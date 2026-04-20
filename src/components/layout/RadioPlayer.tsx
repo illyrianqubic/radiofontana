@@ -4,13 +4,14 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { Play, Pause, Volume2, VolumeX, Radio, ChevronUp, ChevronDown, Mic2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-const STREAM_URL = 'https://stream.radiofontana.com/live';
+const STREAM_URL = 'https://live.radiostreaming.al:8010/stream.mp3';
 
 export default function RadioPlayer() {
   const [playing, setPlaying] = useState(false);
   const [volume, setVolume] = useState(0.8);
   const [muted, setMuted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -22,9 +23,10 @@ export default function RadioPlayer() {
     audioRef.current = audio;
 
     audio.addEventListener('waiting', () => setLoading(true));
-    audio.addEventListener('playing', () => { setLoading(false); setPlaying(true); });
+    audio.addEventListener('playing', () => { setLoading(false); setPlaying(true); setError(false); });
     audio.addEventListener('pause', () => setPlaying(false));
-    audio.addEventListener('error', () => { setLoading(false); setPlaying(false); });
+    audio.addEventListener('stalled', () => { setLoading(false); setPlaying(false); setError(true); });
+    audio.addEventListener('error', () => { setLoading(false); setPlaying(false); setError(true); });
 
     return () => { audio.pause(); audio.src = ''; };
   }, []);
@@ -48,18 +50,23 @@ export default function RadioPlayer() {
   const togglePlay = useCallback(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    if (playing) {
+    if (playing || loading) {
       audio.pause();
       audio.src = '';
+      setLoading(false);
+      setPlaying(false);
     } else {
+      setError(false);
       setLoading(true);
       audio.src = STREAM_URL;
+      audio.load();
       audio.play().catch(() => {
         setLoading(false);
         setPlaying(false);
+        setError(true);
       });
     }
-  }, [playing]);
+  }, [playing, loading]);
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const v = parseFloat(e.target.value);
@@ -109,7 +116,7 @@ export default function RadioPlayer() {
               <div className="min-w-0">
                 <p className="text-sm font-semibold text-white leading-tight truncate">Radio Fontana</p>
                 <p className="text-[11px] text-slate-500 truncate">
-                  {playing ? 'Duke transmetuar live...' : '96.5 FM · Pejë, Kosovë'}
+                  {error ? 'Transmetimi nuk është i disponueshëm' : playing ? 'Duke transmetuar live...' : '96.5 FM · Pejë, Kosovë'}
                 </p>
               </div>
             </div>
@@ -119,16 +126,20 @@ export default function RadioPlayer() {
               {/* Play/Pause */}
               <button
                 onClick={togglePlay}
-                disabled={loading}
-                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 active:scale-95 disabled:opacity-50 ${
-                  playing
+                disabled={false}
+                className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-200 active:scale-95 ${
+                  error
+                    ? 'bg-slate-700 hover:bg-slate-600 text-slate-300'
+                    : playing
                     ? 'bg-[#e63946] hover:bg-[#d32f3f] text-white shadow-lg shadow-[#e63946]/25'
                     : 'bg-white hover:bg-slate-100 text-slate-900'
                 }`}
-                aria-label={playing ? 'Ndalo' : 'Luaj'}
+                aria-label={playing ? 'Ndalo' : error ? 'Provo përsëri' : 'Luaj'}
               >
                 {loading ? (
                   <div className={`w-4 h-4 border-2 rounded-full animate-spin ${playing ? 'border-white border-t-transparent' : 'border-slate-900 border-t-transparent'}`} />
+                ) : error ? (
+                  <Play className="w-4 h-4 ml-0.5 opacity-60" />
                 ) : playing ? (
                   <Pause className="w-4 h-4" />
                 ) : (
