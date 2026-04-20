@@ -18,9 +18,12 @@ export const metadata: Metadata = {
   authors: [{ name: 'Radio Fontana' }],
   creator: 'Radio Fontana',
   icons: {
-    icon: '/logortvfontana.jpg',
-    shortcut: '/logortvfontana.jpg',
-    apple: '/logortvfontana.jpg',
+    icon: [
+      { url: '/favicon.ico', sizes: '48x48' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
   },
   openGraph: {
     type: 'website',
