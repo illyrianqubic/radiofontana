@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Force class-based dark mode — since we never add .dark class, site stays light */
+@variant dark (&:is(.dark *));
+
 :root {
   --rf-primary: #0a1628;
   --rf-primary-light: #131f36;
@@ -27,18 +30,6 @@
   --color-rf-blue-deep: var(--rf-blue-deep);
   --font-sans: var(--font-geist-sans);
   --font-serif: Georgia, 'Times New Roman', serif;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #030712;
-    --foreground: #f1f5f9;
-    --card-bg: #0f172a;
-    --card-hover: #1e293b;
-    --border-color: #1e293b;
-    --muted: #94a3b8;
-    --surface: #0f172a;
-  }
 }
 
 html {
