@@ -1,0 +1,83 @@
+[
+  {
+    "day": "E Hënë",
+    "slots": [
+      { "time": "06:00 - 09:00", "show": "Mëngjesi me Radio Fontana", "host": "Arjeta Krasniqi", "description": "Lajmet e mëngjesit, muzikë dhe bisedë." },
+      { "time": "09:00 - 12:00", "show": "Magazina e Mëngjesit", "host": "Besnik Gashi", "description": "Intervista, reportazhe dhe muzikë hit." },
+      { "time": "12:00 - 14:00", "show": "Lajmet e Drekës", "host": "Valbona Morina", "description": "Lajmet kryesore të ditës dhe analizë." },
+      { "time": "14:00 - 17:00", "show": "Pasdite me Fontana", "host": "Rinor Haxhiaj", "description": "Muzikë, lojëra dhe çmime." },
+      { "time": "17:00 - 19:00", "show": "Koha e Lirë", "host": "Edona Rexha", "description": "Muzikë popullore dhe folk." },
+      { "time": "19:00 - 21:00", "show": "Lajmet e Mbrëmjes", "host": "Leutrim Hasani", "description": "Rishikimi i ditës dhe lajmet ndërkombëtare." },
+      { "time": "21:00 - 24:00", "show": "Natën Mirë Fontana", "host": "DJ Mentor", "description": "Muzikë relaxuese dhe hit të natës." }
+    ]
+  },
+  {
+    "day": "E Martë",
+    "slots": [
+      { "time": "06:00 - 09:00", "show": "Mëngjesi me Radio Fontana", "host": "Valbona Morina", "description": "Lajmet e mëngjesit, muzikë dhe bisedë." },
+      { "time": "09:00 - 12:00", "show": "Biznes & Ekonomi", "host": "Leutrim Hasani", "description": "Lajme ekonomike, tregjet dhe investimet." },
+      { "time": "12:00 - 14:00", "show": "Lajmet e Drekës", "host": "Arjeta Krasniqi", "description": "Lajmet kryesore të ditës dhe analizë." },
+      { "time": "14:00 - 17:00", "show": "Pasdite me Fontana", "host": "Besnik Gashi", "description": "Muzikë, lojëra dhe çmime." },
+      { "time": "17:00 - 19:00", "show": "Sportet", "host": "Rinor Haxhiaj", "description": "Rezultate, analiza dhe intervista sportive." },
+      { "time": "19:00 - 21:00", "show": "Lajmet e Mbrëmjes", "host": "Edona Rexha", "description": "Rishikimi i ditës dhe lajmet ndërkombëtare." },
+      { "time": "21:00 - 24:00", "show": "Natën Mirë Fontana", "host": "DJ Mentor", "description": "Muzikë relaxuese dhe hit të natës." }
+    ]
+  },
+  {
+    "day": "E Mërkurë",
+    "slots": [
+      { "time": "06:00 - 09:00", "show": "Mëngjesi me Radio Fontana", "host": "Rinor Haxhiaj", "description": "Lajmet e mëngjesit, muzikë dhe bisedë." },
+      { "time": "09:00 - 12:00", "show": "Shëndetësia Sot", "host": "Dr. Fatime Berisha", "description": "Këshilla shëndetësore dhe intervista me mjekë." },
+      { "time": "12:00 - 14:00", "show": "Lajmet e Drekës", "host": "Leutrim Hasani", "description": "Lajmet kryesore të ditës dhe analizë." },
+      { "time": "14:00 - 17:00", "show": "Pasdite me Fontana", "host": "Valbona Morina", "description": "Muzikë, lojëra dhe çmime." },
+      { "time": "17:00 - 19:00", "show": "Teknologjia Sot", "host": "Arjeta Krasniqi", "description": "Lajmet teknologjike dhe inovacioni." },
+      { "time": "19:00 - 21:00", "show": "Lajmet e Mbrëmjes", "host": "Besnik Gashi", "description": "Rishikimi i ditës dhe lajmet ndërkombëtare." },
+      { "time": "21:00 - 24:00", "show": "Natën Mirë Fontana", "host": "DJ Mentor", "description": "Muzikë relaxuese dhe hit të natës." }
+    ]
+  },
+  {
+    "day": "E Enjte",
+    "slots": [
+      { "time": "06:00 - 09:00", "show": "Mëngjesi me Radio Fontana", "host": "Edona Rexha", "description": "Lajmet e mëngjesit, muzikë dhe bisedë." },
+      { "time": "09:00 - 12:00", "show": "Kultura & Arte", "host": "Valbona Morina", "description": "Kulturë, arte dhe evente lokale." },
+      { "time": "12:00 - 14:00", "show": "Lajmet e Drekës", "host": "Rinor Haxhiaj", "description": "Lajmet kryesore të ditës dhe analizë." },
+      { "time": "14:00 - 17:00", "show": "Pasdite me Fontana", "host": "Leutrim Hasani", "description": "Muzikë, lojëra dhe çmime." },
+      { "time": "17:00 - 19:00", "show": "Bota e Muzikës", "host": "DJ Mentor", "description": "Hitet ndërkombëtare dhe muzika e re." },
+      { "time": "19:00 - 21:00", "show": "Lajmet e Mbrëmjes", "host": "Arjeta Krasniqi", "description": "Rishikimi i ditës dhe lajmet ndërkombëtare." },
+      { "time": "21:00 - 24:00", "show": "Natën Mirë Fontana", "host": "DJ Mentor", "description": "Muzikë relaxuese dhe hit të natës." }
+    ]
+  },
+  {
+    "day": "E Premte",
+    "slots": [
+      { "time": "06:00 - 09:00", "show": "Mëngjesi me Radio Fontana", "host": "Besnik Gashi", "description": "Lajmet e mëngjesit, muzikë dhe bisedë." },
+      { "time": "09:00 - 12:00", "show": "Fun Friday", "host": "Rinor Haxhiaj", "description": "Humor, lojëra dhe muzikë e fundjavës." },
+      { "time": "12:00 - 14:00", "show": "Lajmet e Drekës", "host": "Edona Rexha", "description": "Lajmet kryesore të ditës dhe analizë." },
+      { "time": "14:00 - 17:00", "show": "Weekend Vibes", "host": "DJ Mentor", "description": "Muzikë për fundjavë dhe hits të reja." },
+      { "time": "17:00 - 19:00", "show": "Sportet e Fundjavës", "host": "Besnik Gashi", "description": "Preview i garat sportive të fundjavës." },
+      { "time": "19:00 - 21:00", "show": "Lajmet e Mbrëmjes", "host": "Valbona Morina", "description": "Rishikimi i javës dhe lajmet ndërkombëtare." },
+      { "time": "21:00 - 24:00", "show": "Friday Night Party", "host": "DJ Mentor", "description": "Muzikë dance dhe hit për fundjavë." }
+    ]
+  },
+  {
+    "day": "E Shtunë",
+    "slots": [
+      { "time": "08:00 - 11:00", "show": "Fundjavë Relax", "host": "Valbona Morina", "description": "Muzikë e lehtë dhe lajme fundjavore." },
+      { "time": "11:00 - 14:00", "show": "Magazina e Fundjavës", "host": "Arjeta Krasniqi", "description": "Intervista, kulturë dhe lifestyle." },
+      { "time": "14:00 - 17:00", "show": "Sportet Live", "host": "Besnik Gashi", "description": "Transmetim i drejtpërdrejtë i garat sportive." },
+      { "time": "17:00 - 20:00", "show": "Pasdite e Shtunë", "host": "Edona Rexha", "description": "Muzikë popullore dhe folk shqip." },
+      { "time": "20:00 - 24:00", "show": "Saturday Night Live", "host": "DJ Mentor", "description": "Muzikë dhe lojëra elektronike të natës." }
+    ]
+  },
+  {
+    "day": "E Diel",
+    "slots": [
+      { "time": "08:00 - 11:00", "show": "Mëngjes i Dielë", "host": "Leutrim Hasani", "description": "Muzikë relaxuese dhe lajme të fundjavës." },
+      { "time": "11:00 - 13:00", "show": "Feja & Tradita", "host": "Hasan Hoti", "description": "Vlerat kulturore dhe traditat tona." },
+      { "time": "13:00 - 16:00", "show": "Familja Sot", "host": "Dr. Fatime Berisha", "description": "Këshilla për familje, fëmijë dhe marrëdhënie." },
+      { "time": "16:00 - 19:00", "show": "Muzika Popullore", "host": "Valbona Morina", "description": "Repertori i muzikës popullore shqiptare." },
+      { "time": "19:00 - 21:00", "show": "Lajmet e Dielës", "host": "Arjeta Krasniqi", "description": "Rishikimi i fundjavës dhe parashikimi i javës." },
+      { "time": "21:00 - 24:00", "show": "Natën Mirë Fontana", "host": "DJ Mentor", "description": "Muzikë relaxuese për netën e dielës." }
+    ]
+  }
+]
