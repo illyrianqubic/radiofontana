@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { Article } from '@/lib/types';
+import { Zap } from 'lucide-react';
 
 interface Props {
   articles: Article[];
@@ -15,34 +16,34 @@ export default function BreakingNewsTicker({ articles }: Props) {
   if (breaking.length === 0) return null;
 
   return (
-    <div className="bg-[#e63946] text-white overflow-hidden">
-      <div className="flex items-stretch">
+    <div className="bg-red-600 text-white overflow-hidden shadow-sm">
+      <div className="flex items-stretch h-9">
         {/* Label */}
-        <div className="flex-shrink-0 bg-[#c0303b] px-3 sm:px-4 py-2 flex items-center gap-1.5 sm:gap-2 z-10">
-          <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-          <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-[0.15em] whitespace-nowrap">
+        <div className="flex-shrink-0 bg-red-800 px-3 sm:px-4 flex items-center gap-1.5 z-10 shadow-[2px_0_8px_rgba(0,0,0,0.2)]">
+          <Zap className="w-3 h-3 text-yellow-300 flex-shrink-0" fill="currentColor" />
+          <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-[0.18em] whitespace-nowrap">
             Breaking
           </span>
         </div>
 
         {/* Ticker */}
         <div
-          className="relative flex-1 overflow-hidden py-2"
+          className="relative flex-1 overflow-hidden flex items-center"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
           <div
-            className={`flex gap-16 whitespace-nowrap ${paused ? '' : 'ticker-animate'}`}
+            className={`flex gap-0 whitespace-nowrap ${paused ? '' : 'ticker-animate'}`}
             style={{ willChange: 'transform' }}
           >
-            {[...breaking, ...breaking].map((article, i) => (
+            {[...breaking, ...breaking, ...breaking, ...breaking].map((article, i) => (
               <Link
                 key={`${article.id}-${i}`}
                 href={`/lajme/${article.slug}`}
-                className="inline-flex items-center gap-2.5 text-[13px] text-white/90 hover:text-white transition-colors duration-200"
+                className="inline-flex items-center gap-3 text-[12px] text-white/90 hover:text-white transition-colors duration-200 px-8"
               >
-                <span className="text-white/40 font-bold text-lg leading-none">|</span>
-                <span>{article.title}</span>
+                <span className="text-red-300 font-bold text-xs">◆</span>
+                <span className="font-medium">{article.title}</span>
               </Link>
             ))}
           </div>
@@ -51,3 +52,5 @@ export default function BreakingNewsTicker({ articles }: Props) {
     </div>
   );
 }
+
+

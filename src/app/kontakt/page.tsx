@@ -34,7 +34,10 @@ export default function KontaktPage() {
           <span className="text-slate-300">/</span>
           <span className="text-slate-700 font-medium">Kontakt</span>
         </div>
-        <h1 className="text-3xl font-bold text-slate-800 section-title mb-3">Na Kontaktoni</h1>
+        <div className="flex items-center gap-3 mb-3">
+          <div className="w-1 h-8 bg-red-600 rounded-full" />
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">Na Kontaktoni</h1>
+        </div>
         <p className="text-slate-500 text-base">
           Jemi gjithmonë të gatshëm të dëgjojmë nga ju. Dërgoni mesazhin tuaj dhe do t&apos;ju përgjigjemi sa më shpejt.
         </p>

@@ -19,8 +19,8 @@ export default function LivePlayer() {
       {/* Hero */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#e63946]/8 rounded-full blur-[120px]" />
-          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px]" />
+          <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-red-600/8 rounded-full blur-[120px]" />
+          <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-red-900/5 rounded-full blur-[100px]" />
         </div>
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 lg:pt-20 pb-8 sm:pb-12 lg:pb-16 text-center text-white relative z-10">

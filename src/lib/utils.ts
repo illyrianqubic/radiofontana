@@ -20,3 +20,10 @@ export function timeAgo(dateString: string): string {
   if (diffHours < 24) return `${diffHours} orë më parë`;
   return `${diffDays} ditë më parë`;
 }
+
+/** Estimated reading time in minutes (avg 200 words/min) */
+export function readTime(content: string): number {
+  const words = content.trim().split(/\s+/).length;
+  return Math.max(1, Math.round(words / 200));
+}
+

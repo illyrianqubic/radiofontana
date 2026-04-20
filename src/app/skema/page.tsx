@@ -27,7 +27,7 @@ export default function SkemaPage() {
           <span className="text-slate-300">/</span>
           <span className="text-slate-700 font-medium">Skema Programore</span>
         </div>
-        <h1 className="text-3xl font-bold text-slate-800 section-title mb-3">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3">
           Skema Programore
         </h1>
         <p className="text-slate-500 text-base">
@@ -36,7 +36,7 @@ export default function SkemaPage() {
       </div>
 
       {/* Current show banner */}
-      <div className="bg-[#e63946] rounded-2xl p-7 text-white mb-10 flex flex-col sm:flex-row items-start sm:items-center gap-5">
+      <div className="bg-red-600 rounded-2xl p-5 sm:p-7 text-white mb-10 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-5">
         <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center flex-shrink-0">
           <Mic2 className="w-6 h-6 text-white" />
         </div>

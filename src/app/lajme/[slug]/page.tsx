@@ -43,19 +43,20 @@ export default async function ArticlePage({ params }: Props) {
   const catColor = CATEGORY_COLORS[article.category];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10">
+    <div className="bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-12">
         {/* Main content */}
         <article className="lg:col-span-2">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-xs text-slate-400 mb-5">
-            <Link href="/" className="hover:text-[#e63946] transition-colors duration-200">Kryefaqja</Link>
+            <Link href="/" className="hover:text-red-600 transition-colors duration-200">Kryefaqja</Link>
             <span className="text-slate-300">/</span>
-            <Link href="/lajme" className="hover:text-[#e63946] transition-colors duration-200">Lajme</Link>
+            <Link href="/lajme" className="hover:text-red-600 transition-colors duration-200">Lajme</Link>
             <span className="text-slate-300">/</span>
             <Link
               href={`/lajme?kategoria=${encodeURIComponent(article.category)}`}
-              className="hover:text-[#e63946] transition-colors duration-200"
+              className="hover:text-red-600 transition-colors duration-200"
             >
               {article.category}
             </Link>
@@ -67,12 +68,12 @@ export default async function ArticlePage({ params }: Props) {
           </span>
 
           {/* Title */}
-          <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-slate-800 leading-tight mb-4 sm:mb-5">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-extrabold text-slate-900 leading-tight mb-4 sm:mb-5">
             {article.title}
           </h1>
 
           {/* Excerpt */}
-          <p className="text-lg text-slate-500 leading-relaxed mb-7 border-l-4 border-[#e63946] pl-5 italic">
+          <p className="text-base sm:text-lg text-slate-500 leading-relaxed mb-7 border-l-4 border-red-600 pl-5 italic">
             {article.excerpt}
           </p>
 
@@ -116,7 +117,7 @@ export default async function ArticlePage({ params }: Props) {
                 <Link
                   key={tag}
                   href={`/lajme?q=${encodeURIComponent(tag)}`}
-                  className="px-3 py-1.5 bg-slate-100 text-slate-500 rounded-xl text-sm hover:bg-[#e63946]/5 hover:text-[#e63946] transition-colors duration-200"
+                  className="px-3 py-1.5 bg-slate-100 text-slate-500 rounded-xl text-sm hover:bg-red-50 hover:text-red-600 transition-colors duration-200"
                 >
                   #{tag}
                 </Link>
@@ -157,7 +158,7 @@ export default async function ArticlePage({ params }: Props) {
         <aside className="space-y-7">
           <Link
             href="/lajme"
-            className="flex items-center gap-2 text-sm text-[#e63946] font-semibold hover:gap-3 transition-all duration-200"
+            className="flex items-center gap-2 text-sm text-red-600 font-semibold hover:gap-3 transition-all duration-200"
           >
             <ArrowLeft className="w-4 h-4" />
             Kthehu tek Lajmet
@@ -166,8 +167,8 @@ export default async function ArticlePage({ params }: Props) {
           {/* Related */}
           {related.length > 0 && (
             <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden">
-              <div className="px-5 py-3.5 bg-[#e63946] text-white">
-                <h3 className="font-bold text-xs uppercase tracking-[0.1em]">Artikuj të Ngjashëm</h3>
+              <div className="px-5 py-3.5 bg-red-600 text-white">
+                <h3 className="font-extrabold text-[10px] uppercase tracking-[0.14em]">Artikuj të Ngjashëm</h3>
               </div>
               <div className="divide-y divide-slate-50">
                 {related.map((a) => (
@@ -181,8 +182,8 @@ export default async function ArticlePage({ params }: Props) {
 
           {/* All recent */}
           <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden">
-            <div className="px-5 py-3.5 border-b border-slate-100">
-              <h3 className="font-bold text-xs text-slate-800 uppercase tracking-[0.1em]">Lajmet e Fundit</h3>
+            <div className="px-5 py-3.5 border-b border-slate-100 bg-slate-50/50">
+              <h3 className="font-extrabold text-[10px] text-slate-700 uppercase tracking-[0.14em]">Lajmet e Fundit</h3>
             </div>
             <div className="divide-y divide-slate-50">
               {allArticles
@@ -201,9 +202,12 @@ export default async function ArticlePage({ params }: Props) {
       {/* More articles */}
       {related.length > 0 && (
         <section className="mt-14 sm:mt-16 pt-8 sm:pt-10 border-t border-slate-100">
-          <h2 className="text-xl sm:text-2xl font-bold text-slate-800 section-title mb-5 sm:mb-7">
-            Lexo Gjithashtu
-          </h2>
+          <div className="flex items-center gap-2.5 mb-5 sm:mb-7">
+            <div className="w-1 h-6 bg-red-600 rounded-full" />
+            <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900">
+              Lexo Gjithashtu
+            </h2>
+          </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {related.map((a) => (
               <NewsCard key={a.id} article={a} />
@@ -211,6 +215,7 @@ export default async function ArticlePage({ params }: Props) {
           </div>
         </section>
       )}
+    </div>
     </div>
   );
 }

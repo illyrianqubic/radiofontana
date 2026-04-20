@@ -3,130 +3,185 @@
 /* Force class-based dark mode — since we never add .dark class, site stays light */
 @variant dark (&:is(.dark *));
 
+/* ── Design Tokens ── */
 :root {
-  --rf-accent: #e63946;
-  --rf-accent-glow: rgba(230, 57, 70, 0.3);
-  --background: #ffffff;
-  --foreground: #0f172a;
+  --rf-red:        #dc2626;
+  --rf-red-dark:   #b91c1c;
+  --rf-red-light:  #ef4444;
+  --rf-red-glow:   rgba(220, 38, 38, 0.25);
+  --rf-accent:     #dc2626;
+  --rf-accent-glow: rgba(220, 38, 38, 0.25);
+  --background:    #ffffff;
+  --foreground:    #0d1117;
+  --shadow-card:   0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04);
+  --shadow-hover:  0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
-  /* Custom breakpoint: xs = 320px */
   --breakpoint-xs: 20rem;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+/* ── Base ── */
+html { scroll-behavior: smooth; }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
-  /* Reserve space for fixed radio player bar */
-  padding-bottom: 60px;
+  padding-bottom: 62px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Prevent horizontal overflow on all screen sizes */
   overflow-x: hidden;
+  font-feature-settings: "kern" 1, "liga" 1;
 }
-@media (min-width: 640px) {
-  body { padding-bottom: 72px; }
-}
+@media (min-width: 640px) { body { padding-bottom: 72px; } }
+
+/* ── Selection ── */
+::selection { background: rgba(220,38,38,0.12); color: #b91c1c; }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--rf-red); border-radius: 999px; }
 
 /* ── Breaking news ticker ── */
 @keyframes ticker {
-  0% { transform: translateX(100%); }
-  100% { transform: translateX(-100%); }
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
-.ticker-animate {
-  animation: ticker 35s linear infinite;
-}
+.ticker-animate { animation: ticker 50s linear infinite; }
 
-/* ── Section headings ── */
+/* ── Section headings (underline style) ── */
 .section-title {
   position: relative;
 }
 .section-title::after {
   content: '';
   display: block;
-  width: 48px;
+  width: 36px;
   height: 3px;
-  background: var(--rf-accent);
-  margin-top: 8px;
+  background: var(--rf-red);
+  margin-top: 7px;
   border-radius: 999px;
 }
 
-/* ── Custom scrollbar ── */
-::-webkit-scrollbar { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--rf-accent); border-radius: 999px; }
+/* ── Section title with left red bar ── */
+.section-title-bar {
+  position: relative;
+  padding-left: 13px;
+}
+.section-title-bar::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 1px; bottom: 1px;
+  width: 4px;
+  background: var(--rf-red);
+  border-radius: 999px;
+}
+
+/* ── Animated gradient bar ── */
+@keyframes gradientShift {
+  0%,100% { background-position: 0% 50%; }
+  50%     { background-position: 100% 50%; }
+}
+.gradient-bar {
+  background: linear-gradient(90deg, #dc2626, #991b1b, #ef4444, #dc2626);
+  background-size: 300%;
+  animation: gradientShift 8s ease infinite;
+}
 
 /* ── Radio player backdrop ── */
 .radio-player {
-  backdrop-filter: blur(24px) saturate(1.8);
-  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  backdrop-filter: blur(32px) saturate(2);
+  -webkit-backdrop-filter: blur(32px) saturate(2);
 }
 
 /* ── Card system ── */
 .news-card {
-  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+  transition: transform 0.3s cubic-bezier(0.22,1,0.36,1),
+              box-shadow 0.3s cubic-bezier(0.22,1,0.36,1);
+  box-shadow: var(--shadow-card);
 }
 .news-card:hover {
-  transform: translateY(-4px);
-  box-shadow:
-    0 20px 44px rgba(0, 0, 0, 0.06),
-    0 8px 16px rgba(0, 0, 0, 0.04);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
 }
+
+/* ── Card top accent (red line on hover) ── */
+.card-accent {
+  position: relative;
+}
+.card-accent::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--rf-red);
+  border-radius: 2px 2px 0 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s cubic-bezier(0.22,1,0.36,1);
+}
+.news-card:hover .card-accent::after,
+.card-accent:hover::after { transform: scaleX(1); }
 
 /* ── Category badge ── */
 .category-badge {
-  letter-spacing: 0.08em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   font-size: 0.6rem;
   font-weight: 800;
   line-height: 1;
 }
 
-/* ── Pulse glow for live indicator ── */
+/* ── LIVE glow pulse ── */
 @keyframes glow-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 var(--rf-accent-glow); }
-  50% { box-shadow: 0 0 0 8px transparent; }
+  0%,100% { box-shadow: 0 0 0 0 var(--rf-red-glow); }
+  50%     { box-shadow: 0 0 0 8px transparent; }
 }
 .live-glow { animation: glow-pulse 2s ease-in-out infinite; }
 
-/* ── Smooth image zoom on hover ── */
+/* ── Image zoom on hover ── */
 .img-zoom {
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
-.group:hover .img-zoom {
-  transform: scale(1.06);
-}
+.group:hover .img-zoom { transform: scale(1.07); }
 
-/* ── Range slider (radio player volume) ── */
-input[type="range"] {
-  appearance: none;
-  background: transparent;
-  cursor: pointer;
-}
+/* ── Waveform animation (radio player) ── */
+@keyframes wave1 { 0%,100%{height:5px}  50%{height:16px} }
+@keyframes wave2 { 0%,100%{height:12px} 50%{height:5px}  }
+@keyframes wave3 { 0%,100%{height:8px}  50%{height:18px} }
+@keyframes wave4 { 0%,100%{height:16px} 50%{height:7px}  }
+@keyframes wave5 { 0%,100%{height:7px}  50%{height:14px} }
+.waveform-bar:nth-child(1) { animation: wave1 0.7s ease-in-out infinite; }
+.waveform-bar:nth-child(2) { animation: wave2 0.6s ease-in-out infinite 0.1s; }
+.waveform-bar:nth-child(3) { animation: wave3 0.8s ease-in-out infinite 0.05s; }
+.waveform-bar:nth-child(4) { animation: wave4 0.65s ease-in-out infinite 0.15s; }
+.waveform-bar:nth-child(5) { animation: wave5 0.75s ease-in-out infinite 0.08s; }
+
+/* ── Range slider ── */
+input[type="range"] { appearance: none; background: transparent; cursor: pointer; }
 input[type="range"]::-webkit-slider-track {
-  height: 4px;
+  height: 3px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255,255,255,0.15);
 }
 input[type="range"]::-webkit-slider-thumb {
   appearance: none;
-  width: 14px;
-  height: 14px;
+  width: 13px; height: 13px;
   border-radius: 50%;
   background: white;
   margin-top: -5px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.35);
   transition: transform 0.15s;
 }
-input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
+input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.25); }
+
+/* ── Divider ── */
+.divider-red {
+  height: 2px;
+  background: linear-gradient(90deg, var(--rf-red) 0%, transparent 100%);
 }

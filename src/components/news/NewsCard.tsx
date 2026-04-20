@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Article, CATEGORY_COLORS } from '@/lib/types';
-import { timeAgo } from '@/lib/utils';
-import { Clock, User } from 'lucide-react';
+import { timeAgo, readTime } from '@/lib/utils';
+import { Clock, User, BookOpen } from 'lucide-react';
 
 interface Props {
   article: Article;
@@ -11,11 +11,12 @@ interface Props {
 
 export default function NewsCard({ article, variant = 'default' }: Props) {
   const categoryColor = CATEGORY_COLORS[article.category];
+  const minutes = readTime(article.content);
 
   if (variant === 'hero') {
     return (
       <Link href={`/lajme/${article.slug}`} className="group block relative overflow-hidden rounded-2xl news-card h-full">
-        <div className="relative h-[260px] sm:h-[380px] lg:h-[460px] xl:h-[500px]">
+        <div className="relative h-[280px] sm:h-[400px] lg:h-[480px] xl:h-[520px]">
           <Image
             src={article.imageUrl}
             alt={article.title}
@@ -24,15 +25,26 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
             className="object-cover img-zoom"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
-          <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-7 lg:p-9">
-            <span className={`category-badge inline-block px-2.5 py-1.5 rounded-md text-white mb-3 w-fit ${categoryColor}`}>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
+          {/* Top label */}
+          <div className="absolute top-4 left-4 flex items-center gap-2">
+            <span className={`category-badge px-2.5 py-1.5 rounded-md text-white ${categoryColor}`}>
               {article.category}
             </span>
-            <h2 className="text-white text-lg sm:text-2xl lg:text-3xl xl:text-[2rem] font-bold leading-[1.25] mb-2 sm:mb-3 group-hover:text-red-300 transition-colors duration-300">
+            {article.breaking && (
+              <span className="category-badge px-2.5 py-1.5 rounded-md bg-red-600 text-white">
+                Breaking
+              </span>
+            )}
+          </div>
+          <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-7 lg:p-9">
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-red-400 mb-2">
+              Lajm kryesor
+            </p>
+            <h2 className="text-white text-lg sm:text-2xl lg:text-[1.75rem] xl:text-[2rem] font-extrabold leading-[1.2] mb-3 group-hover:text-red-200 transition-colors duration-300">
               {article.title}
             </h2>
-            <p className="text-white/70 text-sm line-clamp-2 mb-5 max-w-2xl leading-relaxed">{article.excerpt}</p>
+            <p className="text-white/65 text-sm line-clamp-2 mb-5 max-w-2xl leading-relaxed">{article.excerpt}</p>
             <div className="flex items-center gap-4 text-white/50 text-xs">
               <span className="flex items-center gap-1.5">
                 <User className="w-3.5 h-3.5" />
@@ -41,6 +53,10 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
               <span className="flex items-center gap-1.5">
                 <Clock className="w-3.5 h-3.5" />
                 {timeAgo(article.publishedAt)}
+              </span>
+              <span className="flex items-center gap-1.5">
+                <BookOpen className="w-3.5 h-3.5" />
+                {minutes} min lexim
               </span>
             </div>
           </div>
@@ -51,7 +67,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   if (variant === 'compact') {
     return (
-      <Link href={`/lajme/${article.slug}`} className="group flex gap-3.5 items-start p-3 rounded-xl hover:bg-slate-50 transition-colors duration-200">
+      <Link href={`/lajme/${article.slug}`} className="group flex gap-3.5 items-start p-3 sm:p-3.5 hover:bg-slate-50 transition-colors duration-200">
         <div className="relative w-20 h-16 flex-shrink-0 rounded-lg overflow-hidden">
           <Image
             src={article.imageUrl}
@@ -66,11 +82,11 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
           <span className={`category-badge inline-block px-1.5 py-0.5 rounded text-white mb-1.5 ${categoryColor}`}>
             {article.category}
           </span>
-          <h4 className="text-sm font-semibold text-slate-800 leading-snug line-clamp-2 group-hover:text-[#e63946] transition-colors duration-200">
+          <h4 className="text-sm font-semibold text-slate-800 leading-snug line-clamp-2 group-hover:text-red-600 transition-colors duration-200">
             {article.title}
           </h4>
-          <p className="text-[11px] text-slate-400 mt-1.5 flex items-center gap-1">
-            <Clock className="w-3 h-3" />
+          <p className="text-[10px] text-slate-400 mt-1.5 flex items-center gap-1">
+            <Clock className="w-2.5 h-2.5" />
             {timeAgo(article.publishedAt)}
           </p>
         </div>
@@ -80,8 +96,8 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   if (variant === 'horizontal') {
     return (
-      <Link href={`/lajme/${article.slug}`} className="group flex gap-4 items-start p-3.5 rounded-2xl hover:bg-slate-50 transition-colors duration-200">
-        <div className="relative w-32 h-24 flex-shrink-0 rounded-xl overflow-hidden">
+      <Link href={`/lajme/${article.slug}`} className="group flex gap-4 items-start p-3 sm:p-3.5 rounded-xl hover:bg-slate-50 transition-all duration-200 hover:shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+        <div className="relative w-28 h-20 sm:w-32 sm:h-24 flex-shrink-0 rounded-xl overflow-hidden">
           <Image
             src={article.imageUrl}
             alt={article.title}
@@ -92,19 +108,19 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
           />
         </div>
         <div className="flex-1 min-w-0">
-          <span className={`category-badge inline-block px-2 py-0.5 rounded text-white mb-2 ${categoryColor}`}>
+          <span className={`category-badge inline-block px-2 py-0.5 rounded text-white mb-1.5 ${categoryColor}`}>
             {article.category}
           </span>
-          <h3 className="font-semibold text-slate-800 text-sm leading-snug line-clamp-2 group-hover:text-[#e63946] transition-colors duration-200 mb-2.5">
+          <h3 className="font-bold text-slate-800 text-sm leading-snug line-clamp-2 group-hover:text-red-600 transition-colors duration-200 mb-2">
             {article.title}
           </h3>
-          <div className="flex items-center gap-3 text-[11px] text-slate-400">
+          <div className="flex items-center gap-2.5 text-[10px] text-slate-400">
             <span className="flex items-center gap-1">
-              <User className="w-3 h-3" />
+              <User className="w-2.5 h-2.5" />
               {article.author}
             </span>
             <span className="flex items-center gap-1">
-              <Clock className="w-3 h-3" />
+              <Clock className="w-2.5 h-2.5" />
               {timeAgo(article.publishedAt)}
             </span>
           </div>
@@ -115,8 +131,8 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   // Default card
   return (
-    <Link href={`/lajme/${article.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-100 news-card h-full">
-      <div className="relative h-48 overflow-hidden">
+    <Link href={`/lajme/${article.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-100 news-card card-accent h-full">
+      <div className="relative h-44 sm:h-48 overflow-hidden">
         <Image
           src={article.imageUrl}
           alt={article.title}
@@ -125,31 +141,49 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
           className="object-cover img-zoom"
           loading="lazy"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <div className="absolute top-3 left-3">
-          <span className={`category-badge px-2.5 py-1 rounded-md text-white ${categoryColor}`}>
+          <span className={`category-badge px-2.5 py-1 rounded-lg text-white ${categoryColor}`}>
             {article.category}
           </span>
         </div>
+        {article.breaking && (
+          <div className="absolute top-3 right-3">
+            <span className="category-badge px-2 py-1 rounded-lg bg-red-600 text-white">Breaking</span>
+          </div>
+        )}
       </div>
       <div className="p-4 sm:p-5">
-        <h3 className="font-bold text-slate-800 text-[0.95rem] leading-snug mb-2.5 line-clamp-2 group-hover:text-[#e63946] transition-colors duration-200">
+        <h3 className="font-bold text-slate-900 text-[0.9rem] leading-snug mb-2 line-clamp-2 group-hover:text-red-600 transition-colors duration-200">
           {article.title}
         </h3>
-        <p className="text-slate-500 text-sm line-clamp-2 mb-4 leading-relaxed">
+        <p className="text-slate-500 text-xs line-clamp-2 mb-3.5 leading-relaxed">
           {article.excerpt}
         </p>
-        <div className="flex items-center justify-between text-[11px] text-slate-400 pt-4 border-t border-slate-100">
-          <span className="flex items-center gap-1.5">
-            <User className="w-3 h-3" />
+        <div className="flex items-center justify-between text-[10px] text-slate-400 pt-3 border-t border-slate-100">
+          <span className="flex items-center gap-1">
+            <User className="w-2.5 h-2.5" />
             {article.author}
           </span>
-          <span className="flex items-center gap-1.5">
-            <Clock className="w-3 h-3" />
-            {timeAgo(article.publishedAt)}
-          </span>
+          <div className="flex items-center gap-2.5">
+            <span className="flex items-center gap-1">
+              <Clock className="w-2.5 h-2.5" />
+              {timeAgo(article.publishedAt)}
+            </span>
+            <span className="flex items-center gap-1">
+              <BookOpen className="w-2.5 h-2.5" />
+              {minutes}m
+            </span>
+          </div>
         </div>
       </div>
     </Link>
   );
 }
+
+
+interface Props {
+  article: Article;
+  variant?: 'default' | 'hero' | 'compact' | 'horizontal';
+}
+
