@@ -3,8 +3,6 @@ import Image from 'next/image';
 import { Mail, Phone, MapPin, Radio } from 'lucide-react';
 import { FacebookIcon, InstagramIcon, YoutubeIcon } from '@/components/shared/SocialIcons';
 import { CATEGORIES } from '@/lib/types';
-import FooterNewsletter from '@/components/layout/FooterNewsletter';
-
 export default function Footer() {
   const year = new Date().getFullYear();
 
@@ -12,20 +10,6 @@ export default function Footer() {
     <footer className="bg-white text-slate-800 border-t border-slate-200">
       {/* Top red accent */}
       <div className="h-1 gradient-bar" />
-
-      {/* Newsletter strip */}
-      <div className="border-b border-slate-200 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-9">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6">
-            <div>
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] text-red-600 mb-1">Buletini Ditor</p>
-              <h3 className="text-base sm:text-lg font-bold text-slate-900 mb-0.5">Qëndro i Informuar</h3>
-              <p className="text-slate-500 text-sm">Merr lajmet e fundit direkt në emailin tënd.</p>
-            </div>
-            <FooterNewsletter />
-          </div>
-        </div>
-      </div>
 
       {/* Main footer */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-14">
