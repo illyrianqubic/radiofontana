@@ -2,13 +2,16 @@ import { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, TrendingUp, Clock, Flame, Radio, Rss } from 'lucide-react';
-import articlesData from '@/data/articles.json';
 import { Article, CATEGORIES, CATEGORY_COLORS } from '@/lib/types';
+import { fetchTelegrafiArticles } from '@/lib/rss';
+import articlesData from '@/data/articles.json';
 import NewsCard from '@/components/news/NewsCard';
 import BreakingNewsTicker from '@/components/layout/BreakingNewsTicker';
 import WeatherWidget from '@/components/home/WeatherWidget';
 import NewsletterSection from '@/components/home/NewsletterSection';
 import { timeAgo, readTime } from '@/lib/utils';
+
+export const revalidate = 300; // ISR: revalidate every 5 minutes
 
 export const metadata: Metadata = {
   title: 'Radio Fontana - Lajmet e Fundit nga Peja dhe Kosova',
@@ -16,12 +19,16 @@ export const metadata: Metadata = {
     'Lajmet e fundit, analizat dhe raportimet ekskluzive nga Radio Fontana, stacioni kryesor i informacionit në Pejë.',
 };
 
-const articles = articlesData as Article[];
+const staticArticles = articlesData as Article[];
 
-export default function HomePage() {
+export default async function HomePage() {
+  // Fetch live RSS articles; fall back to static data if feed is unavailable
+  const rssArticles = await fetchTelegrafiArticles(100);
+  const articles = rssArticles.length > 0 ? rssArticles : staticArticles;
+
   const featured = articles.filter((a) => a.featured);
-  const hero = featured[0];
-  const sideFeatures = featured.slice(1, 4);
+  const hero = featured[0] ?? articles[0];
+  const sideFeatures = (featured.length > 1 ? featured.slice(1, 4) : articles.slice(1, 4));
   const latest = articles.slice(0, 8);
   const sports = articles.filter((a) => a.category === 'Sport').slice(0, 4);
   const tech = articles.filter((a) => a.category === 'Teknologji').slice(0, 4);
@@ -107,7 +114,9 @@ export default function HomePage() {
                   {mostRead.map((article, i) => (
                     <Link
                       key={article.id}
-                      href={`/lajme/${article.slug}`}
+                      href={article.externalUrl ?? `/lajme/${article.slug}`}
+                      target={article.externalUrl ? '_blank' : undefined}
+                      rel={article.externalUrl ? 'noopener noreferrer' : undefined}
                       className="flex gap-3 p-3.5 hover:bg-slate-50 transition-colors duration-200 group"
                     >
                       <span className="text-2xl font-black text-slate-100 w-8 flex-shrink-0 leading-none mt-0.5 tabular-nums">
@@ -151,7 +160,9 @@ export default function HomePage() {
                 {teJundit.map((article) => (
                   <Link
                     key={article.id}
-                    href={`/lajme/${article.slug}`}
+                    href={article.externalUrl ?? `/lajme/${article.slug}`}
+                    target={article.externalUrl ? '_blank' : undefined}
+                    rel={article.externalUrl ? 'noopener noreferrer' : undefined}
                     className="group flex gap-4 bg-white rounded-xl p-3.5 border border-slate-100 hover:border-red-200 hover:shadow-[0_4px_16px_rgba(220,38,38,0.08)] transition-all duration-200"
                   >
                     <div className="relative w-24 h-[72px] sm:w-32 sm:h-24 flex-shrink-0 rounded-lg overflow-hidden">
@@ -177,6 +188,9 @@ export default function HomePage() {
                       <h3 className="font-bold text-slate-800 text-sm leading-snug line-clamp-2 group-hover:text-red-600 transition-colors">
                         {article.title}
                       </h3>
+                      {article.source && (
+                        <p className="text-[9px] text-red-500/60 mt-1">Burimi: {article.source}</p>
+                      )}
                     </div>
                   </Link>
                 ))}
@@ -292,7 +306,9 @@ export default function HomePage() {
             {articles.slice(0, 6).map((article, i) => (
               <Link
                 key={article.id}
-                href={`/lajme/${article.slug}`}
+                href={article.externalUrl ?? `/lajme/${article.slug}`}
+                target={article.externalUrl ? '_blank' : undefined}
+                rel={article.externalUrl ? 'noopener noreferrer' : undefined}
                 className="flex items-start gap-4 p-4 rounded-xl hover:bg-slate-50 transition-colors duration-200 group"
               >
                 <span className="text-4xl font-black text-slate-100 w-10 flex-shrink-0 leading-none mt-1 tabular-nums">

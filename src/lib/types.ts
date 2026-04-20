@@ -11,6 +11,10 @@ export interface Article {
   tags: string[];
   featured?: boolean;
   breaking?: boolean;
+  /** External article URL — opens in new tab instead of /lajme/[slug] */
+  externalUrl?: string;
+  /** Source label e.g. 'Telegrafi' */
+  source?: string;
 }
 
 export type Category =

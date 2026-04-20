@@ -2,15 +2,18 @@ import { Metadata } from 'next';
 import { Suspense } from 'react';
 import articlesData from '@/data/articles.json';
 import { Article, Category, CATEGORY_COLORS } from '@/lib/types';
+import { fetchTelegrafiArticles } from '@/lib/rss';
 import NewsCard from '@/components/news/NewsCard';
 import NewsFilter from '@/components/news/NewsFilter';
+
+export const revalidate = 300; // ISR: revalidate every 5 minutes
 
 export const metadata: Metadata = {
   title: 'Lajme',
   description: 'Lajmet e fundit nga Peja, Kosova dhe bota. Sport, Teknologji, Showbiz dhe më shumë.',
 };
 
-const allArticles = articlesData as Article[];
+const staticArticles = articlesData as Article[];
 
 interface Props {
   searchParams: Promise<{ kategoria?: string; q?: string }>;
@@ -18,6 +21,10 @@ interface Props {
 
 export default async function LajmePage({ searchParams }: Props) {
   const { kategoria, q } = await searchParams;
+
+  // Fetch live RSS articles; fall back to static data if feed is unavailable
+  const rssArticles = await fetchTelegrafiArticles(100);
+  const allArticles = rssArticles.length > 0 ? rssArticles : staticArticles;
 
   let filtered = allArticles;
 
