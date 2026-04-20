@@ -34,22 +34,22 @@ export default function Footer() {
                 alt="Radio Fontana"
                 width={120}
                 height={40}
-                className="h-10 w-auto object-contain brightness-0 invert opacity-90"
+                className="h-10 w-auto object-contain rounded"
               />
             </div>
             <p className="text-slate-400 text-sm leading-relaxed mb-6">
-              Stacioni kryesor i informacionit dhe muzikës në Pejë, Kosovë. Duke transmetuar me cilësi të lartë që nga viti 1995.
+              Stacioni kryesor i informacionit dhe muzikës në Pejë, Kosovë. Radio Fontana 98.8 FM.
             </p>
             <div className="flex gap-2">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.facebook.com/rtvfontanalive" target="_blank" rel="noopener noreferrer"
                 className="w-9 h-9 rounded-xl bg-white/[0.06] flex items-center justify-center hover:bg-[#1877F2] transition-all duration-200" aria-label="Facebook">
                 <FacebookIcon className="w-4 h-4" />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.instagram.com/rtvfontana/" target="_blank" rel="noopener noreferrer"
                 className="w-9 h-9 rounded-xl bg-white/[0.06] flex items-center justify-center hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-500 transition-all duration-200" aria-label="Instagram">
                 <InstagramIcon className="w-4 h-4" />
               </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.youtube.com/@RTVFontana" target="_blank" rel="noopener noreferrer"
                 className="w-9 h-9 rounded-xl bg-white/[0.06] flex items-center justify-center hover:bg-[#FF0000] transition-all duration-200" aria-label="YouTube">
                 <YoutubeIcon className="w-4 h-4" />
               </a>
@@ -99,15 +99,18 @@ export default function Footer() {
             <ul className="space-y-3.5">
               <li className="flex items-start gap-3 text-sm text-slate-400">
                 <MapPin className="w-4 h-4 text-slate-600 flex-shrink-0 mt-0.5" />
-                <span>Rr. Mbretëresha Teuta, Nr. 15<br />Pejë 30000, Kosovë</span>
+                <span>Rruga &quot;Ibrahim Rugova&quot; Nr. 56<br />Pejë, Kosovë</span>
               </li>
               <li className="flex items-center gap-3 text-sm text-slate-400">
                 <Phone className="w-4 h-4 text-slate-600 flex-shrink-0" />
-                <a href="tel:+38339123456" className="hover:text-white transition-colors duration-200">+383 39 123 456</a>
+                <div className="flex flex-col">
+                  <a href="tel:+38344150027" className="hover:text-white transition-colors duration-200">+383 44 150 027</a>
+                  <a href="tel:+38344141294" className="hover:text-white transition-colors duration-200">+383 44 141 294</a>
+                </div>
               </li>
               <li className="flex items-center gap-3 text-sm text-slate-400">
                 <Mail className="w-4 h-4 text-slate-600 flex-shrink-0" />
-                <a href="mailto:info@radiofontana.com" className="hover:text-white transition-colors duration-200">info@radiofontana.com</a>
+                <a href="mailto:rtvfontana@gmail.com" className="hover:text-white transition-colors duration-200">rtvfontana@gmail.com</a>
               </li>
             </ul>
           </div>

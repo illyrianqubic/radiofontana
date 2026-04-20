@@ -47,17 +47,17 @@ export default function KontaktPage() {
             {
               icon: <MapPin className="w-5 h-5 text-[#e63946]" />,
               label: 'Adresa',
-              value: 'Rr. Mbretëresha Teuta, Nr. 15\nPejë 30000, Kosovë',
+              value: 'Rruga "Ibrahim Rugova" Nr. 56\nPejë, Kosovë',
             },
             {
               icon: <Phone className="w-5 h-5 text-[#e63946]" />,
               label: 'Telefon',
-              value: '+383 39 123 456',
+              value: '+383 44 150 027\n+383 44 141 294',
             },
             {
               icon: <Mail className="w-5 h-5 text-[#e63946]" />,
               label: 'Email',
-              value: 'info@radiofontana.com',
+              value: 'rtvfontana@gmail.com',
             },
             {
               icon: <Clock className="w-5 h-5 text-[#e63946]" />,
@@ -87,15 +87,15 @@ export default function KontaktPage() {
           <div className="p-5 bg-[#e63946] rounded-2xl text-white">
             <p className="font-bold text-sm mb-3">Na Ndiqni</p>
             <div className="flex gap-2">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.facebook.com/rtvfontanalive" target="_blank" rel="noopener noreferrer"
                 className="flex items-center gap-2 bg-white/10 hover:bg-[#1877F2] px-3.5 py-2.5 rounded-xl text-sm transition-all duration-200">
                 <FacebookIcon className="w-4 h-4" /> Facebook
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.instagram.com/rtvfontana/" target="_blank" rel="noopener noreferrer"
                 className="flex items-center gap-2 bg-white/10 hover:bg-pink-600 px-3.5 py-2.5 rounded-xl text-sm transition-all duration-200">
                 <InstagramIcon className="w-4 h-4" /> Instagram
               </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.youtube.com/@RTVFontana" target="_blank" rel="noopener noreferrer"
                 className="flex items-center gap-2 bg-white/10 hover:bg-red-800 px-3.5 py-2.5 rounded-xl text-sm transition-all duration-200">
                 <YoutubeIcon className="w-4 h-4" /> YouTube
               </a>
@@ -110,9 +110,7 @@ export default function KontaktPage() {
             </div>
             <div className="space-y-2.5">
               {[
-                { location: 'Pejë', freq: '96.5 FM' },
-                { location: 'Deçan', freq: '97.2 FM' },
-                { location: 'Gjakovë', freq: '98.1 FM' },
+                { location: 'Pejë', freq: '98.8 FM' },
               ].map((f) => (
                 <div key={f.location} className="flex justify-between text-sm">
                   <span className="text-slate-400">{f.location}</span>
@@ -246,7 +244,7 @@ export default function KontaktPage() {
         <div className="text-center text-slate-400">
           <MapPin className="w-8 h-8 mx-auto mb-2 text-[#e63946]" />
           <p className="font-semibold text-slate-600 dark:text-white">Radio Fontana</p>
-          <p className="text-sm">Rr. Mbretëresha Teuta, Nr. 15, Pejë</p>
+          <p className="text-sm">Rruga &quot;Ibrahim Rugova&quot; Nr. 56, Pejë</p>
         </div>
       </div>
     </div>
