@@ -4,32 +4,16 @@
 @variant dark (&:is(.dark *));
 
 :root {
-  --rf-primary: #0a1628;
-  --rf-primary-light: #131f36;
   --rf-accent: #e63946;
   --rf-accent-glow: rgba(230, 57, 70, 0.3);
-  --rf-gold: #f4a636;
-  --rf-blue: #3b82f6;
-  --rf-blue-deep: #1a3a6b;
   --background: #ffffff;
   --foreground: #0f172a;
-  --card-bg: #ffffff;
-  --card-hover: #f8fafc;
-  --border-color: #e2e8f0;
-  --muted: #64748b;
-  --surface: #f1f5f9;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-rf-primary: var(--rf-primary);
-  --color-rf-accent: var(--rf-accent);
-  --color-rf-gold: var(--rf-gold);
-  --color-rf-blue: var(--rf-blue);
-  --color-rf-blue-deep: var(--rf-blue-deep);
   --font-sans: var(--font-geist-sans);
-  --font-serif: Georgia, 'Times New Roman', serif;
 }
 
 html {
@@ -99,42 +83,12 @@ body {
   line-height: 1;
 }
 
-/* ── Line clamps ── */
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-.line-clamp-3 {
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* ── Glass card ── */
-.glass {
-  background: rgba(255, 255, 255, 0.06);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
 /* ── Pulse glow for live indicator ── */
 @keyframes glow-pulse {
   0%, 100% { box-shadow: 0 0 0 0 var(--rf-accent-glow); }
   50% { box-shadow: 0 0 0 8px transparent; }
 }
 .live-glow { animation: glow-pulse 2s ease-in-out infinite; }
-
-/* ── Gradient text utility ── */
-.gradient-text {
-  background: linear-gradient(135deg, var(--rf-accent) 0%, var(--rf-gold) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
 
 /* ── Smooth image zoom on hover ── */
 .img-zoom {

@@ -27,7 +27,6 @@ export default function LivePlayer() {
     <div className="min-h-screen bg-slate-950">
       {/* Hero */}
       <div className="relative overflow-hidden">
-        {/* Background effects */}
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#e63946]/8 rounded-full blur-[120px]" />
           <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-blue-500/5 rounded-full blur-[100px]" />
@@ -74,7 +73,7 @@ export default function LivePlayer() {
             </div>
 
             <h1 className="text-5xl sm:text-6xl font-bold mb-3 tracking-tight">Radio Fontana</h1>
-            <p className="text-slate-400 text-lg mb-1">96.5 FM · Pejë, Kosovë</p>
+            <p className="text-slate-400 text-lg mb-1">98.8 FM · Pejë, Kosovë</p>
             <p className="text-slate-600 text-sm mb-10">Transmetim 24/7 me cilësi të lartë</p>
 
             <button
@@ -134,41 +133,41 @@ export default function LivePlayer() {
       </div>
 
       {/* Schedule section */}
-      <div className="bg-white dark:bg-slate-900 rounded-t-[2rem]">
+      <div className="bg-white rounded-t-[2rem]">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
-          <h2 className="text-2xl font-bold text-slate-800 dark:text-white section-title mb-7">
+          <h2 className="text-2xl font-bold text-slate-800 section-title mb-7">
             Tani në Emision
           </h2>
 
-          <div className="bg-slate-950 rounded-2xl p-6 text-white mb-10 flex items-center gap-5 border border-white/[0.06]">
-            <div className="w-14 h-14 bg-[#e63946]/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-              <Mic2 className="w-6 h-6 text-[#e63946]" />
+          <div className="bg-[#e63946] rounded-2xl p-6 text-white mb-10 flex items-center gap-5">
+            <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+              <Mic2 className="w-6 h-6 text-white" />
             </div>
             <div>
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] text-[#e63946] mb-0.5">Tani</p>
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] text-white/70 mb-0.5">Tani</p>
               <p className="font-bold text-xl">Mëngjesi me Radio Fontana</p>
-              <p className="text-slate-400 text-sm">me Arjeta Krasniqi · 06:00 - 09:00</p>
+              <p className="text-white/70 text-sm">me Arjeta Krasniqi · 06:00 - 09:00</p>
             </div>
-            <div className="ml-auto hidden sm:flex items-center gap-1.5 bg-[#e63946] px-3 py-1.5 rounded-full">
+            <div className="ml-auto hidden sm:flex items-center gap-1.5 bg-white/20 px-3 py-1.5 rounded-full">
               <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
               <span className="text-[10px] font-extrabold tracking-wider">LIVE</span>
             </div>
           </div>
 
-          <h3 className="font-bold text-slate-800 dark:text-white text-lg mb-5">Emisionet e Sotme</h3>
+          <h3 className="font-bold text-slate-800 text-lg mb-5">Emisionet e Sotme</h3>
           <div className="space-y-2.5">
             {programs.map((p, i) => (
               <div
                 key={i}
                 className={`flex items-center gap-4 p-4 rounded-2xl border transition-all duration-200 ${
                   p.live
-                    ? 'bg-[#e63946]/5 dark:bg-[#e63946]/10 border-[#e63946]/20'
-                    : 'bg-white dark:bg-slate-800/50 border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800'
+                    ? 'bg-[#e63946]/5 border-[#e63946]/20'
+                    : 'bg-white border-slate-100 hover:bg-slate-50'
                 }`}
               >
                 <div className="text-sm font-mono text-slate-400 w-28 flex-shrink-0">{p.time}</div>
                 <div className="flex-1">
-                  <p className={`font-semibold ${p.live ? 'text-[#e63946]' : 'text-slate-800 dark:text-white'}`}>
+                  <p className={`font-semibold ${p.live ? 'text-[#e63946]' : 'text-slate-800'}`}>
                     {p.show}
                   </p>
                   <p className="text-sm text-slate-400">me {p.host}</p>

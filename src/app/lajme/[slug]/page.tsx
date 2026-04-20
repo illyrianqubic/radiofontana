@@ -50,9 +50,9 @@ export default async function ArticlePage({ params }: Props) {
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-xs text-slate-400 mb-5">
             <Link href="/" className="hover:text-[#e63946] transition-colors duration-200">Kryefaqja</Link>
-            <span className="text-slate-300 dark:text-slate-600">›</span>
+            <span className="text-slate-300">/</span>
             <Link href="/lajme" className="hover:text-[#e63946] transition-colors duration-200">Lajme</Link>
-            <span className="text-slate-300 dark:text-slate-600">›</span>
+            <span className="text-slate-300">/</span>
             <Link
               href={`/lajme?kategoria=${encodeURIComponent(article.category)}`}
               className="hover:text-[#e63946] transition-colors duration-200"
@@ -67,26 +67,26 @@ export default async function ArticlePage({ params }: Props) {
           </span>
 
           {/* Title */}
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-800 dark:text-white leading-tight mb-5">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-800 leading-tight mb-5">
             {article.title}
           </h1>
 
           {/* Excerpt */}
-          <p className="text-lg text-slate-500 dark:text-slate-400 leading-relaxed mb-7 border-l-3 border-[#e63946] pl-5 italic">
+          <p className="text-lg text-slate-500 leading-relaxed mb-7 border-l-4 border-[#e63946] pl-5 italic">
             {article.excerpt}
           </p>
 
           {/* Meta */}
-          <div className="flex flex-wrap items-center gap-4 text-sm text-slate-400 pb-7 border-b border-slate-100 dark:border-slate-800">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-slate-400 pb-7 border-b border-slate-100">
             <span className="flex items-center gap-1.5">
               <User className="w-4 h-4" />
-              <span className="font-medium text-slate-600 dark:text-slate-300">{article.author}</span>
+              <span className="font-medium text-slate-600">{article.author}</span>
             </span>
             <span className="flex items-center gap-1.5">
               <Clock className="w-4 h-4" />
               <time dateTime={article.publishedAt}>{formatAlbanianDate(article.publishedAt)}</time>
             </span>
-            <span className="text-slate-300 dark:text-slate-600">·</span>
+            <span className="text-slate-300">/</span>
             <span>{timeAgo(article.publishedAt)}</span>
           </div>
 
@@ -96,6 +96,7 @@ export default async function ArticlePage({ params }: Props) {
               src={article.imageUrl}
               alt={article.title}
               fill
+              sizes="(max-width: 1024px) 100vw, 66vw"
               className="object-cover"
               priority
             />
@@ -103,19 +104,19 @@ export default async function ArticlePage({ params }: Props) {
 
           {/* Article content */}
           <div
-            className="prose prose-lg dark:prose-invert max-w-none prose-headings:text-slate-800 dark:prose-headings:text-white prose-p:text-slate-600 dark:prose-p:text-slate-300 prose-p:leading-relaxed"
+            className="prose prose-lg max-w-none prose-headings:text-slate-800 prose-p:text-slate-600 prose-p:leading-relaxed"
             dangerouslySetInnerHTML={{ __html: article.content }}
           />
 
           {/* Tags */}
-          <div className="mt-10 pt-7 border-t border-slate-100 dark:border-slate-800">
+          <div className="mt-10 pt-7 border-t border-slate-100">
             <div className="flex flex-wrap gap-2 items-center">
               <Tag className="w-4 h-4 text-slate-400" />
               {article.tags.map((tag) => (
                 <Link
                   key={tag}
                   href={`/lajme?q=${encodeURIComponent(tag)}`}
-                  className="px-3 py-1.5 bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 rounded-xl text-sm hover:bg-[#e63946]/5 hover:text-[#e63946] dark:hover:bg-[#e63946]/10 dark:hover:text-[#e63946] transition-colors duration-200"
+                  className="px-3 py-1.5 bg-slate-100 text-slate-500 rounded-xl text-sm hover:bg-[#e63946]/5 hover:text-[#e63946] transition-colors duration-200"
                 >
                   #{tag}
                 </Link>
@@ -124,8 +125,8 @@ export default async function ArticlePage({ params }: Props) {
           </div>
 
           {/* Share */}
-          <div className="mt-7 pt-7 border-t border-slate-100 dark:border-slate-800">
-            <p className="text-sm font-semibold text-slate-600 dark:text-slate-300 mb-3 flex items-center gap-2">
+          <div className="mt-7 pt-7 border-t border-slate-100">
+            <p className="text-sm font-semibold text-slate-600 mb-3 flex items-center gap-2">
               <Share2 className="w-4 h-4" />
               Shpërnda këtë artikull
             </p>
@@ -164,11 +165,11 @@ export default async function ArticlePage({ params }: Props) {
 
           {/* Related */}
           {related.length > 0 && (
-            <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden">
-              <div className="px-5 py-3.5 bg-slate-950 text-white">
+            <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+              <div className="px-5 py-3.5 bg-[#e63946] text-white">
                 <h3 className="font-bold text-xs uppercase tracking-[0.1em]">Artikuj të Ngjashëm</h3>
               </div>
-              <div className="divide-y divide-slate-50 dark:divide-slate-800/50">
+              <div className="divide-y divide-slate-50">
                 {related.map((a) => (
                   <div key={a.id} className="p-2">
                     <NewsCard article={a} variant="compact" />
@@ -179,11 +180,11 @@ export default async function ArticlePage({ params }: Props) {
           )}
 
           {/* All recent */}
-          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden">
-            <div className="px-5 py-3.5 border-b border-slate-100 dark:border-slate-800">
-              <h3 className="font-bold text-xs text-slate-800 dark:text-white uppercase tracking-[0.1em]">Lajmet e Fundit</h3>
+          <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+            <div className="px-5 py-3.5 border-b border-slate-100">
+              <h3 className="font-bold text-xs text-slate-800 uppercase tracking-[0.1em]">Lajmet e Fundit</h3>
             </div>
-            <div className="divide-y divide-slate-50 dark:divide-slate-800/50">
+            <div className="divide-y divide-slate-50">
               {allArticles
                 .filter((a) => a.id !== article.id)
                 .slice(0, 5)
@@ -199,8 +200,8 @@ export default async function ArticlePage({ params }: Props) {
 
       {/* More articles */}
       {related.length > 0 && (
-        <section className="mt-16 pt-10 border-t border-slate-100 dark:border-slate-800">
-          <h2 className="text-2xl font-bold text-slate-800 dark:text-white section-title mb-7">
+        <section className="mt-16 pt-10 border-t border-slate-100">
+          <h2 className="text-2xl font-bold text-slate-800 section-title mb-7">
             Lexo Gjithashtu
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">

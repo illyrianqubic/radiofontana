@@ -47,16 +47,16 @@ export default async function LajmePage({ searchParams }: Props) {
       <div className="mb-8">
         <div className="flex items-center gap-2 text-xs text-slate-400 mb-3">
           <span>Kryefaqja</span>
-          <span className="text-slate-300 dark:text-slate-600">›</span>
-          <span className="text-slate-700 dark:text-white font-medium">Lajme</span>
+          <span className="text-slate-300">/</span>
+          <span className="text-slate-700 font-medium">Lajme</span>
           {kategoria && (
             <>
-              <span className="text-slate-300 dark:text-slate-600">›</span>
-              <span className="text-slate-700 dark:text-white font-medium">{kategoria}</span>
+              <span className="text-slate-300">/</span>
+              <span className="text-slate-700 font-medium">{kategoria}</span>
             </>
           )}
         </div>
-        <h1 className="text-3xl font-bold text-slate-800 dark:text-white section-title">
+        <h1 className="text-3xl font-bold text-slate-800 section-title">
           {title}
         </h1>
         {kategoria && (
@@ -70,7 +70,7 @@ export default async function LajmePage({ searchParams }: Props) {
 
       {/* Filter */}
       <div className="mb-10">
-        <Suspense fallback={<div className="h-20 bg-slate-100 dark:bg-slate-800 rounded-xl animate-pulse" />}>
+        <Suspense fallback={<div className="h-20 bg-slate-100 rounded-xl animate-pulse" />}>
           <NewsFilter />
         </Suspense>
       </div>
@@ -79,7 +79,7 @@ export default async function LajmePage({ searchParams }: Props) {
       {filtered.length === 0 ? (
         <div className="text-center py-24">
           <div className="text-5xl mb-5">🔍</div>
-          <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">
+          <h3 className="text-xl font-bold text-slate-800 mb-2">
             Nuk u gjetën rezultate
           </h3>
           <p className="text-slate-400">

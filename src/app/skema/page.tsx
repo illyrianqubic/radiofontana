@@ -24,13 +24,13 @@ export default function SkemaPage() {
       <div className="mb-10">
         <div className="flex items-center gap-2 text-xs text-slate-400 mb-3">
           <span>Kryefaqja</span>
-          <span className="text-slate-300 dark:text-slate-600">›</span>
-          <span className="text-slate-700 dark:text-white font-medium">Skema Programore</span>
+          <span className="text-slate-300">/</span>
+          <span className="text-slate-700 font-medium">Skema Programore</span>
         </div>
-        <h1 className="text-3xl font-bold text-slate-800 dark:text-white section-title mb-3">
+        <h1 className="text-3xl font-bold text-slate-800 section-title mb-3">
           Skema Programore
         </h1>
-        <p className="text-slate-500 dark:text-slate-400">
+        <p className="text-slate-500 text-base">
           Zbuloni emisionet dhe programet tona javore. Radio Fontana transmeton 24 orë në ditë.
         </p>
       </div>
@@ -59,15 +59,15 @@ export default function SkemaPage() {
             <div
               key={dayData.day}
               id={dayData.day}
-              className={`bg-white dark:bg-slate-900 rounded-2xl border overflow-hidden transition-all ${
+              className={`bg-white rounded-2xl border overflow-hidden transition-all ${
                 isToday
                   ? 'border-[#e63946]/30 ring-1 ring-[#e63946]/10'
-                  : 'border-slate-100 dark:border-slate-800'
+                  : 'border-slate-100'
               }`}
             >
               {/* Day header */}
-              <div className={`px-6 py-4 flex items-center justify-between ${isToday ? 'bg-[#e63946] text-white' : 'bg-slate-50 dark:bg-slate-800/50'}`}>
-                <h2 className={`font-bold text-lg ${isToday ? 'text-white' : 'text-slate-800 dark:text-white'}`}>
+              <div className={`px-6 py-4 flex items-center justify-between ${isToday ? 'bg-[#e63946] text-white' : 'bg-slate-50'}`}>
+                <h2 className={`font-bold text-lg ${isToday ? 'text-white' : 'text-slate-800'}`}>
                   {dayData.day}
                 </h2>
                 {isToday && (
@@ -79,15 +79,15 @@ export default function SkemaPage() {
               </div>
 
               {/* Slots */}
-              <div className="divide-y divide-slate-50 dark:divide-slate-800/50">
+              <div className="divide-y divide-slate-50">
                 {dayData.slots.map((slot, i) => (
-                  <div key={i} className="px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-3 hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors duration-200">
+                  <div key={i} className="px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-3 hover:bg-slate-50 transition-colors duration-200">
                     <div className="flex items-center gap-2.5 sm:w-32 flex-shrink-0">
-                      <Clock className="w-3.5 h-3.5 text-slate-300 dark:text-slate-600 flex-shrink-0" />
+                      <Clock className="w-3.5 h-3.5 text-slate-300 flex-shrink-0" />
                       <span className="text-sm font-mono text-slate-400 whitespace-nowrap">{slot.time}</span>
                     </div>
-                    <div className="flex-1 min-w-0 sm:border-l sm:border-slate-100 sm:dark:border-slate-800 sm:pl-5">
-                      <p className="font-semibold text-slate-800 dark:text-white">{slot.show}</p>
+                    <div className="flex-1 min-w-0 sm:border-l sm:border-slate-100 sm:pl-5">
+                      <p className="font-semibold text-slate-800">{slot.show}</p>
                       <p className="text-sm text-slate-400 mt-0.5">{slot.description}</p>
                     </div>
                     <div className="sm:w-40 flex-shrink-0">

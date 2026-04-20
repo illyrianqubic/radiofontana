@@ -20,6 +20,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
             src={article.imageUrl}
             alt={article.title}
             fill
+            sizes="(max-width: 1024px) 100vw, 66vw"
             className="object-cover img-zoom"
             priority
           />
@@ -50,23 +51,25 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   if (variant === 'compact') {
     return (
-      <Link href={`/lajme/${article.slug}`} className="group flex gap-3.5 items-start p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors duration-200">
+      <Link href={`/lajme/${article.slug}`} className="group flex gap-3.5 items-start p-3 rounded-xl hover:bg-slate-50 transition-colors duration-200">
         <div className="relative w-20 h-16 flex-shrink-0 rounded-lg overflow-hidden">
           <Image
             src={article.imageUrl}
             alt={article.title}
             fill
+            sizes="80px"
             className="object-cover img-zoom"
+            loading="lazy"
           />
         </div>
         <div className="flex-1 min-w-0">
           <span className={`category-badge inline-block px-1.5 py-0.5 rounded text-white mb-1.5 ${categoryColor}`}>
             {article.category}
           </span>
-          <h4 className="text-sm font-semibold text-slate-800 dark:text-slate-100 leading-snug line-clamp-2 group-hover:text-[#e63946] transition-colors duration-200">
+          <h4 className="text-sm font-semibold text-slate-800 leading-snug line-clamp-2 group-hover:text-[#e63946] transition-colors duration-200">
             {article.title}
           </h4>
-          <p className="text-[11px] text-slate-400 dark:text-slate-500 mt-1.5 flex items-center gap-1">
+          <p className="text-[11px] text-slate-400 mt-1.5 flex items-center gap-1">
             <Clock className="w-3 h-3" />
             {timeAgo(article.publishedAt)}
           </p>
@@ -77,20 +80,22 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   if (variant === 'horizontal') {
     return (
-      <Link href={`/lajme/${article.slug}`} className="group flex gap-4 items-start p-3.5 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors duration-200">
+      <Link href={`/lajme/${article.slug}`} className="group flex gap-4 items-start p-3.5 rounded-2xl hover:bg-slate-50 transition-colors duration-200">
         <div className="relative w-32 h-24 flex-shrink-0 rounded-xl overflow-hidden">
           <Image
             src={article.imageUrl}
             alt={article.title}
             fill
+            sizes="128px"
             className="object-cover img-zoom"
+            loading="lazy"
           />
         </div>
         <div className="flex-1 min-w-0">
           <span className={`category-badge inline-block px-2 py-0.5 rounded text-white mb-2 ${categoryColor}`}>
             {article.category}
           </span>
-          <h3 className="font-semibold text-slate-800 dark:text-slate-100 text-sm leading-snug line-clamp-2 group-hover:text-[#e63946] transition-colors duration-200 mb-2.5">
+          <h3 className="font-semibold text-slate-800 text-sm leading-snug line-clamp-2 group-hover:text-[#e63946] transition-colors duration-200 mb-2.5">
             {article.title}
           </h3>
           <div className="flex items-center gap-3 text-[11px] text-slate-400">
@@ -110,13 +115,15 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   // Default card
   return (
-    <Link href={`/lajme/${article.slug}`} className="group block bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 news-card h-full">
+    <Link href={`/lajme/${article.slug}`} className="group block bg-white rounded-2xl overflow-hidden border border-slate-100 news-card h-full">
       <div className="relative h-48 overflow-hidden">
         <Image
           src={article.imageUrl}
           alt={article.title}
           fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
           className="object-cover img-zoom"
+          loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         <div className="absolute top-3 left-3">
@@ -126,13 +133,13 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
         </div>
       </div>
       <div className="p-5">
-        <h3 className="font-bold text-slate-800 dark:text-slate-100 text-[0.95rem] leading-snug mb-2.5 line-clamp-2 group-hover:text-[#e63946] transition-colors duration-200">
+        <h3 className="font-bold text-slate-800 text-[0.95rem] leading-snug mb-2.5 line-clamp-2 group-hover:text-[#e63946] transition-colors duration-200">
           {article.title}
         </h3>
-        <p className="text-slate-500 dark:text-slate-400 text-sm line-clamp-2 mb-4 leading-relaxed">
+        <p className="text-slate-500 text-sm line-clamp-2 mb-4 leading-relaxed">
           {article.excerpt}
         </p>
-        <div className="flex items-center justify-between text-[11px] text-slate-400 dark:text-slate-500 pt-4 border-t border-slate-100 dark:border-slate-800">
+        <div className="flex items-center justify-between text-[11px] text-slate-400 pt-4 border-t border-slate-100">
           <span className="flex items-center gap-1.5">
             <User className="w-3 h-3" />
             {article.author}

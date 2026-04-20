@@ -37,16 +37,16 @@ export default function HomePage() {
           </div>
           <div className="flex flex-col gap-5">
             <WeatherWidget />
-            <div className="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 flex-1">
-              <div className="px-5 py-3.5 border-b border-slate-100 dark:border-slate-800">
-                <h3 className="font-bold text-xs text-slate-800 dark:text-white uppercase tracking-[0.1em]">
+            <div className="bg-white rounded-2xl overflow-hidden border border-slate-100 flex-1">
+              <div className="px-5 py-3.5 border-b border-slate-100">
+                <h3 className="font-bold text-xs text-slate-800 uppercase tracking-[0.1em]">
                   Lajme të Spikatura
                 </h3>
               </div>
               {sideFeatures.map((article, i) => (
                 <div
                   key={article.id}
-                  className={i < sideFeatures.length - 1 ? 'border-b border-slate-50 dark:border-slate-800/50' : ''}
+                  className={i < sideFeatures.length - 1 ? 'border-b border-slate-50' : ''}
                 >
                   <NewsCard article={article} variant="compact" />
                 </div>
@@ -59,7 +59,7 @@ export default function HomePage() {
       {/* Latest news */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <div className="flex items-center justify-between mb-7">
-          <h2 className="text-2xl font-bold text-slate-800 dark:text-white section-title">
+          <h2 className="text-2xl font-bold text-slate-800 section-title">
             Lajmet e Fundit
           </h2>
           <Link
@@ -77,12 +77,12 @@ export default function HomePage() {
       </section>
 
       {/* Category sections */}
-      <section className="bg-slate-50 dark:bg-slate-900/50 py-12">
+      <section className="bg-slate-50 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-slate-800 dark:text-white section-title">Sport</h2>
+                <h2 className="text-xl font-bold text-slate-800 section-title">Sport</h2>
                 <Link href="/lajme?kategoria=Sport" className="text-xs text-[#e63946] font-bold uppercase tracking-wider hover:underline">
                   Shiko të gjitha
                 </Link>
@@ -95,7 +95,7 @@ export default function HomePage() {
             </div>
             <div>
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-xl font-bold text-slate-800 dark:text-white section-title">Teknologji</h2>
+                <h2 className="text-xl font-bold text-slate-800 section-title">Teknologji</h2>
                 <Link href="/lajme?kategoria=Teknologji" className="text-xs text-[#e63946] font-bold uppercase tracking-wider hover:underline">
                   Shiko të gjitha
                 </Link>
@@ -112,7 +112,7 @@ export default function HomePage() {
 
       {/* Category browse */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h2 className="text-xl font-bold text-slate-800 dark:text-white section-title mb-7">
+        <h2 className="text-xl font-bold text-slate-800 section-title mb-7">
           Shfletoni Kategoritë
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -132,23 +132,23 @@ export default function HomePage() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
         <div className="flex items-center gap-2 mb-6">
           <TrendingUp className="w-5 h-5 text-[#e63946]" />
-          <h2 className="text-xl font-bold text-slate-800 dark:text-white section-title">Trending</h2>
+          <h2 className="text-xl font-bold text-slate-800 section-title">Trending</h2>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1">
           {articles.slice(0, 6).map((article, i) => (
             <Link
               key={article.id}
               href={`/lajme/${article.slug}`}
-              className="flex items-center gap-4 p-4 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors duration-200 group"
+              className="flex items-center gap-4 p-4 rounded-2xl hover:bg-slate-50 transition-colors duration-200 group"
             >
-              <span className="text-3xl font-black text-slate-100 dark:text-slate-800 w-10 flex-shrink-0 text-center tabular-nums">
+              <span className="text-3xl font-black text-slate-100 w-10 flex-shrink-0 text-center tabular-nums">
                 {String(i + 1).padStart(2, '0')}
               </span>
               <div className="flex-1 min-w-0">
                 <span className={`category-badge inline-block px-1.5 py-0.5 rounded text-white mb-1.5 ${CATEGORY_COLORS[article.category]}`}>
                   {article.category}
                 </span>
-                <p className="text-sm font-semibold text-slate-800 dark:text-white line-clamp-2 group-hover:text-[#e63946] transition-colors duration-200">
+                <p className="text-sm font-semibold text-slate-800 line-clamp-2 group-hover:text-[#e63946] transition-colors duration-200">
                   {article.title}
                 </p>
                 <p className="text-[11px] text-slate-400 mt-1 flex items-center gap-1">

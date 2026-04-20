@@ -47,7 +47,7 @@ export default function Navbar() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-300 bg-white dark:bg-gray-950 ${
+      className={`sticky top-0 z-50 transition-all duration-300 bg-white ${
         scrolled
           ? 'shadow-[0_1px_3px_rgba(0,0,0,0.06)]'
           : ''
@@ -83,7 +83,7 @@ export default function Navbar() {
                       className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                         isActive('/lajme')
                           ? 'text-[#e63946] font-semibold'
-                          : 'text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                          : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
                       }`}
                     >
                       {link.label}
@@ -96,13 +96,13 @@ export default function Navbar() {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 6, scale: 0.97 }}
                           transition={{ duration: 0.15 }}
-                          className="absolute top-full left-0 mt-1 w-48 bg-white dark:bg-slate-900 rounded-xl shadow-xl shadow-black/8 border border-slate-100 dark:border-slate-800 overflow-hidden z-50 p-1"
+                          className="absolute top-full left-0 mt-1 w-48 bg-white rounded-xl shadow-xl shadow-black/8 border border-slate-100 overflow-hidden z-50 p-1"
                         >
                           {CATEGORIES.map((cat) => (
                             <Link
                               key={cat}
                               href={`/lajme?kategoria=${encodeURIComponent(cat)}`}
-                              className="block px-3.5 py-2.5 text-sm text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-white rounded-lg transition-colors"
+                              className="block px-3.5 py-2.5 text-sm text-slate-600 hover:bg-slate-50 hover:text-slate-900 rounded-lg transition-colors"
                             >
                               {cat}
                             </Link>
@@ -117,7 +117,7 @@ export default function Navbar() {
                     className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                       isActive(link.href)
                         ? 'text-[#e63946] font-semibold'
-                        : 'text-slate-700 dark:text-slate-200 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800/50'
+                        : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
                     }`}
                   >
                     {link.label}
@@ -140,13 +140,13 @@ export default function Navbar() {
 
             <button
               onClick={() => setSearchOpen(!searchOpen)}
-              className="p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="p-2.5 rounded-xl text-slate-500 hover:bg-slate-100 transition-colors"
               aria-label="Kërko"
             >
               <Search className="w-[18px] h-[18px]" />
             </button>
             <button
-              className="lg:hidden p-2.5 rounded-xl text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+              className="lg:hidden p-2.5 rounded-xl text-slate-500 hover:bg-slate-100 transition-colors"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Menu"
             >
@@ -173,7 +173,7 @@ export default function Navbar() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Kërko lajme, tema, autorë..."
                     autoFocus
-                    className="w-full pl-11 pr-4 py-3 border border-slate-200 dark:border-slate-700 rounded-xl bg-slate-50 dark:bg-slate-800/50 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#e63946]/30 focus:border-[#e63946] text-sm transition-all"
+                    className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#e63946]/30 focus:border-[#e63946] text-sm transition-all"
                   />
                 </div>
               </form>
@@ -183,7 +183,7 @@ export default function Navbar() {
       </div>
 
       {/* Subtle bottom border */}
-      <div className={`h-px transition-opacity duration-300 ${scrolled ? 'bg-slate-100 dark:bg-slate-800 opacity-100' : 'opacity-0'}`} />
+      <div className={`h-px transition-opacity duration-300 ${scrolled ? 'bg-slate-100 opacity-100' : 'opacity-0'}`} />
 
       {/* Mobile menu */}
       <AnimatePresence>
@@ -192,7 +192,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
-            className="lg:hidden border-t border-slate-100 dark:border-slate-800 bg-white dark:bg-gray-950 overflow-hidden"
+            className="lg:hidden border-t border-slate-100 bg-white overflow-hidden"
           >
             <nav className="px-4 py-3 space-y-0.5">
               {navLinks.map((link) => (
@@ -202,20 +202,20 @@ export default function Navbar() {
                   className={`block px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
                     isActive(link.href)
                       ? 'bg-[#e63946]/5 text-[#e63946] font-semibold'
-                      : 'text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800'
+                      : 'text-slate-700 hover:bg-slate-50'
                   }`}
                 >
                   {link.label}
                 </Link>
               ))}
-              <div className="pt-3 mt-2 border-t border-slate-100 dark:border-slate-800">
+              <div className="pt-3 mt-2 border-t border-slate-100">
                 <p className="text-[10px] text-slate-400 px-4 py-1 font-bold uppercase tracking-[0.15em]">Kategoritë</p>
                 <div className="grid grid-cols-2 gap-0.5 mt-1">
                   {CATEGORIES.map((cat) => (
                     <Link
                       key={cat}
                       href={`/lajme?kategoria=${encodeURIComponent(cat)}`}
-                      className="px-4 py-2.5 text-sm text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors"
+                      className="px-4 py-2.5 text-sm text-slate-500 hover:text-slate-900 transition-colors"
                     >
                       {cat}
                     </Link>

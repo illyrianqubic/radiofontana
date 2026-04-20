@@ -39,19 +39,3 @@ export const CATEGORY_COLORS: Record<Category, string> = {
   'Nga Bota': 'bg-orange-600',
 };
 
-export interface ProgramSlot {
-  day: string;
-  time: string;
-  show: string;
-  host: string;
-  description: string;
-}
-
-export interface WeatherData {
-  city: string;
-  temp: number;
-  condition: string;
-  humidity: number;
-  wind: number;
-  icon: string;
-}
