@@ -6,18 +6,27 @@ import { Clock, User, Tag, ArrowLeft, Share2 } from 'lucide-react';
 import { FacebookIcon, TwitterIcon } from '@/components/shared/SocialIcons';
 import articlesData from '@/data/articles.json';
 import { Article, CATEGORY_COLORS } from '@/lib/types';
+import { fetchTelegrafiArticles } from '@/lib/rss';
 import NewsCard from '@/components/news/NewsCard';
 import { formatAlbanianDate, timeAgo } from '@/lib/utils';
 
-const allArticles = articlesData as Article[];
+export const revalidate = 300;
+
+const staticArticles = articlesData as Article[];
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
+async function getArticles(): Promise<Article[]> {
+  const rss = await fetchTelegrafiArticles(100);
+  return rss.length > 0 ? [...rss, ...staticArticles] : staticArticles;
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const article = allArticles.find((a) => a.slug === slug);
+  const articles = await getArticles();
+  const article = articles.find((a) => a.slug === slug);
   if (!article) return { title: 'Artikull nuk u gjet' };
   return {
     title: article.title,
@@ -32,6 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
+  const allArticles = await getArticles();
   const article = allArticles.find((a) => a.slug === slug);
 
   if (!article) notFound();

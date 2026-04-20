@@ -114,9 +114,7 @@ export default async function HomePage() {
                   {mostRead.map((article, i) => (
                     <Link
                       key={article.id}
-                      href={article.externalUrl ?? `/lajme/${article.slug}`}
-                      target={article.externalUrl ? '_blank' : undefined}
-                      rel={article.externalUrl ? 'noopener noreferrer' : undefined}
+                      href={`/lajme/${article.slug}`}
                       className="flex gap-3 p-3.5 hover:bg-slate-50 transition-colors duration-200 group"
                     >
                       <span className="text-2xl font-black text-slate-100 w-8 flex-shrink-0 leading-none mt-0.5 tabular-nums">
@@ -160,9 +158,7 @@ export default async function HomePage() {
                 {teJundit.map((article) => (
                   <Link
                     key={article.id}
-                    href={article.externalUrl ?? `/lajme/${article.slug}`}
-                    target={article.externalUrl ? '_blank' : undefined}
-                    rel={article.externalUrl ? 'noopener noreferrer' : undefined}
+                    href={`/lajme/${article.slug}`}
                     className="group flex gap-4 bg-white rounded-xl p-3.5 border border-slate-100 hover:border-red-200 hover:shadow-[0_4px_16px_rgba(220,38,38,0.08)] transition-all duration-200"
                   >
                     <div className="relative w-24 h-[72px] sm:w-32 sm:h-24 flex-shrink-0 rounded-lg overflow-hidden">
@@ -188,9 +184,7 @@ export default async function HomePage() {
                       <h3 className="font-bold text-slate-800 text-sm leading-snug line-clamp-2 group-hover:text-red-600 transition-colors">
                         {article.title}
                       </h3>
-                      {article.source && (
-                        <p className="text-[9px] text-red-500/60 mt-1">Burimi: {article.source}</p>
-                      )}
+
                     </div>
                   </Link>
                 ))}
@@ -306,9 +300,7 @@ export default async function HomePage() {
             {articles.slice(0, 6).map((article, i) => (
               <Link
                 key={article.id}
-                href={article.externalUrl ?? `/lajme/${article.slug}`}
-                target={article.externalUrl ? '_blank' : undefined}
-                rel={article.externalUrl ? 'noopener noreferrer' : undefined}
+                href={`/lajme/${article.slug}`}
                 className="flex items-start gap-4 p-4 rounded-xl hover:bg-slate-50 transition-colors duration-200 group"
               >
                 <span className="text-4xl font-black text-slate-100 w-10 flex-shrink-0 leading-none mt-1 tabular-nums">

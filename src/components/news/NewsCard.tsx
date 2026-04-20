@@ -2,7 +2,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Article, CATEGORY_COLORS } from '@/lib/types';
 import { timeAgo, readTime } from '@/lib/utils';
-import { Clock, User, BookOpen, ExternalLink } from 'lucide-react';
+import { Clock, User, BookOpen } from 'lucide-react';
 
 interface Props {
   article: Article;
@@ -12,17 +12,11 @@ interface Props {
 export default function NewsCard({ article, variant = 'default' }: Props) {
   const categoryColor = CATEGORY_COLORS[article.category];
   const minutes = readTime(article.content);
-
-  // Support external links: if externalUrl is set, open in new tab
-  const href = article.externalUrl ?? `/lajme/${article.slug}`;
-  const isExternal = Boolean(article.externalUrl);
-  const externalProps = isExternal
-    ? { target: '_blank' as const, rel: 'noopener noreferrer' }
-    : {};
+  const href = `/lajme/${article.slug}`;
 
   if (variant === 'hero') {
     return (
-      <Link href={href} {...externalProps} className="group block relative overflow-hidden rounded-2xl news-card h-full">
+      <Link href={href} className="group block relative overflow-hidden rounded-2xl news-card h-full">
         <div className="relative h-[280px] sm:h-[400px] lg:h-[480px] xl:h-[520px]">
           <Image
             src={article.imageUrl}
@@ -41,12 +35,6 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
             {article.breaking && (
               <span className="category-badge px-2.5 py-1.5 rounded-md bg-red-600 text-white">
                 Breaking
-              </span>
-            )}
-            {article.source && (
-              <span className="category-badge px-2.5 py-1.5 rounded-md bg-black/50 text-white/80 backdrop-blur-sm flex items-center gap-1">
-                <ExternalLink className="w-2.5 h-2.5" />
-                {article.source}
               </span>
             )}
           </div>
@@ -80,7 +68,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   if (variant === 'compact') {
     return (
-      <Link href={href} {...externalProps} className="group flex gap-3.5 items-start p-3 sm:p-3.5 hover:bg-slate-50 transition-colors duration-200">
+      <Link href={href} className="group flex gap-3.5 items-start p-3 sm:p-3.5 hover:bg-slate-50 transition-colors duration-200">
         <div className="relative w-20 h-16 flex-shrink-0 rounded-lg overflow-hidden">
           <Image
             src={article.imageUrl}
@@ -98,17 +86,9 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
           <h4 className="text-sm font-semibold text-slate-800 leading-snug line-clamp-2 group-hover:text-red-600 transition-colors duration-200">
             {article.title}
           </h4>
-          <p className="text-[10px] text-slate-400 mt-1.5 flex items-center gap-2">
-            <span className="flex items-center gap-1">
-              <Clock className="w-2.5 h-2.5" />
-              {timeAgo(article.publishedAt)}
-            </span>
-            {article.source && (
-              <span className="flex items-center gap-1 text-red-500/70">
-                <ExternalLink className="w-2 h-2" />
-                Burimi: {article.source}
-              </span>
-            )}
+          <p className="text-[10px] text-slate-400 mt-1.5 flex items-center gap-1">
+            <Clock className="w-2.5 h-2.5" />
+            {timeAgo(article.publishedAt)}
           </p>
         </div>
       </Link>
@@ -117,7 +97,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   if (variant === 'horizontal') {
     return (
-      <Link href={href} {...externalProps} className="group flex gap-4 items-start p-3 sm:p-3.5 rounded-xl hover:bg-slate-50 transition-all duration-200 hover:shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+      <Link href={href} className="group flex gap-4 items-start p-3 sm:p-3.5 rounded-xl hover:bg-slate-50 transition-all duration-200 hover:shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
         <div className="relative w-28 h-20 sm:w-32 sm:h-24 flex-shrink-0 rounded-xl overflow-hidden">
           <Image
             src={article.imageUrl}
@@ -144,12 +124,6 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
               <Clock className="w-2.5 h-2.5" />
               {timeAgo(article.publishedAt)}
             </span>
-            {article.source && (
-              <span className="flex items-center gap-1 text-red-500/70">
-                <ExternalLink className="w-2 h-2" />
-                Burimi: {article.source}
-              </span>
-            )}
           </div>
         </div>
       </Link>
@@ -158,7 +132,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   // Default card
   return (
-    <Link href={href} {...externalProps} className="group block bg-white rounded-2xl overflow-hidden border border-slate-100 news-card card-accent h-full">
+    <Link href={href} className="group block bg-white rounded-2xl overflow-hidden border border-slate-100 news-card card-accent h-full">
       <div className="relative h-44 sm:h-48 overflow-hidden">
         <Image
           src={article.imageUrl}
@@ -177,14 +151,6 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
         {article.breaking && (
           <div className="absolute top-3 right-3">
             <span className="category-badge px-2 py-1 rounded-lg bg-red-600 text-white">Breaking</span>
-          </div>
-        )}
-        {article.source && (
-          <div className="absolute bottom-2.5 right-2.5">
-            <span className="flex items-center gap-1 text-[9px] font-bold bg-black/60 text-white/80 backdrop-blur-sm px-2 py-1 rounded-md">
-              <ExternalLink className="w-2 h-2" />
-              {article.source}
-            </span>
           </div>
         )}
       </div>
@@ -215,4 +181,3 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
     </Link>
   );
 }
-

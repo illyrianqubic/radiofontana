@@ -34,31 +34,30 @@ function extractImage(item: Parser.Item & CustomItem): string {
   return '/logortvfontana.jpg';
 }
 
+// Title-based keyword classification (primary method)
+const TITLE_KEYWORDS: Array<[Category, string[]]> = [
+  ['Sport', ['futboll', 'basketboll', 'volejboll', 'sport', ' gol', 'ndeshje', 'kampionat', 'lojtarë', 'lojtare', 'trajner']],
+  ['Teknologji', ['teknologji', ' ai ', 'iphone', 'samsung', 'internet', 'kompjuter', 'aplikacion', 'software']],
+  ['Showbiz', ['muzikë', 'muzike', 'këngëtar', 'kengëtar', 'kengëtare', 'aktor', 'aktore', ' film', 'shfaqje', 'koncert', 'celebrity', 'showbiz']],
+  ['Shëndetësi', ['shëndetësi', 'shendetësi', 'shendetesi', 'mjekësi', 'mjekesi', 'spital', 'sëmundje', 'semundje', 'ilaç', 'ilac', 'vaksinë', 'vaksine', 'dietë', 'diete']],
+  ['Nga Bota', ['shba', 'rusi', 'kinë', 'kine', 'europë', 'europe', 'nato', ' okb ', 'botë', ' bote', 'ndërkombëtar', 'nderkombëtar', 'nderkombetar']],
+];
+
+function classifyByTitle(title: string): Category {
+  const t = ` ${title.toLowerCase()} `;
+  for (const [cat, keywords] of TITLE_KEYWORDS) {
+    if (keywords.some((kw) => t.includes(kw))) return cat;
+  }
+  return 'Lajme';
+}
+
+// RSS category fallback
 const CATEGORY_MAP: Record<string, Category> = {
-  sport: 'Sport',
-  sports: 'Sport',
-  futboll: 'Sport',
-  teknologji: 'Teknologji',
-  teknologjia: 'Teknologji',
-  technology: 'Teknologji',
-  tech: 'Teknologji',
-  showbiz: 'Showbiz',
-  kultura: 'Showbiz',
-  muzik: 'Showbiz',
-  'argëtim': 'Showbiz',
-  argetim: 'Showbiz',
-  film: 'Showbiz',
-  'shëndetësi': 'Shëndetësi',
-  shendetësi: 'Shëndetësi',
-  shendetesi: 'Shëndetësi',
-  health: 'Shëndetësi',
-  mjekësi: 'Shëndetësi',
-  bota: 'Nga Bota',
-  world: 'Nga Bota',
-  'ndërkombëtare': 'Nga Bota',
-  nderkombetare: 'Nga Bota',
-  international: 'Nga Bota',
-  rajon: 'Nga Bota',
+  sport: 'Sport', sports: 'Sport', futboll: 'Sport',
+  teknologji: 'Teknologji', technology: 'Teknologji', tech: 'Teknologji',
+  showbiz: 'Showbiz', kultura: 'Showbiz', argetim: 'Showbiz',
+  'shëndetësi': 'Shëndetësi', shendetesi: 'Shëndetësi', health: 'Shëndetësi',
+  bota: 'Nga Bota', world: 'Nga Bota', nderkombetare: 'Nga Bota', rajon: 'Nga Bota',
 };
 
 function mapCategory(categories?: string[]): Category {
@@ -66,7 +65,6 @@ function mapCategory(categories?: string[]): Category {
   for (const cat of categories) {
     const key = cat.toLowerCase().trim();
     if (key in CATEGORY_MAP) return CATEGORY_MAP[key];
-    // Partial matching
     for (const [mapKey, mappedCat] of Object.entries(CATEGORY_MAP)) {
       if (key.includes(mapKey)) return mappedCat;
     }
@@ -104,26 +102,31 @@ async function fetchFeedPage(page: number): Promise<(Parser.Item & CustomItem)[]
 }
 
 function itemToArticle(item: Parser.Item & CustomItem, index: number): Article {
-  const externalUrl = item.link || (typeof item.guid === 'string' ? item.guid : '') || '#';
+  const sourceUrl = item.link || (typeof item.guid === 'string' ? item.guid : '') || '#';
   // Derive a stable slug from the last URL segment
-  const urlSlug = externalUrl.split('/').filter(Boolean).pop() || `article-${index}`;
-  const id = `tele-${urlSlug}`;
+  const slug = sourceUrl.split('/').filter(Boolean).pop() || `article-${index}`;
+  const id = `rss-${slug}`;
+  const title = sanitizeTitle(item.title || 'Pa titull');
+
+  // Classify by title keywords first, fall back to RSS category tags
+  const titleCat = classifyByTitle(title);
+  const category = titleCat !== 'Lajme'
+    ? titleCat
+    : mapCategory(item.categories as string[] | undefined);
 
   return {
     id,
-    slug: id,
-    title: sanitizeTitle(item.title || 'Pa titull'),
+    slug,
+    title,
     excerpt: (item.contentSnippet || item.summary || '').replace(/<[^>]+>/g, '').slice(0, 200),
     content: (item as Record<string, string>)['content:encoded'] || item.content || '',
-    category: mapCategory(item.categories as string[] | undefined),
-    author: (item as Record<string, string>).creator || 'Telegrafi',
+    category,
+    author: (item as Record<string, string>).creator || 'Redaksia',
     publishedAt: item.isoDate || item.pubDate || new Date().toISOString(),
     imageUrl: extractImage(item),
     tags: (item.categories as string[]) || [],
     featured: index < 3,
     breaking: false,
-    externalUrl,
-    source: 'Telegrafi',
   };
 }
 
