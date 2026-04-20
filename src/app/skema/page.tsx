@@ -1,7 +1,5 @@
 import { Metadata } from 'next';
 import scheduleData from '@/data/schedule.json';
-
-export const runtime = 'edge';
 import { Clock, Mic2 } from 'lucide-react';
 
 export const metadata: Metadata = {

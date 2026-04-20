@@ -1,7 +1,6 @@
 import { Metadata } from 'next';
 import LivePlayer from '@/components/live/LivePlayer';
 
-export const runtime = 'edge';
 
 export const metadata: Metadata = {
   title: 'Radio Live',

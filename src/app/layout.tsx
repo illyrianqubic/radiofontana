@@ -5,8 +5,6 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import RadioPlayer from '@/components/layout/RadioPlayer';
 
-export const runtime = 'edge';
-
 const geist = Geist({ subsets: ['latin'] });
 
 export const metadata: Metadata = {

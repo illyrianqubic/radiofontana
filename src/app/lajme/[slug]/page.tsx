@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-export const runtime = 'edge';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { Clock, User, Tag, ArrowLeft, Share2 } from 'lucide-react';

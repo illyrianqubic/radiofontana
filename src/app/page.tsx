@@ -1,7 +1,5 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-
-export const runtime = 'edge';
 import { ArrowRight, TrendingUp, Clock } from 'lucide-react';
 import articlesData from '@/data/articles.json';
 import { Article, CATEGORIES, CATEGORY_COLORS } from '@/lib/types';

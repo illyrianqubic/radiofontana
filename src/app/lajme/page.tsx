@@ -1,7 +1,5 @@
 import { Metadata } from 'next';
 import { Suspense } from 'react';
-
-export const runtime = 'edge';
 import articlesData from '@/data/articles.json';
 import { Article, Category, CATEGORY_COLORS } from '@/lib/types';
 import NewsCard from '@/components/news/NewsCard';
