@@ -52,10 +52,11 @@ export default function Navbar() {
           ? 'shadow-[0_1px_3px_rgba(0,0,0,0.06)]'
           : ''
       }`}
+      style={{ minWidth: 0 }}
     >
       {/* Main navbar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-14 sm:h-16">
           {/* Logo */}
           <Link href="/" className="flex items-center flex-shrink-0">
             <Image
@@ -63,7 +64,7 @@ export default function Navbar() {
               alt="Radio Fontana"
               width={140}
               height={48}
-              className="h-11 w-auto object-contain"
+              className="h-8 sm:h-10 lg:h-11 w-auto object-contain"
               priority
             />
           </Link>

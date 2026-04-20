@@ -47,7 +47,7 @@ export default function WeatherWidget() {
       {/* Time header */}
       <div className="px-5 pt-5 pb-4">
         <div className="flex items-baseline justify-between mb-1">
-          <p className="text-3xl font-bold tabular-nums tracking-tight text-slate-800">{time}</p>
+          <p className="text-2xl sm:text-3xl font-bold tabular-nums tracking-tight text-slate-800">{time}</p>
           <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#e63946]">LIVE</span>
         </div>
         <p className="text-slate-400 text-sm">{date}</p>
@@ -64,7 +64,7 @@ export default function WeatherWidget() {
               {mockWeather.city}, {mockWeather.country}
             </p>
             <div className="flex items-end gap-1">
-              <span className="text-4xl font-bold text-slate-800 tracking-tight">{mockWeather.temp}°</span>
+              <span className="text-3xl sm:text-4xl font-bold text-slate-800 tracking-tight">{mockWeather.temp}°</span>
               <span className="text-slate-400 mb-1.5 text-sm font-medium">C</span>
             </div>
             <p className="text-slate-500 text-sm mt-0.5">{mockWeather.condition}</p>

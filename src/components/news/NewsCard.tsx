@@ -15,7 +15,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
   if (variant === 'hero') {
     return (
       <Link href={`/lajme/${article.slug}`} className="group block relative overflow-hidden rounded-2xl news-card h-full">
-        <div className="relative h-[420px] sm:h-[500px]">
+        <div className="relative h-[260px] sm:h-[380px] lg:h-[460px] xl:h-[500px]">
           <Image
             src={article.imageUrl}
             alt={article.title}
@@ -25,11 +25,11 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
             priority
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
-          <div className="absolute inset-0 flex flex-col justify-end p-7 sm:p-9">
+          <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-7 lg:p-9">
             <span className={`category-badge inline-block px-2.5 py-1.5 rounded-md text-white mb-3 w-fit ${categoryColor}`}>
               {article.category}
             </span>
-            <h2 className="text-white text-2xl sm:text-3xl lg:text-[2rem] font-bold leading-[1.2] mb-3 group-hover:text-red-300 transition-colors duration-300">
+            <h2 className="text-white text-lg sm:text-2xl lg:text-3xl xl:text-[2rem] font-bold leading-[1.25] mb-2 sm:mb-3 group-hover:text-red-300 transition-colors duration-300">
               {article.title}
             </h2>
             <p className="text-white/70 text-sm line-clamp-2 mb-5 max-w-2xl leading-relaxed">{article.excerpt}</p>
@@ -132,7 +132,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
           </span>
         </div>
       </div>
-      <div className="p-5">
+      <div className="p-4 sm:p-5">
         <h3 className="font-bold text-slate-800 text-[0.95rem] leading-snug mb-2.5 line-clamp-2 group-hover:text-[#e63946] transition-colors duration-200">
           {article.title}
         </h3>

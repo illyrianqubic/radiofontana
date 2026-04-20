@@ -19,7 +19,7 @@ export default function SkemaPage() {
   const today = currentDay();
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10">
       {/* Header */}
       <div className="mb-10">
         <div className="flex items-center gap-2 text-xs text-slate-400 mb-3">
@@ -66,7 +66,7 @@ export default function SkemaPage() {
               }`}
             >
               {/* Day header */}
-              <div className={`px-6 py-4 flex items-center justify-between ${isToday ? 'bg-[#e63946] text-white' : 'bg-slate-50'}`}>
+              <div className={`px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between ${isToday ? 'bg-[#e63946] text-white' : 'bg-slate-50'}`}>
                 <h2 className={`font-bold text-lg ${isToday ? 'text-white' : 'text-slate-800'}`}>
                   {dayData.day}
                 </h2>
@@ -81,10 +81,10 @@ export default function SkemaPage() {
               {/* Slots */}
               <div className="divide-y divide-slate-50">
                 {dayData.slots.map((slot, i) => (
-                  <div key={i} className="px-6 py-4 flex flex-col sm:flex-row sm:items-center gap-3 hover:bg-slate-50 transition-colors duration-200">
-                    <div className="flex items-center gap-2.5 sm:w-32 flex-shrink-0">
-                      <Clock className="w-3.5 h-3.5 text-slate-300 flex-shrink-0" />
-                      <span className="text-sm font-mono text-slate-400 whitespace-nowrap">{slot.time}</span>
+                  <div key={i} className="px-4 sm:px-6 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 hover:bg-slate-50 transition-colors duration-200">
+                    <div className="flex items-center gap-2 sm:gap-2.5 sm:w-32 flex-shrink-0">
+                      <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-slate-300 flex-shrink-0" />
+                      <span className="text-xs sm:text-sm font-mono text-slate-400 whitespace-nowrap">{slot.time}</span>
                     </div>
                     <div className="flex-1 min-w-0 sm:border-l sm:border-slate-100 sm:pl-5">
                       <p className="font-semibold text-slate-800">{slot.show}</p>

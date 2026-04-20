@@ -20,7 +20,7 @@ export default function NewsletterSection() {
   };
 
   return (
-    <section className="relative overflow-hidden bg-[#e63946] py-20 px-4">
+    <section className="relative overflow-hidden bg-[#e63946] py-10 sm:py-16 lg:py-20 px-4">
       {/* Background decoration */}
       <div className="absolute inset-0">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-white/5 rounded-full blur-3xl" />
@@ -33,7 +33,7 @@ export default function NewsletterSection() {
             <Mail className="w-6 h-6 text-white" />
           </div>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Qëndro i Informuar</h2>
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight">Qëndro i Informuar</h2>
         <p className="text-white/70 mb-8 leading-relaxed">
           Abonohu tek buletini ynë ditor dhe merr lajmet kryesore nga Peja dhe Kosova.
         </p>

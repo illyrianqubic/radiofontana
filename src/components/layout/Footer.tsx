@@ -12,10 +12,10 @@ export default function Footer() {
     <footer className="bg-slate-950 text-white mt-20 pb-20">
       {/* Newsletter strip */}
       <div className="border-b border-white/[0.06]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <h3 className="text-xl font-bold mb-1">Abonohu tek Buletini</h3>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-6">
+              <div>
+                <h3 className="text-lg sm:text-xl font-bold mb-1">Abonohu tek Buletini</h3>
               <p className="text-slate-400 text-sm">Merr lajmet e fundit direkt në emailin tënd.</p>
             </div>
             <FooterNewsletter />
@@ -24,7 +24,7 @@ export default function Footer() {
       </div>
 
       {/* Main footer */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="lg:col-span-1">

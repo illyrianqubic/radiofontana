@@ -18,9 +18,9 @@ export default function BreakingNewsTicker({ articles }: Props) {
     <div className="bg-[#e63946] text-white overflow-hidden">
       <div className="flex items-stretch">
         {/* Label */}
-        <div className="flex-shrink-0 bg-[#c0303b] px-4 py-2 flex items-center gap-2 z-10">
+        <div className="flex-shrink-0 bg-[#c0303b] px-3 sm:px-4 py-2 flex items-center gap-1.5 sm:gap-2 z-10">
           <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-          <span className="text-[10px] font-extrabold uppercase tracking-[0.15em] whitespace-nowrap">
+          <span className="text-[9px] sm:text-[10px] font-extrabold uppercase tracking-[0.15em] whitespace-nowrap">
             Breaking
           </span>
         </div>

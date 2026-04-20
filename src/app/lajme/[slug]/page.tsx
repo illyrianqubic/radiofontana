@@ -43,8 +43,8 @@ export default async function ArticlePage({ params }: Props) {
   const catColor = CATEGORY_COLORS[article.category];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-12">
         {/* Main content */}
         <article className="lg:col-span-2">
           {/* Breadcrumb */}
@@ -67,7 +67,7 @@ export default async function ArticlePage({ params }: Props) {
           </span>
 
           {/* Title */}
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-slate-800 leading-tight mb-5">
+          <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-slate-800 leading-tight mb-4 sm:mb-5">
             {article.title}
           </h1>
 
@@ -130,7 +130,7 @@ export default async function ArticlePage({ params }: Props) {
               <Share2 className="w-4 h-4" />
               Shpërnda këtë artikull
             </p>
-            <div className="flex gap-2.5">
+            <div className="flex flex-wrap gap-2 sm:gap-2.5">
               <a
                 href={`https://facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://radiofontana.org/lajme/${article.slug}`)}`}
                 target="_blank"
@@ -200,8 +200,8 @@ export default async function ArticlePage({ params }: Props) {
 
       {/* More articles */}
       {related.length > 0 && (
-        <section className="mt-16 pt-10 border-t border-slate-100">
-          <h2 className="text-2xl font-bold text-slate-800 section-title mb-7">
+        <section className="mt-14 sm:mt-16 pt-8 sm:pt-10 border-t border-slate-100">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-800 section-title mb-5 sm:mb-7">
             Lexo Gjithashtu
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
