@@ -1,35 +1,14 @@
 'use client';
 
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX, Radio, ChevronUp, ChevronDown, Mic2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const STREAM_URL = 'https://live.radiostreaming.al:8010/stream.mp3';
+import { useAudioPlayer } from '@/lib/AudioPlayerContext';
 
 export default function RadioPlayer() {
-  const [playing, setPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.8);
-  const [muted, setMuted] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  const { playing, loading, error, volume, muted, setVolume, setMuted, togglePlay } = useAudioPlayer();
   const [expanded, setExpanded] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    const audio = new Audio();
-    audio.preload = 'none';
-    audio.volume = volume;
-    audioRef.current = audio;
-
-    audio.addEventListener('waiting', () => setLoading(true));
-    audio.addEventListener('playing', () => { setLoading(false); setPlaying(true); setError(false); });
-    audio.addEventListener('pause', () => setPlaying(false));
-    audio.addEventListener('stalled', () => { setLoading(false); setPlaying(false); setError(true); });
-    audio.addEventListener('error', () => { setLoading(false); setPlaying(false); setError(true); });
-
-    return () => { audio.pause(); audio.src = ''; };
-  }, []);
 
   useEffect(() => {
     const tick = () => {
@@ -41,37 +20,8 @@ export default function RadioPlayer() {
     return () => clearInterval(id);
   }, []);
 
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = muted ? 0 : volume;
-    }
-  }, [volume, muted]);
-
-  const togglePlay = useCallback(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-    if (playing || loading) {
-      audio.pause();
-      audio.src = '';
-      setLoading(false);
-      setPlaying(false);
-    } else {
-      setError(false);
-      setLoading(true);
-      audio.src = STREAM_URL;
-      audio.load();
-      audio.play().catch(() => {
-        setLoading(false);
-        setPlaying(false);
-        setError(true);
-      });
-    }
-  }, [playing, loading]);
-
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const v = parseFloat(e.target.value);
-    setVolume(v);
-    setMuted(v === 0);
+    setVolume(parseFloat(e.target.value));
   };
 
   return (

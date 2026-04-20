@@ -4,6 +4,7 @@ import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import RadioPlayer from '@/components/layout/RadioPlayer';
+import { AudioPlayerProvider } from '@/lib/AudioPlayerContext';
 
 const geist = Geist({ subsets: ['latin'] });
 
@@ -38,10 +39,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="sq" className={geist.className} suppressHydrationWarning>
       <body className="min-h-screen flex flex-col antialiased">
-        <Navbar />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <RadioPlayer />
+        <AudioPlayerProvider>
+          <Navbar />
+          <main className="flex-1">{children}</main>
+          <Footer />
+          <RadioPlayer />
+        </AudioPlayerProvider>
       </body>
     </html>
   );

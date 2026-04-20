@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import { Radio, Play, Pause, Users, Clock, Mic2, Volume2 } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useAudioPlayer } from '@/lib/AudioPlayerContext';
 
 const programs = [
   { time: '06:00 - 09:00', show: 'Mëngjesi me Radio Fontana', host: 'Arjeta Krasniqi', live: true },
@@ -12,16 +12,7 @@ const programs = [
 ];
 
 export default function LivePlayer() {
-  const [playing, setPlaying] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const handlePlay = () => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setPlaying(!playing);
-    }, 1000);
-  };
+  const { playing, loading, error, togglePlay } = useAudioPlayer();
 
   return (
     <div className="min-h-screen bg-slate-950">
@@ -59,7 +50,12 @@ export default function LivePlayer() {
             transition={{ delay: 0.2 }}
           >
             <div className="flex justify-center mb-4">
-              {playing ? (
+              {error ? (
+                <span className="flex items-center gap-2 bg-slate-800 text-slate-400 text-xs font-medium px-4 py-2 rounded-full">
+                  <span className="w-2 h-2 bg-slate-500 rounded-full" />
+                  TRANSMETIMI NDALUR
+                </span>
+              ) : playing ? (
                 <span className="flex items-center gap-2 bg-[#e63946] text-white text-xs font-extrabold px-4 py-2 rounded-full tracking-wider shadow-lg shadow-[#e63946]/30">
                   <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
                   DUKE TRANSMETUAR LIVE
@@ -77,16 +73,20 @@ export default function LivePlayer() {
             <p className="text-slate-600 text-sm mb-10">Transmetim 24/7 me cilësi të lartë</p>
 
             <button
-              onClick={handlePlay}
+              onClick={togglePlay}
               className={`w-20 h-20 mx-auto rounded-full flex items-center justify-center mb-10 transition-all duration-300 hover:scale-105 active:scale-95 ${
-                playing
+                error
+                  ? 'bg-slate-700 hover:bg-slate-600 text-slate-300 shadow-2xl'
+                  : playing
                   ? 'bg-[#e63946] hover:bg-[#d32f3f] text-white shadow-2xl shadow-[#e63946]/30'
                   : 'bg-white hover:bg-slate-100 text-slate-900 shadow-2xl'
               }`}
-              aria-label={playing ? 'Ndalo' : 'Luaj'}
+              aria-label={playing ? 'Ndalo' : error ? 'Provo përsëri' : 'Luaj'}
             >
               {loading ? (
                 <div className={`w-7 h-7 border-2 rounded-full animate-spin ${playing ? 'border-white border-t-transparent' : 'border-slate-900 border-t-transparent'}`} />
+              ) : error ? (
+                <Play className="w-8 h-8 ml-1 opacity-60" />
               ) : playing ? (
                 <Pause className="w-8 h-8" />
               ) : (
