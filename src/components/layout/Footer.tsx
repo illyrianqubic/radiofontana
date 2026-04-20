@@ -44,7 +44,7 @@ export default function Footer() {
             </div>
             <div className="flex items-center gap-1.5 mb-3">
               <Radio className="w-3.5 h-3.5 text-red-600" />
-              <span className="text-sm font-semibold text-slate-700">96.5 FM · Pejë, Kosovë</span>
+              <span className="text-sm font-semibold text-slate-700">98.8 FM · Pejë, Kosovë</span>
             </div>
             <p className="text-slate-500 text-sm leading-relaxed mb-5">
               Stacioni kryesor i informacionit dhe muzikës në Pejë, Kosovë. Transmetim live 24/7.

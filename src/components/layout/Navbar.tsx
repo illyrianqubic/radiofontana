@@ -33,7 +33,7 @@ function TopBar() {
           <div className="flex items-center gap-4 text-slate-400">
             <span className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-              <span className="font-semibold text-white">Radio Fontana 96.5 FM</span>
+              <span className="font-semibold text-white">Radio Fontana 98.8 FM</span>
             </span>
             {dateStr && (
               <>
@@ -288,7 +288,7 @@ export default function Navbar() {
                   </a>
                   <span className="ml-auto flex items-center gap-1.5 text-xs text-slate-500">
                     <Radio className="w-3.5 h-3.5 text-red-500" />
-                    96.5 FM
+                    98.8 FM
                   </span>
                 </div>
               </nav>

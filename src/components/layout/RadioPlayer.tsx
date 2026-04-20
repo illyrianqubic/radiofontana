@@ -75,7 +75,7 @@ export default function RadioPlayer() {
               <div className="min-w-0 flex-1">
                 <div className="flex items-center gap-2">
                   <p className="text-xs sm:text-sm font-bold text-white leading-tight truncate">Radio Fontana</p>
-                  <span className="hidden sm:block text-[10px] text-slate-600">96.5 FM</span>
+                  <span className="hidden sm:block text-[10px] text-slate-600">98.8 FM</span>
                 </div>
                 <p className="text-[9px] sm:text-[10px] text-slate-500 truncate">
                   {error

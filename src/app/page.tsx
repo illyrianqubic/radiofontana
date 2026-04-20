@@ -195,7 +195,7 @@ export default function HomePage() {
                     Dëgjo Tani
                   </p>
                   <h3 className="text-xl font-extrabold mb-1">Radio Fontana</h3>
-                  <p className="text-slate-400 text-sm mb-5">96.5 FM · Pejë, Kosovë</p>
+                  <p className="text-slate-400 text-sm mb-5">98.8 FM · Pejë, Kosovë</p>
                   <p className="text-sm text-slate-400 leading-relaxed mb-6">
                     Muzikë, lajme dhe emisionet e preferuara — 24 orë në ditë.
                   </p>
