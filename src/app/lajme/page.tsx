@@ -42,26 +42,26 @@ export default async function LajmePage({ searchParams }: Props) {
     : 'Të gjitha lajmet';
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
       {/* Page header */}
-      <div className="mb-6">
-        <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-2">
+      <div className="mb-8">
+        <div className="flex items-center gap-2 text-xs text-slate-400 mb-3">
           <span>Kryefaqja</span>
-          <span>›</span>
-          <span className="text-gray-900 dark:text-white font-medium">Lajme</span>
+          <span className="text-slate-300 dark:text-slate-600">›</span>
+          <span className="text-slate-700 dark:text-white font-medium">Lajme</span>
           {kategoria && (
             <>
-              <span>›</span>
-              <span className="text-gray-900 dark:text-white font-medium">{kategoria}</span>
+              <span className="text-slate-300 dark:text-slate-600">›</span>
+              <span className="text-slate-700 dark:text-white font-medium">{kategoria}</span>
             </>
           )}
         </div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-white section-title">
+        <h1 className="text-3xl font-bold text-slate-800 dark:text-white section-title">
           {title}
         </h1>
         {kategoria && (
-          <div className="mt-2">
-            <span className={`category-badge inline-block px-3 py-1 rounded-sm text-white ${CATEGORY_COLORS[kategoria as Category] ?? 'bg-gray-500'}`}>
+          <div className="mt-3">
+            <span className={`category-badge inline-block px-3 py-1.5 rounded-lg text-white ${CATEGORY_COLORS[kategoria as Category] ?? 'bg-slate-500'}`}>
               {filtered.length} artikuj
             </span>
           </div>
@@ -69,26 +69,26 @@ export default async function LajmePage({ searchParams }: Props) {
       </div>
 
       {/* Filter */}
-      <div className="mb-8">
-        <Suspense fallback={<div className="h-20 bg-gray-100 dark:bg-gray-800 rounded-lg animate-pulse" />}>
+      <div className="mb-10">
+        <Suspense fallback={<div className="h-20 bg-slate-100 dark:bg-slate-800 rounded-xl animate-pulse" />}>
           <NewsFilter />
         </Suspense>
       </div>
 
       {/* Results */}
       {filtered.length === 0 ? (
-        <div className="text-center py-20">
-          <div className="text-5xl mb-4">🔍</div>
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
+        <div className="text-center py-24">
+          <div className="text-5xl mb-5">🔍</div>
+          <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">
             Nuk u gjetën rezultate
           </h3>
-          <p className="text-gray-500 dark:text-gray-400">
+          <p className="text-slate-400">
             Provo me fjalë kyçe të ndryshme ose zgjidh një kategori tjetër.
           </p>
         </div>
       ) : (
         <>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+          <p className="text-sm text-slate-400 mb-5">
             {filtered.length} artikuj gjithsej
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">

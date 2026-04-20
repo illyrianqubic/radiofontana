@@ -30,23 +30,23 @@ export default function HomePage() {
       <BreakingNewsTicker articles={articles} />
 
       {/* Hero Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
             {hero && <NewsCard article={hero} variant="hero" />}
           </div>
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-5">
             <WeatherWidget />
-            <div className="space-y-0 bg-white dark:bg-gray-800 rounded-xl overflow-hidden border border-gray-100 dark:border-gray-700 shadow-sm">
-              <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50">
-                <h3 className="font-bold text-sm text-gray-900 dark:text-white uppercase tracking-wider">
+            <div className="bg-white dark:bg-slate-900 rounded-2xl overflow-hidden border border-slate-100 dark:border-slate-800 flex-1">
+              <div className="px-5 py-3.5 border-b border-slate-100 dark:border-slate-800">
+                <h3 className="font-bold text-xs text-slate-800 dark:text-white uppercase tracking-[0.1em]">
                   Lajme të Spikatura
                 </h3>
               </div>
               {sideFeatures.map((article, i) => (
                 <div
                   key={article.id}
-                  className={i < sideFeatures.length - 1 ? 'border-b border-gray-100 dark:border-gray-700' : ''}
+                  className={i < sideFeatures.length - 1 ? 'border-b border-slate-50 dark:border-slate-800/50' : ''}
                 >
                   <NewsCard article={article} variant="compact" />
                 </div>
@@ -56,21 +56,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="h-px bg-gradient-to-r from-transparent via-blue-200 dark:via-gray-600 to-transparent" />
-      </div>
-
       {/* Latest news */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white section-title">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="flex items-center justify-between mb-7">
+          <h2 className="text-2xl font-bold text-slate-800 dark:text-white section-title">
             Lajmet e Fundit
           </h2>
           <Link
             href="/lajme"
-            className="flex items-center gap-1.5 text-sm text-[#1a3a6b] dark:text-blue-400 font-semibold hover:gap-2.5 transition-all"
+            className="flex items-center gap-1.5 text-sm text-[#e63946] font-semibold hover:gap-2.5 transition-all duration-200"
           >
-            Të gjitha lajmet <ArrowRight className="w-4 h-4" />
+            Të gjitha <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
@@ -81,30 +77,30 @@ export default function HomePage() {
       </section>
 
       {/* Category sections */}
-      <section className="bg-gray-50 dark:bg-gray-900 py-10">
+      <section className="bg-slate-50 dark:bg-slate-900/50 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             <div>
-              <div className="flex items-center justify-between mb-5">
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white section-title">Sport</h2>
-                <Link href="/lajme?kategoria=Sport" className="text-xs text-[#1a3a6b] dark:text-blue-400 font-semibold uppercase tracking-wider hover:underline">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-bold text-slate-800 dark:text-white section-title">Sport</h2>
+                <Link href="/lajme?kategoria=Sport" className="text-xs text-[#e63946] font-bold uppercase tracking-wider hover:underline">
                   Shiko të gjitha
                 </Link>
               </div>
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {sports.map((article) => (
                   <NewsCard key={article.id} article={article} variant="horizontal" />
                 ))}
               </div>
             </div>
             <div>
-              <div className="flex items-center justify-between mb-5">
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white section-title">Teknologji</h2>
-                <Link href="/lajme?kategoria=Teknologji" className="text-xs text-[#1a3a6b] dark:text-blue-400 font-semibold uppercase tracking-wider hover:underline">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-bold text-slate-800 dark:text-white section-title">Teknologji</h2>
+                <Link href="/lajme?kategoria=Teknologji" className="text-xs text-[#e63946] font-bold uppercase tracking-wider hover:underline">
                   Shiko të gjitha
                 </Link>
               </div>
-              <div className="space-y-3">
+              <div className="space-y-2">
                 {tech.map((article) => (
                   <NewsCard key={article.id} article={article} variant="horizontal" />
                 ))}
@@ -115,8 +111,8 @@ export default function HomePage() {
       </section>
 
       {/* Category browse */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-white section-title mb-6">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <h2 className="text-xl font-bold text-slate-800 dark:text-white section-title mb-7">
           Shfletoni Kategoritë
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
@@ -124,7 +120,7 @@ export default function HomePage() {
             <Link
               key={cat}
               href={`/lajme?kategoria=${encodeURIComponent(cat)}`}
-              className={`${CATEGORY_COLORS[cat]} text-white rounded-xl p-4 text-center hover:opacity-90 transition-all hover:-translate-y-0.5 shadow-sm hover:shadow-md`}
+              className={`${CATEGORY_COLORS[cat]} text-white rounded-2xl p-5 text-center hover:opacity-90 transition-all duration-200 hover:-translate-y-0.5 shadow-sm hover:shadow-lg`}
             >
               <span className="font-bold text-sm">{cat}</span>
             </Link>
@@ -133,29 +129,29 @@ export default function HomePage() {
       </section>
 
       {/* Trending */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10">
-        <div className="flex items-center gap-2 mb-5">
-          <TrendingUp className="w-5 h-5 text-[#1a3a6b] dark:text-blue-400" />
-          <h2 className="text-xl font-bold text-gray-900 dark:text-white section-title">Trending</h2>
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <div className="flex items-center gap-2 mb-6">
+          <TrendingUp className="w-5 h-5 text-[#e63946]" />
+          <h2 className="text-xl font-bold text-slate-800 dark:text-white section-title">Trending</h2>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1">
           {articles.slice(0, 6).map((article, i) => (
             <Link
               key={article.id}
               href={`/lajme/${article.slug}`}
-              className="flex items-center gap-4 p-3 rounded-lg hover:bg-blue-50 dark:hover:bg-gray-800 transition-colors group"
+              className="flex items-center gap-4 p-4 rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors duration-200 group"
             >
-              <span className="text-3xl font-black text-gray-200 dark:text-gray-700 w-10 flex-shrink-0 text-center">
+              <span className="text-3xl font-black text-slate-100 dark:text-slate-800 w-10 flex-shrink-0 text-center tabular-nums">
                 {String(i + 1).padStart(2, '0')}
               </span>
               <div className="flex-1 min-w-0">
-                <span className={`category-badge inline-block px-1.5 py-0.5 rounded-sm text-white mb-1 ${CATEGORY_COLORS[article.category]}`}>
+                <span className={`category-badge inline-block px-1.5 py-0.5 rounded text-white mb-1.5 ${CATEGORY_COLORS[article.category]}`}>
                   {article.category}
                 </span>
-                <p className="text-sm font-semibold text-gray-900 dark:text-white line-clamp-2 group-hover:text-[#1a3a6b] dark:group-hover:text-blue-400 transition-colors">
+                <p className="text-sm font-semibold text-slate-800 dark:text-white line-clamp-2 group-hover:text-[#e63946] transition-colors duration-200">
                   {article.title}
                 </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5 flex items-center gap-1">
+                <p className="text-[11px] text-slate-400 mt-1 flex items-center gap-1">
                   <Clock className="w-3 h-3" />
                   {timeAgo(article.publishedAt)}
                 </p>

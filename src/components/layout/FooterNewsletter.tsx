@@ -6,12 +6,12 @@ export default function FooterNewsletter() {
       <input
         type="email"
         placeholder="emaili@jote.com"
-        className="flex-1 md:w-72 px-4 py-2.5 rounded-lg bg-white/10 border border-white/20 text-white placeholder-blue-300 focus:outline-none focus:ring-2 focus:ring-white/50 text-sm"
+        className="flex-1 md:w-72 px-4 py-2.5 rounded-xl bg-white/[0.06] border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#e63946]/40 focus:border-[#e63946]/50 text-sm transition-all"
         required
       />
       <button
         type="submit"
-        className="px-5 py-2.5 bg-white text-[#1a3a6b] rounded-lg font-semibold text-sm hover:bg-blue-50 transition-colors"
+        className="px-5 py-2.5 bg-[#e63946] hover:bg-[#d32f3f] text-white rounded-xl font-semibold text-sm transition-colors duration-200"
       >
         Abonohu
       </button>

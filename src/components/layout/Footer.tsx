@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { Radio, Mail, Phone, MapPin } from 'lucide-react';
+import Image from 'next/image';
+import { Mail, Phone, MapPin } from 'lucide-react';
 import { FacebookIcon, InstagramIcon, YoutubeIcon } from '@/components/shared/SocialIcons';
 import { CATEGORIES } from '@/lib/types';
 import FooterNewsletter from '@/components/layout/FooterNewsletter';
@@ -8,14 +9,14 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#0f2347] text-white mt-16 pb-20">
-      {/* Newsletter */}
-      <div className="bg-[#1a3a6b] py-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="bg-slate-950 text-white mt-20 pb-20">
+      {/* Newsletter strip */}
+      <div className="border-b border-white/[0.06]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
-              <h3 className="text-xl font-bold mb-1">Abonohu tek Buletini Ynë</h3>
-              <p className="text-blue-200 text-sm">Merr lajmet e fundit direkt në emailin tënd.</p>
+              <h3 className="text-xl font-bold mb-1">Abonohu tek Buletini</h3>
+              <p className="text-slate-400 text-sm">Merr lajmet e fundit direkt në emailin tënd.</p>
             </div>
             <FooterNewsletter />
           </div>
@@ -23,48 +24,33 @@ export default function Footer() {
       </div>
 
       {/* Main footer */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
-                <Radio className="w-5 h-5 text-white" />
-              </div>
-              <div>
-                <p className="font-bold text-lg leading-none">Radio Fontana</p>
-                <p className="text-xs text-blue-300">96.5 FM · Pejë</p>
-              </div>
+            <div className="mb-5">
+              <Image
+                src="/logortvfontana.jpg"
+                alt="Radio Fontana"
+                width={120}
+                height={40}
+                className="h-10 w-auto object-contain brightness-0 invert opacity-90"
+              />
             </div>
-            <p className="text-blue-200 text-sm leading-relaxed mb-5">
+            <p className="text-slate-400 text-sm leading-relaxed mb-6">
               Stacioni kryesor i informacionit dhe muzikës në Pejë, Kosovë. Duke transmetuar me cilësi të lartë që nga viti 1995.
             </p>
-            <div className="flex gap-3">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-blue-600 transition-colors"
-                aria-label="Facebook"
-              >
+            <div className="flex gap-2">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
+                className="w-9 h-9 rounded-xl bg-white/[0.06] flex items-center justify-center hover:bg-[#1877F2] transition-all duration-200" aria-label="Facebook">
                 <FacebookIcon className="w-4 h-4" />
               </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-pink-600 transition-colors"
-                aria-label="Instagram"
-              >
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
+                className="w-9 h-9 rounded-xl bg-white/[0.06] flex items-center justify-center hover:bg-gradient-to-br hover:from-purple-600 hover:to-pink-500 transition-all duration-200" aria-label="Instagram">
                 <InstagramIcon className="w-4 h-4" />
               </a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center hover:bg-red-600 transition-colors"
-                aria-label="YouTube"
-              >
+              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"
+                className="w-9 h-9 rounded-xl bg-white/[0.06] flex items-center justify-center hover:bg-[#FF0000] transition-all duration-200" aria-label="YouTube">
                 <YoutubeIcon className="w-4 h-4" />
               </a>
             </div>
@@ -72,15 +58,14 @@ export default function Footer() {
 
           {/* Categories */}
           <div>
-            <h4 className="font-bold text-sm uppercase tracking-wider text-blue-300 mb-4">Kategoritë</h4>
-            <ul className="space-y-2">
+            <h4 className="text-[10px] font-extrabold uppercase tracking-[0.15em] text-slate-500 mb-5">Kategoritë</h4>
+            <ul className="space-y-2.5">
               {CATEGORIES.map((cat) => (
                 <li key={cat}>
                   <Link
                     href={`/lajme?kategoria=${encodeURIComponent(cat)}`}
-                    className="text-blue-100 hover:text-white text-sm transition-colors flex items-center gap-2 group"
+                    className="text-slate-400 hover:text-white text-sm transition-colors duration-200"
                   >
-                    <span className="w-1 h-1 rounded-full bg-blue-400 group-hover:bg-white transition-colors" />
                     {cat}
                   </Link>
                 </li>
@@ -90,8 +75,8 @@ export default function Footer() {
 
           {/* Quick links */}
           <div>
-            <h4 className="font-bold text-sm uppercase tracking-wider text-blue-300 mb-4">Lidhje të Shpejta</h4>
-            <ul className="space-y-2">
+            <h4 className="text-[10px] font-extrabold uppercase tracking-[0.15em] text-slate-500 mb-5">Navigimi</h4>
+            <ul className="space-y-2.5">
               {[
                 { label: 'Kryefaqja', href: '/' },
                 { label: 'Lajme', href: '/lajme' },
@@ -100,11 +85,7 @@ export default function Footer() {
                 { label: 'Kontakt', href: '/kontakt' },
               ].map((link) => (
                 <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-blue-100 hover:text-white text-sm transition-colors flex items-center gap-2 group"
-                  >
-                    <span className="w-1 h-1 rounded-full bg-blue-400 group-hover:bg-white transition-colors" />
+                  <Link href={link.href} className="text-slate-400 hover:text-white text-sm transition-colors duration-200">
                     {link.label}
                   </Link>
                 </li>
@@ -114,30 +95,30 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="font-bold text-sm uppercase tracking-wider text-blue-300 mb-4">Na Kontaktoni</h4>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-3 text-sm text-blue-100">
-                <MapPin className="w-4 h-4 text-blue-400 flex-shrink-0 mt-0.5" />
+            <h4 className="text-[10px] font-extrabold uppercase tracking-[0.15em] text-slate-500 mb-5">Kontakti</h4>
+            <ul className="space-y-3.5">
+              <li className="flex items-start gap-3 text-sm text-slate-400">
+                <MapPin className="w-4 h-4 text-slate-600 flex-shrink-0 mt-0.5" />
                 <span>Rr. Mbretëresha Teuta, Nr. 15<br />Pejë 30000, Kosovë</span>
               </li>
-              <li className="flex items-center gap-3 text-sm text-blue-100">
-                <Phone className="w-4 h-4 text-blue-400 flex-shrink-0" />
-                <a href="tel:+38339123456" className="hover:text-white transition-colors">+383 39 123 456</a>
+              <li className="flex items-center gap-3 text-sm text-slate-400">
+                <Phone className="w-4 h-4 text-slate-600 flex-shrink-0" />
+                <a href="tel:+38339123456" className="hover:text-white transition-colors duration-200">+383 39 123 456</a>
               </li>
-              <li className="flex items-center gap-3 text-sm text-blue-100">
-                <Mail className="w-4 h-4 text-blue-400 flex-shrink-0" />
-                <a href="mailto:info@radiofontana.com" className="hover:text-white transition-colors">info@radiofontana.com</a>
+              <li className="flex items-center gap-3 text-sm text-slate-400">
+                <Mail className="w-4 h-4 text-slate-600 flex-shrink-0" />
+                <a href="mailto:info@radiofontana.com" className="hover:text-white transition-colors duration-200">info@radiofontana.com</a>
               </li>
             </ul>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-10 pt-6 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-blue-300">
+        <div className="mt-12 pt-6 border-t border-white/[0.06] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-600">
           <p>© {year} Radio Fontana. Të gjitha të drejtat e rezervuara.</p>
-          <div className="flex gap-4">
-            <Link href="/kontakt" className="hover:text-white transition-colors">Politika e Privatësisë</Link>
-            <Link href="/kontakt" className="hover:text-white transition-colors">Kushtet e Përdorimit</Link>
+          <div className="flex gap-6">
+            <Link href="/kontakt" className="hover:text-slate-300 transition-colors">Privatësia</Link>
+            <Link href="/kontakt" className="hover:text-slate-300 transition-colors">Kushtet</Link>
           </div>
         </div>
       </div>

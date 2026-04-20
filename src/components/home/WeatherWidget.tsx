@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import { Cloud, Sun, CloudRain, Thermometer, Wind, Droplets } from 'lucide-react';
 
 const mockWeather = {
-  city: 'Pejë, Kosovë',
+  city: 'Pejë',
+  country: 'Kosovë',
   temp: 18,
   feelsLike: 16,
   condition: 'Pjesërisht me re',
@@ -26,7 +27,7 @@ export default function WeatherWidget() {
         'Korrik', 'Gusht', 'Shtator', 'Tetor', 'Nëntor', 'Dhjetor',
       ];
       setTime(now.toLocaleTimeString('sq-AL', { hour: '2-digit', minute: '2-digit' }));
-      setDate(`${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`);
+      setDate(`${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]}`);
     };
     tick();
     const id = setInterval(tick, 1000);
@@ -35,51 +36,59 @@ export default function WeatherWidget() {
 
   const WeatherIcon = () => {
     switch (mockWeather.icon) {
-      case 'sunny': return <Sun className="w-10 h-10 text-yellow-400" />;
-      case 'rainy': return <CloudRain className="w-10 h-10 text-blue-400" />;
-      default: return <Cloud className="w-10 h-10 text-gray-300" />;
+      case 'sunny': return <Sun className="w-12 h-12 text-amber-400" />;
+      case 'rainy': return <CloudRain className="w-12 h-12 text-blue-400" />;
+      default: return <Cloud className="w-12 h-12 text-slate-300 dark:text-slate-500" />;
     }
   };
 
   return (
-    <div className="bg-gradient-to-br from-[#1a3a6b] to-[#0f2347] text-white rounded-xl p-5 shadow-lg">
-      {/* Date & Time */}
-      <div className="mb-4 pb-4 border-b border-white/10">
-        <p className="text-3xl font-mono font-bold tabular-nums">{time}</p>
-        <p className="text-blue-200 text-sm mt-0.5">{date}</p>
+    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden">
+      {/* Time header */}
+      <div className="px-5 pt-5 pb-4">
+        <div className="flex items-baseline justify-between mb-1">
+          <p className="text-3xl font-bold tabular-nums tracking-tight text-slate-800 dark:text-white">{time}</p>
+          <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#e63946]">LIVE</span>
+        </div>
+        <p className="text-slate-400 dark:text-slate-500 text-sm">{date}</p>
       </div>
 
-      {/* Weather */}
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-xs text-blue-300 font-semibold uppercase tracking-wider mb-1">
-            {mockWeather.city}
-          </p>
-          <div className="flex items-end gap-2">
-            <span className="text-4xl font-bold">{mockWeather.temp}°</span>
-            <span className="text-blue-200 mb-1 text-sm">C</span>
+      {/* Divider */}
+      <div className="mx-5 h-px bg-slate-100 dark:bg-slate-800" />
+
+      {/* Weather body */}
+      <div className="px-5 py-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.12em] text-slate-400 dark:text-slate-500 mb-1.5">
+              {mockWeather.city}, {mockWeather.country}
+            </p>
+            <div className="flex items-end gap-1">
+              <span className="text-4xl font-bold text-slate-800 dark:text-white tracking-tight">{mockWeather.temp}°</span>
+              <span className="text-slate-400 mb-1.5 text-sm font-medium">C</span>
+            </div>
+            <p className="text-slate-500 dark:text-slate-400 text-sm mt-0.5">{mockWeather.condition}</p>
           </div>
-          <p className="text-blue-200 text-sm">{mockWeather.condition}</p>
+          <WeatherIcon />
         </div>
-        <WeatherIcon />
       </div>
 
       {/* Stats */}
-      <div className="mt-4 grid grid-cols-3 gap-2">
-        <div className="flex flex-col items-center bg-white/10 rounded-lg p-2">
-          <Thermometer className="w-4 h-4 text-blue-300 mb-1" />
-          <span className="text-xs text-blue-200">Ndjesia</span>
-          <span className="text-sm font-semibold">{mockWeather.feelsLike}°</span>
+      <div className="grid grid-cols-3 border-t border-slate-100 dark:border-slate-800">
+        <div className="flex flex-col items-center py-3.5 border-r border-slate-100 dark:border-slate-800">
+          <Thermometer className="w-3.5 h-3.5 text-slate-400 mb-1" />
+          <span className="text-sm font-semibold text-slate-700 dark:text-white">{mockWeather.feelsLike}°</span>
+          <span className="text-[10px] text-slate-400">Ndjesia</span>
         </div>
-        <div className="flex flex-col items-center bg-white/10 rounded-lg p-2">
-          <Droplets className="w-4 h-4 text-blue-300 mb-1" />
-          <span className="text-xs text-blue-200">Lagësia</span>
-          <span className="text-sm font-semibold">{mockWeather.humidity}%</span>
+        <div className="flex flex-col items-center py-3.5 border-r border-slate-100 dark:border-slate-800">
+          <Droplets className="w-3.5 h-3.5 text-slate-400 mb-1" />
+          <span className="text-sm font-semibold text-slate-700 dark:text-white">{mockWeather.humidity}%</span>
+          <span className="text-[10px] text-slate-400">Lagësia</span>
         </div>
-        <div className="flex flex-col items-center bg-white/10 rounded-lg p-2">
-          <Wind className="w-4 h-4 text-blue-300 mb-1" />
-          <span className="text-xs text-blue-200">Era</span>
-          <span className="text-sm font-semibold">{mockWeather.wind} km/h</span>
+        <div className="flex flex-col items-center py-3.5">
+          <Wind className="w-3.5 h-3.5 text-slate-400 mb-1" />
+          <span className="text-sm font-semibold text-slate-700 dark:text-white">{mockWeather.wind}</span>
+          <span className="text-[10px] text-slate-400">km/h</span>
         </div>
       </div>
     </div>

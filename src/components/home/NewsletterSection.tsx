@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, CheckCircle } from 'lucide-react';
+import { Mail, CheckCircle, ArrowRight } from 'lucide-react';
 
 export default function NewsletterSection() {
   const [email, setEmail] = useState('');
@@ -20,15 +20,21 @@ export default function NewsletterSection() {
   };
 
   return (
-    <section className="bg-gradient-to-r from-[#1a3a6b] to-[#2563eb] text-white py-14 px-4">
-      <div className="max-w-2xl mx-auto text-center">
-        <div className="flex justify-center mb-4">
-          <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
-            <Mail className="w-6 h-6 text-white" />
+    <section className="relative overflow-hidden bg-slate-950 py-20 px-4">
+      {/* Background decoration */}
+      <div className="absolute inset-0">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[#e63946]/5 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="max-w-xl mx-auto text-center relative z-10">
+        <div className="flex justify-center mb-5">
+          <div className="w-14 h-14 rounded-2xl bg-[#e63946]/10 flex items-center justify-center">
+            <Mail className="w-6 h-6 text-[#e63946]" />
           </div>
         </div>
-        <h2 className="text-2xl sm:text-3xl font-bold mb-2">Qëndro i Informuar</h2>
-        <p className="text-blue-100 mb-8">
+        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-3 tracking-tight">Qëndro i Informuar</h2>
+        <p className="text-slate-400 mb-8 leading-relaxed">
           Abonohu tek buletini ynë ditor dhe merr lajmet kryesore nga Peja dhe Kosova.
         </p>
 
@@ -38,11 +44,13 @@ export default function NewsletterSection() {
               key="success"
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="flex flex-col items-center gap-3 text-center"
+              className="flex flex-col items-center gap-3"
             >
-              <CheckCircle className="w-12 h-12 text-green-400" />
-              <p className="text-xl font-semibold">Faleminderit për abonimin!</p>
-              <p className="text-blue-200 text-sm">Do të marrësh buletinin tonë së shpejti.</p>
+              <div className="w-14 h-14 rounded-full bg-green-500/10 flex items-center justify-center">
+                <CheckCircle className="w-7 h-7 text-green-400" />
+              </div>
+              <p className="text-xl font-semibold text-white">Faleminderit!</p>
+              <p className="text-slate-400 text-sm">Do të marrësh buletinin tonë së shpejti.</p>
             </motion.div>
           ) : (
             <motion.form
@@ -59,21 +67,22 @@ export default function NewsletterSection() {
                   onChange={(e) => { setEmail(e.target.value); setError(''); }}
                   placeholder="Emaili juaj..."
                   required
-                  className="w-full px-4 py-3 rounded-lg bg-white/15 border border-white/30 text-white placeholder-blue-200 focus:outline-none focus:ring-2 focus:ring-white/60 text-sm"
+                  className="w-full px-4 py-3.5 rounded-xl bg-white/[0.06] border border-white/10 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-[#e63946]/40 focus:border-[#e63946]/50 text-sm transition-all"
                 />
-                {error && <p className="text-red-300 text-xs mt-1 text-left">{error}</p>}
+                {error && <p className="text-red-400 text-xs mt-1.5 text-left">{error}</p>}
               </div>
               <button
                 type="submit"
-                className="px-6 py-3 bg-white text-[#1a3a6b] rounded-lg font-bold text-sm hover:bg-blue-50 transition-colors whitespace-nowrap"
+                className="px-6 py-3.5 bg-[#e63946] hover:bg-[#d32f3f] text-white rounded-xl font-bold text-sm transition-all duration-200 whitespace-nowrap flex items-center justify-center gap-2 shadow-lg shadow-[#e63946]/20"
               >
                 Abonohu
+                <ArrowRight className="w-4 h-4" />
               </button>
             </motion.form>
           )}
         </AnimatePresence>
 
-        <p className="text-blue-300 text-xs mt-5">
+        <p className="text-slate-600 text-xs mt-6">
           Nuk dërgojmë spam. Mund të çabonohesh në çdo kohë.
         </p>
       </div>

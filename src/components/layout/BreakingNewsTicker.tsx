@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useState } from 'react';
 import Link from 'next/link';
 import { Article } from '@/lib/types';
 
@@ -16,13 +16,13 @@ export default function BreakingNewsTicker({ articles }: Props) {
   if (breaking.length === 0) return null;
 
   return (
-    <div className="bg-[#e63946] text-white overflow-hidden">
+    <div className="bg-slate-900 dark:bg-slate-950 text-white overflow-hidden border-b border-slate-800">
       <div className="flex items-stretch">
         {/* Label */}
-        <div className="flex-shrink-0 bg-[#c1121f] px-4 py-2 flex items-center gap-2 z-10">
-          <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
-          <span className="text-xs font-bold uppercase tracking-widest whitespace-nowrap">
-            Lajme të fundit
+        <div className="flex-shrink-0 bg-[#e63946] px-4 py-2 flex items-center gap-2 z-10">
+          <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+          <span className="text-[10px] font-extrabold uppercase tracking-[0.15em] whitespace-nowrap">
+            Breaking
           </span>
         </div>
 
@@ -41,9 +41,9 @@ export default function BreakingNewsTicker({ articles }: Props) {
               <Link
                 key={`${article.id}-${i}`}
                 href={`/lajme/${article.slug}`}
-                className="inline-flex items-center gap-2 text-sm hover:underline underline-offset-2"
+                className="inline-flex items-center gap-2.5 text-[13px] text-slate-300 hover:text-white transition-colors duration-200"
               >
-                <span className="text-yellow-300 font-bold">›</span>
+                <span className="text-[#e63946] font-bold text-lg leading-none">|</span>
                 <span>{article.title}</span>
               </Link>
             ))}
