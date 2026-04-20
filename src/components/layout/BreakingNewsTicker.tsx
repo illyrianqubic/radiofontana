@@ -16,10 +16,10 @@ export default function BreakingNewsTicker({ articles }: Props) {
   if (breaking.length === 0) return null;
 
   return (
-    <div className="bg-slate-900 dark:bg-slate-950 text-white overflow-hidden border-b border-slate-800">
+    <div className="bg-[#e63946] text-white overflow-hidden">
       <div className="flex items-stretch">
         {/* Label */}
-        <div className="flex-shrink-0 bg-[#e63946] px-4 py-2 flex items-center gap-2 z-10">
+        <div className="flex-shrink-0 bg-[#c0303b] px-4 py-2 flex items-center gap-2 z-10">
           <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
           <span className="text-[10px] font-extrabold uppercase tracking-[0.15em] whitespace-nowrap">
             Breaking
@@ -41,9 +41,9 @@ export default function BreakingNewsTicker({ articles }: Props) {
               <Link
                 key={`${article.id}-${i}`}
                 href={`/lajme/${article.slug}`}
-                className="inline-flex items-center gap-2.5 text-[13px] text-slate-300 hover:text-white transition-colors duration-200"
+                className="inline-flex items-center gap-2.5 text-[13px] text-white/90 hover:text-white transition-colors duration-200"
               >
-                <span className="text-[#e63946] font-bold text-lg leading-none">|</span>
+                <span className="text-white/40 font-bold text-lg leading-none">|</span>
                 <span>{article.title}</span>
               </Link>
             ))}

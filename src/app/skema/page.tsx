@@ -36,16 +36,16 @@ export default function SkemaPage() {
       </div>
 
       {/* Current show banner */}
-      <div className="bg-slate-950 rounded-2xl p-7 text-white mb-10 flex flex-col sm:flex-row items-start sm:items-center gap-5 border border-white/[0.06]">
-        <div className="w-14 h-14 bg-[#e63946]/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-          <Mic2 className="w-6 h-6 text-[#e63946]" />
+      <div className="bg-[#e63946] rounded-2xl p-7 text-white mb-10 flex flex-col sm:flex-row items-start sm:items-center gap-5">
+        <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+          <Mic2 className="w-6 h-6 text-white" />
         </div>
         <div className="flex-1">
-          <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] text-[#e63946] mb-1">Tani në Emision</p>
+          <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] text-white/70 mb-1">Tani në Emision</p>
           <p className="font-bold text-xl">Mëngjesi me Radio Fontana</p>
-          <p className="text-slate-400 text-sm">me Arjeta Krasniqi · 06:00 - 09:00</p>
+          <p className="text-white/70 text-sm">me Arjeta Krasniqi · 06:00 - 09:00</p>
         </div>
-        <div className="flex items-center gap-2 bg-[#e63946] px-3.5 py-2 rounded-full self-start sm:self-auto">
+        <div className="flex items-center gap-2 bg-white/20 px-3.5 py-2 rounded-full self-start sm:self-auto">
           <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
           <span className="text-[10px] font-extrabold tracking-wider">LIVE</span>
         </div>
@@ -66,13 +66,13 @@ export default function SkemaPage() {
               }`}
             >
               {/* Day header */}
-              <div className={`px-6 py-4 flex items-center justify-between ${isToday ? 'bg-slate-950 text-white' : 'bg-slate-50 dark:bg-slate-800/50'}`}>
+              <div className={`px-6 py-4 flex items-center justify-between ${isToday ? 'bg-[#e63946] text-white' : 'bg-slate-50 dark:bg-slate-800/50'}`}>
                 <h2 className={`font-bold text-lg ${isToday ? 'text-white' : 'text-slate-800 dark:text-white'}`}>
                   {dayData.day}
                 </h2>
                 {isToday && (
-                  <span className="flex items-center gap-1.5 bg-[#e63946] text-white text-[10px] font-extrabold px-3 py-1.5 rounded-full tracking-wider">
-                    <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
+                  <span className="flex items-center gap-1.5 bg-white text-[#e63946] text-[10px] font-extrabold px-3 py-1.5 rounded-full tracking-wider">
+                    <span className="w-1.5 h-1.5 bg-[#e63946] rounded-full animate-pulse" />
                     SOT
                   </span>
                 )}

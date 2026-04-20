@@ -84,19 +84,19 @@ export default function KontaktPage() {
           ))}
 
           {/* Social */}
-          <div className="p-5 bg-slate-950 rounded-2xl text-white">
+          <div className="p-5 bg-[#e63946] rounded-2xl text-white">
             <p className="font-bold text-sm mb-3">Na Ndiqni</p>
             <div className="flex gap-2">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-white/[0.06] hover:bg-[#1877F2] px-3.5 py-2.5 rounded-xl text-sm transition-all duration-200">
+                className="flex items-center gap-2 bg-white/10 hover:bg-[#1877F2] px-3.5 py-2.5 rounded-xl text-sm transition-all duration-200">
                 <FacebookIcon className="w-4 h-4" /> Facebook
               </a>
               <a href="https://instagram.com" target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-white/[0.06] hover:bg-pink-600 px-3.5 py-2.5 rounded-xl text-sm transition-all duration-200">
+                className="flex items-center gap-2 bg-white/10 hover:bg-pink-600 px-3.5 py-2.5 rounded-xl text-sm transition-all duration-200">
                 <InstagramIcon className="w-4 h-4" /> Instagram
               </a>
               <a href="https://youtube.com" target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-white/[0.06] hover:bg-red-600 px-3.5 py-2.5 rounded-xl text-sm transition-all duration-200">
+                className="flex items-center gap-2 bg-white/10 hover:bg-red-800 px-3.5 py-2.5 rounded-xl text-sm transition-all duration-200">
                 <YoutubeIcon className="w-4 h-4" /> YouTube
               </a>
             </div>
@@ -126,9 +126,9 @@ export default function KontaktPage() {
         {/* Contact form */}
         <div className="lg:col-span-2">
           <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden">
-            <div className="bg-slate-950 px-7 py-5 text-white">
+            <div className="bg-[#e63946] px-7 py-5 text-white">
               <h2 className="font-bold text-lg">Dërgoni Mesazh</h2>
-              <p className="text-slate-400 text-sm">Do t&apos;ju përgjigjemi brenda 24 orëve.</p>
+              <p className="text-white/70 text-sm">Do t&apos;ju përgjigjemi brenda 24 orëve.</p>
             </div>
 
             <div className="p-7">
