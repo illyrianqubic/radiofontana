@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { Article } from '@/lib/types';
 
@@ -10,7 +10,6 @@ interface Props {
 
 export default function BreakingNewsTicker({ articles }: Props) {
   const breaking = articles.filter((a) => a.breaking);
-  const containerRef = useRef<HTMLDivElement>(null);
   const [paused, setPaused] = useState(false);
 
   if (breaking.length === 0) return null;
@@ -28,7 +27,6 @@ export default function BreakingNewsTicker({ articles }: Props) {
 
         {/* Ticker */}
         <div
-          ref={containerRef}
           className="relative flex-1 overflow-hidden py-2"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
