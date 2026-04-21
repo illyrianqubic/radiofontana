@@ -22,7 +22,7 @@ export default function HomeClient() {
       .then((r) => r.json())
       .then((data: Article[]) => {
         if (Array.isArray(data) && data.length > 0) {
-          setArticles(data);
+          setArticles([...data, ...staticArticles]);
         }
       })
       .catch(() => {});

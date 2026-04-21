@@ -22,7 +22,7 @@ export default function LajmeClient() {
       .then((r) => r.json())
       .then((data: Article[]) => {
         if (Array.isArray(data) && data.length > 0) {
-          setAllArticles(data);
+          setAllArticles([...data, ...staticArticles]);
         }
       })
       .catch(() => {});

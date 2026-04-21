@@ -11,9 +11,11 @@ interface Props {
 
 export default function BreakingNewsTicker({ articles }: Props) {
   const breaking = articles.filter((a) => a.breaking);
+  // Fall back to latest 5 articles when no explicitly-breaking ones exist
+  const items = breaking.length > 0 ? breaking : articles.slice(0, 5);
   const [paused, setPaused] = useState(false);
 
-  if (breaking.length === 0) return null;
+  if (items.length === 0) return null;
 
   return (
     <div className="bg-red-600 text-white overflow-hidden shadow-sm">
@@ -36,7 +38,7 @@ export default function BreakingNewsTicker({ articles }: Props) {
             className={`flex gap-0 whitespace-nowrap ${paused ? '' : 'ticker-animate'}`}
             style={{ willChange: 'transform' }}
           >
-            {[...breaking, ...breaking, ...breaking, ...breaking].map((article, i) => (
+            {[...items, ...items, ...items, ...items].map((article, i) => (
               <Link
                 key={`${article.id}-${i}`}
                 href={`/lajme/${article.slug}`}
