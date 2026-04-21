@@ -26,7 +26,7 @@ interface PS {
   height: number;
 }
 
-const DEFAULT_W = 440;
+const DEFAULT_W = 520;
 
 function clamp(v: number, lo: number, hi: number) { return Math.max(lo, Math.min(hi, v)); }
 
@@ -86,6 +86,20 @@ export default function RadioPlayer() {
     });
     return () => cancelAnimationFrame(raf);
   }, [viewportWidth]);
+
+  // Keep the first-landing centered player a bit wider unless user has manually moved/resized it.
+  useEffect(() => {
+    if (!mounted || !viewportWidth) return;
+    const raf = requestAnimationFrame(() => {
+      setPs((prev) => {
+        if (prev.dragged || prev.width >= DEFAULT_W) {
+          return prev;
+        }
+        return clampPS({ ...prev, width: DEFAULT_W });
+      });
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [mounted, viewportWidth]);
 
   // Persist after mount
   useEffect(() => {

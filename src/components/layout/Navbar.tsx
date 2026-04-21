@@ -152,7 +152,7 @@ export default function Navbar() {
                 alt="Radio Fontana"
                 width={140}
                 height={48}
-                className="h-7 sm:h-9 lg:h-10 w-auto object-contain"
+                className="h-8 sm:h-10 lg:h-11 w-auto object-contain translate-y-0.5"
                 priority
               />
             </Link>
