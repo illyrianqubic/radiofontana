@@ -55,16 +55,12 @@ export default function RadioPlayer() {
   const { playing, loading, error, volume, muted, setVolume, setMuted, togglePlay } = useAudioPlayer();
   const pathname = usePathname();
   const [currentTime, setCurrentTime] = useState('');
-  const [ps, setPs] = useState<PS>({ dragged: false, x: 0, y: 0, width: DEFAULT_W, height: MIN_H });
+  const [ps, setPs] = useState<PS>(() => loadPS() ?? ({ dragged: false, x: 0, y: 0, width: DEFAULT_W, height: MIN_H }));
   const [mounted, setMounted] = useState(false);
-  const psRef = useRef<PS>(ps);
   const panelRef = useRef<HTMLDivElement>(null);
-  psRef.current = ps;
 
-  // Hydrate from localStorage once
+  // Mark client mount to avoid SSR/client mismatch on fixed positioning.
   useEffect(() => {
-    const saved = loadPS();
-    if (saved) setPs(saved);
     setMounted(true);
   }, []);
 
@@ -265,10 +261,10 @@ export default function RadioPlayer() {
           )}
 
           {/* Volume */}
-          <div className="flex items-center gap-1.5 flex-shrink-0 bg-white/[0.07] border border-white/[0.14] rounded-md px-2 py-1">
+          <div className="flex items-center gap-1.5 h-6 flex-shrink-0 bg-white/[0.07] border border-white/[0.14] rounded-md px-1.5">
             <button
               onClick={() => setMuted(!muted)}
-              className="text-white/65 hover:text-white transition-colors flex-shrink-0"
+              className="inline-flex items-center justify-center h-4 w-4 text-white/65 hover:text-white transition-colors flex-shrink-0 leading-none"
               aria-label={muted ? 'Aktivizo tingullin' : 'Hiqe tingullin'}
             >
               {muted || volume === 0
@@ -282,7 +278,7 @@ export default function RadioPlayer() {
               step="0.05"
               value={muted ? 0 : volume}
               onChange={handleVolumeChange}
-              className="volume-slider w-16 sm:w-20"
+              className="volume-slider w-14 sm:w-16"
               style={{
                 background: `linear-gradient(to right, #dc2626 ${(muted ? 0 : volume) * 100}%, rgba(255,255,255,0.15) ${(muted ? 0 : volume) * 100}%)`
               }}
