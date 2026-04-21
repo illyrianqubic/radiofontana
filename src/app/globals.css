@@ -51,6 +51,13 @@ body {
   100% { transform: translateX(-50%); }
 }
 .ticker-animate { animation: ticker 50s linear infinite; }
+.ticker-track {
+  display: flex;
+  width: max-content;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ticker-animate { animation: none; }
+}
 
 /* ── Section headings (underline style) ── */
 .section-title {

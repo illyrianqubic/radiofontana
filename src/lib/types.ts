@@ -11,7 +11,8 @@ export interface Article {
   title: string;
   excerpt: string;
   /** Portable Text blocks (from Sanity) or raw HTML string (legacy) */
-  content: string | PortableTextBlock[];
+  content?: string | PortableTextBlock[];
+  readMinutes?: number;
   category: Category;
   author: string;
   publishedAt: string;

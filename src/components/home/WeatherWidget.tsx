@@ -1,6 +1,3 @@
-'use client';
-
-import { useState, useEffect } from 'react';
 import { Cloud, Sun, CloudRain, Thermometer, Wind, Droplets } from 'lucide-react';
 
 const mockWeather = {
@@ -15,42 +12,24 @@ const mockWeather = {
 };
 
 export default function WeatherWidget() {
-  const [time, setTime] = useState('');
-  const [date, setDate] = useState('');
-
-  useEffect(() => {
-    const tick = () => {
-      const now = new Date();
-      const days = ['E Diel', 'E Hënë', 'E Martë', 'E Mërkurë', 'E Enjte', 'E Premte', 'E Shtunë'];
-      const months = [
-        'Janar', 'Shkurt', 'Mars', 'Prill', 'Maj', 'Qershor',
-        'Korrik', 'Gusht', 'Shtator', 'Tetor', 'Nëntor', 'Dhjetor',
-      ];
-      setTime(now.toLocaleTimeString('sq-AL', { hour: '2-digit', minute: '2-digit' }));
-      setDate(`${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]}`);
-    };
-    tick();
-    const id = setInterval(tick, 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  const WeatherIcon = () => {
-    switch (mockWeather.icon) {
-      case 'sunny': return <Sun className="w-12 h-12 text-amber-400" />;
-      case 'rainy': return <CloudRain className="w-12 h-12 text-blue-400" />;
-      default: return <Cloud className="w-12 h-12 text-slate-300" />;
-    }
-  };
+  const weatherIcon =
+    mockWeather.icon === 'sunny' ? (
+      <Sun className="w-12 h-12 text-amber-400" />
+    ) : mockWeather.icon === 'rainy' ? (
+      <CloudRain className="w-12 h-12 text-blue-400" />
+    ) : (
+      <Cloud className="w-12 h-12 text-slate-300" />
+    );
 
   return (
     <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden">
       {/* Time header */}
       <div className="px-5 pt-5 pb-4">
         <div className="flex items-baseline justify-between mb-1">
-          <p className="text-2xl sm:text-3xl font-bold tabular-nums tracking-tight text-slate-800">{time}</p>
-          <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#e63946]">LIVE</span>
+          <p className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-800">Moti Aktual</p>
+          <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#e63946]">Pejë</span>
         </div>
-        <p className="text-slate-400 text-sm">{date}</p>
+        <p className="text-slate-400 text-sm">Parashikimi për sot</p>
       </div>
 
       {/* Divider */}
@@ -69,7 +48,7 @@ export default function WeatherWidget() {
             </div>
             <p className="text-slate-500 text-sm mt-0.5">{mockWeather.condition}</p>
           </div>
-          <WeatherIcon />
+          {weatherIcon}
         </div>
       </div>
 

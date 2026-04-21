@@ -3,7 +3,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
 import { Play, Pause, Volume2, VolumeX, Radio, ChevronUp, ChevronDown, Mic2, GripHorizontal } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { useAudioPlayer } from '@/lib/AudioPlayerContext';
 
 // ── Constraints ──────────────────────────────────────────────────────────────
@@ -61,7 +60,8 @@ export default function RadioPlayer() {
 
   // Mark client mount to avoid SSR/client mismatch on fixed positioning.
   useEffect(() => {
-    setMounted(true);
+    const raf = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(raf);
   }, []);
 
   // Persist after mount
@@ -197,36 +197,27 @@ export default function RadioPlayer() {
         <div className="h-px flex-shrink-0 gradient-bar" />
 
         {/* ── Expanded info panel ───────────────────────────────────────── */}
-        <AnimatePresence>
-          {showExpanded && (
-            <motion.div
-              key="expanded"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.18 }}
-              className="flex-1 min-h-0 overflow-y-auto border-b border-white/[0.06]"
-            >
-              <div className="px-4 py-3 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-xl bg-red-600/15 border border-red-500/20 flex items-center justify-center flex-shrink-0">
-                    <Mic2 className="w-4 h-4 text-red-400" />
-                  </div>
-                  <div>
-                    <p className="text-[9px] font-extrabold uppercase tracking-[0.18em] text-red-400 mb-0.5">Tani në emision</p>
-                    <p className="text-white font-extrabold text-sm">Mëngjesi me Radio Fontana</p>
-                    <p className="text-slate-500 text-xs">me Arjeta Krasniqi · 06:00 – 09:00</p>
-                  </div>
+        {showExpanded && (
+          <div className="flex-1 min-h-0 overflow-y-auto border-b border-white/[0.06]">
+            <div className="px-4 py-3 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-red-600/15 border border-red-500/20 flex items-center justify-center flex-shrink-0">
+                  <Mic2 className="w-4 h-4 text-red-400" />
                 </div>
-                {currentTime && (
-                  <div className="text-2xl font-mono text-white/20 tabular-nums font-light tracking-widest">
-                    {currentTime}
-                  </div>
-                )}
+                <div>
+                  <p className="text-[9px] font-extrabold uppercase tracking-[0.18em] text-red-400 mb-0.5">Tani në emision</p>
+                  <p className="text-white font-extrabold text-sm">Mëngjesi me Radio Fontana</p>
+                  <p className="text-slate-500 text-xs">me Arjeta Krasniqi · 06:00 – 09:00</p>
+                </div>
               </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              {currentTime && (
+                <div className="text-2xl font-mono text-white/20 tabular-nums font-light tracking-widest">
+                  {currentTime}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* ── Controls bar ─────────────────────────────────────────────── */}
         <div className="flex-shrink-0 px-3 py-2 flex items-center gap-2 sm:gap-3">

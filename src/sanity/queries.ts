@@ -5,7 +5,11 @@ export const ARTICLES_QUERY = `
     "slug": slug.current,
     title,
     excerpt,
-    content,
+    "readMinutes": select(
+      length(coalesce(excerpt, "")) > 420 => 3,
+      length(coalesce(excerpt, "")) > 220 => 2,
+      1
+    ),
     "category": coalesce(category->title, "Lajme"),
     "author": coalesce(author->name, "Radio Fontana"),
     publishedAt,

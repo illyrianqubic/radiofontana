@@ -1,6 +1,3 @@
-'use client';
-
-import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, TrendingUp, Clock, Flame, Radio, Rss } from 'lucide-react';
@@ -9,21 +6,13 @@ import NewsCard from '@/components/news/NewsCard';
 import BreakingNewsTicker from '@/components/layout/BreakingNewsTicker';
 import WeatherWidget from '@/components/home/WeatherWidget';
 import NewsletterSection from '@/components/home/NewsletterSection';
-import { timeAgo, readTime } from '@/lib/utils';
+import { timeAgo, readTime, optimizeImageUrl } from '@/lib/utils';
 
-export default function HomeClient() {
-  const [articles, setArticles] = useState<Article[]>([]);
+interface HomeClientProps {
+  articles: Article[];
+}
 
-  useEffect(() => {
-    fetch('/api/articles?limit=100')
-      .then((r) => r.json())
-      .then((data: Article[]) => {
-        if (Array.isArray(data) && data.length > 0) {
-          setArticles(data);
-        }
-      })
-      .catch(() => {});
-  }, []);
+export default function HomeClient({ articles }: HomeClientProps) {
 
   const featured = articles.filter((a) => a.featured);
   const hero = featured[0] ?? articles[0];
@@ -162,7 +151,7 @@ export default function HomeClient() {
                   >
                     <div className="relative w-24 h-[72px] sm:w-32 sm:h-24 flex-shrink-0 rounded-lg overflow-hidden">
                       <Image
-                        src={article.imageUrl}
+                        src={optimizeImageUrl(article.imageUrl, 256, 192, 72)}
                         alt={article.title}
                         fill
                         sizes="128px"
@@ -231,7 +220,7 @@ export default function HomeClient() {
                   <div className="w-1 h-6 bg-green-600 rounded-full" />
                   <h2 className="text-xl font-extrabold text-slate-900">Sport</h2>
                 </div>
-                <Link href="/lajme?kategoria=Sport" className="text-xs text-red-600 font-bold uppercase tracking-wider hover:underline">
+                <Link href="/lajme/?kategoria=Sport" className="text-xs text-red-600 font-bold uppercase tracking-wider hover:underline">
                   Të gjitha
                 </Link>
               </div>
@@ -249,7 +238,7 @@ export default function HomeClient() {
                   <div className="w-1 h-6 bg-purple-600 rounded-full" />
                   <h2 className="text-xl font-extrabold text-slate-900">Teknologji</h2>
                 </div>
-                <Link href="/lajme?kategoria=Teknologji" className="text-xs text-red-600 font-bold uppercase tracking-wider hover:underline">
+                <Link href="/lajme/?kategoria=Teknologji" className="text-xs text-red-600 font-bold uppercase tracking-wider hover:underline">
                   Të gjitha
                 </Link>
               </div>
@@ -276,7 +265,7 @@ export default function HomeClient() {
             {CATEGORIES.map((cat) => (
               <Link
                 key={cat}
-                href={`/lajme?kategoria=${encodeURIComponent(cat)}`}
+                href={`/lajme/?kategoria=${encodeURIComponent(cat)}`}
                 className={`${CATEGORY_COLORS[cat]} text-white rounded-xl sm:rounded-2xl p-3 sm:p-4 text-center hover:opacity-85 transition-all duration-200 hover:-translate-y-1 shadow-sm hover:shadow-lg`}
               >
                 <span className="font-bold text-sm">{cat}</span>
@@ -315,7 +304,7 @@ export default function HomeClient() {
                     <Clock className="w-3 h-3" />
                     {timeAgo(article.publishedAt)}
                     <span className="mx-1 text-slate-300">·</span>
-                    {readTime(article.content)} min lexim
+                    {article.readMinutes ?? (article.content ? readTime(article.content) : 1)} min lexim
                   </p>
                 </div>
               </Link>

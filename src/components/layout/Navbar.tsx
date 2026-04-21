@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Search, ChevronDown, Radio } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { CATEGORIES } from '@/lib/types';
 import { FacebookIcon, InstagramIcon, YoutubeIcon } from '@/components/shared/SocialIcons';
 
@@ -18,13 +17,12 @@ const navLinks = [
 ];
 
 function TopBar() {
-  const [dateStr, setDateStr] = useState('');
-  useEffect(() => {
-    const d = new Date();
-    setDateStr(
-      d.toLocaleDateString('sq-AL', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })
-    );
-  }, []);
+  const dateStr = new Date().toLocaleDateString('sq-AL', {
+    weekday: 'long',
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
 
   return (
     <div className="bg-slate-950 text-white hidden md:block border-b border-white/[0.06]">
@@ -78,22 +76,41 @@ export default function Navbar() {
   }, []);
 
   useEffect(() => {
-    setMobileOpen(false);
-    setDropdownOpen(false);
+    const raf = requestAnimationFrame(() => {
+      setMobileOpen(false);
+      setDropdownOpen(false);
+    });
+    return () => cancelAnimationFrame(raf);
   }, [pathname]);
 
   // Fetch live status from Sanity via Cloudflare Function
   useEffect(() => {
-    fetch('/api/livestream')
-      .then((r) => r.json())
-      .then((data: { isLive?: boolean }) => setIsLive(data?.isLive === true))
-      .catch(() => {});
+    const loadLiveStatus = () => {
+      fetch('/api/livestream')
+        .then((r) => r.json())
+        .then((data: { isLive?: boolean }) => setIsLive(data?.isLive === true))
+        .catch(() => {});
+    };
+
+    if ('requestIdleCallback' in window) {
+      const idleId = (window as Window & {
+        requestIdleCallback: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
+        cancelIdleCallback: (id: number) => void;
+      }).requestIdleCallback(loadLiveStatus, { timeout: 2500 });
+      return () =>
+        (window as Window & {
+          cancelIdleCallback: (id: number) => void;
+        }).cancelIdleCallback(idleId);
+    }
+
+    const timeoutId = setTimeout(loadLiveStatus, 1000);
+    return () => clearTimeout(timeoutId);
   }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      window.location.href = `/lajme?q=${encodeURIComponent(searchQuery)}`;
+      window.location.href = `/lajme/?q=${encodeURIComponent(searchQuery)}`;
     }
   };
 
@@ -152,30 +169,22 @@ export default function Navbar() {
                         {link.label}
                         <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
                       </Link>
-                      <AnimatePresence>
-                        {dropdownOpen && (
-                          <motion.div
-                            initial={{ opacity: 0, y: 8, scale: 0.96 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: 8, scale: 0.96 }}
-                            transition={{ duration: 0.15, ease: 'easeOut' }}
-                            className="absolute top-full left-0 mt-2 w-52 bg-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-slate-100 overflow-hidden z-50"
-                          >
-                            <div className="p-1.5">
-                              {CATEGORIES.map((cat) => (
-                                <Link
-                                  key={cat}
-                                  href={`/lajme?kategoria=${encodeURIComponent(cat)}`}
-                                  className="flex items-center gap-2.5 px-3.5 py-2.5 text-sm text-slate-600 hover:bg-red-50 hover:text-red-700 rounded-xl transition-colors group"
-                                >
-                                  <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-red-400 transition-colors" />
-                                  {cat}
-                                </Link>
-                              ))}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                      {dropdownOpen && (
+                        <div className="absolute top-full left-0 mt-2 w-52 bg-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-slate-100 overflow-hidden z-50">
+                          <div className="p-1.5">
+                            {CATEGORIES.map((cat) => (
+                              <Link
+                                key={cat}
+                                href={`/lajme/?kategoria=${encodeURIComponent(cat)}`}
+                                className="flex items-center gap-2.5 px-3.5 py-2.5 text-sm text-slate-600 hover:bg-red-50 hover:text-red-700 rounded-xl transition-colors group"
+                              >
+                                <span className="w-1.5 h-1.5 rounded-full bg-slate-300 group-hover:bg-red-400 transition-colors" />
+                                {cat}
+                              </Link>
+                            ))}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   ) : (
                     <Link
@@ -224,92 +233,78 @@ export default function Navbar() {
           </div>
 
           {/* Search bar */}
-          <AnimatePresence>
-            {searchOpen && (
-              <motion.div
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                className="overflow-hidden"
-              >
-                <form onSubmit={handleSearch} className="pb-4">
-                  <div className="relative">
-                    <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder="Kërko lajme, tema, autorë..."
-                      autoFocus
-                      className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-red-500/25 focus:border-red-500 text-sm transition-all"
-                    />
-                  </div>
-                </form>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {searchOpen && (
+            <div className="overflow-hidden">
+              <form onSubmit={handleSearch} className="pb-4">
+                <div className="relative">
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Kërko lajme, tema, autorë..."
+                    autoFocus
+                    className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-red-500/25 focus:border-red-500 text-sm transition-all"
+                  />
+                </div>
+              </form>
+            </div>
+          )}
         </div>
 
         {/* Mobile menu */}
-        <AnimatePresence>
-          {mobileOpen && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden border-t border-slate-100 bg-white overflow-hidden"
-            >
-              <nav className="px-4 py-3 space-y-0.5">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`block px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
-                      isActive(link.href)
-                        ? 'bg-red-50 text-red-600 font-semibold'
-                        : 'text-slate-700 hover:bg-slate-50'
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-                <div className="pt-3 mt-2 border-t border-slate-100">
-                  <p className="text-[10px] text-slate-400 px-4 py-1 font-bold uppercase tracking-[0.15em]">Kategoritë</p>
-                  <div className="grid grid-cols-2 gap-0.5 mt-1">
-                    {CATEGORIES.map((cat) => (
-                      <Link
-                        key={cat}
-                        href={`/lajme?kategoria=${encodeURIComponent(cat)}`}
-                        className="px-4 py-2.5 text-sm text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                      >
-                        {cat}
-                      </Link>
-                    ))}
-                  </div>
+        {mobileOpen && (
+          <div className="lg:hidden border-t border-slate-100 bg-white overflow-hidden">
+            <nav className="px-4 py-3 space-y-0.5">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`block px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                    isActive(link.href)
+                      ? 'bg-red-50 text-red-600 font-semibold'
+                      : 'text-slate-700 hover:bg-slate-50'
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <div className="pt-3 mt-2 border-t border-slate-100">
+                <p className="text-[10px] text-slate-400 px-4 py-1 font-bold uppercase tracking-[0.15em]">Kategoritë</p>
+                <div className="grid grid-cols-2 gap-0.5 mt-1">
+                  {CATEGORIES.map((cat) => (
+                    <Link
+                      key={cat}
+                      href={`/lajme/?kategoria=${encodeURIComponent(cat)}`}
+                      className="px-4 py-2.5 text-sm text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                    >
+                      {cat}
+                    </Link>
+                  ))}
                 </div>
-                {/* Mobile social links */}
-                <div className="flex items-center gap-3 px-4 pt-3 border-t border-slate-100 mt-2">
-                  <a href="https://www.facebook.com/rtvfontanalive" target="_blank" rel="noopener noreferrer"
-                    className="text-slate-400 hover:text-slate-700 transition-colors" aria-label="Facebook">
-                    <FacebookIcon className="w-4 h-4" />
-                  </a>
-                  <a href="https://www.instagram.com/rtvfontana/" target="_blank" rel="noopener noreferrer"
-                    className="text-slate-400 hover:text-slate-700 transition-colors" aria-label="Instagram">
-                    <InstagramIcon className="w-4 h-4" />
-                  </a>
-                  <a href="https://www.youtube.com/@RTVFontana" target="_blank" rel="noopener noreferrer"
-                    className="text-slate-400 hover:text-slate-700 transition-colors" aria-label="YouTube">
-                    <YoutubeIcon className="w-4 h-4" />
-                  </a>
-                  <span className="ml-auto flex items-center gap-1.5 text-xs text-slate-500">
-                    <Radio className="w-3.5 h-3.5 text-red-500" />
-                    98.8 FM
-                  </span>
-                </div>
-              </nav>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              </div>
+              {/* Mobile social links */}
+              <div className="flex items-center gap-3 px-4 pt-3 border-t border-slate-100 mt-2">
+                <a href="https://www.facebook.com/rtvfontanalive" target="_blank" rel="noopener noreferrer"
+                  className="text-slate-400 hover:text-slate-700 transition-colors" aria-label="Facebook">
+                  <FacebookIcon className="w-4 h-4" />
+                </a>
+                <a href="https://www.instagram.com/rtvfontana/" target="_blank" rel="noopener noreferrer"
+                  className="text-slate-400 hover:text-slate-700 transition-colors" aria-label="Instagram">
+                  <InstagramIcon className="w-4 h-4" />
+                </a>
+                <a href="https://www.youtube.com/@RTVFontana" target="_blank" rel="noopener noreferrer"
+                  className="text-slate-400 hover:text-slate-700 transition-colors" aria-label="YouTube">
+                  <YoutubeIcon className="w-4 h-4" />
+                </a>
+                <span className="ml-auto flex items-center gap-1.5 text-xs text-slate-500">
+                  <Radio className="w-3.5 h-3.5 text-red-500" />
+                  98.8 FM
+                </span>
+              </div>
+            </nav>
+          </div>
+        )}
       </header>
     </>
   );

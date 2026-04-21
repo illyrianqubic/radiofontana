@@ -13,7 +13,11 @@ const QUERY = `*[_type == "post" && defined(slug.current)] | order(publishedAt d
   "slug": slug.current,
   title,
   excerpt,
-  content,
+  "readMinutes": select(
+    length(coalesce(excerpt, "")) > 420 => 3,
+    length(coalesce(excerpt, "")) > 220 => 2,
+    1
+  ),
   "category": coalesce(category->title, "Lajme"),
   "author": coalesce(author->name, "Radio Fontana"),
   publishedAt,
@@ -62,7 +66,7 @@ export async function onRequestGet(context: {
     return new Response(JSON.stringify(data.result ?? []), {
       headers: {
         'Content-Type': 'application/json',
-        'Cache-Control': 'public, max-age=60, stale-while-revalidate=300',
+        'Cache-Control': 'public, max-age=300, stale-while-revalidate=3600',
         'Access-Control-Allow-Origin': '*',
       },
     });

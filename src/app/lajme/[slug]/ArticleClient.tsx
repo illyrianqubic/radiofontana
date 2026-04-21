@@ -9,7 +9,7 @@ import { FacebookIcon, TwitterIcon } from '@/components/shared/SocialIcons';
 import { Article, CATEGORY_COLORS } from '@/lib/types';
 import NewsCard from '@/components/news/NewsCard';
 import SanityPortableText from '@/components/sanity/PortableText';
-import { formatAlbanianDate, timeAgo } from '@/lib/utils';
+import { formatAlbanianDate, timeAgo, optimizeImageUrl } from '@/lib/utils';
 
 interface Props {
   slug: string;
@@ -137,7 +137,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
               <Link href="/lajme" className="hover:text-red-600 transition-colors duration-200">Lajme</Link>
               <span className="text-slate-300">/</span>
               <Link
-                href={`/lajme?kategoria=${encodeURIComponent(article.category)}`}
+                href={`/lajme/?kategoria=${encodeURIComponent(article.category)}`}
                 className="hover:text-red-600 transition-colors duration-200"
               >
                 {article.category}
@@ -176,7 +176,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
             {/* Hero image */}
             <div className="relative aspect-video rounded-2xl overflow-hidden my-7">
               <Image
-                src={article.imageUrl}
+                src={optimizeImageUrl(article.imageUrl, 1440, 810, 76)}
                 alt={article.title}
                 fill
                 sizes="(max-width: 1024px) 100vw, 66vw"
@@ -190,11 +190,13 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
               <div className="prose prose-lg max-w-none">
                 <SanityPortableText value={article.content} />
               </div>
-            ) : (
+            ) : typeof article.content === 'string' && article.content ? (
               <div
                 className="prose prose-lg max-w-none prose-headings:text-slate-800 prose-p:text-slate-600 prose-p:leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: article.content as string }}
               />
+            ) : (
+              <p className="text-slate-500">Përmbajtja e artikullit nuk është e disponueshme.</p>
             )}
 
             {/* Tags */}
@@ -204,7 +206,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
                 {article.tags.map((tag) => (
                   <Link
                     key={tag}
-                    href={`/lajme?q=${encodeURIComponent(tag)}`}
+                    href={`/lajme/?q=${encodeURIComponent(tag)}`}
                     className="px-3 py-1.5 bg-slate-100 text-slate-500 rounded-xl text-sm hover:bg-red-50 hover:text-red-600 transition-colors duration-200"
                   >
                     #{tag}

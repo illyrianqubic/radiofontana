@@ -40,3 +40,33 @@ export function readTime(content: string | unknown[]): number {
   return Math.max(1, Math.round(words / 200));
 }
 
+export function optimizeImageUrl(
+  imageUrl: string,
+  width: number,
+  height?: number,
+  quality = 72,
+): string {
+  if (!imageUrl || imageUrl.startsWith('/')) {
+    return imageUrl;
+  }
+
+  try {
+    const url = new URL(imageUrl);
+    if (!url.hostname.includes('sanity')) {
+      return imageUrl;
+    }
+
+    url.searchParams.set('auto', 'format');
+    url.searchParams.set('q', String(Math.round(quality)));
+    url.searchParams.set('w', String(Math.round(width)));
+    if (height) {
+      url.searchParams.set('h', String(Math.round(height)));
+      url.searchParams.set('fit', 'crop');
+    }
+
+    return url.toString();
+  } catch {
+    return imageUrl;
+  }
+}
+
