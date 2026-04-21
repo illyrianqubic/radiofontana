@@ -25,7 +25,8 @@ export default function NewsFilter({
   const [query, setQuery] = useState(activeQuery);
 
   useEffect(() => {
-    setQuery(activeQuery);
+    const raf = requestAnimationFrame(() => setQuery(activeQuery));
+    return () => cancelAnimationFrame(raf);
   }, [activeQuery]);
 
   const handleSearch = (e: React.FormEvent) => {

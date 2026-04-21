@@ -74,7 +74,6 @@ export default function LajmeClient() {
 
   useEffect(() => {
     let cancelled = false;
-    setLoadingArticles(!articlesCache);
 
     loadArticles().then((data) => {
       if (cancelled) return;
