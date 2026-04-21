@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { usePathname } from 'next/navigation';
 import { Play, Pause, Volume2, VolumeX, Radio, ChevronUp, ChevronDown, Mic2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAudioPlayer } from '@/lib/AudioPlayerContext';
@@ -32,6 +33,7 @@ function saveSize(s: PlayerSize) {
 
 export default function RadioPlayer() {
   const { playing, loading, error, volume, muted, setVolume, setMuted, togglePlay } = useAudioPlayer();
+  const pathname = usePathname();
   const [expanded, setExpanded] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
   const [size, setSize] = useState<PlayerSize>({ height: 0, marginLeft: 0, marginRight: 0 });
@@ -138,6 +140,10 @@ export default function RadioPlayer() {
     right: size.marginRight,
     ...(size.height > 0 ? { height: size.height } : {}),
   } : {};
+
+  if (pathname.startsWith('/studio')) {
+    return null;
+  }
 
   return (
     <div

@@ -1,10 +1,18 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
 import { Mail, Phone, MapPin, Radio } from 'lucide-react';
 import { FacebookIcon, InstagramIcon, YoutubeIcon } from '@/components/shared/SocialIcons';
 import { CATEGORIES } from '@/lib/types';
 export default function Footer() {
+  const pathname = usePathname();
   const year = new Date().getFullYear();
+
+  if (pathname.startsWith('/studio')) {
+    return null;
+  }
 
   return (
     <footer className="bg-white text-slate-800 border-t border-slate-200">
