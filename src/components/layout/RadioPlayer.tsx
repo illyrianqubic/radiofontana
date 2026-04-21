@@ -9,30 +9,34 @@ import { useAudioPlayer } from '@/lib/AudioPlayerContext';
 // ── Constraints ──────────────────────────────────────────────────────────────
 const MIN_W = 300;
 const MAX_W = 960;
-const MIN_H = 76;   // drag-handle(20) + gradient-line(1) + controls(~55)
+const MIN_H = 76;
 const MAX_H = 440;
-const STORAGE_KEY = 'rf_player_v2';
+const STORAGE_KEY = 'rf_player_v3';
 // ─────────────────────────────────────────────────────────────────────────────
 
-interface PS { x: number; y: number; width: number; height: number }
-
-function clampPS(s: PS): PS {
-  const width  = Math.max(MIN_W, Math.min(MAX_W, s.width));
-  const height = Math.max(MIN_H, Math.min(MAX_H, s.height));
-  if (typeof window === 'undefined') return { ...s, width, height };
-  const x = Math.max(0, Math.min(window.innerWidth  - width,  s.x));
-  const y = Math.max(0, Math.min(window.innerHeight - height, s.y));
-  return { x, y, width, height };
+/**
+ * dragged=false  →  render with CSS bottom/left/transform (always visible, zoom-safe)
+ * dragged=true   →  render with explicit left/top pixel coords (where the user placed it)
+ */
+interface PS {
+  dragged: boolean;
+  x: number;
+  y: number;
+  width: number;
+  height: number;
 }
 
-function defaultPS(): PS {
-  const width = 460;
-  return {
-    x: Math.max(0, Math.round((window.innerWidth - width) / 2)),
-    y: Math.max(0, window.innerHeight - MIN_H - 10),
-    width,
-    height: MIN_H,
-  };
+const DEFAULT_W = 480;
+
+function clamp(v: number, lo: number, hi: number) { return Math.max(lo, Math.min(hi, v)); }
+
+function clampPS(s: PS): PS {
+  const width  = clamp(s.width,  MIN_W, MAX_W);
+  const height = clamp(s.height, MIN_H, MAX_H);
+  if (typeof window === 'undefined' || !s.dragged) return { ...s, width, height };
+  const x = clamp(s.x, 0, window.innerWidth  - width);
+  const y = clamp(s.y, 0, window.innerHeight - height);
+  return { ...s, x, y, width, height };
 }
 
 function loadPS(): PS | null {
@@ -51,19 +55,20 @@ export default function RadioPlayer() {
   const { playing, loading, error, volume, muted, setVolume, setMuted, togglePlay } = useAudioPlayer();
   const pathname = usePathname();
   const [currentTime, setCurrentTime] = useState('');
-  const [ps, setPs] = useState<PS>({ x: 0, y: 0, width: 460, height: MIN_H });
+  const [ps, setPs] = useState<PS>({ dragged: false, x: 0, y: 0, width: DEFAULT_W, height: MIN_H });
   const [mounted, setMounted] = useState(false);
   const psRef = useRef<PS>(ps);
+  const panelRef = useRef<HTMLDivElement>(null);
   psRef.current = ps;
 
-  // Hydrate from localStorage once mounted
+  // Hydrate from localStorage once
   useEffect(() => {
-    const initial = loadPS() ?? defaultPS();
-    setPs(initial);
+    const saved = loadPS();
+    if (saved) setPs(saved);
     setMounted(true);
   }, []);
 
-  // Persist on every change (after mount)
+  // Persist after mount
   useEffect(() => {
     if (mounted) savePS(ps);
   }, [ps, mounted]);
@@ -83,7 +88,7 @@ export default function RadioPlayer() {
     setVolume(parseFloat(e.target.value));
   };
 
-  // Toggle expanded info panel (also snaps height)
+  // Expand / collapse
   const toggleExpand = useCallback(() => {
     setPs(prev => {
       const isExpanded = prev.height > MIN_H + 20;
@@ -95,10 +100,21 @@ export default function RadioPlayer() {
   const onDragDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
     if ((e.target as HTMLElement).closest('button, input')) return;
     e.preventDefault();
-    const originX = e.clientX - psRef.current.x;
-    const originY = e.clientY - psRef.current.y;
+
+    // Convert current CSS position to pixel coords before first move
+    const rect = panelRef.current!.getBoundingClientRect();
+    const startX = rect.left;
+    const startY = rect.top;
+    const originX = e.clientX - startX;
+    const originY = e.clientY - startY;
+
+    // Switch to dragged mode immediately so resize handles can see it
+    setPs(prev => clampPS({ ...prev, dragged: true, x: startX, y: startY }));
+
     const onMove = (ev: PointerEvent) => {
-      setPs(prev => clampPS({ ...prev, x: ev.clientX - originX, y: ev.clientY - originY }));
+      const nx = ev.clientX - originX;
+      const ny = ev.clientY - originY;
+      setPs(prev => clampPS({ ...prev, dragged: true, x: nx, y: ny }));
     };
     const onUp = () => {
       window.removeEventListener('pointermove', onMove);
@@ -114,20 +130,23 @@ export default function RadioPlayer() {
     (e: React.PointerEvent<HTMLDivElement>) => {
       e.preventDefault();
       e.stopPropagation();
-      const { x, y, width, height } = psRef.current;
+
+      // Capture actual pixel rect (works for both CSS-centered and dragged)
+      const rect = panelRef.current!.getBoundingClientRect();
+      const x0 = rect.left, y0 = rect.top, w0 = rect.width, h0 = rect.height;
       const sx = e.clientX, sy = e.clientY;
+
       const onMove = (ev: PointerEvent) => {
         const dx = ev.clientX - sx;
         const dy = ev.clientY - sy;
-        let nx = x, ny = y, nw = width, nh = height;
-        if (edges.r) nw = width + dx;
-        if (edges.l) { nw = width - dx; nx = x + dx; }
-        if (edges.b) nh = height + dy;
-        if (edges.t) { nh = height - dy; ny = y + dy; }
-        // Pin opposite edge when minimum is hit
-        if (edges.l && nw < MIN_W) { nw = MIN_W; nx = x + width - MIN_W; }
-        if (edges.t && nh < MIN_H) { nh = MIN_H; ny = y + height - MIN_H; }
-        setPs(clampPS({ x: nx, y: ny, width: nw, height: nh }));
+        let nx = x0, ny = y0, nw = w0, nh = h0;
+        if (edges.r) nw = w0 + dx;
+        if (edges.l) { nw = w0 - dx; nx = x0 + dx; }
+        if (edges.b) nh = h0 + dy;
+        if (edges.t) { nh = h0 - dy; ny = y0 + dy; }
+        if (edges.l && nw < MIN_W) { nw = MIN_W; nx = x0 + w0 - MIN_W; }
+        if (edges.t && nh < MIN_H) { nh = MIN_H; ny = y0 + h0 - MIN_H; }
+        setPs(clampPS({ dragged: true, x: nx, y: ny, width: nw, height: nh }));
       };
       const onUp = () => {
         window.removeEventListener('pointermove', onMove);
@@ -141,32 +160,33 @@ export default function RadioPlayer() {
 
   const showExpanded = ps.height > MIN_H + 20;
 
+  // Build the outer container style
+  // Default (not dragged): CSS-centered at bottom — survives scroll/zoom perfectly
+  // Dragged: explicit left/top so it stays exactly where the user put it
+  const outerStyle: React.CSSProperties = ps.dragged
+    ? { position: 'fixed', left: ps.x, top: ps.y, width: ps.width, height: ps.height, zIndex: 9999 }
+    : { position: 'fixed', bottom: 10, left: '50%', transform: 'translateX(-50%)', width: ps.width, height: ps.height, zIndex: 9999 };
+
   if (pathname.startsWith('/studio')) return null;
   if (!mounted) return null;
 
   return (
-    <div
-      className="fixed z-50 select-none"
-      style={{ left: ps.x, top: ps.y, width: ps.width, height: ps.height }}
-    >
-      {/* ── Edge resize handles (invisible, sit over panel edges) ─────────── */}
-      {/* Top */}
-      <div className="absolute top-0 left-3 right-3 h-1.5 z-20 cursor-ns-resize" onPointerDown={onEdgeDown({ t: 1 })} style={{ touchAction: 'none' }} />
-      {/* Bottom */}
-      <div className="absolute bottom-0 left-3 right-3 h-1.5 z-20 cursor-ns-resize" onPointerDown={onEdgeDown({ b: 1 })} style={{ touchAction: 'none' }} />
-      {/* Left */}
-      <div className="absolute left-0 top-3 bottom-3 w-1.5 z-20 cursor-ew-resize" onPointerDown={onEdgeDown({ l: 1 })} style={{ touchAction: 'none' }} />
-      {/* Right */}
-      <div className="absolute right-0 top-3 bottom-3 w-1.5 z-20 cursor-ew-resize" onPointerDown={onEdgeDown({ r: 1 })} style={{ touchAction: 'none' }} />
-      {/* Corners */}
-      <div className="absolute top-0 left-0 w-3 h-3 z-30 cursor-nwse-resize" onPointerDown={onEdgeDown({ t: 1, l: 1 })} style={{ touchAction: 'none' }} />
-      <div className="absolute top-0 right-0 w-3 h-3 z-30 cursor-nesw-resize" onPointerDown={onEdgeDown({ t: 1, r: 1 })} style={{ touchAction: 'none' }} />
-      <div className="absolute bottom-0 left-0 w-3 h-3 z-30 cursor-nesw-resize" onPointerDown={onEdgeDown({ b: 1, l: 1 })} style={{ touchAction: 'none' }} />
-      <div className="absolute bottom-0 right-0 w-3 h-3 z-30 cursor-nwse-resize" onPointerDown={onEdgeDown({ b: 1, r: 1 })} style={{ touchAction: 'none' }} />
+    <div className="select-none" style={outerStyle}>
+      {/* ── Edge resize handles ──────────────────────────────────────────── */}
+      <div className="absolute top-0    left-3  right-3  h-1.5 z-20 cursor-ns-resize"  onPointerDown={onEdgeDown({ t: 1 })}       style={{ touchAction: 'none' }} />
+      <div className="absolute bottom-0 left-3  right-3  h-1.5 z-20 cursor-ns-resize"  onPointerDown={onEdgeDown({ b: 1 })}       style={{ touchAction: 'none' }} />
+      <div className="absolute left-0   top-3   bottom-3 w-1.5 z-20 cursor-ew-resize"  onPointerDown={onEdgeDown({ l: 1 })}       style={{ touchAction: 'none' }} />
+      <div className="absolute right-0  top-3   bottom-3 w-1.5 z-20 cursor-ew-resize"  onPointerDown={onEdgeDown({ r: 1 })}       style={{ touchAction: 'none' }} />
+      <div className="absolute top-0    left-0  w-3 h-3  z-30 cursor-nwse-resize"      onPointerDown={onEdgeDown({ t: 1, l: 1 })} style={{ touchAction: 'none' }} />
+      <div className="absolute top-0    right-0 w-3 h-3  z-30 cursor-nesw-resize"      onPointerDown={onEdgeDown({ t: 1, r: 1 })} style={{ touchAction: 'none' }} />
+      <div className="absolute bottom-0 left-0  w-3 h-3  z-30 cursor-nesw-resize"      onPointerDown={onEdgeDown({ b: 1, l: 1 })} style={{ touchAction: 'none' }} />
+      <div className="absolute bottom-0 right-0 w-3 h-3  z-30 cursor-nwse-resize"      onPointerDown={onEdgeDown({ b: 1, r: 1 })} style={{ touchAction: 'none' }} />
 
       {/* ── Main panel ───────────────────────────────────────────────────── */}
-      <div className="absolute inset-0 bg-black rounded-xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.7),0_2px_12px_rgba(0,0,0,0.5)] border border-white/[0.09] flex flex-col radio-player">
-
+      <div
+        ref={panelRef}
+        className="absolute inset-0 bg-black rounded-xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.7),0_2px_12px_rgba(0,0,0,0.5)] border border-white/[0.09] flex flex-col radio-player"
+      >
         {/* ── Drag handle bar ──────────────────────────────────────────── */}
         <div
           className="flex-shrink-0 h-5 flex items-center justify-center cursor-grab active:cursor-grabbing border-b border-white/[0.05] group"
@@ -191,9 +211,9 @@ export default function RadioPlayer() {
               transition={{ duration: 0.18 }}
               className="flex-1 min-h-0 overflow-y-auto border-b border-white/[0.06]"
             >
-              <div className="px-4 sm:px-5 py-4 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-red-600/15 border border-red-500/20 flex items-center justify-center flex-shrink-0">
+              <div className="px-4 py-3 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-xl bg-red-600/15 border border-red-500/20 flex items-center justify-center flex-shrink-0">
                     <Mic2 className="w-4 h-4 text-red-400" />
                   </div>
                   <div>
@@ -213,19 +233,19 @@ export default function RadioPlayer() {
         </AnimatePresence>
 
         {/* ── Controls bar ─────────────────────────────────────────────── */}
-        <div className="flex-shrink-0 px-3 sm:px-4 py-2 flex items-center gap-2.5 sm:gap-3">
+        <div className="flex-shrink-0 px-3 py-2 flex items-center gap-2 sm:gap-3">
 
           {/* Station branding */}
           <div className="flex items-center gap-2 flex-1 min-w-0">
-            <div className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 ${playing ? 'bg-red-600/20 border border-red-500/30' : 'bg-white/[0.05] border border-white/[0.08]'}`}>
-              <Radio className={`w-3.5 h-3.5 transition-colors duration-300 ${playing ? 'text-red-400' : 'text-slate-500'}`} />
+            <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 ${playing ? 'bg-red-600/20 border border-red-500/30' : 'bg-white/[0.05] border border-white/[0.08]'}`}>
+              <Radio className={`w-3 h-3 transition-colors duration-300 ${playing ? 'text-red-400' : 'text-slate-500'}`} />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2">
-                <p className="text-xs sm:text-sm font-bold text-white leading-tight truncate">Radio Fontana</p>
+              <div className="flex items-center gap-1.5">
+                <p className="text-xs font-bold text-white leading-tight truncate">Radio Fontana</p>
                 <span className="hidden sm:block text-[10px] text-slate-600">98.8 FM</span>
               </div>
-              <p className="text-[9px] sm:text-[10px] text-slate-500 truncate">
+              <p className="text-[9px] text-slate-500 truncate">
                 {error
                   ? 'Transmetimi nuk është i disponueshëm'
                   : playing
@@ -235,25 +255,25 @@ export default function RadioPlayer() {
             </div>
           </div>
 
-          {/* Waveform (when playing) */}
+          {/* Waveform */}
           {playing && (
-            <div className="hidden sm:flex items-center gap-0.5 h-5 flex-shrink-0">
+            <div className="hidden sm:flex items-center gap-0.5 h-4 flex-shrink-0">
               {[1, 2, 3, 4, 5].map((n) => (
-                <div key={n} className="waveform-bar w-0.5 rounded-full bg-red-500 opacity-80" style={{ height: '6px' }} />
+                <div key={n} className="waveform-bar w-0.5 rounded-full bg-red-500 opacity-80" style={{ height: '5px' }} />
               ))}
             </div>
           )}
 
           {/* Volume */}
-          <div className="flex items-center gap-2 flex-shrink-0 bg-white/[0.07] border border-white/[0.14] rounded-lg px-2.5 py-1.5">
+          <div className="flex items-center gap-1.5 flex-shrink-0 bg-white/[0.07] border border-white/[0.14] rounded-md px-2 py-1">
             <button
               onClick={() => setMuted(!muted)}
-              className="text-white/70 hover:text-white transition-colors flex-shrink-0"
+              className="text-white/65 hover:text-white transition-colors flex-shrink-0"
               aria-label={muted ? 'Aktivizo tingullin' : 'Hiqe tingullin'}
             >
               {muted || volume === 0
-                ? <VolumeX className="w-4 h-4" />
-                : <Volume2 className="w-4 h-4" />}
+                ? <VolumeX className="w-3 h-3" />
+                : <Volume2 className="w-3 h-3" />}
             </button>
             <input
               type="range"
@@ -262,13 +282,13 @@ export default function RadioPlayer() {
               step="0.05"
               value={muted ? 0 : volume}
               onChange={handleVolumeChange}
-              className="volume-slider w-20"
+              className="volume-slider w-16 sm:w-20"
               style={{
                 background: `linear-gradient(to right, #dc2626 ${(muted ? 0 : volume) * 100}%, rgba(255,255,255,0.15) ${(muted ? 0 : volume) * 100}%)`
               }}
               aria-label="Volumi"
             />
-            <span className="text-[10px] text-white/40 tabular-nums w-7 text-right flex-shrink-0">
+            <span className="text-[9px] text-white/40 tabular-nums w-6 text-right flex-shrink-0 leading-none">
               {Math.round((muted ? 0 : volume) * 100)}%
             </span>
           </div>
@@ -284,30 +304,30 @@ export default function RadioPlayer() {
           {/* Play / Pause */}
           <button
             onClick={togglePlay}
-            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-200 active:scale-95 shadow-lg flex-shrink-0 ${
+            className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 active:scale-95 shadow-md flex-shrink-0 ${
               error
-                ? 'bg-slate-700 hover:bg-slate-600 text-slate-300 shadow-black/30'
+                ? 'bg-slate-700 hover:bg-slate-600 text-slate-300'
                 : playing
-                ? 'bg-red-600 hover:bg-red-700 text-white shadow-red-900/40'
-                : 'bg-white hover:bg-slate-100 text-slate-900 shadow-black/20'
+                ? 'bg-red-600 hover:bg-red-700 text-white'
+                : 'bg-white hover:bg-slate-100 text-slate-900'
             }`}
             aria-label={playing ? 'Ndalo' : error ? 'Provo përsëri' : 'Luaj'}
           >
             {loading ? (
-              <div className={`w-4 h-4 border-2 rounded-full animate-spin ${playing ? 'border-white border-t-transparent' : 'border-slate-900 border-t-transparent'}`} />
+              <div className={`w-3 h-3 border-2 rounded-full animate-spin ${playing ? 'border-white border-t-transparent' : 'border-slate-900 border-t-transparent'}`} />
             ) : error ? (
-              <Play className="w-3.5 h-3.5 ml-0.5 opacity-60" />
+              <Play className="w-3 h-3 ml-0.5 opacity-60" />
             ) : playing ? (
-              <Pause className="w-3.5 h-3.5" />
+              <Pause className="w-3 h-3" />
             ) : (
-              <Play className="w-3.5 h-3.5 ml-0.5" />
+              <Play className="w-3 h-3 ml-0.5" />
             )}
           </button>
 
-          {/* Expand / collapse toggle */}
+          {/* Expand / collapse */}
           <button
             onClick={toggleExpand}
-            className="hidden sm:flex p-1.5 text-slate-600 hover:text-white transition-colors rounded-lg hover:bg-white/[0.06] flex-shrink-0"
+            className="hidden sm:flex p-1 text-slate-600 hover:text-white transition-colors rounded-md hover:bg-white/[0.06] flex-shrink-0"
             aria-label={showExpanded ? 'Mbylle' : 'Hap'}
           >
             {showExpanded ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronUp className="w-3.5 h-3.5" />}
@@ -318,4 +338,5 @@ export default function RadioPlayer() {
     </div>
   );
 }
+
 
