@@ -18,12 +18,10 @@ export default function LivePlayer() {
     <div className="min-h-screen bg-slate-950">
       {/* Facebook Live Embed */}
       <div className="w-full bg-black">
-        <div className="max-w-5xl mx-auto">
+        <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
           <iframe
             src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Frtvfontanalive%2Fvideos%2F902541369457878&show_text=false&autoplay=true&width=1280"
-            width="100%"
-            height="600"
-            style={{ border: 'none', overflow: 'hidden' }}
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none', overflow: 'hidden' }}
             scrolling="no"
             frameBorder={0}
             allowFullScreen
