@@ -97,6 +97,37 @@ body {
   -webkit-backdrop-filter: blur(32px) saturate(2);
 }
 
+/* ── Volume slider ── */
+.volume-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 5px;
+  border-radius: 9999px;
+  outline: none;
+  cursor: pointer;
+}
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  transition: transform 0.1s ease;
+}
+.volume-slider:hover::-webkit-slider-thumb { transform: scale(1.2); }
+.volume-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: none;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
 /* ── Card system ── */
 .news-card {
   transition: transform 0.3s cubic-bezier(0.22,1,0.36,1),

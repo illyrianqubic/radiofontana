@@ -245,13 +245,15 @@ export default function RadioPlayer() {
           )}
 
           {/* Volume */}
-          <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
+          <div className="flex items-center gap-2 flex-shrink-0 bg-white/[0.07] border border-white/[0.14] rounded-lg px-2.5 py-1.5">
             <button
               onClick={() => setMuted(!muted)}
-              className="text-slate-500 hover:text-white transition-colors p-1"
+              className="text-white/70 hover:text-white transition-colors flex-shrink-0"
               aria-label={muted ? 'Aktivizo tingullin' : 'Hiqe tingullin'}
             >
-              {muted || volume === 0 ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+              {muted || volume === 0
+                ? <VolumeX className="w-4 h-4" />
+                : <Volume2 className="w-4 h-4" />}
             </button>
             <input
               type="range"
@@ -260,9 +262,15 @@ export default function RadioPlayer() {
               step="0.05"
               value={muted ? 0 : volume}
               onChange={handleVolumeChange}
-              className="w-20"
+              className="volume-slider w-20"
+              style={{
+                background: `linear-gradient(to right, #dc2626 ${(muted ? 0 : volume) * 100}%, rgba(255,255,255,0.15) ${(muted ? 0 : volume) * 100}%)`
+              }}
               aria-label="Volumi"
             />
+            <span className="text-[10px] text-white/40 tabular-nums w-7 text-right flex-shrink-0">
+              {Math.round((muted ? 0 : volume) * 100)}%
+            </span>
           </div>
 
           {/* Live badge */}
