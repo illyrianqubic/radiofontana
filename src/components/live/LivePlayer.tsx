@@ -1,8 +1,21 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import { Radio, Play, Pause, Users, Clock, Mic2, Volume2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAudioPlayer } from '@/lib/AudioPlayerContext';
+import { LiveStream } from '@/lib/types';
+
+const FALLBACK_FB_URL =
+  'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Frtvfontanalive&show_text=false&autoplay=true&width=1280';
+
+function buildFbEmbedUrl(facebookUrl: string | null): string {
+  if (!facebookUrl) return FALLBACK_FB_URL;
+  return (
+    `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(facebookUrl)}` +
+    `&show_text=false&autoplay=true&width=1280`
+  );
+}
 
 const programs = [
   { time: '06:00 - 09:00', show: 'Mëngjesi me Radio Fontana', host: 'Arjeta Krasniqi', live: true },
@@ -13,6 +26,16 @@ const programs = [
 
 export default function LivePlayer() {
   const { playing, loading, error, togglePlay } = useAudioPlayer();
+  const [stream, setStream] = useState<LiveStream | null>(null);
+
+  useEffect(() => {
+    fetch('/api/livestream')
+      .then((r) => r.json())
+      .then((data: LiveStream) => setStream(data))
+      .catch(() => {});
+  }, []);
+
+  const embedUrl = buildFbEmbedUrl(stream?.facebookUrl ?? null);
 
   return (
     <div className="min-h-screen bg-slate-950">
@@ -20,7 +43,7 @@ export default function LivePlayer() {
       <div className="w-full bg-black">
         <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
           <iframe
-            src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Frtvfontanalive%2Fvideos%2F902541369457878&show_text=false&autoplay=true&width=1280"
+            src={embedUrl}
             style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none', overflow: 'hidden' }}
             scrolling="no"
             frameBorder={0}

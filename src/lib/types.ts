@@ -1,9 +1,17 @@
+// Minimal portable text block type — avoids a hard dep on sanity in types.ts
+export type PortableTextBlock = {
+  _type: string;
+  _key?: string;
+  [key: string]: unknown;
+};
+
 export interface Article {
   id: string;
   slug: string;
   title: string;
   excerpt: string;
-  content: string;
+  /** Portable Text blocks (from Sanity) or raw HTML string (legacy) */
+  content: string | PortableTextBlock[];
   category: Category;
   author: string;
   publishedAt: string;
@@ -11,6 +19,14 @@ export interface Article {
   tags: string[];
   featured?: boolean;
   breaking?: boolean;
+}
+
+export interface LiveStream {
+  isLive: boolean;
+  title: string | null;
+  facebookUrl: string | null;
+  youtubeUrl: string | null;
+  description: string | null;
 }
 
 export type Category =

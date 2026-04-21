@@ -6,34 +6,43 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Clock, User, Tag, ArrowLeft, Share2 } from 'lucide-react';
 import { FacebookIcon, TwitterIcon } from '@/components/shared/SocialIcons';
-import articlesData from '@/data/articles.json';
 import { Article, CATEGORY_COLORS } from '@/lib/types';
 import NewsCard from '@/components/news/NewsCard';
+import SanityPortableText from '@/components/sanity/PortableText';
 import { formatAlbanianDate, timeAgo } from '@/lib/utils';
-
-const staticArticles = articlesData as Article[];
 
 interface Props {
   slug: string;
 }
 
 export default function ArticleClient({ slug }: Props) {
-  const [allArticles, setAllArticles] = useState<Article[]>(staticArticles);
+  const [article, setArticle] = useState<Article | null>(null);
+  const [related, setRelated] = useState<Article[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/articles?limit=100')
-      .then((r) => r.json())
-      .then((data: Article[]) => {
-        if (Array.isArray(data) && data.length > 0) {
-          setAllArticles([...data, ...staticArticles]);
+    // Fetch the article by slug from the dedicated endpoint
+    fetch(`/api/article?slug=${encodeURIComponent(slug)}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data: Article | null) => {
+        setArticle(data);
+        if (data) {
+          // Fetch related articles in the same category
+          fetch('/api/articles?limit=8')
+            .then((r) => r.json())
+            .then((all: Article[]) => {
+              setRelated(
+                (Array.isArray(all) ? all : [])
+                  .filter((a) => a.id !== data.id && a.category === data.category)
+                  .slice(0, 4),
+              );
+            })
+            .catch(() => {});
         }
       })
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, []);
-
-  const article = allArticles.find((a) => a.slug === slug) ?? null;
+  }, [slug]);
 
   if (!loading && !article) {
     notFound();
@@ -53,10 +62,6 @@ export default function ArticleClient({ slug }: Props) {
       </div>
     );
   }
-
-  const related = allArticles
-    .filter((a) => a.id !== article.id && a.category === article.category)
-    .slice(0, 4);
 
   const catColor = CATEGORY_COLORS[article.category];
 
@@ -122,10 +127,16 @@ export default function ArticleClient({ slug }: Props) {
             </div>
 
             {/* Article content */}
-            <div
-              className="prose prose-lg max-w-none prose-headings:text-slate-800 prose-p:text-slate-600 prose-p:leading-relaxed"
-              dangerouslySetInnerHTML={{ __html: article.content }}
-            />
+            {Array.isArray(article.content) ? (
+              <div className="prose prose-lg max-w-none">
+                <SanityPortableText value={article.content} />
+              </div>
+            ) : (
+              <div
+                className="prose prose-lg max-w-none prose-headings:text-slate-800 prose-p:text-slate-600 prose-p:leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: article.content as string }}
+              />
+            )}
 
             {/* Tags */}
             <div className="mt-10 pt-7 border-t border-slate-100">
@@ -204,8 +215,7 @@ export default function ArticleClient({ slug }: Props) {
                 <h3 className="font-extrabold text-[10px] text-slate-700 uppercase tracking-[0.14em]">Lajmet e Fundit</h3>
               </div>
               <div className="divide-y divide-slate-50">
-                {allArticles
-                  .filter((a) => a.id !== article.id)
+                {related
                   .slice(0, 5)
                   .map((a) => (
                     <div key={a.id} className="p-2">

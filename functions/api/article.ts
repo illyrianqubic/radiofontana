@@ -1,5 +1,5 @@
-// Cloudflare Pages Function: /api/articles
-// Fetches published posts from Sanity via the GROQ HTTP API.
+// Cloudflare Pages Function: /api/article
+// Fetches a single post by slug from Sanity via the GROQ HTTP API.
 
 interface Env {
   NEXT_PUBLIC_SANITY_PROJECT_ID: string;
@@ -8,7 +8,8 @@ interface Env {
 
 const API_VERSION = '2024-01-01';
 
-const QUERY = `*[_type == "post" && defined(slug.current)] | order(publishedAt desc) [0...$limit] {
+// Using GROQ $slug parameter to avoid injection
+const QUERY = `*[_type == "post" && slug.current == $slug][0] {
   "id": _id,
   "slug": slug.current,
   title,
@@ -31,22 +32,28 @@ export async function onRequestGet(context: {
   const projectId = env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 
   if (!projectId) {
-    return new Response(JSON.stringify([]), {
+    return new Response(JSON.stringify(null), {
+      status: 404,
       headers: { 'Content-Type': 'application/json' },
     });
   }
 
   const dataset = env.NEXT_PUBLIC_SANITY_DATASET || 'production';
   const reqUrl = new URL(context.request.url);
-  const limit = Math.min(
-    parseInt(reqUrl.searchParams.get('limit') ?? '20', 10),
-    200,
-  );
+  const slug = reqUrl.searchParams.get('slug') ?? '';
 
-  // $limit must be a number in GROQ — pass as plain integer in the URL
+  if (!slug) {
+    return new Response(JSON.stringify(null), {
+      status: 400,
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  // Sanity GROQ parameters: $slug must be JSON-encoded (quoted string)
+  const slugParam = JSON.stringify(slug);
   const url =
     `https://${projectId}.apicdn.sanity.io/v${API_VERSION}/data/query/${dataset}` +
-    `?query=${encodeURIComponent(QUERY)}&%24limit=${limit}`;
+    `?query=${encodeURIComponent(QUERY)}&%24slug=${encodeURIComponent(slugParam)}`;
 
   try {
     const res = await fetch(url, {
@@ -57,9 +64,19 @@ export async function onRequestGet(context: {
       throw new Error(`Sanity responded with ${res.status}`);
     }
 
-    const data = (await res.json()) as { result?: unknown[] };
+    const data = (await res.json()) as { result?: unknown };
 
-    return new Response(JSON.stringify(data.result ?? []), {
+    if (!data.result) {
+      return new Response(JSON.stringify(null), {
+        status: 404,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
+    }
+
+    return new Response(JSON.stringify(data.result), {
       headers: {
         'Content-Type': 'application/json',
         'Cache-Control': 'public, max-age=60, stale-while-revalidate=300',
@@ -67,9 +84,9 @@ export async function onRequestGet(context: {
       },
     });
   } catch (err) {
-    console.error('[/api/articles] error:', err);
-    return new Response(JSON.stringify([]), {
-      status: 200, // return empty array so the UI degrades gracefully
+    console.error('[/api/article] error:', err);
+    return new Response(JSON.stringify(null), {
+      status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
   }

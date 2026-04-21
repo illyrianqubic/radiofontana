@@ -5,24 +5,21 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, TrendingUp, Clock, Flame, Radio, Rss } from 'lucide-react';
 import { Article, CATEGORIES, CATEGORY_COLORS } from '@/lib/types';
-import articlesData from '@/data/articles.json';
 import NewsCard from '@/components/news/NewsCard';
 import BreakingNewsTicker from '@/components/layout/BreakingNewsTicker';
 import WeatherWidget from '@/components/home/WeatherWidget';
 import NewsletterSection from '@/components/home/NewsletterSection';
 import { timeAgo, readTime } from '@/lib/utils';
 
-const staticArticles = articlesData as Article[];
-
 export default function HomeClient() {
-  const [articles, setArticles] = useState<Article[]>(staticArticles);
+  const [articles, setArticles] = useState<Article[]>([]);
 
   useEffect(() => {
     fetch('/api/articles?limit=100')
       .then((r) => r.json())
       .then((data: Article[]) => {
         if (Array.isArray(data) && data.length > 0) {
-          setArticles([...data, ...staticArticles]);
+          setArticles(data);
         }
       })
       .catch(() => {});

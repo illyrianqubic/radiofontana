@@ -4,25 +4,22 @@ import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Article, Category, CATEGORY_COLORS } from '@/lib/types';
-import articlesData from '@/data/articles.json';
 import NewsCard from '@/components/news/NewsCard';
 import NewsFilter from '@/components/news/NewsFilter';
-
-const staticArticles = articlesData as Article[];
 
 export default function LajmeClient() {
   const searchParams = useSearchParams();
   const kategoria = searchParams.get('kategoria') as Category | null;
   const q = searchParams.get('q') ?? '';
 
-  const [allArticles, setAllArticles] = useState<Article[]>(staticArticles);
+  const [allArticles, setAllArticles] = useState<Article[]>([]);
 
   useEffect(() => {
     fetch('/api/articles?limit=100')
       .then((r) => r.json())
       .then((data: Article[]) => {
         if (Array.isArray(data) && data.length > 0) {
-          setAllArticles([...data, ...staticArticles]);
+          setAllArticles(data);
         }
       })
       .catch(() => {});

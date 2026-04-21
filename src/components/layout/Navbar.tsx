@@ -68,6 +68,7 @@ export default function Navbar() {
   const [searchQuery, setSearchQuery] = useState('');
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isLive, setIsLive] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -80,6 +81,14 @@ export default function Navbar() {
     setMobileOpen(false);
     setDropdownOpen(false);
   }, [pathname]);
+
+  // Fetch live status from Sanity via Cloudflare Function
+  useEffect(() => {
+    fetch('/api/livestream')
+      .then((r) => r.json())
+      .then((data: { isLive?: boolean }) => setIsLive(data?.isLive === true))
+      .catch(() => {});
+  }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -182,14 +191,16 @@ export default function Navbar() {
 
             {/* Right side */}
             <div className="flex items-center gap-1.5">
-              {/* Live badge */}
-              <Link
-                href="/live"
-                className="hidden sm:flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-[11px] font-bold px-3 py-1.5 rounded-full transition-colors live-glow"
-              >
-                <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                LIVE
-              </Link>
+              {/* Live badge — visible only when Sanity liveStream.isLive is true */}
+              {isLive && (
+                <Link
+                  href="/live"
+                  className="hidden sm:flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-[11px] font-bold px-3 py-1.5 rounded-full transition-colors live-glow"
+                >
+                  <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                  LIVE
+                </Link>
+              )}
 
               <button
                 onClick={() => setSearchOpen(!searchOpen)}

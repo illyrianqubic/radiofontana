@@ -21,9 +21,22 @@ export function timeAgo(dateString: string): string {
   return `${diffDays} ditë më parë`;
 }
 
-/** Estimated reading time in minutes (avg 200 words/min) */
-export function readTime(content: string): number {
-  const words = content.trim().split(/\s+/).length;
+/** Estimated reading time in minutes (avg 200 words/min).
+ *  Accepts a plain string or a Portable Text block array. */
+export function readTime(content: string | unknown[]): number {
+  let text: string;
+  if (typeof content === 'string') {
+    text = content;
+  } else if (Array.isArray(content)) {
+    // Extract text from Portable Text blocks
+    text = (content as Array<{ _type?: string; children?: Array<{ text?: string }> }>)
+      .filter((b) => b._type === 'block')
+      .flatMap((b) => (b.children ?? []).map((c) => c.text ?? ''))
+      .join(' ');
+  } else {
+    return 1;
+  }
+  const words = text.trim().split(/\s+/).filter(Boolean).length;
   return Math.max(1, Math.round(words / 200));
 }
 

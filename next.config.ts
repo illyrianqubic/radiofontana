@@ -6,6 +6,8 @@ const nextConfig: NextConfig = {
   images: {
     unoptimized: true,
   },
+  // next-sanity and the Sanity Studio use some packages that need transpilation
+  transpilePackages: ['next-sanity'],
 };
 
 export default nextConfig;
