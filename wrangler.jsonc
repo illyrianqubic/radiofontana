@@ -2,5 +2,10 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "radiofontana",
   "pages_build_output_dir": "out",
-  "compatibility_date": "2026-02-04"
+  "compatibility_date": "2026-02-04",
+  "vars": {
+    "NEXT_PUBLIC_SANITY_PROJECT_ID": "ksakxvtt",
+    "NEXT_PUBLIC_SANITY_DATASET": "production",
+    "NEXT_PUBLIC_SANITY_API_VERSION": "2024-01-01"
+  }
 }
