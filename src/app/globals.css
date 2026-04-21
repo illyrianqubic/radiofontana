@@ -31,13 +31,11 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans), system-ui, sans-serif;
-  padding-bottom: 62px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   font-feature-settings: "kern" 1, "liga" 1;
 }
-@media (min-width: 640px) { body { padding-bottom: 72px; } }
 
 /* ── Selection ── */
 ::selection { background: rgba(220,38,38,0.12); color: #b91c1c; }

@@ -2,52 +2,73 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
-import { Play, Pause, Volume2, VolumeX, Radio, ChevronUp, ChevronDown, Mic2 } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, Radio, ChevronUp, ChevronDown, Mic2, GripHorizontal } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAudioPlayer } from '@/lib/AudioPlayerContext';
 
-// ── Resize constraints ──────────────────────────────────────────────────────
-const MIN_HEIGHT = 56;   // px — collapsed bar's natural height
-const MAX_HEIGHT = 320;  // px
-const MIN_WIDTH  = 300;  // minimum player width in px
-// ────────────────────────────────────────────────────────────────────────────
+// ── Constraints ──────────────────────────────────────────────────────────────
+const MIN_W = 300;
+const MAX_W = 960;
+const MIN_H = 76;   // drag-handle(20) + gradient-line(1) + controls(~55)
+const MAX_H = 440;
+const STORAGE_KEY = 'rf_player_v2';
+// ─────────────────────────────────────────────────────────────────────────────
 
-interface PlayerSize {
-  height: number;      // 0 = auto/natural; >0 = explicit forced height
-  marginLeft: number;  // px inset from left edge of viewport
-  marginRight: number; // px inset from right edge of viewport
+interface PS { x: number; y: number; width: number; height: number }
+
+function clampPS(s: PS): PS {
+  const width  = Math.max(MIN_W, Math.min(MAX_W, s.width));
+  const height = Math.max(MIN_H, Math.min(MAX_H, s.height));
+  if (typeof window === 'undefined') return { ...s, width, height };
+  const x = Math.max(0, Math.min(window.innerWidth  - width,  s.x));
+  const y = Math.max(0, Math.min(window.innerHeight - height, s.y));
+  return { x, y, width, height };
 }
 
-function loadSize(): PlayerSize {
-  if (typeof window === 'undefined') return { height: 0, marginLeft: 0, marginRight: 0 };
+function defaultPS(): PS {
+  const width = 460;
+  return {
+    x: Math.max(0, Math.round((window.innerWidth - width) / 2)),
+    y: Math.max(0, window.innerHeight - MIN_H - 10),
+    width,
+    height: MIN_H,
+  };
+}
+
+function loadPS(): PS | null {
   try {
-    const raw = localStorage.getItem('rf_player_size');
-    if (raw) return { height: 0, marginLeft: 0, marginRight: 0, ...JSON.parse(raw) };
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) return clampPS(JSON.parse(raw) as PS);
   } catch { /* ignore */ }
-  return { height: 0, marginLeft: 0, marginRight: 0 };
+  return null;
 }
 
-function saveSize(s: PlayerSize) {
-  try { localStorage.setItem('rf_player_size', JSON.stringify(s)); } catch { /* ignore */ }
+function savePS(s: PS) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch { /* ignore */ }
 }
 
 export default function RadioPlayer() {
   const { playing, loading, error, volume, muted, setVolume, setMuted, togglePlay } = useAudioPlayer();
   const pathname = usePathname();
-  const [expanded, setExpanded] = useState(false);
   const [currentTime, setCurrentTime] = useState('');
-  const [size, setSize] = useState<PlayerSize>({ height: 0, marginLeft: 0, marginRight: 0 });
+  const [ps, setPs] = useState<PS>({ x: 0, y: 0, width: 460, height: MIN_H });
   const [mounted, setMounted] = useState(false);
+  const psRef = useRef<PS>(ps);
+  psRef.current = ps;
 
-  // Keep a ref so pointer-move closures always read the latest size
-  const sizeRef = useRef(size);
-  sizeRef.current = size;
-
+  // Hydrate from localStorage once mounted
   useEffect(() => {
-    setSize(loadSize());
+    const initial = loadPS() ?? defaultPS();
+    setPs(initial);
     setMounted(true);
   }, []);
 
+  // Persist on every change (after mount)
+  useEffect(() => {
+    if (mounted) savePS(ps);
+  }, [ps, mounted]);
+
+  // Clock
   useEffect(() => {
     const tick = () => {
       const now = new Date();
@@ -62,27 +83,22 @@ export default function RadioPlayer() {
     setVolume(parseFloat(e.target.value));
   };
 
-  const applySize = useCallback((updates: Partial<PlayerSize>) => {
-    setSize(prev => {
-      const next = { ...prev, ...updates };
-      saveSize(next);
-      return next;
+  // Toggle expanded info panel (also snaps height)
+  const toggleExpand = useCallback(() => {
+    setPs(prev => {
+      const isExpanded = prev.height > MIN_H + 20;
+      return clampPS({ ...prev, height: isExpanded ? MIN_H : 220 });
     });
   }, []);
 
-  // ── TOP handle — vertical resize ──────────────────────────────────────────
-  const onTopHandlePointerDown = useCallback((e: React.PointerEvent) => {
+  // ── Drag to move ─────────────────────────────────────────────────────────
+  const onDragDown = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    if ((e.target as HTMLElement).closest('button, input')) return;
     e.preventDefault();
-    const startY = e.clientY;
-    // Use whatever the current forced height is, falling back to MIN_HEIGHT
-    const startH = sizeRef.current.height || MIN_HEIGHT;
-
+    const originX = e.clientX - psRef.current.x;
+    const originY = e.clientY - psRef.current.y;
     const onMove = (ev: PointerEvent) => {
-      const delta = startY - ev.clientY; // drag up → positive → taller
-      let newH = Math.max(MIN_HEIGHT, Math.min(MAX_HEIGHT, startH + delta));
-      // Snap back to auto when very close to natural size
-      if (newH <= MIN_HEIGHT + 6) newH = 0;
-      applySize({ height: newH });
+      setPs(prev => clampPS({ ...prev, x: ev.clientX - originX, y: ev.clientY - originY }));
     };
     const onUp = () => {
       window.removeEventListener('pointermove', onMove);
@@ -90,250 +106,208 @@ export default function RadioPlayer() {
     };
     window.addEventListener('pointermove', onMove);
     window.addEventListener('pointerup', onUp);
-  }, [applySize]);
+  }, []);
 
-  // ── LEFT handle — horizontal resize ──────────────────────────────────────
-  const onLeftHandlePointerDown = useCallback((e: React.PointerEvent) => {
-    e.preventDefault();
-    const startX = e.clientX;
-    const startML = sizeRef.current.marginLeft;
+  // ── Resize via edge / corner handles ─────────────────────────────────────
+  const onEdgeDown = useCallback(
+    (edges: { t?: 1; b?: 1; l?: 1; r?: 1 }) =>
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const { x, y, width, height } = psRef.current;
+      const sx = e.clientX, sy = e.clientY;
+      const onMove = (ev: PointerEvent) => {
+        const dx = ev.clientX - sx;
+        const dy = ev.clientY - sy;
+        let nx = x, ny = y, nw = width, nh = height;
+        if (edges.r) nw = width + dx;
+        if (edges.l) { nw = width - dx; nx = x + dx; }
+        if (edges.b) nh = height + dy;
+        if (edges.t) { nh = height - dy; ny = y + dy; }
+        // Pin opposite edge when minimum is hit
+        if (edges.l && nw < MIN_W) { nw = MIN_W; nx = x + width - MIN_W; }
+        if (edges.t && nh < MIN_H) { nh = MIN_H; ny = y + height - MIN_H; }
+        setPs(clampPS({ x: nx, y: ny, width: nw, height: nh }));
+      };
+      const onUp = () => {
+        window.removeEventListener('pointermove', onMove);
+        window.removeEventListener('pointerup', onUp);
+      };
+      window.addEventListener('pointermove', onMove);
+      window.addEventListener('pointerup', onUp);
+    },
+    []
+  );
 
-    const onMove = (ev: PointerEvent) => {
-      const delta = ev.clientX - startX; // drag right → bigger left margin
-      const maxML = Math.max(0, window.innerWidth - MIN_WIDTH - sizeRef.current.marginRight);
-      applySize({ marginLeft: Math.max(0, Math.min(maxML, startML + delta)) });
-    };
-    const onUp = () => {
-      window.removeEventListener('pointermove', onMove);
-      window.removeEventListener('pointerup', onUp);
-    };
-    window.addEventListener('pointermove', onMove);
-    window.addEventListener('pointerup', onUp);
-  }, [applySize]);
+  const showExpanded = ps.height > MIN_H + 20;
 
-  // ── RIGHT handle — horizontal resize ─────────────────────────────────────
-  const onRightHandlePointerDown = useCallback((e: React.PointerEvent) => {
-    e.preventDefault();
-    const startX = e.clientX;
-    const startMR = sizeRef.current.marginRight;
-
-    const onMove = (ev: PointerEvent) => {
-      const delta = startX - ev.clientX; // drag left → bigger right margin
-      const maxMR = Math.max(0, window.innerWidth - MIN_WIDTH - sizeRef.current.marginLeft);
-      applySize({ marginRight: Math.max(0, Math.min(maxMR, startMR + delta)) });
-    };
-    const onUp = () => {
-      window.removeEventListener('pointermove', onMove);
-      window.removeEventListener('pointerup', onUp);
-    };
-    window.addEventListener('pointermove', onMove);
-    window.addEventListener('pointerup', onUp);
-  }, [applySize]);
-
-  // Whether the container has a forced height (expanded via drag)
-  const isHeightForced = mounted && size.height > 0;
-  // Show expanded panel if toggled by button OR if user dragged the player taller
-  const showExpandedContent = expanded || isHeightForced;
-
-  const containerStyle: React.CSSProperties = mounted ? {
-    left:  size.marginLeft,
-    right: size.marginRight,
-    ...(size.height > 0 ? { height: size.height } : {}),
-  } : {};
-
-  if (pathname.startsWith('/studio')) {
-    return null;
-  }
+  if (pathname.startsWith('/studio')) return null;
+  if (!mounted) return null;
 
   return (
     <div
-      className="fixed bottom-0 z-50 radio-player flex flex-col"
-      style={containerStyle}
+      className="fixed z-50 select-none"
+      style={{ left: ps.x, top: ps.y, width: ps.width, height: ps.height }}
     >
-      {/* ── TOP drag handle ──────────────────────────────────────────────── */}
-      <div
-        className="h-2 w-full flex-shrink-0 cursor-ns-resize group relative select-none"
-        onPointerDown={onTopHandlePointerDown}
-        style={{ touchAction: 'none' }}
-        title="Drag to resize height"
-      >
-        {/* Subtle indicator pill — visible on hover */}
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-          <div className="w-10 h-1 rounded-full bg-white/25" />
-        </div>
-      </div>
+      {/* ── Edge resize handles (invisible, sit over panel edges) ─────────── */}
+      {/* Top */}
+      <div className="absolute top-0 left-3 right-3 h-1.5 z-20 cursor-ns-resize" onPointerDown={onEdgeDown({ t: 1 })} style={{ touchAction: 'none' }} />
+      {/* Bottom */}
+      <div className="absolute bottom-0 left-3 right-3 h-1.5 z-20 cursor-ns-resize" onPointerDown={onEdgeDown({ b: 1 })} style={{ touchAction: 'none' }} />
+      {/* Left */}
+      <div className="absolute left-0 top-3 bottom-3 w-1.5 z-20 cursor-ew-resize" onPointerDown={onEdgeDown({ l: 1 })} style={{ touchAction: 'none' }} />
+      {/* Right */}
+      <div className="absolute right-0 top-3 bottom-3 w-1.5 z-20 cursor-ew-resize" onPointerDown={onEdgeDown({ r: 1 })} style={{ touchAction: 'none' }} />
+      {/* Corners */}
+      <div className="absolute top-0 left-0 w-3 h-3 z-30 cursor-nwse-resize" onPointerDown={onEdgeDown({ t: 1, l: 1 })} style={{ touchAction: 'none' }} />
+      <div className="absolute top-0 right-0 w-3 h-3 z-30 cursor-nesw-resize" onPointerDown={onEdgeDown({ t: 1, r: 1 })} style={{ touchAction: 'none' }} />
+      <div className="absolute bottom-0 left-0 w-3 h-3 z-30 cursor-nesw-resize" onPointerDown={onEdgeDown({ b: 1, l: 1 })} style={{ touchAction: 'none' }} />
+      <div className="absolute bottom-0 right-0 w-3 h-3 z-30 cursor-nwse-resize" onPointerDown={onEdgeDown({ b: 1, r: 1 })} style={{ touchAction: 'none' }} />
 
-      {/* ── Expanded info panel ───────────────────────────────────────────── */}
-      <AnimatePresence>
-        {showExpandedContent && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: isHeightForced ? 'auto' : 'auto', opacity: 1, flex: isHeightForced ? '1 1 0%' : '0 0 auto' }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2, ease: 'easeInOut' }}
-            className="bg-[#080b12]/98 backdrop-blur-2xl text-white overflow-hidden border-t border-white/[0.06]"
-          >
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 sm:py-5">
-              <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
+      {/* ── Main panel ───────────────────────────────────────────────────── */}
+      <div className="absolute inset-0 bg-black rounded-xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.7),0_2px_12px_rgba(0,0,0,0.5)] border border-white/[0.09] flex flex-col radio-player">
+
+        {/* ── Drag handle bar ──────────────────────────────────────────── */}
+        <div
+          className="flex-shrink-0 h-5 flex items-center justify-center cursor-grab active:cursor-grabbing border-b border-white/[0.05] group"
+          onPointerDown={onDragDown}
+          style={{ touchAction: 'none' }}
+          title="Drag to move"
+        >
+          <GripHorizontal className="w-4 h-4 text-white/20 group-hover:text-white/50 transition-colors duration-150" />
+        </div>
+
+        {/* Red gradient accent line */}
+        <div className="h-px flex-shrink-0 gradient-bar" />
+
+        {/* ── Expanded info panel ───────────────────────────────────────── */}
+        <AnimatePresence>
+          {showExpanded && (
+            <motion.div
+              key="expanded"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.18 }}
+              className="flex-1 min-h-0 overflow-y-auto border-b border-white/[0.06]"
+            >
+              <div className="px-4 sm:px-5 py-4 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl bg-red-600/15 border border-red-500/20 flex items-center justify-center">
-                    <Mic2 className="w-5 h-5 text-red-400" />
+                  <div className="w-10 h-10 rounded-xl bg-red-600/15 border border-red-500/20 flex items-center justify-center flex-shrink-0">
+                    <Mic2 className="w-4 h-4 text-red-400" />
                   </div>
                   <div>
                     <p className="text-[9px] font-extrabold uppercase tracking-[0.18em] text-red-400 mb-0.5">Tani në emision</p>
-                    <p className="text-white font-extrabold text-base">Mëngjesi me Radio Fontana</p>
-                    <p className="text-slate-500 text-sm">me Arjeta Krasniqi · 06:00 – 09:00</p>
+                    <p className="text-white font-extrabold text-sm">Mëngjesi me Radio Fontana</p>
+                    <p className="text-slate-500 text-xs">me Arjeta Krasniqi · 06:00 – 09:00</p>
                   </div>
                 </div>
                 {currentTime && (
-                  <div className="text-3xl font-mono text-white/20 tabular-nums font-light tracking-widest">
+                  <div className="text-2xl font-mono text-white/20 tabular-nums font-light tracking-widest">
                     {currentTime}
                   </div>
                 )}
               </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* ── Controls bar ─────────────────────────────────────────────── */}
+        <div className="flex-shrink-0 px-3 sm:px-4 py-2 flex items-center gap-2.5 sm:gap-3">
+
+          {/* Station branding */}
+          <div className="flex items-center gap-2 flex-1 min-w-0">
+            <div className={`w-8 h-8 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 ${playing ? 'bg-red-600/20 border border-red-500/30' : 'bg-white/[0.05] border border-white/[0.08]'}`}>
+              <Radio className={`w-3.5 h-3.5 transition-colors duration-300 ${playing ? 'text-red-400' : 'text-slate-500'}`} />
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ── Main player bar ───────────────────────────────────────────────── */}
-      <div className="relative bg-[#0a0d14]/95 backdrop-blur-2xl border-t border-white/[0.06] text-white shadow-[0_-4px_24px_rgba(0,0,0,0.4)] flex-shrink-0">
-        {/* Thin red accent line */}
-        <div className="h-px gradient-bar" />
-
-        {/* LEFT drag handle */}
-        <div
-          className="absolute left-0 top-0 bottom-0 w-2 cursor-ew-resize group z-10 select-none"
-          onPointerDown={onLeftHandlePointerDown}
-          style={{ touchAction: 'none' }}
-          title="Drag to resize width"
-        >
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-            <div className="h-5 w-1 rounded-full bg-white/25" />
-          </div>
-        </div>
-
-        {/* RIGHT drag handle */}
-        <div
-          className="absolute right-0 top-0 bottom-0 w-2 cursor-ew-resize group z-10 select-none"
-          onPointerDown={onRightHandlePointerDown}
-          style={{ touchAction: 'none' }}
-          title="Drag to resize width"
-        >
-          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-150">
-            <div className="h-5 w-1 rounded-full bg-white/25" />
-          </div>
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-2.5">
-          <div className="flex items-center gap-2.5 sm:gap-4">
-
-            {/* Station branding */}
-            <div className="flex items-center gap-2.5 sm:gap-3 flex-1 min-w-0">
-              <div className={`w-8 h-8 sm:w-9 sm:h-9 rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 ${playing ? 'bg-red-600/20 border border-red-500/30' : 'bg-white/[0.05] border border-white/[0.08]'}`}>
-                <Radio className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-colors duration-300 ${playing ? 'text-red-400' : 'text-slate-500'}`} />
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-2">
+                <p className="text-xs sm:text-sm font-bold text-white leading-tight truncate">Radio Fontana</p>
+                <span className="hidden sm:block text-[10px] text-slate-600">98.8 FM</span>
               </div>
-              <div className="min-w-0 flex-1">
-                <div className="flex items-center gap-2">
-                  <p className="text-xs sm:text-sm font-bold text-white leading-tight truncate">Radio Fontana</p>
-                  <span className="hidden sm:block text-[10px] text-slate-600">98.8 FM</span>
-                </div>
-                <p className="text-[9px] sm:text-[10px] text-slate-500 truncate">
-                  {error
-                    ? 'Transmetimi nuk është i disponueshëm'
-                    : playing
-                    ? 'Duke transmetuar live · Pejë, Kosovë'
-                    : 'Klikoni play për të dëgjuar'}
-                </p>
-              </div>
+              <p className="text-[9px] sm:text-[10px] text-slate-500 truncate">
+                {error
+                  ? 'Transmetimi nuk është i disponueshëm'
+                  : playing
+                  ? 'Duke transmetuar live · Pejë, Kosovë'
+                  : 'Klikoni play për të dëgjuar'}
+              </p>
             </div>
+          </div>
 
-            {/* Waveform (when playing) */}
-            {playing && (
-              <div className="hidden sm:flex items-center gap-0.5 h-5 flex-shrink-0">
-                {[1, 2, 3, 4, 5].map((n) => (
-                  <div
-                    key={n}
-                    className="waveform-bar w-0.5 rounded-full bg-red-500 opacity-80"
-                    style={{ height: '6px' }}
-                  />
-                ))}
-              </div>
+          {/* Waveform (when playing) */}
+          {playing && (
+            <div className="hidden sm:flex items-center gap-0.5 h-5 flex-shrink-0">
+              {[1, 2, 3, 4, 5].map((n) => (
+                <div key={n} className="waveform-bar w-0.5 rounded-full bg-red-500 opacity-80" style={{ height: '6px' }} />
+              ))}
+            </div>
+          )}
+
+          {/* Volume */}
+          <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
+            <button
+              onClick={() => setMuted(!muted)}
+              className="text-slate-500 hover:text-white transition-colors p-1"
+              aria-label={muted ? 'Aktivizo tingullin' : 'Hiqe tingullin'}
+            >
+              {muted || volume === 0 ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+            </button>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              value={muted ? 0 : volume}
+              onChange={handleVolumeChange}
+              className="w-20"
+              aria-label="Volumi"
+            />
+          </div>
+
+          {/* Live badge */}
+          {playing && (
+            <span className="hidden sm:flex items-center gap-1 bg-red-600/15 border border-red-500/25 text-red-400 px-2 py-1 rounded-full text-[9px] font-extrabold tracking-wider flex-shrink-0">
+              <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+              LIVE
+            </span>
+          )}
+
+          {/* Play / Pause */}
+          <button
+            onClick={togglePlay}
+            className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center transition-all duration-200 active:scale-95 shadow-lg flex-shrink-0 ${
+              error
+                ? 'bg-slate-700 hover:bg-slate-600 text-slate-300 shadow-black/30'
+                : playing
+                ? 'bg-red-600 hover:bg-red-700 text-white shadow-red-900/40'
+                : 'bg-white hover:bg-slate-100 text-slate-900 shadow-black/20'
+            }`}
+            aria-label={playing ? 'Ndalo' : error ? 'Provo përsëri' : 'Luaj'}
+          >
+            {loading ? (
+              <div className={`w-4 h-4 border-2 rounded-full animate-spin ${playing ? 'border-white border-t-transparent' : 'border-slate-900 border-t-transparent'}`} />
+            ) : error ? (
+              <Play className="w-3.5 h-3.5 ml-0.5 opacity-60" />
+            ) : playing ? (
+              <Pause className="w-3.5 h-3.5" />
+            ) : (
+              <Play className="w-3.5 h-3.5 ml-0.5" />
             )}
+          </button>
 
-            {/* Controls */}
-            <div className="flex items-center gap-2.5 sm:gap-3 flex-shrink-0">
-              {/* Volume */}
-              <div className="hidden sm:flex items-center gap-2">
-                <button
-                  onClick={() => setMuted(!muted)}
-                  className="text-slate-500 hover:text-white transition-colors p-1"
-                  aria-label={muted ? 'Aktivizo tingullin' : 'Hiqe tingullin'}
-                >
-                  {muted || volume === 0 ? (
-                    <VolumeX className="w-3.5 h-3.5" />
-                  ) : (
-                    <Volume2 className="w-3.5 h-3.5" />
-                  )}
-                </button>
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.05"
-                  value={muted ? 0 : volume}
-                  onChange={handleVolumeChange}
-                  className="w-20"
-                  aria-label="Volumi"
-                />
-              </div>
+          {/* Expand / collapse toggle */}
+          <button
+            onClick={toggleExpand}
+            className="hidden sm:flex p-1.5 text-slate-600 hover:text-white transition-colors rounded-lg hover:bg-white/[0.06] flex-shrink-0"
+            aria-label={showExpanded ? 'Mbylle' : 'Hap'}
+          >
+            {showExpanded ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronUp className="w-3.5 h-3.5" />}
+          </button>
 
-              {/* Live badge */}
-              {playing && (
-                <span className="hidden sm:flex items-center gap-1 bg-red-600/15 border border-red-500/25 text-red-400 px-2.5 py-1 rounded-full text-[9px] font-extrabold tracking-wider">
-                  <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
-                  LIVE
-                </span>
-              )}
-
-              {/* Play / Pause */}
-              <button
-                onClick={togglePlay}
-                className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full flex items-center justify-center transition-all duration-200 active:scale-95 shadow-lg ${
-                  error
-                    ? 'bg-slate-700 hover:bg-slate-600 text-slate-300 shadow-black/30'
-                    : playing
-                    ? 'bg-red-600 hover:bg-red-700 text-white shadow-red-900/40'
-                    : 'bg-white hover:bg-slate-100 text-slate-900 shadow-black/20'
-                }`}
-                aria-label={playing ? 'Ndalo' : error ? 'Provo përsëri' : 'Luaj'}
-              >
-                {loading ? (
-                  <div className={`w-4 h-4 border-2 rounded-full animate-spin ${playing ? 'border-white border-t-transparent' : 'border-slate-900 border-t-transparent'}`} />
-                ) : error ? (
-                  <Play className="w-4 h-4 ml-0.5 opacity-60" />
-                ) : playing ? (
-                  <Pause className="w-4 h-4" />
-                ) : (
-                  <Play className="w-4 h-4 ml-0.5" />
-                )}
-              </button>
-
-              {/* Expand / collapse toggle */}
-              <button
-                onClick={() => setExpanded(!expanded)}
-                className="hidden sm:flex p-2 text-slate-600 hover:text-white transition-colors rounded-lg hover:bg-white/[0.06]"
-                aria-label={showExpandedContent ? 'Mbylle' : 'Hap'}
-              >
-                {showExpandedContent ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
-              </button>
-            </div>
-          </div>
         </div>
       </div>
     </div>
   );
 }
-
-
 
