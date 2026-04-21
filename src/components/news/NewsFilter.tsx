@@ -53,7 +53,7 @@ export default function NewsFilter({
               setQuery('');
               onSearchApply('');
             }}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-1 rounded-lg hover:bg-slate-100 transition-colors"
+            className="touch-target absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 p-2 rounded-lg hover:bg-slate-100 transition-colors inline-flex items-center justify-center"
           >
             <X className="w-4 h-4" />
           </button>
@@ -65,7 +65,7 @@ export default function NewsFilter({
         <button
           type="button"
           onClick={() => onCategoryChange(null)}
-          className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 ${
+          className={`px-4 py-2.5 min-h-11 rounded-xl text-xs font-semibold transition-all duration-200 ${
             !activeCategory
               ? 'bg-slate-900 text-white shadow-sm'
               : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
@@ -78,7 +78,7 @@ export default function NewsFilter({
             key={cat}
             type="button"
             onClick={() => onCategoryChange(cat)}
-            className={`px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-200 ${
+            className={`px-4 py-2.5 min-h-11 rounded-xl text-xs font-semibold transition-all duration-200 ${
               activeCategory === cat
                 ? 'bg-[#e63946] text-white shadow-sm shadow-[#e63946]/20'
                 : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
@@ -94,7 +94,7 @@ export default function NewsFilter({
               setQuery('');
               onClear();
             }}
-            className="px-4 py-2 rounded-xl text-xs font-semibold text-[#e63946] bg-[#e63946]/5 hover:bg-[#e63946]/10 transition-colors duration-200 flex items-center gap-1"
+            className="px-4 py-2.5 min-h-11 rounded-xl text-xs font-semibold text-[#e63946] bg-[#e63946]/5 hover:bg-[#e63946]/10 transition-colors duration-200 flex items-center gap-1"
           >
             <X className="w-3 h-3" />
             Pastro

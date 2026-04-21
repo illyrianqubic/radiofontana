@@ -17,7 +17,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
   if (variant === 'hero') {
     return (
       <Link href={href} className="group block relative overflow-hidden rounded-2xl news-card h-full">
-        <div className="relative h-[280px] sm:h-[400px] lg:h-[480px] xl:h-[520px]">
+        <div className="relative h-[240px] xs:h-[280px] sm:h-[400px] lg:h-[480px] xl:h-[520px]">
           <Image
             src={optimizeImageUrl(article.imageUrl, 1280, 720, 74)}
             alt={article.title}
@@ -28,7 +28,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
           {/* Top labels */}
-          <div className="absolute top-4 left-4 flex items-center gap-2">
+          <div className="absolute top-3 sm:top-4 left-3 sm:left-4 flex items-center gap-2 flex-wrap pr-3">
             <span className={`category-badge px-2.5 py-1.5 rounded-md text-white ${categoryColor}`}>
               {article.category}
             </span>
@@ -46,7 +46,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
               {article.title}
             </h2>
             <p className="text-white/65 text-sm line-clamp-2 mb-5 max-w-2xl leading-relaxed">{article.excerpt}</p>
-            <div className="flex items-center gap-4 text-white/50 text-xs">
+            <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-white/50 text-xs">
               <span className="flex items-center gap-1.5">
                 <User className="w-3.5 h-3.5" />
                 {article.author}
@@ -97,13 +97,13 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   if (variant === 'horizontal') {
     return (
-      <Link href={href} className="group flex gap-4 items-start p-3 sm:p-3.5 rounded-xl hover:bg-slate-50 transition-all duration-200 hover:shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
-        <div className="relative w-28 h-20 sm:w-32 sm:h-24 flex-shrink-0 rounded-xl overflow-hidden">
+      <Link href={href} className="group flex flex-col sm:flex-row gap-3 sm:gap-4 items-start p-3 sm:p-3.5 rounded-xl hover:bg-slate-50 transition-all duration-200 hover:shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+        <div className="relative w-full h-44 sm:w-32 sm:h-24 flex-shrink-0 rounded-xl overflow-hidden">
           <Image
             src={optimizeImageUrl(article.imageUrl, 256, 192, 72)}
             alt={article.title}
             fill
-            sizes="128px"
+            sizes="(max-width: 640px) 100vw, 128px"
             className="object-cover img-zoom"
             loading="lazy"
           />
@@ -161,12 +161,12 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
         <p className="text-slate-500 text-xs line-clamp-2 mb-3.5 leading-relaxed">
           {article.excerpt}
         </p>
-        <div className="flex items-center justify-between text-[10px] text-slate-400 pt-3 border-t border-slate-100">
+        <div className="flex flex-wrap items-center gap-2 text-[10px] text-slate-400 pt-3 border-t border-slate-100">
           <span className="flex items-center gap-1">
             <User className="w-2.5 h-2.5" />
             {article.author}
           </span>
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2.5 sm:ml-auto">
             <span className="flex items-center gap-1">
               <Clock className="w-2.5 h-2.5" />
               {timeAgo(article.publishedAt)}

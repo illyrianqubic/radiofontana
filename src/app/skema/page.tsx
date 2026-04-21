@@ -19,7 +19,7 @@ export default function SkemaPage() {
   const today = currentDay();
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10 page-shell">
       {/* Header */}
       <div className="mb-10">
         <div className="flex items-center gap-2 text-xs text-slate-400 mb-3">
@@ -66,7 +66,7 @@ export default function SkemaPage() {
               }`}
             >
               {/* Day header */}
-              <div className={`px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between ${isToday ? 'bg-[#e63946] text-white' : 'bg-slate-50'}`}>
+              <div className={`px-4 sm:px-6 py-3 sm:py-4 flex flex-wrap items-center justify-between gap-2 ${isToday ? 'bg-[#e63946] text-white' : 'bg-slate-50'}`}>
                 <h2 className={`font-bold text-lg ${isToday ? 'text-white' : 'text-slate-800'}`}>
                   {dayData.day}
                 </h2>

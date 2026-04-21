@@ -38,7 +38,7 @@ export default function LivePlayer() {
   const embedUrl = buildFbEmbedUrl(stream?.facebookUrl ?? null);
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-slate-950 page-shell">
       {/* Facebook Live Embed */}
       <div className="w-full bg-black">
         <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
@@ -148,7 +148,7 @@ export default function LivePlayer() {
               </motion.div>
             )}
 
-            <div className="grid grid-cols-3 gap-3 max-w-sm mx-auto">
+            <div className="grid grid-cols-1 xs:grid-cols-3 gap-3 max-w-sm mx-auto">
               <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-4 text-center">
                 <Users className="w-5 h-5 mx-auto text-slate-500 mb-1.5" />
                 <p className="text-xl font-bold text-white">2.4K</p>

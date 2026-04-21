@@ -24,7 +24,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
   const teJundit = articles.slice(0, 6);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen page-shell">
       <BreakingNewsTicker articles={articles} />
 
       {/* ── HERO ── */}
@@ -76,13 +76,13 @@ export default function HomeClient({ articles }: HomeClientProps) {
                 </div>
                 <Link
                   href="/lajme"
-                  className="flex items-center gap-1.5 text-sm text-red-600 font-semibold hover:text-red-700 transition-colors group"
+                  className="touch-target inline-flex items-center gap-1.5 text-sm text-red-600 font-semibold hover:text-red-700 transition-colors group"
                 >
                   Të gjitha
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </Link>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
+              <div className="news-grid-responsive gap-4 sm:gap-5">
                 {latest.map((article) => (
                   <NewsCard key={article.id} article={article} />
                 ))}
@@ -147,14 +147,14 @@ export default function HomeClient({ articles }: HomeClientProps) {
                   <Link
                     key={article.id}
                     href={`/lajme/${article.slug}`}
-                    className="group flex gap-4 bg-white rounded-xl p-3.5 border border-slate-100 hover:border-red-200 hover:shadow-[0_4px_16px_rgba(220,38,38,0.08)] transition-all duration-200"
+                    className="group flex flex-col sm:flex-row gap-3 sm:gap-4 bg-white rounded-xl p-3.5 border border-slate-100 hover:border-red-200 hover:shadow-[0_4px_16px_rgba(220,38,38,0.08)] transition-all duration-200"
                   >
-                    <div className="relative w-24 h-[72px] sm:w-32 sm:h-24 flex-shrink-0 rounded-lg overflow-hidden">
+                    <div className="relative w-full h-44 sm:w-32 sm:h-24 flex-shrink-0 rounded-lg overflow-hidden">
                       <Image
                         src={optimizeImageUrl(article.imageUrl, 256, 192, 72)}
                         alt={article.title}
                         fill
-                        sizes="128px"
+                        sizes="(max-width: 640px) 100vw, 128px"
                         className="object-cover img-zoom"
                         loading="lazy"
                       />
@@ -220,7 +220,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
                   <div className="w-1 h-6 bg-green-600 rounded-full" />
                   <h2 className="text-xl font-extrabold text-slate-900">Sport</h2>
                 </div>
-                <Link href="/lajme/?kategoria=Sport" className="text-xs text-red-600 font-bold uppercase tracking-wider hover:underline">
+                <Link href="/lajme/?kategoria=Sport" className="touch-target inline-flex items-center text-xs text-red-600 font-bold uppercase tracking-wider hover:underline">
                   Të gjitha
                 </Link>
               </div>
@@ -238,7 +238,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
                   <div className="w-1 h-6 bg-purple-600 rounded-full" />
                   <h2 className="text-xl font-extrabold text-slate-900">Teknologji</h2>
                 </div>
-                <Link href="/lajme/?kategoria=Teknologji" className="text-xs text-red-600 font-bold uppercase tracking-wider hover:underline">
+                <Link href="/lajme/?kategoria=Teknologji" className="touch-target inline-flex items-center text-xs text-red-600 font-bold uppercase tracking-wider hover:underline">
                   Të gjitha
                 </Link>
               </div>
@@ -266,7 +266,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
               <Link
                 key={cat}
                 href={`/lajme/?kategoria=${encodeURIComponent(cat)}`}
-                className={`${CATEGORY_COLORS[cat]} text-white rounded-xl sm:rounded-2xl p-3 sm:p-4 text-center hover:opacity-85 transition-all duration-200 hover:-translate-y-1 shadow-sm hover:shadow-lg`}
+                className={`${CATEGORY_COLORS[cat]} text-white rounded-xl sm:rounded-2xl p-3 sm:p-4 min-h-11 text-center hover:opacity-85 transition-all duration-200 hover:-translate-y-1 shadow-sm hover:shadow-lg inline-flex items-center justify-center`}
               >
                 <span className="font-bold text-sm">{cat}</span>
               </Link>

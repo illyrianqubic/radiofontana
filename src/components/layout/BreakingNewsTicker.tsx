@@ -37,7 +37,7 @@ export default function BreakingNewsTicker({ articles }: Props) {
                   <Link
                     key={`${group}-${article.id || article.slug}`}
                     href={`/lajme/${article.slug}`}
-                    className="inline-flex items-center gap-3 text-[12px] text-white/90 hover:text-white transition-colors duration-200 px-8"
+                    className="inline-flex items-center gap-2 sm:gap-3 text-[11px] sm:text-[12px] text-white/90 hover:text-white transition-colors duration-200 px-4 sm:px-8 min-h-9"
                   >
                     <span className="text-red-300 font-bold text-xs">◆</span>
                     <span className="font-medium">{article.title}</span>

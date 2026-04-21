@@ -17,12 +17,21 @@ const navLinks = [
 ];
 
 function TopBar() {
-  const dateStr = new Date().toLocaleDateString('sq-AL', {
-    weekday: 'long',
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
-  });
+  const [dateStr, setDateStr] = useState('');
+
+  useEffect(() => {
+    const raf = requestAnimationFrame(() => {
+      setDateStr(
+        new Date().toLocaleDateString('sq-AL', {
+          weekday: 'long',
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+        }),
+      );
+    });
+    return () => cancelAnimationFrame(raf);
+  }, []);
 
   return (
     <div className="bg-slate-950 text-white hidden md:block border-b border-white/[0.06]">
@@ -143,7 +152,7 @@ export default function Navbar() {
                 alt="Radio Fontana"
                 width={140}
                 height={48}
-                className="h-8 sm:h-10 lg:h-11 w-auto object-contain"
+                className="h-7 sm:h-9 lg:h-10 w-auto object-contain"
                 priority
               />
             </Link>
@@ -208,7 +217,7 @@ export default function Navbar() {
               {isLive && (
                 <Link
                   href="/live"
-                  className="hidden sm:flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-[11px] font-bold px-3 py-1.5 rounded-full transition-colors live-glow"
+                  className="hidden sm:flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-[11px] font-bold px-3 py-1.5 rounded-full transition-colors live-glow min-h-11"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                   LIVE
@@ -217,13 +226,13 @@ export default function Navbar() {
 
               <button
                 onClick={() => setSearchOpen(!searchOpen)}
-                className="p-2.5 rounded-xl text-slate-500 hover:bg-slate-100 hover:text-slate-700 transition-colors"
+                className="touch-target h-11 w-11 inline-flex items-center justify-center rounded-xl text-slate-500 hover:bg-slate-100 hover:text-slate-700 transition-colors"
                 aria-label="Kërko"
               >
                 <Search className="w-[18px] h-[18px]" />
               </button>
               <button
-                className="lg:hidden p-2.5 rounded-xl text-slate-500 hover:bg-slate-100 transition-colors"
+                className="touch-target h-11 w-11 inline-flex items-center justify-center lg:hidden rounded-xl text-slate-500 hover:bg-slate-100 transition-colors"
                 onClick={() => setMobileOpen(!mobileOpen)}
                 aria-label="Menu"
               >
@@ -254,13 +263,13 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div className="lg:hidden border-t border-slate-100 bg-white overflow-hidden">
+          <div className="lg:hidden border-t border-slate-100 bg-white overflow-hidden max-h-[70vh] overflow-y-auto">
             <nav className="px-4 py-3 space-y-0.5">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`block px-4 py-3 rounded-xl text-sm font-medium transition-colors ${
+                  className={`block px-4 py-3 rounded-xl text-sm font-medium transition-colors min-h-11 ${
                     isActive(link.href)
                       ? 'bg-red-50 text-red-600 font-semibold'
                       : 'text-slate-700 hover:bg-slate-50'
@@ -276,7 +285,7 @@ export default function Navbar() {
                     <Link
                       key={cat}
                       href={`/lajme/?kategoria=${encodeURIComponent(cat)}`}
-                      className="px-4 py-2.5 text-sm text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                      className="px-4 py-3 text-sm text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors min-h-11 flex items-center"
                     >
                       {cat}
                     </Link>
@@ -286,15 +295,15 @@ export default function Navbar() {
               {/* Mobile social links */}
               <div className="flex items-center gap-3 px-4 pt-3 border-t border-slate-100 mt-2">
                 <a href="https://www.facebook.com/rtvfontanalive" target="_blank" rel="noopener noreferrer"
-                  className="text-slate-400 hover:text-slate-700 transition-colors" aria-label="Facebook">
+                  className="touch-target w-11 h-11 rounded-xl bg-slate-100 border border-slate-200 text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition-colors inline-flex items-center justify-center" aria-label="Facebook">
                   <FacebookIcon className="w-4 h-4" />
                 </a>
                 <a href="https://www.instagram.com/rtvfontana/" target="_blank" rel="noopener noreferrer"
-                  className="text-slate-400 hover:text-slate-700 transition-colors" aria-label="Instagram">
+                  className="touch-target w-11 h-11 rounded-xl bg-slate-100 border border-slate-200 text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition-colors inline-flex items-center justify-center" aria-label="Instagram">
                   <InstagramIcon className="w-4 h-4" />
                 </a>
                 <a href="https://www.youtube.com/@RTVFontana" target="_blank" rel="noopener noreferrer"
-                  className="text-slate-400 hover:text-slate-700 transition-colors" aria-label="YouTube">
+                  className="touch-target w-11 h-11 rounded-xl bg-slate-100 border border-slate-200 text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition-colors inline-flex items-center justify-center" aria-label="YouTube">
                   <YoutubeIcon className="w-4 h-4" />
                 </a>
                 <span className="ml-auto flex items-center gap-1.5 text-xs text-slate-500">

@@ -41,7 +41,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen flex flex-col antialiased">
         <AudioPlayerProvider>
           <Navbar />
-          <main className="flex-1">{children}</main>
+          <main className="flex-1 pb-24 sm:pb-28">{children}</main>
           <Footer />
           <RadioPlayer />
         </AudioPlayerProvider>

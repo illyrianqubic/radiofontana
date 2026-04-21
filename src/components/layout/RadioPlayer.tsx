@@ -6,11 +6,12 @@ import { Play, Pause, Volume2, VolumeX, Radio, ChevronUp, ChevronDown, Mic2, Gri
 import { useAudioPlayer } from '@/lib/AudioPlayerContext';
 
 // ── Constraints ──────────────────────────────────────────────────────────────
-const MIN_W = 300;
+const MIN_W = 260;
 const MAX_W = 960;
 const MIN_H = 76;
 const MAX_H = 440;
 const STORAGE_KEY = 'rf_player_v3';
+const EDGE_GAP = 8;
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
@@ -25,16 +26,19 @@ interface PS {
   height: number;
 }
 
-const DEFAULT_W = 480;
+const DEFAULT_W = 440;
 
 function clamp(v: number, lo: number, hi: number) { return Math.max(lo, Math.min(hi, v)); }
 
 function clampPS(s: PS): PS {
-  const width  = clamp(s.width,  MIN_W, MAX_W);
+  const viewportMax = typeof window === 'undefined'
+    ? MAX_W
+    : Math.max(MIN_W, window.innerWidth - EDGE_GAP * 2);
+  const width  = clamp(s.width,  MIN_W, Math.min(MAX_W, viewportMax));
   const height = clamp(s.height, MIN_H, MAX_H);
   if (typeof window === 'undefined' || !s.dragged) return { ...s, width, height };
-  const x = clamp(s.x, 0, window.innerWidth  - width);
-  const y = clamp(s.y, 0, window.innerHeight - height);
+  const x = clamp(s.x, 0, Math.max(0, window.innerWidth  - width));
+  const y = clamp(s.y, 0, Math.max(0, window.innerHeight - height));
   return { ...s, x, y, width, height };
 }
 
@@ -56,6 +60,7 @@ export default function RadioPlayer() {
   const [currentTime, setCurrentTime] = useState('');
   const [ps, setPs] = useState<PS>(() => loadPS() ?? ({ dragged: false, x: 0, y: 0, width: DEFAULT_W, height: MIN_H }));
   const [mounted, setMounted] = useState(false);
+  const [viewportWidth, setViewportWidth] = useState(0);
   const panelRef = useRef<HTMLDivElement>(null);
 
   // Mark client mount to avoid SSR/client mismatch on fixed positioning.
@@ -63,6 +68,24 @@ export default function RadioPlayer() {
     const raf = requestAnimationFrame(() => setMounted(true));
     return () => cancelAnimationFrame(raf);
   }, []);
+
+  useEffect(() => {
+    const syncViewport = () => {
+      const width = window.innerWidth;
+      requestAnimationFrame(() => setViewportWidth(width));
+    };
+    syncViewport();
+    window.addEventListener('resize', syncViewport);
+    return () => window.removeEventListener('resize', syncViewport);
+  }, []);
+
+  useEffect(() => {
+    if (!viewportWidth) return;
+    const raf = requestAnimationFrame(() => {
+      setPs((prev) => clampPS(prev));
+    });
+    return () => cancelAnimationFrame(raf);
+  }, [viewportWidth]);
 
   // Persist after mount
   useEffect(() => {
@@ -155,13 +178,17 @@ export default function RadioPlayer() {
   );
 
   const showExpanded = ps.height > MIN_H + 20;
+  const maxViewportWidth = viewportWidth
+    ? Math.max(MIN_W, viewportWidth - EDGE_GAP * 2)
+    : MAX_W;
+  const effectiveWidth = clamp(ps.width, MIN_W, Math.min(MAX_W, maxViewportWidth));
 
   // Build the outer container style
   // Default (not dragged): CSS-centered at bottom — survives scroll/zoom perfectly
   // Dragged: explicit left/top so it stays exactly where the user put it
   const outerStyle: React.CSSProperties = ps.dragged
-    ? { position: 'fixed', left: ps.x, top: ps.y, width: ps.width, height: ps.height, zIndex: 9999 }
-    : { position: 'fixed', bottom: 10, left: '50%', transform: 'translateX(-50%)', width: ps.width, height: ps.height, zIndex: 9999 };
+    ? { position: 'fixed', left: ps.x, top: ps.y, width: effectiveWidth, height: ps.height, zIndex: 9999 }
+    : { position: 'fixed', bottom: EDGE_GAP, left: '50%', transform: 'translateX(-50%)', width: effectiveWidth, height: ps.height, zIndex: 9999 };
 
   if (pathname.startsWith('/studio')) return null;
   if (!mounted) return null;
@@ -220,11 +247,11 @@ export default function RadioPlayer() {
         )}
 
         {/* ── Controls bar ─────────────────────────────────────────────── */}
-        <div className="flex-shrink-0 px-3 py-2 flex items-center gap-2 sm:gap-3">
+        <div className="flex-shrink-0 px-2.5 sm:px-3 py-2 flex items-center gap-2 sm:gap-3">
 
           {/* Station branding */}
           <div className="flex items-center gap-2 flex-1 min-w-0">
-            <div className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 ${playing ? 'bg-red-600/20 border border-red-500/30' : 'bg-white/[0.05] border border-white/[0.08]'}`}>
+            <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 ${playing ? 'bg-red-600/20 border border-red-500/30' : 'bg-white/[0.05] border border-white/[0.08]'}`}>
               <Radio className={`w-3 h-3 transition-colors duration-300 ${playing ? 'text-red-400' : 'text-slate-500'}`} />
             </div>
             <div className="min-w-0 flex-1">
@@ -252,10 +279,10 @@ export default function RadioPlayer() {
           )}
 
           {/* Volume */}
-          <div className="flex items-center gap-1.5 h-6 flex-shrink-0 bg-white/[0.07] border border-white/[0.14] rounded-md px-1.5">
+          <div className="hidden min-[430px]:flex items-center gap-1.5 h-9 flex-shrink-0 bg-white/[0.07] border border-white/[0.14] rounded-md px-1.5">
             <button
               onClick={() => setMuted(!muted)}
-              className="inline-flex items-center justify-center h-4 w-4 text-white/65 hover:text-white transition-colors flex-shrink-0 leading-none"
+              className="touch-target inline-flex items-center justify-center h-7 w-7 text-white/65 hover:text-white transition-colors flex-shrink-0 leading-none"
               aria-label={muted ? 'Aktivizo tingullin' : 'Hiqe tingullin'}
             >
               {muted || volume === 0
@@ -291,7 +318,7 @@ export default function RadioPlayer() {
           {/* Play / Pause */}
           <button
             onClick={togglePlay}
-            className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200 active:scale-95 shadow-md flex-shrink-0 ${
+            className={`touch-target w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200 active:scale-95 shadow-md flex-shrink-0 ${
               error
                 ? 'bg-slate-700 hover:bg-slate-600 text-slate-300'
                 : playing
@@ -301,20 +328,20 @@ export default function RadioPlayer() {
             aria-label={playing ? 'Ndalo' : error ? 'Provo përsëri' : 'Luaj'}
           >
             {loading ? (
-              <div className={`w-3 h-3 border-2 rounded-full animate-spin ${playing ? 'border-white border-t-transparent' : 'border-slate-900 border-t-transparent'}`} />
+              <div className={`w-4 h-4 border-2 rounded-full animate-spin ${playing ? 'border-white border-t-transparent' : 'border-slate-900 border-t-transparent'}`} />
             ) : error ? (
-              <Play className="w-3 h-3 ml-0.5 opacity-60" />
+              <Play className="w-4 h-4 ml-0.5 opacity-60" />
             ) : playing ? (
-              <Pause className="w-3 h-3" />
+              <Pause className="w-4 h-4" />
             ) : (
-              <Play className="w-3 h-3 ml-0.5" />
+              <Play className="w-4 h-4 ml-0.5" />
             )}
           </button>
 
           {/* Expand / collapse */}
           <button
             onClick={toggleExpand}
-            className="hidden sm:flex p-1 text-slate-600 hover:text-white transition-colors rounded-md hover:bg-white/[0.06] flex-shrink-0"
+            className="hidden sm:flex touch-target p-1 text-slate-600 hover:text-white transition-colors rounded-md hover:bg-white/[0.06] flex-shrink-0"
             aria-label={showExpanded ? 'Mbylle' : 'Hap'}
           >
             {showExpanded ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronUp className="w-3.5 h-3.5" />}

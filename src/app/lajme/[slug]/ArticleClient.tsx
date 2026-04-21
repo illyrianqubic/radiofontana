@@ -125,13 +125,13 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
   const catColor = CATEGORY_COLORS[article.category];
 
   return (
-    <div className="bg-white">
+    <div className="bg-white page-shell">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-12">
           {/* Main content */}
           <article className="lg:col-span-2">
             {/* Breadcrumb */}
-            <div className="flex items-center gap-2 text-xs text-slate-400 mb-5">
+            <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400 mb-5">
               <Link href="/" className="hover:text-red-600 transition-colors duration-200">Kryefaqja</Link>
               <span className="text-slate-300">/</span>
               <Link href="/lajme" className="hover:text-red-600 transition-colors duration-200">Lajme</Link>
@@ -187,12 +187,12 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
 
             {/* Article content */}
             {Array.isArray(article.content) ? (
-              <div className="prose prose-lg max-w-none">
+              <div className="prose prose-lg max-w-none break-words">
                 <SanityPortableText value={article.content} />
               </div>
             ) : typeof article.content === 'string' && article.content ? (
               <div
-                className="prose prose-lg max-w-none prose-headings:text-slate-800 prose-p:text-slate-600 prose-p:leading-relaxed"
+                className="prose prose-lg max-w-none break-words prose-headings:text-slate-800 prose-p:text-slate-600 prose-p:leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: article.content as string }}
               />
             ) : (
@@ -226,7 +226,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
                   href={`https://facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://radiofontana.org/lajme/${article.slug}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2.5 bg-[#1877F2] text-white rounded-xl text-sm font-medium hover:bg-[#166FE5] transition-colors duration-200"
+                  className="touch-target inline-flex items-center gap-2 px-4 py-2.5 bg-[#1877F2] text-white rounded-xl text-sm font-medium hover:bg-[#166FE5] transition-colors duration-200"
                 >
                   <FacebookIcon className="w-4 h-4" />
                   Facebook
@@ -235,7 +235,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
                   href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`https://radiofontana.org/lajme/${article.slug}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2.5 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 transition-colors duration-200"
+                  className="touch-target inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 transition-colors duration-200"
                 >
                   <TwitterIcon className="w-4 h-4" />
                   Twitter
@@ -248,7 +248,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
           <aside className="space-y-7">
             <Link
               href="/lajme"
-              className="flex items-center gap-2 text-sm text-red-600 font-semibold hover:gap-3 transition-all duration-200"
+              className="touch-target inline-flex items-center gap-2 text-sm text-red-600 font-semibold hover:gap-3 transition-all duration-200"
             >
               <ArrowLeft className="w-4 h-4" />
               Kthehu tek Lajmet
@@ -297,7 +297,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
                 Lexo Gjithashtu
               </h2>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <div className="news-grid-responsive gap-5">
               {related.map((a) => (
                 <NewsCard key={a.id} article={a} />
               ))}

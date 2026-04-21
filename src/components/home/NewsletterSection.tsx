@@ -32,7 +32,7 @@ export default function NewsletterSection() {
           </div>
           <button
             type="submit"
-            className="px-6 py-3.5 bg-white hover:bg-white/90 text-[#e63946] rounded-xl font-bold text-sm transition-all duration-200 whitespace-nowrap flex items-center justify-center gap-2 shadow-lg shadow-black/10"
+            className="touch-target px-6 py-3.5 min-h-11 bg-white hover:bg-white/90 text-[#e63946] rounded-xl font-bold text-sm transition-all duration-200 whitespace-nowrap flex items-center justify-center gap-2 shadow-lg shadow-black/10"
           >
             Abonohu
             <ArrowRight className="w-4 h-4" />

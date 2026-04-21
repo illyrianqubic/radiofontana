@@ -54,7 +54,7 @@ export default function LajmeClient() {
     if (category) sp.set('kategoria', category);
     const normalizedQuery = query.trim();
     if (normalizedQuery) sp.set('q', normalizedQuery);
-    const nextUrl = `/lajme${sp.toString() ? `?${sp.toString()}` : ''}`;
+    const nextUrl = `/lajme/${sp.toString() ? `?${sp.toString()}` : ''}`;
     window.history.replaceState({}, '', nextUrl);
   }, []);
 
@@ -130,7 +130,7 @@ export default function LajmeClient() {
     : 'Të gjitha lajmet';
 
   return (
-    <div className="bg-white min-h-screen">
+    <div className="bg-white min-h-screen page-shell">
       <div className="border-b border-slate-100 bg-slate-50/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10">
           {/* Breadcrumb */}
@@ -177,7 +177,7 @@ export default function LajmeClient() {
       {/* Results */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14">
         {loadingArticles && allArticles.length === 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+          <div className="news-grid-responsive gap-5">
             {Array.from({ length: 8 }).map((_, i) => (
               <div key={i} className="rounded-2xl border border-slate-100 p-4 animate-pulse">
                 <div className="h-40 rounded-xl bg-slate-100 mb-4" />
@@ -202,7 +202,7 @@ export default function LajmeClient() {
             <p className="text-xs text-slate-400 mb-5 font-medium uppercase tracking-wider">
               {filtered.length} artikuj gjithsej
             </p>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
+            <div className="news-grid-responsive gap-5">
               {filtered.map((article) => (
                 <NewsCard key={article.id} article={article} />
               ))}

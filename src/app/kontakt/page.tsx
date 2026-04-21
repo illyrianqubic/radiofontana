@@ -26,7 +26,7 @@ export default function KontaktPage() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10 page-shell">
       {/* Header */}
       <div className="mb-10">
         <div className="flex items-center gap-2 text-xs text-slate-400 mb-3">
@@ -91,15 +91,15 @@ export default function KontaktPage() {
             <p className="font-bold text-sm mb-3">Na Ndiqni</p>
             <div className="flex flex-wrap gap-2">
               <a href="https://www.facebook.com/rtvfontanalive" target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-white/10 hover:bg-[#1877F2] px-3 sm:px-3.5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm transition-all duration-200">
+                className="touch-target flex items-center gap-2 bg-white/10 hover:bg-[#1877F2] px-3 sm:px-3.5 py-2.5 rounded-xl text-xs sm:text-sm transition-all duration-200 min-h-11">
                 <FacebookIcon className="w-4 h-4" /> Facebook
               </a>
               <a href="https://www.instagram.com/rtvfontana/" target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-white/10 hover:bg-pink-600 px-3 sm:px-3.5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm transition-all duration-200">
+                className="touch-target flex items-center gap-2 bg-white/10 hover:bg-pink-600 px-3 sm:px-3.5 py-2.5 rounded-xl text-xs sm:text-sm transition-all duration-200 min-h-11">
                 <InstagramIcon className="w-4 h-4" /> Instagram
               </a>
               <a href="https://www.youtube.com/@RTVFontana" target="_blank" rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-white/10 hover:bg-red-800 px-3 sm:px-3.5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm transition-all duration-200">
+                className="touch-target flex items-center gap-2 bg-white/10 hover:bg-red-800 px-3 sm:px-3.5 py-2.5 rounded-xl text-xs sm:text-sm transition-all duration-200 min-h-11">
                 <YoutubeIcon className="w-4 h-4" /> YouTube
               </a>
             </div>
