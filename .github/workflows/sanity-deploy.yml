@@ -24,6 +24,10 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ksakxvtt
+          NEXT_PUBLIC_SANITY_DATASET: production
+          NEXT_PUBLIC_SANITY_API_VERSION: 2024-01-01
 
       - name: Deploy to Cloudflare Pages
         run: npx wrangler pages deploy out --project-name radiofontana --commit-dirty=true
