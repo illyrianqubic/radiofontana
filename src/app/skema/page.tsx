@@ -19,7 +19,7 @@ export default function SkemaPage() {
   const today = currentDay();
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10 page-shell">
+    <div className="site-container py-7 sm:py-10 2xl:py-12 page-shell">
       {/* Header */}
       <div className="mb-10">
         <div className="flex items-center gap-2 text-xs text-slate-400 mb-3">
@@ -27,10 +27,10 @@ export default function SkemaPage() {
           <span className="text-slate-300">/</span>
           <span className="text-slate-700 font-medium">Skema Programore</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3">
+        <h1 className="text-2xl sm:text-3xl 2xl:text-4xl 3xl:text-[2.7rem] font-extrabold text-slate-900 mb-3">
           Skema Programore
         </h1>
-        <p className="text-slate-500 text-base">
+        <p className="text-slate-500 text-base 2xl:text-lg">
           Zbuloni emisionet dhe programet tona javore. Radio Fontana transmeton 24 orë në ditë.
         </p>
       </div>
@@ -42,8 +42,8 @@ export default function SkemaPage() {
         </div>
         <div className="flex-1">
           <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] text-white/70 mb-1">Tani në Emision</p>
-          <p className="font-bold text-xl">Mëngjesi me Radio Fontana</p>
-          <p className="text-white/70 text-sm">me Arjeta Krasniqi · 06:00 - 09:00</p>
+          <p className="font-bold text-xl 2xl:text-2xl">Mëngjesi me Radio Fontana</p>
+          <p className="text-white/70 text-sm 2xl:text-base">me Arjeta Krasniqi · 06:00 - 09:00</p>
         </div>
         <div className="flex items-center gap-2 bg-white/20 px-3.5 py-2 rounded-full self-start sm:self-auto">
           <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
@@ -67,7 +67,7 @@ export default function SkemaPage() {
             >
               {/* Day header */}
               <div className={`px-4 sm:px-6 py-3 sm:py-4 flex flex-wrap items-center justify-between gap-2 ${isToday ? 'bg-[#e63946] text-white' : 'bg-slate-50'}`}>
-                <h2 className={`font-bold text-lg ${isToday ? 'text-white' : 'text-slate-800'}`}>
+                <h2 className={`font-bold text-lg 2xl:text-xl ${isToday ? 'text-white' : 'text-slate-800'}`}>
                   {dayData.day}
                 </h2>
                 {isToday && (
@@ -87,8 +87,8 @@ export default function SkemaPage() {
                       <span className="text-xs sm:text-sm font-mono text-slate-400 whitespace-nowrap">{slot.time}</span>
                     </div>
                     <div className="flex-1 min-w-0 sm:border-l sm:border-slate-100 sm:pl-5">
-                      <p className="font-semibold text-slate-800">{slot.show}</p>
-                      <p className="text-sm text-slate-400 mt-0.5">{slot.description}</p>
+                      <p className="font-semibold text-slate-800 2xl:text-[1.02rem]">{slot.show}</p>
+                      <p className="text-sm 2xl:text-[15px] text-slate-400 mt-0.5">{slot.description}</p>
                     </div>
                     <div className="sm:w-40 flex-shrink-0">
                       <p className="text-sm text-[#e63946] font-medium">me {slot.host}</p>

@@ -60,7 +60,7 @@ export default function LivePlayer() {
           <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-red-900/5 rounded-full blur-[100px]" />
         </div>
 
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 pt-10 sm:pt-16 lg:pt-20 pb-8 sm:pb-12 lg:pb-16 text-center text-white relative z-10">
+        <div className="site-container pt-10 sm:pt-16 lg:pt-20 pb-8 sm:pb-12 lg:pb-16 text-center text-white relative z-10">
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
@@ -105,9 +105,9 @@ export default function LivePlayer() {
               )}
             </div>
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-2 sm:mb-3 tracking-tight">Radio Fontana</h1>
-            <p className="text-slate-400 text-sm sm:text-base lg:text-lg mb-1">98.8 FM · Istog, Kosovë</p>
-            <p className="text-slate-600 text-xs sm:text-sm mb-6 sm:mb-10">Transmetim 24/7 me cilësi të lartë</p>
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[4.4rem] 3xl:text-[4.8rem] font-bold mb-2 sm:mb-3 tracking-tight">Radio Fontana</h1>
+            <p className="text-slate-400 text-sm sm:text-base lg:text-lg 2xl:text-xl mb-1">98.8 FM · Istog, Kosovë</p>
+            <p className="text-slate-600 text-xs sm:text-sm 2xl:text-base mb-6 sm:mb-10">Transmetim 24/7 me cilësi të lartë</p>
 
             <button
               onClick={togglePlay}
@@ -148,7 +148,7 @@ export default function LivePlayer() {
               </motion.div>
             )}
 
-            <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 max-w-sm mx-auto">
+            <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 2xl:gap-4 max-w-sm 2xl:max-w-xl mx-auto">
               <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-4 text-center">
                 <Clock className="w-5 h-5 mx-auto text-slate-500 mb-1.5" />
                 <p className="text-xl font-bold text-white">24/7</p>
@@ -166,8 +166,8 @@ export default function LivePlayer() {
 
       {/* Schedule section */}
       <div className="bg-white rounded-t-[2rem]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-          <h2 className="text-xl sm:text-2xl font-bold text-slate-800 section-title mb-5 sm:mb-7">
+        <div className="site-container py-8 sm:py-12 2xl:py-14">
+          <h2 className="text-xl sm:text-2xl 2xl:text-[1.9rem] 3xl:text-[2.1rem] font-bold text-slate-800 section-title mb-5 sm:mb-7">
             Tani në Emision
           </h2>
 
@@ -177,8 +177,8 @@ export default function LivePlayer() {
             </div>
             <div>
               <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] text-white/70 mb-0.5">Tani</p>
-                <p className="font-bold text-base sm:text-xl">Mëngjësi me Radio Fontana</p>
-                <p className="text-white/70 text-xs sm:text-sm">me Arjeta Krasniqi · 06:00 - 09:00</p>
+                <p className="font-bold text-base sm:text-xl 2xl:text-2xl">Mëngjësi me Radio Fontana</p>
+                <p className="text-white/70 text-xs sm:text-sm 2xl:text-base">me Arjeta Krasniqi · 06:00 - 09:00</p>
             </div>
             <div className="ml-auto hidden sm:flex items-center gap-1.5 bg-white/20 px-3 py-1.5 rounded-full">
               <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
@@ -186,7 +186,7 @@ export default function LivePlayer() {
             </div>
           </div>
 
-          <h3 className="font-bold text-slate-800 text-base sm:text-lg mb-4 sm:mb-5">Emisionet e Sotme</h3>
+          <h3 className="font-bold text-slate-800 text-base sm:text-lg 2xl:text-xl mb-4 sm:mb-5">Emisionet e Sotme</h3>
           <div className="space-y-2.5">
             {programs.map((p, i) => (
               <div

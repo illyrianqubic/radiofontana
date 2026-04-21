@@ -132,7 +132,7 @@ export default function LajmeClient() {
   return (
     <div className="bg-white min-h-screen page-shell">
       <div className="border-b border-slate-100 bg-slate-50/50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10">
+        <div className="site-container py-7 sm:py-10 2xl:py-12">
           {/* Breadcrumb */}
           <div className="flex items-center gap-2 text-xs text-slate-400 mb-4">
             <Link href="/" className="hover:text-red-600 transition-colors">Kryefaqja</Link>
@@ -147,7 +147,7 @@ export default function LajmeClient() {
           </div>
           <div className="flex items-center gap-3">
             <div className="w-1 h-8 bg-red-600 rounded-full" />
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+            <h1 className="text-2xl sm:text-3xl 2xl:text-4xl 3xl:text-[2.7rem] font-extrabold text-slate-900">
               {title}
             </h1>
           </div>
@@ -163,7 +163,7 @@ export default function LajmeClient() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <div className="site-container py-6 sm:py-8 2xl:py-10">
         <NewsFilter
           activeCategory={activeCategory}
           activeQuery={activeQuery}
@@ -175,9 +175,9 @@ export default function LajmeClient() {
       </div>
 
       {/* Results */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14">
+      <div className="site-container pb-10 sm:pb-14 2xl:pb-16">
         {loadingArticles && allArticles.length === 0 ? (
-          <div className="news-grid-responsive gap-5">
+          <div className="news-grid-responsive gap-5 2xl:gap-6">
             {Array.from({ length: 8 }).map((_, i) => (
               <div key={i} className="rounded-2xl border border-slate-100 p-4 animate-pulse">
                 <div className="h-40 rounded-xl bg-slate-100 mb-4" />
@@ -190,7 +190,7 @@ export default function LajmeClient() {
         ) : filtered.length === 0 ? (
           <div className="text-center py-24">
             <div className="text-5xl mb-5">🔍</div>
-            <h3 className="text-xl font-bold text-slate-800 mb-2">
+            <h3 className="text-xl 2xl:text-2xl 3xl:text-[1.8rem] font-bold text-slate-800 mb-2">
               Nuk u gjetën rezultate
             </h3>
             <p className="text-slate-400">
@@ -199,10 +199,10 @@ export default function LajmeClient() {
           </div>
         ) : (
           <>
-            <p className="text-xs text-slate-400 mb-5 font-medium uppercase tracking-wider">
+            <p className="text-xs 2xl:text-sm text-slate-400 mb-5 font-medium uppercase tracking-wider">
               {filtered.length} artikuj gjithsej
             </p>
-            <div className="news-grid-responsive gap-5">
+            <div className="news-grid-responsive gap-5 2xl:gap-6">
               {filtered.map((article) => (
                 <NewsCard key={article.id} article={article} />
               ))}

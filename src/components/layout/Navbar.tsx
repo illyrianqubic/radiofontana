@@ -35,8 +35,8 @@ function TopBar() {
 
   return (
     <div className="bg-slate-950 text-white hidden md:block border-b border-white/[0.06]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-8 text-[11px]">
+      <div className="site-container">
+        <div className="flex items-center justify-between h-8 3xl:h-9 text-[11px] 2xl:text-xs">
           <div className="flex items-center gap-4 text-slate-400">
             <span className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
@@ -143,8 +143,8 @@ export default function Navbar() {
         <div className="h-0.5 gradient-bar" />
 
         {/* Main navbar */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-14 sm:h-16">
+        <div className="site-container">
+          <div className="flex items-center justify-between h-14 sm:h-16 3xl:h-[72px]">
             {/* Logo */}
             <Link href="/" className="flex items-center flex-shrink-0">
               <Image
@@ -152,7 +152,7 @@ export default function Navbar() {
                 alt="Radio Fontana"
                 width={190}
                 height={64}
-                className="h-10 sm:h-12 lg:h-[52px] w-auto object-contain translate-y-0.5"
+                className="h-10 sm:h-12 lg:h-[52px] 3xl:h-[58px] w-auto object-contain translate-y-0.5"
                 priority
               />
             </Link>
@@ -169,7 +169,7 @@ export default function Navbar() {
                     >
                       <Link
                         href={link.href}
-                        className={`flex items-center gap-1 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                        className={`flex items-center gap-1 px-4 2xl:px-5 py-2 rounded-lg text-sm 2xl:text-[15px] 3xl:text-base font-medium transition-all duration-200 ${
                           isActive('/lajme')
                             ? 'text-red-600 font-semibold'
                             : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
@@ -198,7 +198,7 @@ export default function Navbar() {
                   ) : (
                     <Link
                       href={link.href}
-                      className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                      className={`px-4 2xl:px-5 py-2 rounded-lg text-sm 2xl:text-[15px] 3xl:text-base font-medium transition-all duration-200 ${
                         isActive(link.href)
                           ? 'text-red-600 font-semibold'
                           : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
@@ -212,12 +212,12 @@ export default function Navbar() {
             </nav>
 
             {/* Right side */}
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-1.5 2xl:gap-2">
               {/* Live badge — visible only when Sanity liveStream.isLive is true */}
               {isLive && (
                 <Link
                   href="/live"
-                  className="hidden sm:flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-[11px] font-bold px-3 py-1.5 rounded-full transition-colors live-glow min-h-11"
+                  className="hidden sm:flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-[11px] 2xl:text-xs font-bold px-3 2xl:px-4 py-1.5 rounded-full transition-colors live-glow min-h-11"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                   LIVE
@@ -253,7 +253,7 @@ export default function Navbar() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Kërko lajme, tema, autorë..."
                     autoFocus
-                    className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-red-500/25 focus:border-red-500 text-sm transition-all"
+                    className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-red-500/25 focus:border-red-500 text-sm 2xl:text-base transition-all"
                   />
                 </div>
               </form>

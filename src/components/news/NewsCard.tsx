@@ -22,7 +22,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
             src={optimizeImageUrl(article.imageUrl, 1280, 720, 74)}
             alt={article.title}
             fill
-            sizes="(max-width: 1024px) 100vw, 66vw"
+            sizes="(max-width: 1280px) 100vw, (max-width: 1920px) 68vw, 70vw"
             className="object-cover img-zoom"
             priority
           />
@@ -42,10 +42,10 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-red-400 mb-2">
               Lajm kryesor
             </p>
-            <h2 className="text-white text-lg sm:text-2xl lg:text-[1.75rem] xl:text-[2rem] font-extrabold leading-[1.2] mb-3 group-hover:text-red-200 transition-colors duration-300">
+            <h2 className="text-white text-lg sm:text-2xl lg:text-[1.75rem] xl:text-[2rem] 2xl:text-[2.2rem] 3xl:text-[2.45rem] font-extrabold leading-[1.2] mb-3 group-hover:text-red-200 transition-colors duration-300">
               {article.title}
             </h2>
-            <p className="text-white/65 text-sm line-clamp-2 mb-5 max-w-2xl leading-relaxed">{article.excerpt}</p>
+            <p className="text-white/65 text-sm 2xl:text-base line-clamp-2 mb-5 max-w-2xl leading-relaxed">{article.excerpt}</p>
             <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-white/50 text-xs">
               <span className="flex items-center gap-1.5">
                 <User className="w-3.5 h-3.5" />
@@ -133,12 +133,12 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
   // Default card
   return (
     <Link href={href} className="group block bg-white rounded-2xl overflow-hidden border border-slate-100 news-card card-accent h-full">
-      <div className="relative h-44 sm:h-48 overflow-hidden">
+      <div className="relative h-44 sm:h-48 2xl:h-56 3xl:h-60 overflow-hidden">
         <Image
           src={optimizeImageUrl(article.imageUrl, 480, 320, 72)}
           alt={article.title}
           fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1920px) 33vw, 20vw"
           className="object-cover img-zoom"
           loading="lazy"
         />
@@ -155,10 +155,10 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
         )}
       </div>
       <div className="p-4 sm:p-5">
-        <h3 className="font-bold text-slate-900 text-[0.9rem] leading-snug mb-2 line-clamp-2 group-hover:text-red-600 transition-colors duration-200">
+        <h3 className="font-bold text-slate-900 text-[0.9rem] 2xl:text-base 3xl:text-[1.05rem] leading-snug mb-2 line-clamp-2 group-hover:text-red-600 transition-colors duration-200">
           {article.title}
         </h3>
-        <p className="text-slate-500 text-xs line-clamp-2 mb-3.5 leading-relaxed">
+        <p className="text-slate-500 text-xs 2xl:text-sm line-clamp-2 mb-3.5 leading-relaxed">
           {article.excerpt}
         </p>
         <div className="flex flex-wrap items-center gap-2 text-[10px] text-slate-400 pt-3 border-t border-slate-100">

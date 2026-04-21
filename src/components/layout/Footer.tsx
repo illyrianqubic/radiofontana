@@ -20,25 +20,25 @@ export default function Footer() {
       <div className="h-1 gradient-bar" />
 
       {/* Main footer */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-14">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-10">
+      <div className="site-container py-12 sm:py-14 2xl:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-10 2xl:gap-12 3xl:gap-16">
 
           {/* Brand */}
-          <div className="lg:col-span-1">
+          <div className="xl:col-span-1 2xl:col-span-2">
             <div className="mb-4">
               <Image
                 src="/logortvfontana.jpg"
                 alt="Radio Fontana"
                 width={120}
                 height={40}
-                className="h-10 w-auto object-contain rounded"
+                className="h-10 2xl:h-11 3xl:h-12 w-auto object-contain rounded"
               />
             </div>
             <div className="flex items-center gap-1.5 mb-3">
               <Radio className="w-3.5 h-3.5 text-red-600" />
-              <span className="text-sm font-semibold text-slate-700">98.8 FM · Istog, Kosovë</span>
+              <span className="text-sm 2xl:text-base font-semibold text-slate-700">98.8 FM · Istog, Kosovë</span>
             </div>
-            <p className="text-slate-500 text-sm leading-relaxed mb-5">
+            <p className="text-slate-500 text-sm 2xl:text-base leading-relaxed mb-5">
               Stacioni kryesor i informacionit dhe muzikës në Istog, Kosovë. Transmetim live 24/7.
             </p>
             <div className="flex gap-2">
@@ -65,7 +65,7 @@ export default function Footer() {
                 <li key={cat}>
                   <Link
                     href={`/lajme/?kategoria=${encodeURIComponent(cat)}`}
-                    className="inline-flex items-center min-h-11 text-slate-600 hover:text-red-600 text-sm transition-colors duration-200 hover:pl-1"
+                    className="inline-flex items-center min-h-11 text-slate-600 hover:text-red-600 text-sm 2xl:text-[15px] transition-colors duration-200 hover:pl-1"
                   >
                     {cat}
                   </Link>
@@ -86,7 +86,7 @@ export default function Footer() {
                 { label: 'Kontakt', href: '/kontakt' },
               ].map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="inline-flex items-center min-h-11 text-slate-600 hover:text-red-600 text-sm transition-colors duration-200 hover:pl-1">
+                  <Link href={link.href} className="inline-flex items-center min-h-11 text-slate-600 hover:text-red-600 text-sm 2xl:text-[15px] transition-colors duration-200 hover:pl-1">
                     {link.label}
                   </Link>
                 </li>
@@ -98,18 +98,18 @@ export default function Footer() {
           <div>
             <h4 className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-400 mb-5">Kontakti</h4>
             <ul className="space-y-3.5">
-              <li className="flex items-start gap-3 text-sm text-slate-600">
+              <li className="flex items-start gap-3 text-sm 2xl:text-[15px] text-slate-600">
                 <MapPin className="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5" />
                 <span>Rruga &quot;Ibrahim Rugova&quot; Nr. 56<br />Istog, Kosovë</span>
               </li>
-              <li className="flex items-center gap-3 text-sm text-slate-600">
+              <li className="flex items-center gap-3 text-sm 2xl:text-[15px] text-slate-600">
                 <Phone className="w-4 h-4 text-slate-400 flex-shrink-0" />
                 <div className="flex flex-col">
                   <a href="tel:+38344150027" className="hover:text-red-600 transition-colors">+383 44 150 027</a>
                   <a href="tel:+38344141294" className="hover:text-red-600 transition-colors">+383 44 141 294</a>
                 </div>
               </li>
-              <li className="flex items-center gap-3 text-sm text-slate-600">
+              <li className="flex items-center gap-3 text-sm 2xl:text-[15px] text-slate-600">
                 <Mail className="w-4 h-4 text-slate-400 flex-shrink-0" />
                 <a href="mailto:rtvfontana@gmail.com" className="hover:text-red-600 transition-colors break-all">rtvfontana@gmail.com</a>
               </li>
@@ -118,7 +118,7 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-12 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+        <div className="mt-12 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs 2xl:text-sm text-slate-500">
           <p>© {year} Radio Fontana · RTV Fontana. Të gjitha të drejtat e rezervuara.</p>
           <div className="flex gap-6">
             <Link href="/kontakt" className="hover:text-red-600 transition-colors min-h-11 inline-flex items-center">Privatësia</Link>

@@ -110,7 +110,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
   if (!article) {
     return (
       <div className="bg-white min-h-screen">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="site-container py-20">
           <div className="animate-pulse space-y-4">
             <div className="h-4 bg-slate-100 rounded w-1/4" />
             <div className="h-8 bg-slate-100 rounded w-3/4" />
@@ -126,10 +126,10 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
 
   return (
     <div className="bg-white page-shell">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-12">
+      <div className="site-container py-7 sm:py-10 2xl:py-12">
+        <div className="grid grid-cols-1 xl:grid-cols-12 3xl:grid-cols-14 gap-8 sm:gap-12 2xl:gap-14">
           {/* Main content */}
-          <article className="lg:col-span-2">
+          <article className="xl:col-span-8 3xl:col-span-10">
             {/* Breadcrumb */}
             <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400 mb-5">
               <Link href="/" className="hover:text-red-600 transition-colors duration-200">Kryefaqja</Link>
@@ -150,12 +150,12 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
             </span>
 
             {/* Title */}
-            <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-extrabold text-slate-900 leading-tight mb-4 sm:mb-5">
+            <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl 2xl:text-[2.8rem] 3xl:text-[3.1rem] font-extrabold text-slate-900 leading-tight mb-4 sm:mb-5">
               {article.title}
             </h1>
 
             {/* Excerpt */}
-            <p className="text-base sm:text-lg text-slate-500 leading-relaxed mb-7 border-l-4 border-red-600 pl-5 italic">
+            <p className="text-base sm:text-lg 2xl:text-xl text-slate-500 leading-relaxed mb-7 border-l-4 border-red-600 pl-5 italic">
               {article.excerpt}
             </p>
 
@@ -245,7 +245,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
           </article>
 
           {/* Sidebar */}
-          <aside className="space-y-7">
+          <aside className="xl:col-span-4 3xl:col-span-4 space-y-7">
             <Link
               href="/lajme"
               className="touch-target inline-flex items-center gap-2 text-sm text-red-600 font-semibold hover:gap-3 transition-all duration-200"
@@ -293,11 +293,11 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
           <section className="mt-14 sm:mt-16 pt-8 sm:pt-10 border-t border-slate-100">
             <div className="flex items-center gap-2.5 mb-5 sm:mb-7">
               <div className="w-1 h-6 bg-red-600 rounded-full" />
-              <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900">
+              <h2 className="text-xl sm:text-2xl 2xl:text-[1.9rem] 3xl:text-[2.1rem] font-extrabold text-slate-900">
                 Lexo Gjithashtu
               </h2>
             </div>
-            <div className="news-grid-responsive gap-5">
+            <div className="news-grid-responsive gap-5 2xl:gap-6">
               {related.map((a) => (
                 <NewsCard key={a.id} article={a} />
               ))}

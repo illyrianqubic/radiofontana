@@ -29,16 +29,16 @@ export default function HomeClient({ articles }: HomeClientProps) {
 
       {/* ── HERO ── */}
       <section className="bg-white border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 sm:py-7">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+        <div className="site-container py-5 sm:py-7 2xl:py-8 3xl:py-10">
+          <div className="grid grid-cols-1 xl:grid-cols-12 3xl:grid-cols-15 gap-5 2xl:gap-7 3xl:gap-8">
 
             {/* Main hero */}
-            <div className="lg:col-span-7">
+            <div className="xl:col-span-8 3xl:col-span-10">
               {hero && <NewsCard article={hero} variant="hero" />}
             </div>
 
             {/* Right column: weather + featured list */}
-            <div className="lg:col-span-5 flex flex-col gap-4">
+            <div className="xl:col-span-4 3xl:col-span-5 flex flex-col gap-4 2xl:gap-5">
               <WeatherWidget />
 
               {/* Featured side cards */}
@@ -61,16 +61,16 @@ export default function HomeClient({ articles }: HomeClientProps) {
       </section>
 
       {/* ── LATEST NEWS + MOST READ ── */}
-      <section className="bg-white py-8 sm:py-10 border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
+      <section className="bg-white py-8 sm:py-10 2xl:py-12 border-b border-slate-100">
+        <div className="site-container">
+          <div className="grid grid-cols-1 xl:grid-cols-12 3xl:grid-cols-15 gap-8 2xl:gap-10">
 
             {/* Latest grid */}
-            <div className="xl:col-span-9">
+            <div className="xl:col-span-9 3xl:col-span-11">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-2.5">
                   <div className="w-1 h-6 bg-red-600 rounded-full" />
-                  <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+                  <h2 className="text-xl sm:text-2xl 2xl:text-[1.75rem] 3xl:text-[1.95rem] font-extrabold text-slate-900 tracking-tight">
                     Lajmet e Fundit
                   </h2>
                 </div>
@@ -82,7 +82,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </Link>
               </div>
-              <div className="news-grid-responsive gap-4 sm:gap-5">
+              <div className="news-grid-responsive gap-4 sm:gap-5 2xl:gap-6">
                 {latest.map((article) => (
                   <NewsCard key={article.id} article={article} />
                 ))}
@@ -90,7 +90,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
             </div>
 
             {/* Most Read sidebar */}
-            <aside className="xl:col-span-3">
+            <aside className="xl:col-span-3 3xl:col-span-4">
               <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)] sticky top-24">
                 <div className="flex items-center gap-2.5 px-4 py-3 bg-slate-900 text-white">
                   <TrendingUp className="w-3.5 h-3.5 text-red-400" />
@@ -127,22 +127,22 @@ export default function HomeClient({ articles }: HomeClientProps) {
       </section>
 
       {/* ── TË FUNDIT — Live feed ── */}
-      <section className="bg-slate-50 py-8 sm:py-10 border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <section className="bg-slate-50 py-8 sm:py-10 2xl:py-12 border-b border-slate-100">
+        <div className="site-container">
+          <div className="grid grid-cols-1 xl:grid-cols-12 3xl:grid-cols-15 gap-8 2xl:gap-10">
 
             {/* Live feed */}
-            <div className="lg:col-span-8">
+            <div className="xl:col-span-8 3xl:col-span-10">
               <div className="flex items-center gap-2.5 mb-5">
                 <div className="flex items-center gap-1.5 bg-red-600 text-white text-[9px] font-black uppercase tracking-[0.15em] px-2.5 py-1 rounded-full">
                   <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                   LIVE
                 </div>
                 <div className="w-1 h-6 bg-red-600 rounded-full" />
-                <h2 className="text-xl font-extrabold text-slate-900 tracking-tight">Të Fundit</h2>
+                <h2 className="text-xl 2xl:text-[1.75rem] 3xl:text-[1.95rem] font-extrabold text-slate-900 tracking-tight">Të Fundit</h2>
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-3 2xl:space-y-4">
                 {teJundit.map((article) => (
                   <Link
                     key={article.id}
@@ -179,7 +179,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
             </div>
 
             {/* Radio promo */}
-            <aside className="lg:col-span-4">
+            <aside className="xl:col-span-4 3xl:col-span-5">
               <div className="bg-slate-900 rounded-2xl p-6 text-white sticky top-24 overflow-hidden relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-red-900/30 to-transparent" />
                 <div className="relative z-10">
@@ -210,15 +210,15 @@ export default function HomeClient({ articles }: HomeClientProps) {
 
       {/* ── SPORT & TEKNOLOGJI ── */}
       <section className="bg-white py-8 sm:py-12 border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
+        <div className="site-container">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 2xl:gap-16 3xl:gap-20">
 
             {/* Sport */}
             <div>
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2.5">
                   <div className="w-1 h-6 bg-green-600 rounded-full" />
-                  <h2 className="text-xl font-extrabold text-slate-900">Sport</h2>
+                  <h2 className="text-xl 2xl:text-2xl 3xl:text-[1.7rem] font-extrabold text-slate-900">Sport</h2>
                 </div>
                 <Link href="/lajme/?kategoria=Sport" className="touch-target inline-flex items-center text-xs text-red-600 font-bold uppercase tracking-wider hover:underline">
                   Të gjitha
@@ -236,7 +236,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
               <div className="flex items-center justify-between mb-5">
                 <div className="flex items-center gap-2.5">
                   <div className="w-1 h-6 bg-purple-600 rounded-full" />
-                  <h2 className="text-xl font-extrabold text-slate-900">Teknologji</h2>
+                  <h2 className="text-xl 2xl:text-2xl 3xl:text-[1.7rem] font-extrabold text-slate-900">Teknologji</h2>
                 </div>
                 <Link href="/lajme/?kategoria=Teknologji" className="touch-target inline-flex items-center text-xs text-red-600 font-bold uppercase tracking-wider hover:underline">
                   Të gjitha
@@ -254,14 +254,14 @@ export default function HomeClient({ articles }: HomeClientProps) {
 
       {/* ── CATEGORY BROWSE ── */}
       <section className="bg-slate-50 py-8 sm:py-10 border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <div className="flex items-center gap-2.5 mb-6">
             <Rss className="w-4 h-4 text-red-600" />
-            <h2 className="text-lg font-extrabold text-slate-900 uppercase tracking-wide">
+            <h2 className="text-lg 2xl:text-xl 3xl:text-2xl font-extrabold text-slate-900 uppercase tracking-wide">
               Shfletoni Kategoritë
             </h2>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 sm:gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 2xl:grid-cols-7 3xl:grid-cols-8 gap-2 sm:gap-3 2xl:gap-4">
             {CATEGORIES.map((cat) => (
               <Link
                 key={cat}
@@ -277,13 +277,13 @@ export default function HomeClient({ articles }: HomeClientProps) {
 
       {/* ── TRENDING ── */}
       <section className="bg-white py-8 sm:py-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="site-container">
           <div className="flex items-center gap-2.5 mb-6">
             <TrendingUp className="w-4 h-4 text-red-600" />
             <div className="w-1 h-6 bg-red-600 rounded-full" />
-            <h2 className="text-xl font-extrabold text-slate-900">Trending</h2>
+            <h2 className="text-xl 2xl:text-[1.75rem] 3xl:text-[1.95rem] font-extrabold text-slate-900">Trending</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 gap-0.5 2xl:gap-1">
             {articles.slice(0, 6).map((article, i) => (
               <Link
                 key={article.id}

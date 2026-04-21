@@ -26,7 +26,7 @@ export default function KontaktPage() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-7 sm:py-10 page-shell">
+    <div className="site-container py-7 sm:py-10 2xl:py-12 page-shell">
       {/* Header */}
       <div className="mb-10">
         <div className="flex items-center gap-2 text-xs text-slate-400 mb-3">
@@ -36,16 +36,16 @@ export default function KontaktPage() {
         </div>
         <div className="flex items-center gap-3 mb-3">
           <div className="w-1 h-8 bg-red-600 rounded-full" />
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900">Na Kontaktoni</h1>
+          <h1 className="text-2xl sm:text-3xl 2xl:text-4xl 3xl:text-[2.7rem] font-extrabold text-slate-900">Na Kontaktoni</h1>
         </div>
-        <p className="text-slate-500 text-base">
+        <p className="text-slate-500 text-base 2xl:text-lg">
           Jemi gjithmonë të gatshëm të dëgjojmë nga ju. Dërgoni mesazhin tuaj dhe do t&apos;ju përgjigjemi sa më shpejt.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 2xl:gap-10">
         {/* Contact info */}
-        <div className="space-y-4">
+        <div className="xl:col-span-4 3xl:col-span-5 space-y-4 2xl:space-y-5">
           {[
             {
               icon: <MapPin className="w-5 h-5 text-[#e63946]" />,
@@ -125,11 +125,11 @@ export default function KontaktPage() {
         </div>
 
         {/* Contact form */}
-        <div className="lg:col-span-2">
+        <div className="xl:col-span-8 3xl:col-span-7">
           <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden">
             <div className="bg-[#e63946] px-7 py-5 text-white">
-              <h2 className="font-bold text-lg">Dërgoni Mesazh</h2>
-              <p className="text-white/70 text-sm">Do t&apos;ju përgjigjemi brenda 24 orëve.</p>
+              <h2 className="font-bold text-lg 2xl:text-xl">Dërgoni Mesazh</h2>
+              <p className="text-white/70 text-sm 2xl:text-base">Do t&apos;ju përgjigjemi brenda 24 orëve.</p>
             </div>
 
             <div className="p-7">
@@ -243,7 +243,7 @@ export default function KontaktPage() {
       </div>
 
       {/* Map placeholder */}
-      <div className="mt-10 h-64 bg-slate-100 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-200">
+      <div className="mt-10 h-64 2xl:h-72 bg-slate-100 rounded-2xl flex items-center justify-center overflow-hidden border border-slate-200">
         <div className="text-center text-slate-400">
           <MapPin className="w-8 h-8 mx-auto mb-2 text-[#e63946]" />
           <p className="font-semibold text-slate-600">Radio Fontana</p>
