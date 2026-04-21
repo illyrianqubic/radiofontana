@@ -50,7 +50,7 @@ export default function KontaktPage() {
             {
               icon: <MapPin className="w-5 h-5 text-[#e63946]" />,
               label: 'Adresa',
-              value: 'Rruga "Ibrahim Rugova" Nr. 56\nPejë, Kosovë',
+              value: 'Rruga "Ibrahim Rugova" Nr. 56\nIstog, Kosovë',
             },
             {
               icon: <Phone className="w-5 h-5 text-[#e63946]" />,
@@ -113,7 +113,7 @@ export default function KontaktPage() {
             </div>
             <div className="space-y-2.5">
               {[
-                { location: 'Pejë', freq: '98.8 FM' },
+                { location: 'Istog', freq: '98.8 FM' },
               ].map((f) => (
                 <div key={f.location} className="flex justify-between text-sm">
                   <span className="text-slate-400">{f.location}</span>
@@ -247,7 +247,7 @@ export default function KontaktPage() {
         <div className="text-center text-slate-400">
           <MapPin className="w-8 h-8 mx-auto mb-2 text-[#e63946]" />
           <p className="font-semibold text-slate-600">Radio Fontana</p>
-          <p className="text-sm">Rruga &quot;Ibrahim Rugova&quot; Nr. 56, Pejë</p>
+          <p className="text-sm">Rruga &quot;Ibrahim Rugova&quot; Nr. 56, Istog</p>
         </div>
       </div>
     </div>

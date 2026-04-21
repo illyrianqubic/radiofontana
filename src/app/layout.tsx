@@ -10,12 +10,12 @@ const geist = Geist({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: {
-    default: 'Radio Fontana - Pejë, Kosovë',
+    default: 'Radio Fontana - Istog, Kosovë',
     template: '%s | Radio Fontana',
   },
   description:
-    'Radio Fontana është stacioni kryesor i radios në Pejë, Kosovë. Lajme, muzikë dhe transmetim live 24 orë në ditë.',
-  keywords: ['radio', 'Pejë', 'Kosovë', 'lajme', 'muzikë', 'Radio Fontana'],
+    'Radio Fontana është stacioni kryesor i radios në Istog, Kosovë. Lajme, muzikë dhe transmetim live 24 orë në ditë.',
+  keywords: ['radio', 'Istog', 'Kosovë', 'lajme', 'muzikë', 'Radio Fontana'],
   authors: [{ name: 'Radio Fontana' }],
   creator: 'Radio Fontana',
   icons: {
@@ -30,8 +30,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'sq_AL',
     siteName: 'Radio Fontana',
-    title: 'Radio Fontana - Pejë, Kosovë',
-    description: 'Stacioni kryesor i radios në Pejë, Kosovë.',
+    title: 'Radio Fontana - Istog, Kosovë',
+    description: 'Stacioni kryesor i radios në Istog, Kosovë.',
   },
 };
 

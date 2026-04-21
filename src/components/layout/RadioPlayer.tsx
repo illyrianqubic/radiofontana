@@ -263,7 +263,7 @@ export default function RadioPlayer() {
                 {error
                   ? 'Transmetimi nuk është i disponueshëm'
                   : playing
-                  ? 'Duke transmetuar live · Pejë, Kosovë'
+                  ? 'Duke transmetuar live · Istog, Kosovë'
                   : 'Klikoni play për të dëgjuar'}
               </p>
             </div>

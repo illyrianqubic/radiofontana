@@ -36,10 +36,10 @@ export default function Footer() {
             </div>
             <div className="flex items-center gap-1.5 mb-3">
               <Radio className="w-3.5 h-3.5 text-red-600" />
-              <span className="text-sm font-semibold text-slate-700">98.8 FM · Pejë, Kosovë</span>
+              <span className="text-sm font-semibold text-slate-700">98.8 FM · Istog, Kosovë</span>
             </div>
             <p className="text-slate-500 text-sm leading-relaxed mb-5">
-              Stacioni kryesor i informacionit dhe muzikës në Pejë, Kosovë. Transmetim live 24/7.
+              Stacioni kryesor i informacionit dhe muzikës në Istog, Kosovë. Transmetim live 24/7.
             </p>
             <div className="flex gap-2">
               <a href="https://www.facebook.com/rtvfontanalive" target="_blank" rel="noopener noreferrer"
@@ -100,7 +100,7 @@ export default function Footer() {
             <ul className="space-y-3.5">
               <li className="flex items-start gap-3 text-sm text-slate-600">
                 <MapPin className="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5" />
-                <span>Rruga &quot;Ibrahim Rugova&quot; Nr. 56<br />Pejë, Kosovë</span>
+                <span>Rruga &quot;Ibrahim Rugova&quot; Nr. 56<br />Istog, Kosovë</span>
               </li>
               <li className="flex items-center gap-3 text-sm text-slate-600">
                 <Phone className="w-4 h-4 text-slate-400 flex-shrink-0" />

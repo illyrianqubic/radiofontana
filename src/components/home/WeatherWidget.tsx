@@ -1,7 +1,7 @@
 import { Cloud, Sun, CloudRain, Thermometer, Wind, Droplets } from 'lucide-react';
 
 const mockWeather = {
-  city: 'Pejë',
+  city: 'Istog',
   country: 'Kosovë',
   temp: 18,
   feelsLike: 16,
@@ -27,7 +27,7 @@ export default function WeatherWidget() {
       <div className="px-4 sm:px-5 pt-4 sm:pt-5 pb-4">
         <div className="flex items-baseline justify-between gap-3 mb-1">
           <p className="text-xl sm:text-3xl font-bold tracking-tight text-slate-800">Moti Aktual</p>
-          <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#e63946]">Pejë</span>
+          <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-[#e63946]">Istog</span>
         </div>
         <p className="text-slate-400 text-xs sm:text-sm">Parashikimi për sot</p>
       </div>

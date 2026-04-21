@@ -17,7 +17,7 @@ export default function NewsletterSection() {
         </div>
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 tracking-tight">Qëndro i Informuar</h2>
         <p className="text-white/70 mb-8 leading-relaxed">
-          Abonohu tek buletini ynë ditor dhe merr lajmet kryesore nga Peja dhe Kosova.
+          Abonohu tek buletini ynë ditor dhe merr lajmet kryesore nga Istog dhe Kosova.
         </p>
 
         <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto" method="get" action="/kontakt/">

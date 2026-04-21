@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Radio, Play, Pause, Users, Clock, Mic2, Volume2 } from 'lucide-react';
+import { Radio, Play, Pause, Clock, Mic2, Volume2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAudioPlayer } from '@/lib/AudioPlayerContext';
 import { LiveStream } from '@/lib/types';
@@ -106,7 +106,7 @@ export default function LivePlayer() {
             </div>
 
             <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-2 sm:mb-3 tracking-tight">Radio Fontana</h1>
-            <p className="text-slate-400 text-sm sm:text-base lg:text-lg mb-1">98.8 FM · Pejë, Kosovë</p>
+            <p className="text-slate-400 text-sm sm:text-base lg:text-lg mb-1">98.8 FM · Istog, Kosovë</p>
             <p className="text-slate-600 text-xs sm:text-sm mb-6 sm:mb-10">Transmetim 24/7 me cilësi të lartë</p>
 
             <button
@@ -148,12 +148,7 @@ export default function LivePlayer() {
               </motion.div>
             )}
 
-            <div className="grid grid-cols-1 xs:grid-cols-3 gap-3 max-w-sm mx-auto">
-              <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-4 text-center">
-                <Users className="w-5 h-5 mx-auto text-slate-500 mb-1.5" />
-                <p className="text-xl font-bold text-white">2.4K</p>
-                <p className="text-[10px] text-slate-500 uppercase tracking-wider font-semibold">Dëgjues</p>
-              </div>
+            <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 max-w-sm mx-auto">
               <div className="bg-white/[0.04] border border-white/[0.06] rounded-2xl p-4 text-center">
                 <Clock className="w-5 h-5 mx-auto text-slate-500 mb-1.5" />
                 <p className="text-xl font-bold text-white">24/7</p>
