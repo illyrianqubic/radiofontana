@@ -150,9 +150,9 @@ export default function Navbar() {
               <Image
                 src="/logortvfontana.jpg"
                 alt="Radio Fontana"
-                width={140}
-                height={48}
-                className="h-8 sm:h-10 lg:h-11 w-auto object-contain translate-y-0.5"
+                width={190}
+                height={64}
+                className="h-10 sm:h-12 lg:h-[52px] w-auto object-contain translate-y-0.5"
                 priority
               />
             </Link>
