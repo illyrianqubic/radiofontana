@@ -1,6 +1,9 @@
 # Sanity Studio — serve index.html for all sub-paths (client-side routing)
 /studio/* /studio/index.html 200
 
+# Canonicalize /lajme without trailing slash so it resolves to listing page.
+/lajme /lajme/ 301
+
 # Ensure the /lajme listing page (index.html) wins over the slug fallback below.
 /lajme/ /lajme/index.html 200
 
