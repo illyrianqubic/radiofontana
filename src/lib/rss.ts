@@ -114,12 +114,16 @@ function itemToArticle(item: Parser.Item & CustomItem, index: number): Article {
     ? titleCat
     : mapCategory(item.categories as string[] | undefined);
 
+  const rawContent = (item as Record<string, string>)['content:encoded'] || item.content || '';
+  // Remove the first <img> tag from content since it's shown as the hero image
+  const content = rawContent.replace(/<img[^>]*>/i, '');
+
   return {
     id,
     slug,
     title,
     excerpt: (item.contentSnippet || item.summary || '').replace(/<[^>]+>/g, '').slice(0, 200),
-    content: (item as Record<string, string>)['content:encoded'] || item.content || '',
+    content,
     category,
     author: (item as Record<string, string>).creator || 'Redaksia',
     publishedAt: item.isoDate || item.pubDate || new Date().toISOString(),
