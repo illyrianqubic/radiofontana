@@ -30,8 +30,6 @@ export default function BreakingNewsTicker({ articles }: Props) {
 
   const SPEED_PX_PER_SECOND = 70;
 
-  if (items.length === 0) return null;
-
   useEffect(() => {
     const updateSizes = () => {
       const container = containerRef.current?.offsetWidth ?? 0;
@@ -68,6 +66,8 @@ export default function BreakingNewsTicker({ articles }: Props) {
     }
     x.set(next);
   });
+
+  if (items.length === 0) return null;
 
   return (
     <div className="bg-red-600 text-white overflow-hidden shadow-sm">
