@@ -16,6 +16,22 @@ export default function LivePlayer() {
 
   return (
     <div className="min-h-screen bg-slate-950">
+      {/* Facebook Live Embed */}
+      <div className="w-full bg-black">
+        <div className="max-w-5xl mx-auto">
+          <iframe
+            src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Frtvfontanalive%2Fvideos%2F902541369457878&show_text=false&autoplay=true&width=1280"
+            width="100%"
+            height="600"
+            style={{ border: 'none', overflow: 'hidden' }}
+            scrolling="no"
+            frameBorder={0}
+            allowFullScreen
+            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+          />
+        </div>
+      </div>
+
       {/* Hero */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0">
