@@ -4,6 +4,7 @@
 interface Env {
   NEXT_PUBLIC_SANITY_PROJECT_ID: string;
   NEXT_PUBLIC_SANITY_DATASET: string;
+  NEXT_PUBLIC_SANITY_API_VERSION?: string;
 }
 
 const API_VERSION = '2024-01-01';
@@ -39,6 +40,7 @@ export async function onRequestGet(context: {
   }
 
   const dataset = env.NEXT_PUBLIC_SANITY_DATASET || 'production';
+  const apiVersion = env.NEXT_PUBLIC_SANITY_API_VERSION || API_VERSION;
   const reqUrl = new URL(context.request.url);
   const slug = reqUrl.searchParams.get('slug') ?? '';
 
@@ -52,12 +54,13 @@ export async function onRequestGet(context: {
   // Sanity GROQ parameters: $slug must be JSON-encoded (quoted string)
   const slugParam = JSON.stringify(slug);
   const url =
-    `https://${projectId}.apicdn.sanity.io/v${API_VERSION}/data/query/${dataset}` +
+    `https://${projectId}.api.sanity.io/v${apiVersion}/data/query/${dataset}` +
     `?query=${encodeURIComponent(QUERY)}&%24slug=${encodeURIComponent(slugParam)}`;
 
   try {
     const res = await fetch(url, {
       headers: { Accept: 'application/json' },
+      cache: 'no-store',
     });
 
     if (!res.ok) {
@@ -79,7 +82,7 @@ export async function onRequestGet(context: {
     return new Response(JSON.stringify(data.result), {
       headers: {
         'Content-Type': 'application/json',
-        'Cache-Control': 'public, max-age=60, stale-while-revalidate=300',
+        'Cache-Control': 'no-store',
         'Access-Control-Allow-Origin': '*',
       },
     });

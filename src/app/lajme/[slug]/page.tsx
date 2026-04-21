@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import ArticleClient from './ArticleClient';
-import { ARTICLE_SLUGS_QUERY } from '@/sanity/queries';
+import { Article } from '@/lib/types';
+import { ARTICLE_BY_SLUG_QUERY, ARTICLE_SLUGS_QUERY } from '@/sanity/queries';
 
 const SANITY_PROJECT_ID = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? '';
 const SANITY_DATASET = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production';
@@ -53,10 +54,13 @@ export async function generateStaticParams() {
     { useCdn: false },
   )) ?? [];
 
-  return results
+  const slugs = results
     .map((p) => p.slug)
     .filter((slug): slug is string => Boolean(slug))
     .map((slug) => ({ slug }));
+
+  // Keep one static fallback page that can hydrate and fetch by browser URL slug.
+  return [...slugs, { slug: '_' }];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -83,5 +87,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
-  return <ArticleClient slug={slug} />;
+  const initialArticle = await fetchSanity<Article>(ARTICLE_BY_SLUG_QUERY, { slug });
+
+  return <ArticleClient slug={slug} initialArticle={initialArticle} />;
 }

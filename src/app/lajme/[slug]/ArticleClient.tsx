@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { notFound } from 'next/navigation';
+import { notFound, usePathname } from 'next/navigation';
 import { Clock, User, Tag, ArrowLeft, Share2 } from 'lucide-react';
 import { FacebookIcon, TwitterIcon } from '@/components/shared/SocialIcons';
 import { Article, CATEGORY_COLORS } from '@/lib/types';
@@ -13,36 +13,95 @@ import { formatAlbanianDate, timeAgo } from '@/lib/utils';
 
 interface Props {
   slug: string;
+  initialArticle?: Article | null;
 }
 
-export default function ArticleClient({ slug }: Props) {
-  const [article, setArticle] = useState<Article | null>(null);
+export default function ArticleClient({ slug, initialArticle = null }: Props) {
+  const pathname = usePathname();
+  const resolvedSlug = (() => {
+    if (slug !== '_') {
+      return slug;
+    }
+
+    const fromPath = pathname?.split('/').filter(Boolean).at(-1) ?? slug;
+
+    try {
+      return decodeURIComponent(fromPath);
+    } catch {
+      return fromPath;
+    }
+  })();
+
+  const [article, setArticle] = useState<Article | null>(initialArticle);
   const [related, setRelated] = useState<Article[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!initialArticle);
 
   useEffect(() => {
-    // Fetch the article by slug from the dedicated endpoint
-    fetch(`/api/article?slug=${encodeURIComponent(slug)}`)
-      .then((r) => (r.ok ? r.json() : null))
-      .then((data: Article | null) => {
-        setArticle(data);
-        if (data) {
-          // Fetch related articles in the same category
-          fetch('/api/articles?limit=8')
-            .then((r) => r.json())
-            .then((all: Article[]) => {
-              setRelated(
-                (Array.isArray(all) ? all : [])
-                  .filter((a) => a.id !== data.id && a.category === data.category)
-                  .slice(0, 4),
-              );
-            })
-            .catch(() => {});
+    let cancelled = false;
+
+    const fetchRelated = async (current: Article) => {
+      try {
+        const response = await fetch('/api/articles?limit=8');
+        const all = (await response.json()) as Article[];
+
+        if (cancelled) {
+          return;
         }
-      })
-      .catch(() => {})
-      .finally(() => setLoading(false));
-  }, [slug]);
+
+        setRelated(
+          (Array.isArray(all) ? all : [])
+            .filter((a) => a.id !== current.id && a.category === current.category)
+            .slice(0, 4),
+        );
+      } catch {
+        if (!cancelled) {
+          setRelated([]);
+        }
+      }
+    };
+
+    const loadArticle = async () => {
+      if (initialArticle && initialArticle.slug === resolvedSlug) {
+        setArticle(initialArticle);
+        setLoading(false);
+        await fetchRelated(initialArticle);
+        return;
+      }
+
+      setArticle(null);
+      setLoading(true);
+
+      try {
+        const response = await fetch(`/api/article?slug=${encodeURIComponent(resolvedSlug)}`);
+        const data = response.ok ? ((await response.json()) as Article) : null;
+
+        if (cancelled) {
+          return;
+        }
+
+        setArticle(data);
+
+        if (data) {
+          await fetchRelated(data);
+        }
+      } catch {
+        if (!cancelled) {
+          setArticle(null);
+          setRelated([]);
+        }
+      } finally {
+        if (!cancelled) {
+          setLoading(false);
+        }
+      }
+    };
+
+    void loadArticle();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [resolvedSlug, initialArticle]);
 
   if (!loading && !article) {
     notFound();
