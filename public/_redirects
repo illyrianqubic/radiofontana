@@ -1,14 +1,14 @@
 # Sanity Studio — serve index.html for all sub-paths (client-side routing)
 /studio/* /studio/index.html 200
 
-# Canonicalize /lajme without trailing slash so it resolves to listing page.
-/lajme /lajme/ 301
-
-# Ensure the /lajme listing page (index.html) wins over the slug fallback below.
+# Ensure the /lajme listing page resolves in both URL forms.
+/lajme /lajme/index.html 200
 /lajme/ /lajme/index.html 200
 
 # Article fallback shell for slugs published after the last static export build.
-/lajme/* /lajme/_/ 200
+# Use segment placeholders so /lajme itself is NOT rewritten to /lajme/_/.
+/lajme/:slug /lajme/_/ 200
+/lajme/:slug/ /lajme/_/ 200
 
 # Fallback to 404 page for unmatched routes
 /* /404.html 404
