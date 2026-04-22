@@ -8,6 +8,8 @@ interface Env {
 }
 
 const API_VERSION = '2024-01-01';
+const DEFAULT_PROJECT_ID = 'ksakxvtt';
+const DEFAULT_DATASET = 'production';
 
 const QUERY = `*[_type == "post" && defined(slug.current) && !(_id in path("drafts.**"))] | order(publishedAt desc) [0...$limit] {
   "id": _id,
@@ -33,15 +35,8 @@ export async function onRequestGet(context: {
   env: Env;
 }) {
   const { env } = context;
-  const projectId = env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-
-  if (!projectId) {
-    return new Response(JSON.stringify([]), {
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-
-  const dataset = env.NEXT_PUBLIC_SANITY_DATASET || 'production';
+  const projectId = env.NEXT_PUBLIC_SANITY_PROJECT_ID || DEFAULT_PROJECT_ID;
+  const dataset = env.NEXT_PUBLIC_SANITY_DATASET || DEFAULT_DATASET;
   const apiVersion = env.NEXT_PUBLIC_SANITY_API_VERSION || API_VERSION;
   const reqUrl = new URL(context.request.url);
   const rawLimit = Number(reqUrl.searchParams.get('limit') ?? '20');

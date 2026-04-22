@@ -8,6 +8,8 @@ interface Env {
 }
 
 const API_VERSION = '2024-01-01';
+const DEFAULT_PROJECT_ID = 'ksakxvtt';
+const DEFAULT_DATASET = 'production';
 
 // Using GROQ $slug parameter to avoid injection
 const QUERY = `*[_type == "post" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
@@ -30,16 +32,8 @@ export async function onRequestGet(context: {
   env: Env;
 }) {
   const { env } = context;
-  const projectId = env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-
-  if (!projectId) {
-    return new Response(JSON.stringify(null), {
-      status: 500,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-
-  const dataset = env.NEXT_PUBLIC_SANITY_DATASET || 'production';
+  const projectId = env.NEXT_PUBLIC_SANITY_PROJECT_ID || DEFAULT_PROJECT_ID;
+  const dataset = env.NEXT_PUBLIC_SANITY_DATASET || DEFAULT_DATASET;
   const apiVersion = env.NEXT_PUBLIC_SANITY_API_VERSION || API_VERSION;
   const reqUrl = new URL(context.request.url);
   const slug = (reqUrl.searchParams.get('slug') ?? '').trim();
