@@ -1,0 +1,586 @@
+{
+  "meta": {
+    "generatedAt": "2026-04-21",
+    "filesScanned": 38,
+    "sourceScope": [
+      "src/**/*.css",
+      "src/**/*.ts",
+      "src/**/*.tsx"
+    ],
+    "extractionMethod": "Static scan of CSS variables, literal style values, and Tailwind utility tokens used in source files."
+  },
+  "primaryColors": {
+    "brandCore": {
+      "rfRed": "#dc2626",
+      "rfRedDark": "#b91c1c",
+      "rfRedLight": "#ef4444",
+      "rfAccent": "#dc2626",
+      "liveRed": "#e63946",
+      "liveRedHover": "#d32f3f",
+      "gradientDarkStop": "#991b1b"
+    },
+    "glowAndAlpha": {
+      "rfRedGlow": "rgba(220, 38, 38, 0.25)",
+      "rfAccentGlow": "rgba(220, 38, 38, 0.25)",
+      "redTint08": "rgba(220,38,38,0.08)",
+      "redTint12": "rgba(220,38,38,0.12)"
+    },
+    "tailwindRedsUsed": {
+      "red-200": "#fecaca",
+      "red-300": "#fca5a5",
+      "red-400": "#f87171",
+      "red-500": "#ef4444",
+      "red-600": "#dc2626",
+      "red-700": "#b91c1c",
+      "red-800": "#991b1b",
+      "red-900": "#7f1d1d"
+    }
+  },
+  "secondaryColors": {
+    "neutrals": {
+      "background": "#ffffff",
+      "foreground": "#0d1117",
+      "studioBackground": "#141416",
+      "white": "#ffffff",
+      "black": "#000000"
+    },
+    "socialAndSupport": {
+      "facebookBlue": "#1877F2",
+      "facebookBlueHover": "#166FE5",
+      "green500": "#22c55e",
+      "green600": "#16a34a",
+      "purple600": "#9333ea",
+      "pink600": "#db2777",
+      "blue400": "#60a5fa",
+      "amber400": "#fbbf24",
+      "yellow300": "#fde047",
+      "gray400": "#9ca3af"
+    },
+    "slateScaleUsed": {
+      "slate-50": "#f8fafc",
+      "slate-100": "#f1f5f9",
+      "slate-200": "#e2e8f0",
+      "slate-300": "#cbd5e1",
+      "slate-400": "#94a3b8",
+      "slate-500": "#64748b",
+      "slate-600": "#475569",
+      "slate-700": "#334155",
+      "slate-800": "#1e293b",
+      "slate-900": "#0f172a",
+      "slate-950": "#020617"
+    }
+  },
+  "backgroundColors": {
+    "cssVariableBacked": {
+      "background": "#ffffff",
+      "foreground": "#0d1117"
+    },
+    "utilityClassesUsed": [
+      "bg-[#1877F2]",
+      "bg-[#e63946]",
+      "bg-black",
+      "bg-black/5",
+      "bg-blue-600",
+      "bg-green-500/10",
+      "bg-green-600",
+      "bg-orange-600",
+      "bg-pink-600",
+      "bg-purple-600",
+      "bg-red-50",
+      "bg-red-500",
+      "bg-red-600",
+      "bg-red-600/15",
+      "bg-red-600/20",
+      "bg-red-600/8",
+      "bg-red-800",
+      "bg-red-900/5",
+      "bg-slate-100",
+      "bg-slate-300",
+      "bg-slate-50",
+      "bg-slate-50/50",
+      "bg-slate-500",
+      "bg-slate-700",
+      "bg-slate-800",
+      "bg-slate-900",
+      "bg-slate-950",
+      "bg-white",
+      "bg-white/[0.04]",
+      "bg-white/[0.05]",
+      "bg-white/[0.06]",
+      "bg-white/[0.07]",
+      "bg-white/10",
+      "bg-white/20",
+      "bg-white/30",
+      "bg-white/5",
+      "hover:bg-[#166FE5]",
+      "hover:bg-[#1877F2]",
+      "hover:bg-[#d32f3f]",
+      "hover:bg-pink-600",
+      "hover:bg-red-50",
+      "hover:bg-red-600",
+      "hover:bg-red-700",
+      "hover:bg-red-800",
+      "hover:bg-slate-100",
+      "hover:bg-slate-200",
+      "hover:bg-slate-50",
+      "hover:bg-slate-600",
+      "hover:bg-slate-800",
+      "hover:bg-white/[0.06]",
+      "hover:bg-white/90"
+    ],
+    "gradientDefinitions": [
+      "linear-gradient(90deg, #dc2626, #991b1b, #ef4444, #dc2626)",
+      "linear-gradient(90deg, var(--rf-red) 0%, transparent 100%)",
+      "linear-gradient(to right, #dc2626 <volume%>, rgba(255,255,255,0.15) <volume%>)"
+    ],
+    "literalHexValuesUsed": [
+      "#0d1117",
+      "#141416",
+      "#166FE5",
+      "#1877F2",
+      "#666",
+      "#991b1b",
+      "#b91c1c",
+      "#d32f3f",
+      "#dc2626",
+      "#e63946",
+      "#ef4444",
+      "#fff",
+      "#ffffff"
+    ],
+    "literalRgbaValuesUsed": [
+      "rgba(0,0,0,0.04)",
+      "rgba(0,0,0,0.06)",
+      "rgba(0,0,0,0.08)",
+      "rgba(0,0,0,0.10)",
+      "rgba(0,0,0,0.12)",
+      "rgba(0,0,0,0.2)",
+      "rgba(0,0,0,0.35)",
+      "rgba(0,0,0,0.5)",
+      "rgba(0,0,0,0.7)",
+      "rgba(220, 38, 38, 0.25)",
+      "rgba(220,38,38,0.08)",
+      "rgba(220,38,38,0.12)",
+      "rgba(255,255,255,0.15)"
+    ]
+  },
+  "textColors": {
+    "utilityClassesUsed": [
+      "hover:text-red-600",
+      "hover:text-red-700",
+      "hover:text-slate-600",
+      "hover:text-slate-700",
+      "hover:text-slate-900",
+      "hover:text-white",
+      "text-[#e63946]",
+      "text-amber-400",
+      "text-blue-400",
+      "text-gray-400",
+      "text-green-500",
+      "text-red-300",
+      "text-red-400",
+      "text-red-500",
+      "text-red-600",
+      "text-slate-100",
+      "text-slate-300",
+      "text-slate-400",
+      "text-slate-500",
+      "text-slate-600",
+      "text-slate-700",
+      "text-slate-800",
+      "text-slate-900",
+      "text-white",
+      "text-white/20",
+      "text-white/40",
+      "text-white/50",
+      "text-white/60",
+      "text-white/65",
+      "text-white/70",
+      "text-white/90",
+      "text-yellow-300"
+    ],
+    "semanticTextHex": {
+      "primary": "#0d1117",
+      "inverse": "#ffffff",
+      "accent": "#dc2626",
+      "accentAlt": "#e63946",
+      "muted": "#64748b"
+    }
+  },
+  "borderColors": {
+    "utilityClassesUsed": [
+      "border-red-500",
+      "border-red-500/20",
+      "border-red-500/25",
+      "border-red-500/30",
+      "border-red-600",
+      "border-slate-100",
+      "border-slate-200",
+      "border-slate-400",
+      "border-slate-900",
+      "border-white",
+      "border-white/[0.05]",
+      "border-white/[0.06]",
+      "border-white/[0.08]",
+      "border-white/[0.09]",
+      "border-white/[0.14]",
+      "border-white/10",
+      "border-white/20",
+      "focus:border-[#e63946]",
+      "focus:border-red-500",
+      "focus:border-white/50",
+      "hover:border-[#1877F2]",
+      "hover:border-pink-600",
+      "hover:border-red-200",
+      "hover:border-red-600",
+      "hover:border-slate-200",
+      "sm:border-slate-100"
+    ],
+    "semanticBorderHex": {
+      "subtle": "#e2e8f0",
+      "default": "#cbd5e1",
+      "strong": "#94a3b8",
+      "accent": "#dc2626",
+      "accentAlt": "#e63946",
+      "translucentWhite": "rgba(255,255,255,0.15)"
+    }
+  },
+  "accentColors": {
+    "cssAccentVariables": {
+      "rfAccent": "#dc2626",
+      "rfAccentGlow": "rgba(220, 38, 38, 0.25)"
+    },
+    "gradientBar": "linear-gradient(90deg, #dc2626, #991b1b, #ef4444, #dc2626)",
+    "utilitiesUsed": [
+      "focus:border-[#e63946]",
+      "focus:border-red-500",
+      "focus:border-white/50",
+      "focus:ring-red-500/25",
+      "focus:ring-white/40",
+      "from-black/30",
+      "from-black/95",
+      "from-red-900/30",
+      "hover:bg-[#166FE5]",
+      "hover:bg-[#1877F2]",
+      "hover:bg-[#d32f3f]",
+      "hover:bg-pink-600",
+      "hover:bg-red-50",
+      "hover:bg-red-600",
+      "hover:bg-red-700",
+      "hover:bg-red-800",
+      "hover:bg-slate-100",
+      "hover:bg-slate-200",
+      "hover:bg-slate-50",
+      "hover:bg-slate-600",
+      "hover:bg-slate-800",
+      "hover:bg-white/[0.06]",
+      "hover:bg-white/90",
+      "hover:border-[#1877F2]",
+      "hover:border-pink-600",
+      "hover:border-red-200",
+      "hover:border-red-600",
+      "hover:border-slate-200",
+      "hover:text-red-600",
+      "hover:text-red-700",
+      "hover:text-slate-600",
+      "hover:text-slate-700",
+      "hover:text-slate-900",
+      "hover:text-white",
+      "to-transparent",
+      "via-black/40"
+    ]
+  },
+  "fontFamilies": {
+    "primary": "Geist (next/font/google)",
+    "cssStack": [
+      "var(--font-sans), system-ui, sans-serif"
+    ],
+    "themeToken": "var(--font-geist-sans)",
+    "fallback": [
+      "system-ui",
+      "sans-serif"
+    ],
+    "utilityFamiliesUsed": [
+      "font-sans",
+      "font-mono"
+    ]
+  },
+  "fontSizes": {
+    "tailwindScaleUsed": {
+      "text-2xl": {
+        "rem": "1.5rem",
+        "px": 24
+      },
+      "text-4xl": {
+        "rem": "2.25rem",
+        "px": 36
+      },
+      "text-base": {
+        "rem": "1rem",
+        "px": 16
+      },
+      "text-lg": {
+        "rem": "1.125rem",
+        "px": 18
+      },
+      "text-sm": {
+        "rem": "0.875rem",
+        "px": 14
+      },
+      "text-xl": {
+        "rem": "1.25rem",
+        "px": 20
+      },
+      "text-xs": {
+        "rem": "0.75rem",
+        "px": 12
+      },
+      "text-3xl": {
+        "rem": "1.875rem",
+        "px": 30
+      },
+      "text-5xl": {
+        "rem": "3rem",
+        "px": 48
+      },
+      "text-7xl": {
+        "rem": "4.5rem",
+        "px": 72
+      },
+      "text-6xl": {
+        "rem": "3.75rem",
+        "px": 60
+      }
+    },
+    "utilityClassesUsed": [
+      "2xl:text-[1.02rem]",
+      "2xl:text-[1.75rem]",
+      "2xl:text-[1.9rem]",
+      "2xl:text-[11px]",
+      "2xl:text-[13px]",
+      "2xl:text-[15px]",
+      "2xl:text-[2.2rem]",
+      "2xl:text-[2.8rem]",
+      "2xl:text-[4.4rem]",
+      "2xl:text-2xl",
+      "2xl:text-4xl",
+      "2xl:text-base",
+      "2xl:text-lg",
+      "2xl:text-sm",
+      "2xl:text-xl",
+      "2xl:text-xs",
+      "3xl:text-[1.05rem]",
+      "3xl:text-[1.7rem]",
+      "3xl:text-[1.8rem]",
+      "3xl:text-[1.95rem]",
+      "3xl:text-[2.1rem]",
+      "3xl:text-[2.45rem]",
+      "3xl:text-[2.7rem]",
+      "3xl:text-[3.1rem]",
+      "3xl:text-[4.8rem]",
+      "3xl:text-2xl",
+      "3xl:text-base",
+      "lg:text-[1.75rem]",
+      "lg:text-3xl",
+      "lg:text-5xl",
+      "lg:text-lg",
+      "md:text-4xl",
+      "sm:text-[10px]",
+      "sm:text-[12px]",
+      "sm:text-2xl",
+      "sm:text-3xl",
+      "sm:text-4xl",
+      "sm:text-base",
+      "sm:text-lg",
+      "sm:text-sm",
+      "sm:text-xl",
+      "text-[0.8rem]",
+      "text-[0.9rem]",
+      "text-[10px]",
+      "text-[11px]",
+      "text-[9px]",
+      "text-2xl",
+      "text-3xl",
+      "text-4xl",
+      "text-5xl",
+      "text-7xl",
+      "text-base",
+      "text-lg",
+      "text-sm",
+      "text-xl",
+      "text-xs",
+      "xl:text-[2rem]",
+      "xl:text-4xl",
+      "xl:text-6xl"
+    ],
+    "customArbitrarySizesUsed": [
+      "9px",
+      "10px",
+      "11px",
+      "12px",
+      "0.8rem",
+      "13px",
+      "0.9rem",
+      "15px",
+      "1.02rem",
+      "1.05rem",
+      "1.7rem",
+      "1.75rem",
+      "1.8rem",
+      "1.9rem",
+      "1.95rem",
+      "2rem",
+      "2.1rem",
+      "2.2rem",
+      "2.45rem",
+      "2.7rem",
+      "2.8rem",
+      "3.1rem",
+      "4.4rem",
+      "4.8rem"
+    ]
+  },
+  "borderRadiusValues": {
+    "tailwindUtilitiesUsed": [
+      "rounded",
+      "rounded-[1.5rem]",
+      "rounded-2xl",
+      "rounded-3xl",
+      "rounded-full",
+      "rounded-lg",
+      "rounded-md",
+      "rounded-t-[2rem]",
+      "rounded-xl",
+      "sm:rounded-2xl"
+    ],
+    "tailwindReferenceValues": {
+      "rounded": "0.25rem",
+      "rounded-md": "0.375rem",
+      "rounded-lg": "0.5rem",
+      "rounded-xl": "0.75rem",
+      "rounded-2xl": "1rem",
+      "rounded-full": "9999px"
+    },
+    "customArbitraryValues": [
+      "1.5rem",
+      "2rem"
+    ],
+    "cssLiteralValues": [
+      "2px 2px 0 0",
+      "50%",
+      "9999px",
+      "999px"
+    ]
+  },
+  "shadowValues": {
+    "cssVariables": {
+      "shadowCard": "0 1px 3px rgba(0,0,0,0.06), 0 4px 12px rgba(0,0,0,0.04)",
+      "shadowHover": "0 8px 32px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06)"
+    },
+    "utilityClassesUsed": [
+      "hover:shadow-lg",
+      "hover:shadow-xl",
+      "shadow-2xl",
+      "shadow-black/10",
+      "shadow-lg",
+      "shadow-md",
+      "shadow-sm"
+    ],
+    "tailwindReferenceValues": {
+      "shadow-sm": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+      "shadow-md": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+      "shadow-lg": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
+      "shadow-2xl": "0 25px 50px -12px rgb(0 0 0 / 0.25)"
+    },
+    "cssLiteralBoxShadows": [
+      "0 0 0 0 var(--rf-red-glow)",
+      "0 0 0 8px transparent",
+      "0 1px 4px rgba(0,0,0,0.5)",
+      "0 2px 6px rgba(0,0,0,0.35)",
+      "var(--shadow-card)",
+      "var(--shadow-hover)"
+    ]
+  },
+  "breakpointsAndLayoutTokens": {
+    "breakpoints": {
+      "xs": "20rem",
+      "3xl": "120rem",
+      "4xl": "160rem"
+    },
+    "containerWidths": {
+      "base": "min(100% - 2rem, 1600px)",
+      "sm": "min(100% - 3rem, 1600px)",
+      "lg": "min(100% - 4rem, 1600px)",
+      "3xl": "min(100% - 5rem, 1840px)",
+      "4xl": "min(100% - 7rem, 2200px)"
+    }
+  },
+  "extractedColorReferences": {
+    "literalHexValues": [
+      "#0d1117",
+      "#141416",
+      "#166FE5",
+      "#1877F2",
+      "#666",
+      "#991b1b",
+      "#b91c1c",
+      "#d32f3f",
+      "#dc2626",
+      "#e63946",
+      "#ef4444",
+      "#fff",
+      "#ffffff"
+    ],
+    "literalRgbaValues": [
+      "rgba(0,0,0,0.04)",
+      "rgba(0,0,0,0.06)",
+      "rgba(0,0,0,0.08)",
+      "rgba(0,0,0,0.10)",
+      "rgba(0,0,0,0.12)",
+      "rgba(0,0,0,0.2)",
+      "rgba(0,0,0,0.35)",
+      "rgba(0,0,0,0.5)",
+      "rgba(0,0,0,0.7)",
+      "rgba(220, 38, 38, 0.25)",
+      "rgba(220,38,38,0.08)",
+      "rgba(220,38,38,0.12)",
+      "rgba(255,255,255,0.15)"
+    ],
+    "resolvedTailwindPaletteValuesUsed": {
+      "[#166FE5]": "#166FE5",
+      "[#1877F2]": "#1877F2",
+      "[#d32f3f]": "#d32f3f",
+      "[#e63946]": "#e63946",
+      "amber-400": "#fbbf24",
+      "black": "#000000",
+      "blue-400": "#60a5fa",
+      "gray-400": "#9ca3af",
+      "green-500": "#22c55e",
+      "green-600": "#16a34a",
+      "pink-600": "#db2777",
+      "purple-600": "#9333ea",
+      "red-200": "#fecaca",
+      "red-300": "#fca5a5",
+      "red-400": "#f87171",
+      "red-50": "#fef2f2",
+      "red-500": "#ef4444",
+      "red-600": "#dc2626",
+      "red-700": "#b91c1c",
+      "red-800": "#991b1b",
+      "red-900": "#7f1d1d",
+      "slate-100": "#f1f5f9",
+      "slate-200": "#e2e8f0",
+      "slate-300": "#cbd5e1",
+      "slate-400": "#94a3b8",
+      "slate-50": "#f8fafc",
+      "slate-500": "#64748b",
+      "slate-600": "#475569",
+      "slate-700": "#334155",
+      "slate-800": "#1e293b",
+      "slate-900": "#0f172a",
+      "slate-950": "#020617",
+      "white": "#ffffff",
+      "yellow-300": "#fde047"
+    }
+  }
+}
