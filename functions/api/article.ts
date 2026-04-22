@@ -36,6 +36,7 @@ export async function onRequestGet(context: {
   const dataset = env.NEXT_PUBLIC_SANITY_DATASET || DEFAULT_DATASET;
   const apiVersion = env.NEXT_PUBLIC_SANITY_API_VERSION || API_VERSION;
   const reqUrl = new URL(context.request.url);
+  const debug = reqUrl.searchParams.get('debug') === '1';
   const slug = (reqUrl.searchParams.get('slug') ?? '').trim();
 
   if (!slug) {
@@ -82,6 +83,21 @@ export async function onRequestGet(context: {
     });
   } catch (err) {
     console.error('[/api/article] error:', err);
+    if (debug) {
+      return new Response(
+        JSON.stringify({
+          error: String(err),
+          projectId,
+          dataset,
+          apiVersion,
+          slug,
+        }),
+        {
+          status: 500,
+          headers: { 'Content-Type': 'application/json' },
+        },
+      );
+    }
     return new Response(JSON.stringify(null), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },
