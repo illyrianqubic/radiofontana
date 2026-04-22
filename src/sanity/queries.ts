@@ -15,7 +15,7 @@ export const ARTICLES_QUERY = `
     publishedAt,
     "featured": coalesce(featured, false),
     "breaking": coalesce(breaking, false),
-    "tags": coalesce(tags, []),
+    "tags": coalesce(tags, etiketat, []),
     "imageUrl": coalesce(mainImage.asset->url, "/logortvfontana.jpg")
   }
 `;
@@ -38,7 +38,7 @@ export const ARTICLE_BY_SLUG_QUERY = `
     publishedAt,
     "featured": coalesce(featured, false),
     "breaking": coalesce(breaking, false),
-    "tags": coalesce(tags, []),
+    "tags": coalesce(tags, etiketat, []),
     "imageUrl": coalesce(mainImage.asset->url, "/logortvfontana.jpg")
   }
 `;

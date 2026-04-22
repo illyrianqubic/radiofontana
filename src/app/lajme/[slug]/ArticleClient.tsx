@@ -61,15 +61,17 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
     };
 
     const loadArticle = async () => {
-      if (initialArticle && initialArticle.slug === resolvedSlug) {
+      const hasInitial = Boolean(initialArticle && initialArticle.slug === resolvedSlug);
+
+      if (hasInitial && initialArticle) {
+        // Use static data immediately, then refresh from API so published edits
+        // like tags appear without requiring a new site build.
         setArticle(initialArticle);
         setLoading(false);
-        await fetchRelated(initialArticle);
-        return;
+      } else {
+        setArticle(null);
+        setLoading(true);
       }
-
-      setArticle(null);
-      setLoading(true);
 
       try {
         const response = await fetch(`/api/article?slug=${encodeURIComponent(resolvedSlug)}`);
@@ -83,11 +85,17 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
 
         if (data) {
           await fetchRelated(data);
+        } else if (hasInitial && initialArticle) {
+          await fetchRelated(initialArticle);
         }
       } catch {
         if (!cancelled) {
-          setArticle(null);
-          setRelated([]);
+          if (!hasInitial) {
+            setArticle(null);
+            setRelated([]);
+          } else if (initialArticle) {
+            await fetchRelated(initialArticle);
+          }
         }
       } finally {
         if (!cancelled) {
