@@ -293,7 +293,11 @@ export default function RadioPlayer() {
         )}
 
         {/* ── Controls bar ─────────────────────────────────────────────── */}
-        <div className="flex-shrink-0 px-2.5 sm:px-3 py-2 flex items-center gap-2 sm:gap-3">
+        <div
+          className={`px-2.5 sm:px-3 py-2 flex items-center gap-2 sm:gap-3 ${
+            showExpanded ? 'flex-shrink-0' : 'flex-1 min-h-[58px]'
+          }`}
+        >
 
           {/* Station branding */}
           <div className="flex items-center gap-2 flex-1 min-w-0">
