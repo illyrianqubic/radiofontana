@@ -26,8 +26,6 @@ export async function onRequestGet(context: {
   env: Env;
 }) {
   const { env } = context;
-  const reqUrl = new URL(context.request.url);
-  const debug = reqUrl.searchParams.get('debug') === '1';
   const projectId = env.NEXT_PUBLIC_SANITY_PROJECT_ID || DEFAULT_PROJECT_ID;
   const dataset = env.NEXT_PUBLIC_SANITY_DATASET || DEFAULT_DATASET;
   const apiVersion = env.NEXT_PUBLIC_SANITY_API_VERSION || API_VERSION;
@@ -39,7 +37,6 @@ export async function onRequestGet(context: {
   try {
     const res = await fetch(url, {
       headers: { Accept: 'application/json' },
-      cache: 'force-cache',
     });
 
     if (!res.ok) throw new Error(`Sanity responded with ${res.status}`);
@@ -56,20 +53,6 @@ export async function onRequestGet(context: {
     });
   } catch (err) {
     console.error('[/api/livestream] error:', err);
-    if (debug) {
-      return new Response(
-        JSON.stringify({
-          error: String(err),
-          projectId,
-          dataset,
-          apiVersion,
-        }),
-        {
-          status: 500,
-          headers: { 'Content-Type': 'application/json' },
-        },
-      );
-    }
     return new Response(JSON.stringify(FALLBACK), {
       headers: { 'Content-Type': 'application/json' },
     });

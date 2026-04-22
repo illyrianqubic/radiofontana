@@ -39,7 +39,6 @@ export async function onRequestGet(context: {
   const dataset = env.NEXT_PUBLIC_SANITY_DATASET || DEFAULT_DATASET;
   const apiVersion = env.NEXT_PUBLIC_SANITY_API_VERSION || API_VERSION;
   const reqUrl = new URL(context.request.url);
-  const debug = reqUrl.searchParams.get('debug') === '1';
   const rawLimit = Number(reqUrl.searchParams.get('limit') ?? '20');
   const limit = Number.isFinite(rawLimit)
     ? Math.min(Math.max(Math.trunc(rawLimit), 1), 200)
@@ -53,7 +52,6 @@ export async function onRequestGet(context: {
   try {
     const res = await fetch(url, {
       headers: { Accept: 'application/json' },
-      cache: 'force-cache',
     });
 
     if (!res.ok) {
@@ -71,21 +69,6 @@ export async function onRequestGet(context: {
     });
   } catch (err) {
     console.error('[/api/articles] error:', err);
-    if (debug) {
-      return new Response(
-        JSON.stringify({
-          error: String(err),
-          projectId,
-          dataset,
-          apiVersion,
-          limit,
-        }),
-        {
-          status: 500,
-          headers: { 'Content-Type': 'application/json' },
-        },
-      );
-    }
     return new Response(JSON.stringify([]), {
       status: 200, // return empty array so the UI degrades gracefully
       headers: { 'Content-Type': 'application/json' },
