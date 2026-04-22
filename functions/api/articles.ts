@@ -4,11 +4,12 @@
 interface Env {
   NEXT_PUBLIC_SANITY_PROJECT_ID: string;
   NEXT_PUBLIC_SANITY_DATASET: string;
+  NEXT_PUBLIC_SANITY_API_VERSION?: string;
 }
 
 const API_VERSION = '2024-01-01';
 
-const QUERY = `*[_type == "post" && defined(slug.current)] | order(publishedAt desc) [0...$limit] {
+const QUERY = `*[_type == "post" && defined(slug.current) && !(_id in path("drafts.**"))] | order(publishedAt desc) [0...$limit] {
   "id": _id,
   "slug": slug.current,
   title,
@@ -41,20 +42,22 @@ export async function onRequestGet(context: {
   }
 
   const dataset = env.NEXT_PUBLIC_SANITY_DATASET || 'production';
+  const apiVersion = env.NEXT_PUBLIC_SANITY_API_VERSION || API_VERSION;
   const reqUrl = new URL(context.request.url);
-  const limit = Math.min(
-    parseInt(reqUrl.searchParams.get('limit') ?? '20', 10),
-    200,
-  );
+  const rawLimit = Number(reqUrl.searchParams.get('limit') ?? '20');
+  const limit = Number.isFinite(rawLimit)
+    ? Math.min(Math.max(Math.trunc(rawLimit), 1), 200)
+    : 20;
 
   // $limit must be a number in GROQ — pass as plain integer in the URL
   const url =
-    `https://${projectId}.apicdn.sanity.io/v${API_VERSION}/data/query/${dataset}` +
+    `https://${projectId}.apicdn.sanity.io/v${apiVersion}/data/query/${dataset}` +
     `?query=${encodeURIComponent(QUERY)}&%24limit=${limit}`;
 
   try {
     const res = await fetch(url, {
       headers: { Accept: 'application/json' },
+      cache: 'force-cache',
     });
 
     if (!res.ok) {

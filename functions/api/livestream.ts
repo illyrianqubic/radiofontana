@@ -4,6 +4,7 @@
 interface Env {
   NEXT_PUBLIC_SANITY_PROJECT_ID: string;
   NEXT_PUBLIC_SANITY_DATASET: string;
+  NEXT_PUBLIC_SANITY_API_VERSION?: string;
 }
 
 const API_VERSION = '2024-01-01';
@@ -32,14 +33,16 @@ export async function onRequestGet(context: {
   }
 
   const dataset = env.NEXT_PUBLIC_SANITY_DATASET || 'production';
+  const apiVersion = env.NEXT_PUBLIC_SANITY_API_VERSION || API_VERSION;
 
   const url =
-    `https://${projectId}.apicdn.sanity.io/v${API_VERSION}/data/query/${dataset}` +
+    `https://${projectId}.apicdn.sanity.io/v${apiVersion}/data/query/${dataset}` +
     `?query=${encodeURIComponent(QUERY)}`;
 
   try {
     const res = await fetch(url, {
       headers: { Accept: 'application/json' },
+      cache: 'force-cache',
     });
 
     if (!res.ok) throw new Error(`Sanity responded with ${res.status}`);

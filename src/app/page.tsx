@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import HomeClient from './HomeClient';
-import { client } from '@/sanity/client';
+import { readClient } from '@/sanity/client';
 import { ARTICLES_QUERY } from '@/sanity/queries';
 import { Article } from '@/lib/types';
 
@@ -12,7 +12,11 @@ export const metadata: Metadata = {
 
 async function fetchHomeArticles(): Promise<Article[]> {
   try {
-    const data = await client.fetch<Article[]>(ARTICLES_QUERY, { limit: 30 });
+    const data = await readClient.fetch<Article[]>(
+      ARTICLES_QUERY,
+      { limit: 24 },
+      { next: { revalidate: 300 } },
+    );
     return Array.isArray(data) ? data : [];
   } catch {
     return [];

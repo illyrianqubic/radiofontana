@@ -1,6 +1,6 @@
 /** GROQ query that maps a Sanity post document to the Article type */
 export const ARTICLES_QUERY = `
-  *[_type == "post" && defined(slug.current)] | order(publishedAt desc) [0...$limit] {
+  *[_type == "post" && defined(slug.current) && !(_id in path("drafts.**"))] | order(publishedAt desc) [0...$limit] {
     "id": _id,
     "slug": slug.current,
     title,
@@ -21,13 +21,13 @@ export const ARTICLES_QUERY = `
 `;
 
 export const ARTICLE_SLUGS_QUERY = `
-  *[_type == "post" && defined(slug.current)] {
+  *[_type == "post" && defined(slug.current) && !(_id in path("drafts.**"))] {
     "slug": slug.current
   }
 `;
 
 export const ARTICLE_BY_SLUG_QUERY = `
-  *[_type == "post" && slug.current == $slug][0] {
+  *[_type == "post" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
     "id": _id,
     "slug": slug.current,
     title,

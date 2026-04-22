@@ -1,9 +1,25 @@
 # Sanity Studio — serve index.html for all sub-paths (client-side routing)
 /studio/* /studio/index.html 200
 
+# Canonicalize accidental trailing slash on common static files
+/favicon.ico/ /favicon.ico 301
+/favicon-32x32.png/ /favicon-32x32.png 301
+/apple-touch-icon.png/ /apple-touch-icon.png 301
+/logortvfontana.jpg/ /logortvfontana.jpg 301
+/cdn-cgi/l/email-protection /kontakt/ 302
+/cdn-cgi/l/email-protection/ /kontakt/ 302
+
 # Ensure the /lajme listing page resolves in both URL forms.
 /lajme /lajme/index.html 200
 /lajme/ /lajme/index.html 200
+
+# Ensure top-level pages resolve in both URL forms.
+/live /live/index.html 200
+/live/ /live/index.html 200
+/skema /skema/index.html 200
+/skema/ /skema/index.html 200
+/kontakt /kontakt/index.html 200
+/kontakt/ /kontakt/index.html 200
 
 # Article fallback shell for slugs published after the last static export build.
 # Use segment placeholders so /lajme itself is NOT rewritten to /lajme/_/.

@@ -10,7 +10,7 @@ interface Env {
 const API_VERSION = '2024-01-01';
 
 // Using GROQ $slug parameter to avoid injection
-const QUERY = `*[_type == "post" && slug.current == $slug][0] {
+const QUERY = `*[_type == "post" && slug.current == $slug && !(_id in path("drafts.**"))][0] {
   "id": _id,
   "slug": slug.current,
   title,
@@ -34,7 +34,7 @@ export async function onRequestGet(context: {
 
   if (!projectId) {
     return new Response(JSON.stringify(null), {
-      status: 404,
+      status: 500,
       headers: { 'Content-Type': 'application/json' },
     });
   }
@@ -42,7 +42,7 @@ export async function onRequestGet(context: {
   const dataset = env.NEXT_PUBLIC_SANITY_DATASET || 'production';
   const apiVersion = env.NEXT_PUBLIC_SANITY_API_VERSION || API_VERSION;
   const reqUrl = new URL(context.request.url);
-  const slug = reqUrl.searchParams.get('slug') ?? '';
+  const slug = (reqUrl.searchParams.get('slug') ?? '').trim();
 
   if (!slug) {
     return new Response(JSON.stringify(null), {
@@ -54,13 +54,13 @@ export async function onRequestGet(context: {
   // Sanity GROQ parameters: $slug must be JSON-encoded (quoted string)
   const slugParam = JSON.stringify(slug);
   const url =
-    `https://${projectId}.api.sanity.io/v${apiVersion}/data/query/${dataset}` +
+    `https://${projectId}.apicdn.sanity.io/v${apiVersion}/data/query/${dataset}` +
     `?query=${encodeURIComponent(QUERY)}&%24slug=${encodeURIComponent(slugParam)}`;
 
   try {
     const res = await fetch(url, {
       headers: { Accept: 'application/json' },
-      cache: 'no-store',
+      cache: 'force-cache',
     });
 
     if (!res.ok) {
@@ -82,7 +82,7 @@ export async function onRequestGet(context: {
     return new Response(JSON.stringify(data.result), {
       headers: {
         'Content-Type': 'application/json',
-        'Cache-Control': 'no-store',
+        'Cache-Control': 'public, max-age=60, stale-while-revalidate=900',
         'Access-Control-Allow-Origin': '*',
       },
     });

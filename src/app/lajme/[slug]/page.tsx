@@ -1,58 +1,67 @@
 import { Metadata } from 'next';
+import { cache } from 'react';
 import ArticleClient from './ArticleClient';
 import { Article } from '@/lib/types';
+import { readClient } from '@/sanity/client';
 import { ARTICLE_BY_SLUG_QUERY, ARTICLE_SLUGS_QUERY } from '@/sanity/queries';
-
-const SANITY_PROJECT_ID = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID ?? '';
-const SANITY_DATASET = process.env.NEXT_PUBLIC_SANITY_DATASET ?? 'production';
-const SANITY_API_VERSION = process.env.NEXT_PUBLIC_SANITY_API_VERSION ?? '2024-01-01';
 
 interface Props {
   params: Promise<{ slug: string }>;
 }
 
-async function fetchSanity<T>(
-  query: string,
-  params: Record<string, string> = {},
-  options: { useCdn?: boolean } = {},
-): Promise<T | null> {
-  if (!SANITY_PROJECT_ID) {
-    throw new Error('Missing NEXT_PUBLIC_SANITY_PROJECT_ID for Sanity fetch');
+const fetchArticleBySlug = cache(async (slug: string): Promise<Article | null> => {
+  if (!slug || slug === '_') {
+    return null;
   }
-
-  const useCdn = options.useCdn ?? true;
-  const host = useCdn ? 'apicdn.sanity.io' : 'api.sanity.io';
-
   try {
-    const paramStr = Object.entries(params)
-      .map(([k, v]) => `&%24${k}=${encodeURIComponent(JSON.stringify(v))}`)
-      .join('');
-    const url =
-      `https://${SANITY_PROJECT_ID}.${host}/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}` +
-      `?query=${encodeURIComponent(query)}${paramStr}`;
-    const res = await fetch(url, {
-      headers: { Accept: 'application/json' },
-      cache: useCdn ? 'force-cache' : 'no-store',
-    });
-
-    if (!res.ok) {
-      throw new Error(`Sanity request failed with ${res.status}`);
-    }
-
-    const data = (await res.json()) as { result?: T };
-    return data.result ?? null;
+    return await readClient.fetch<Article | null>(
+      ARTICLE_BY_SLUG_QUERY,
+      { slug },
+      { next: { revalidate: 300 } },
+    );
   } catch (error) {
-    console.error('[lajme/[slug]] Sanity fetch failed:', error);
-    throw error;
+    console.error('[lajme/[slug]] ARTICLE_BY_SLUG_QUERY failed:', error);
+    return null;
   }
-}
+});
+
+const fetchArticleSlugs = cache(async (): Promise<Array<{ slug: string | null }>> => {
+  try {
+    const results = await readClient.fetch<Array<{ slug: string | null }>>(
+      ARTICLE_SLUGS_QUERY,
+      {},
+      { next: { revalidate: 300 } },
+    );
+    return Array.isArray(results) ? results : [];
+  } catch (error) {
+    console.error('[lajme/[slug]] ARTICLE_SLUGS_QUERY failed:', error);
+    return [];
+  }
+});
+
+type MetadataArticle = {
+  title: string;
+  excerpt: string;
+  imageUrl: string;
+};
+
+const fetchMetadataArticle = cache(async (slug: string): Promise<MetadataArticle | null> => {
+  if (!slug || slug === '_') {
+    return null;
+  }
+  try {
+    return await readClient.fetch<MetadataArticle | null>(
+      `*[_type == "post" && slug.current == $slug][0]{ title, excerpt, "imageUrl": coalesce(mainImage.asset->url, "") }`,
+      { slug },
+      { next: { revalidate: 300 } },
+    );
+  } catch {
+    return null;
+  }
+});
 
 export async function generateStaticParams() {
-  const results = (await fetchSanity<Array<{ slug: string | null }>>(
-    ARTICLE_SLUGS_QUERY,
-    {},
-    { useCdn: false },
-  )) ?? [];
+  const results = await fetchArticleSlugs();
 
   const slugs = results
     .map((p) => p.slug)
@@ -65,14 +74,7 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const article = await fetchSanity<{
-    title: string;
-    excerpt: string;
-    imageUrl: string;
-  }>(
-    `*[_type == "post" && slug.current == $slug][0]{ title, excerpt, "imageUrl": coalesce(mainImage.asset->url, "") }`,
-    { slug },
-  );
+  const article = await fetchMetadataArticle(slug);
   if (!article?.title) return { title: 'Artikull | Radio Fontana' };
   return {
     title: article.title,
@@ -87,7 +89,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
-  const initialArticle = await fetchSanity<Article>(ARTICLE_BY_SLUG_QUERY, { slug });
+  const initialArticle = await fetchArticleBySlug(slug);
 
   return <ArticleClient slug={slug} initialArticle={initialArticle} />;
 }
