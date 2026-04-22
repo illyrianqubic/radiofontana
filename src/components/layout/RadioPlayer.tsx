@@ -11,7 +11,7 @@ const MAX_W = 960;
 const MIN_H = 76;
 const MAX_H = 440;
 const STORAGE_KEY = 'rf_player_v3';
-const EDGE_GAP = 8;
+const EDGE_GAP = 16;
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
@@ -30,15 +30,31 @@ const DEFAULT_W = 520;
 
 function clamp(v: number, lo: number, hi: number) { return Math.max(lo, Math.min(hi, v)); }
 
+function getViewportSize() {
+  if (typeof window === 'undefined') {
+    return { width: MAX_W + EDGE_GAP * 2, height: MAX_H + EDGE_GAP * 2 };
+  }
+
+  const visual = window.visualViewport;
+  if (visual) {
+    return {
+      width: Math.max(1, Math.round(visual.width)),
+      height: Math.max(1, Math.round(visual.height)),
+    };
+  }
+
+  return { width: window.innerWidth, height: window.innerHeight };
+}
+
 function clampPS(s: PS): PS {
-  const viewportMax = typeof window === 'undefined'
-    ? MAX_W
-    : Math.max(MIN_W, window.innerWidth - EDGE_GAP * 2);
-  const width  = clamp(s.width,  MIN_W, Math.min(MAX_W, viewportMax));
-  const height = clamp(s.height, MIN_H, MAX_H);
+  const { width: viewportW, height: viewportH } = getViewportSize();
+  const maxWidth = Math.max(MIN_W, viewportW - EDGE_GAP * 2);
+  const maxHeight = Math.max(MIN_H, viewportH - EDGE_GAP * 2);
+  const width  = clamp(s.width,  MIN_W, Math.min(MAX_W, maxWidth));
+  const height = clamp(s.height, MIN_H, Math.min(MAX_H, maxHeight));
   if (typeof window === 'undefined' || !s.dragged) return { ...s, width, height };
-  const x = clamp(s.x, 0, Math.max(0, window.innerWidth  - width));
-  const y = clamp(s.y, 0, Math.max(0, window.innerHeight - height));
+  const x = clamp(s.x, EDGE_GAP, Math.max(EDGE_GAP, viewportW - width - EDGE_GAP));
+  const y = clamp(s.y, EDGE_GAP, Math.max(EDGE_GAP, viewportH - height - EDGE_GAP));
   return { ...s, x, y, width, height };
 }
 
@@ -60,7 +76,7 @@ export default function RadioPlayer() {
   const [currentTime, setCurrentTime] = useState('');
   const [ps, setPs] = useState<PS>(() => loadPS() ?? ({ dragged: false, x: 0, y: 0, width: DEFAULT_W, height: MIN_H }));
   const [mounted, setMounted] = useState(false);
-  const [viewportWidth, setViewportWidth] = useState(0);
+  const [viewport, setViewport] = useState({ width: 0, height: 0 });
   const panelRef = useRef<HTMLDivElement>(null);
 
   // Mark client mount to avoid SSR/client mismatch on fixed positioning.
@@ -71,25 +87,41 @@ export default function RadioPlayer() {
 
   useEffect(() => {
     const syncViewport = () => {
-      const width = window.innerWidth;
-      requestAnimationFrame(() => setViewportWidth(width));
+      const nextViewport = getViewportSize();
+      requestAnimationFrame(() => {
+        setViewport((prev) => {
+          if (prev.width === nextViewport.width && prev.height === nextViewport.height) {
+            return prev;
+          }
+          return nextViewport;
+        });
+      });
     };
+
     syncViewport();
     window.addEventListener('resize', syncViewport);
-    return () => window.removeEventListener('resize', syncViewport);
+    const visual = window.visualViewport;
+    visual?.addEventListener('resize', syncViewport);
+    visual?.addEventListener('scroll', syncViewport);
+
+    return () => {
+      window.removeEventListener('resize', syncViewport);
+      visual?.removeEventListener('resize', syncViewport);
+      visual?.removeEventListener('scroll', syncViewport);
+    };
   }, []);
 
   useEffect(() => {
-    if (!viewportWidth) return;
+    if (!viewport.width || !viewport.height) return;
     const raf = requestAnimationFrame(() => {
       setPs((prev) => clampPS(prev));
     });
     return () => cancelAnimationFrame(raf);
-  }, [viewportWidth]);
+  }, [viewport]);
 
   // Keep the first-landing centered player a bit wider unless user has manually moved/resized it.
   useEffect(() => {
-    if (!mounted || !viewportWidth) return;
+    if (!mounted || !viewport.width) return;
     const raf = requestAnimationFrame(() => {
       setPs((prev) => {
         if (prev.dragged || prev.width >= DEFAULT_W) {
@@ -99,7 +131,7 @@ export default function RadioPlayer() {
       });
     });
     return () => cancelAnimationFrame(raf);
-  }, [mounted, viewportWidth]);
+  }, [mounted, viewport.width]);
 
   // Persist after mount
   useEffect(() => {
@@ -192,8 +224,8 @@ export default function RadioPlayer() {
   );
 
   const showExpanded = ps.height > MIN_H + 20;
-  const maxViewportWidth = viewportWidth
-    ? Math.max(MIN_W, viewportWidth - EDGE_GAP * 2)
+  const maxViewportWidth = viewport.width
+    ? Math.max(MIN_W, viewport.width - EDGE_GAP * 2)
     : MAX_W;
   const effectiveWidth = clamp(ps.width, MIN_W, Math.min(MAX_W, maxViewportWidth));
 
