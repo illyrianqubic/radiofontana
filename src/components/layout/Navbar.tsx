@@ -15,7 +15,7 @@ const navLinks = [
   { label: 'Kontakt', href: '/kontakt' },
 ];
 
-const DROPDOWN_CLOSE_DELAY_MS = 300;
+const DROPDOWN_CLOSE_DELAY_MS = 150;
 
 function TopBar() {
   const [dateStr, setDateStr] = useState('');
