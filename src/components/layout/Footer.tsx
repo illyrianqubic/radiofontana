@@ -88,7 +88,6 @@ export default function Footer() {
                 { label: 'Kryefaqja', href: '/' },
                 { label: 'Lajme', href: '/lajme' },
                 { label: 'Radio Live', href: '/live' },
-                { label: 'Skema Programore', href: '/skema' },
                 { label: 'Kontakt', href: '/kontakt' },
               ].map((link) => (
                 <li key={link.href}>

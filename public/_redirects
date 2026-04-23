@@ -16,8 +16,6 @@
 # Ensure top-level pages resolve in both URL forms.
 /live /live/index.html 200
 /live/ /live/index.html 200
-/skema /skema/index.html 200
-/skema/ /skema/index.html 200
 /kontakt /kontakt/index.html 200
 /kontakt/ /kontakt/index.html 200
 

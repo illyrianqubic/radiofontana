@@ -12,7 +12,6 @@ const navLinks = [
   { label: 'Kryefaqja', href: '/' },
   { label: 'Lajme', href: '/lajme', hasDropdown: true },
   { label: 'Live', href: '/live' },
-  { label: 'Skema', href: '/skema' },
   { label: 'Kontakt', href: '/kontakt' },
 ];
 
