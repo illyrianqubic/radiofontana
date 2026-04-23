@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Mail, Phone, MapPin, Radio } from 'lucide-react';
-import { FacebookIcon, InstagramIcon, YoutubeIcon } from '@/components/shared/SocialIcons';
+import { FacebookIcon, InstagramIcon, YoutubeIcon, TiktokIcon } from '@/components/shared/SocialIcons';
 import { CATEGORIES } from '@/lib/types';
 export default function Footer() {
   const pathname = usePathname();
@@ -47,18 +47,30 @@ export default function Footer() {
             <p className="text-slate-500 text-sm 2xl:text-base leading-relaxed mb-5">
               Stacioni kryesor i informacionit dhe muzikës në Istog, Kosovë. Transmetim live 24/7.
             </p>
-            <div className="flex gap-2">
+            <div className="flex gap-2.5">
               <a href="https://www.facebook.com/rtvfontanalive" target="_blank" rel="noopener noreferrer"
-                className="touch-target w-11 h-11 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-[#1877F2] hover:border-[#1877F2] hover:text-white transition-all duration-200" aria-label="Facebook">
-                <FacebookIcon className="w-4 h-4" />
+                className="group touch-target w-12 h-12 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-[#1877F2] hover:border-[#1877F2] hover:text-white hover:shadow-[0_10px_22px_rgba(24,119,242,0.3)] transition-all duration-200" aria-label="Facebook">
+                <span className="rounded-full p-1.5 transition-colors duration-200 group-hover:bg-white/20">
+                  <FacebookIcon className="w-5 h-5" />
+                </span>
               </a>
               <a href="https://www.instagram.com/rtvfontana/" target="_blank" rel="noopener noreferrer"
-                className="touch-target w-11 h-11 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-pink-600 hover:border-pink-600 hover:text-white transition-all duration-200" aria-label="Instagram">
-                <InstagramIcon className="w-4 h-4" />
+                className="group touch-target w-12 h-12 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-600 hover:border-transparent hover:bg-[linear-gradient(135deg,#f58529_0%,#dd2a7b_45%,#8134af_75%,#515bd4_100%)] hover:text-white hover:shadow-[0_10px_22px_rgba(221,42,123,0.35)] transition-all duration-200" aria-label="Instagram">
+                <span className="rounded-full p-1.5 transition-colors duration-200 group-hover:bg-white/20">
+                  <InstagramIcon className="w-5 h-5" />
+                </span>
               </a>
               <a href="https://www.youtube.com/@RTVFontana" target="_blank" rel="noopener noreferrer"
-                className="touch-target w-11 h-11 rounded-xl bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-red-600 hover:border-red-600 hover:text-white transition-all duration-200" aria-label="YouTube">
-                <YoutubeIcon className="w-4 h-4" />
+                className="group touch-target w-12 h-12 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-red-600 hover:border-red-600 hover:text-white hover:shadow-[0_10px_22px_rgba(220,38,38,0.35)] transition-all duration-200" aria-label="YouTube">
+                <span className="rounded-full p-1.5 transition-colors duration-200 group-hover:bg-white/20">
+                  <YoutubeIcon className="w-5 h-5" />
+                </span>
+              </a>
+              <a href="https://www.tiktok.com/@rtvfontanalive" target="_blank" rel="noopener noreferrer"
+                className="group touch-target w-12 h-12 rounded-full bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-black hover:border-black hover:text-white hover:shadow-[0_10px_22px_rgba(15,23,42,0.35)] transition-all duration-200" aria-label="TikTok">
+                <span className="rounded-full p-1.5 transition-colors duration-200 group-hover:bg-white/15">
+                  <TiktokIcon className="w-5 h-5" />
+                </span>
               </a>
             </div>
           </div>

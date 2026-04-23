@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { Mail, Phone, MapPin, Clock, Send, CheckCircle, Radio } from 'lucide-react';
-import { FacebookIcon, InstagramIcon, YoutubeIcon } from '@/components/shared/SocialIcons';
+import { FacebookIcon, InstagramIcon, YoutubeIcon, TiktokIcon } from '@/components/shared/SocialIcons';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function KontaktPage() {
@@ -89,18 +89,34 @@ export default function KontaktPage() {
           {/* Social */}
           <div className="p-5 bg-[#e63946] rounded-2xl text-white">
             <p className="font-bold text-sm mb-3">Na Ndiqni</p>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2.5">
               <a href="https://www.facebook.com/rtvfontanalive" target="_blank" rel="noopener noreferrer"
-                className="touch-target flex items-center gap-2 bg-white/10 hover:bg-[#1877F2] px-3 sm:px-3.5 py-2.5 rounded-xl text-xs sm:text-sm transition-all duration-200 min-h-11">
-                <FacebookIcon className="w-4 h-4" /> Facebook
+                className="group touch-target flex items-center gap-2.5 bg-white/10 hover:bg-[#1877F2] px-3 sm:px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 min-h-11 hover:shadow-[0_10px_20px_rgba(24,119,242,0.35)]">
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/15 transition-colors duration-200 group-hover:bg-white/25">
+                  <FacebookIcon className="w-5 h-5" />
+                </span>
+                Facebook
               </a>
               <a href="https://www.instagram.com/rtvfontana/" target="_blank" rel="noopener noreferrer"
-                className="touch-target flex items-center gap-2 bg-white/10 hover:bg-pink-600 px-3 sm:px-3.5 py-2.5 rounded-xl text-xs sm:text-sm transition-all duration-200 min-h-11">
-                <InstagramIcon className="w-4 h-4" /> Instagram
+                className="group touch-target flex items-center gap-2.5 bg-white/10 hover:bg-[linear-gradient(135deg,#f58529_0%,#dd2a7b_45%,#8134af_75%,#515bd4_100%)] px-3 sm:px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 min-h-11 hover:shadow-[0_10px_20px_rgba(221,42,123,0.35)]">
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/15 transition-colors duration-200 group-hover:bg-white/25">
+                  <InstagramIcon className="w-5 h-5" />
+                </span>
+                Instagram
               </a>
               <a href="https://www.youtube.com/@RTVFontana" target="_blank" rel="noopener noreferrer"
-                className="touch-target flex items-center gap-2 bg-white/10 hover:bg-red-800 px-3 sm:px-3.5 py-2.5 rounded-xl text-xs sm:text-sm transition-all duration-200 min-h-11">
-                <YoutubeIcon className="w-4 h-4" /> YouTube
+                className="group touch-target flex items-center gap-2.5 bg-white/10 hover:bg-red-600 px-3 sm:px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 min-h-11 hover:shadow-[0_10px_20px_rgba(220,38,38,0.35)]">
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/15 transition-colors duration-200 group-hover:bg-white/25">
+                  <YoutubeIcon className="w-5 h-5" />
+                </span>
+                YouTube
+              </a>
+              <a href="https://www.tiktok.com/@rtvfontanalive" target="_blank" rel="noopener noreferrer"
+                className="group touch-target flex items-center gap-2.5 bg-white/10 hover:bg-black px-3 sm:px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all duration-200 min-h-11 hover:shadow-[0_10px_20px_rgba(2,6,23,0.35)]">
+                <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/15 transition-colors duration-200 group-hover:bg-white/20">
+                  <TiktokIcon className="w-5 h-5" />
+                </span>
+                TikTok
               </a>
             </div>
           </div>

@@ -22,6 +22,14 @@ export function YoutubeIcon({ className = 'w-4 h-4' }: { className?: string }) {
   );
 }
 
+export function TiktokIcon({ className = 'w-4 h-4' }: { className?: string }) {
+  return (
+    <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M9 12a4 4 0 104 4V7.5a5.5 5.5 0 005.5 5.5v-3A2.5 2.5 0 0116 7.5V4h-3v12a1 1 0 11-1-1h1v-3H9z" />
+    </svg>
+  );
+}
+
 export function TwitterIcon({ className = 'w-4 h-4' }: { className?: string }) {
   return (
     <svg className={className} fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">

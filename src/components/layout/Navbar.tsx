@@ -1,12 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { Menu, X, Search, ChevronDown, Radio } from 'lucide-react';
 import { CATEGORIES } from '@/lib/types';
-import { FacebookIcon, InstagramIcon, YoutubeIcon } from '@/components/shared/SocialIcons';
+import { FacebookIcon, InstagramIcon, YoutubeIcon, TiktokIcon } from '@/components/shared/SocialIcons';
 
 const navLinks = [
   { label: 'Kryefaqja', href: '/' },
@@ -14,6 +14,8 @@ const navLinks = [
   { label: 'Live', href: '/live' },
   { label: 'Kontakt', href: '/kontakt' },
 ];
+
+const DROPDOWN_CLOSE_DELAY_MS = 300;
 
 function TopBar() {
   const [dateStr, setDateStr] = useState('');
@@ -48,18 +50,22 @@ function TopBar() {
               </>
             )}
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1.5">
             <a href="https://www.facebook.com/rtvfontanalive" target="_blank" rel="noopener noreferrer"
-              className="text-slate-500 hover:text-white transition-colors" aria-label="Facebook">
-              <FacebookIcon className="w-3 h-3" />
+              className="group inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-500 transition-all duration-200 hover:scale-105 hover:bg-[#1877F2]/20 hover:text-[#1877F2]" aria-label="Facebook">
+              <FacebookIcon className="w-4 h-4" />
             </a>
             <a href="https://www.instagram.com/rtvfontana/" target="_blank" rel="noopener noreferrer"
-              className="text-slate-500 hover:text-white transition-colors" aria-label="Instagram">
-              <InstagramIcon className="w-3 h-3" />
+              className="group inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-500 transition-all duration-200 hover:scale-105 hover:bg-[linear-gradient(135deg,rgba(245,133,41,0.25)_0%,rgba(221,42,123,0.25)_45%,rgba(129,52,175,0.25)_75%,rgba(81,91,212,0.25)_100%)] hover:text-[#f77737]" aria-label="Instagram">
+              <InstagramIcon className="w-4 h-4" />
             </a>
             <a href="https://www.youtube.com/@RTVFontana" target="_blank" rel="noopener noreferrer"
-              className="text-slate-500 hover:text-white transition-colors" aria-label="YouTube">
-              <YoutubeIcon className="w-3 h-3" />
+              className="group inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-500 transition-all duration-200 hover:scale-105 hover:bg-red-600/20 hover:text-red-500" aria-label="YouTube">
+              <YoutubeIcon className="w-4 h-4" />
+            </a>
+            <a href="https://www.tiktok.com/@rtvfontanalive" target="_blank" rel="noopener noreferrer"
+              className="group inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-500 transition-all duration-200 hover:scale-105 hover:bg-black hover:text-white" aria-label="TikTok">
+              <TiktokIcon className="w-4 h-4" />
             </a>
           </div>
         </div>
@@ -75,7 +81,29 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isLive, setIsLive] = useState(false);
+  const dropdownCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
+
+  const clearDropdownCloseTimer = useCallback(() => {
+    if (!dropdownCloseTimerRef.current) {
+      return;
+    }
+    clearTimeout(dropdownCloseTimerRef.current);
+    dropdownCloseTimerRef.current = null;
+  }, []);
+
+  const openDropdown = useCallback(() => {
+    clearDropdownCloseTimer();
+    setDropdownOpen(true);
+  }, [clearDropdownCloseTimer]);
+
+  const closeDropdownWithDelay = useCallback(() => {
+    clearDropdownCloseTimer();
+    dropdownCloseTimerRef.current = setTimeout(() => {
+      setDropdownOpen(false);
+      dropdownCloseTimerRef.current = null;
+    }, DROPDOWN_CLOSE_DELAY_MS);
+  }, [clearDropdownCloseTimer]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -85,11 +113,18 @@ export default function Navbar() {
 
   useEffect(() => {
     const raf = requestAnimationFrame(() => {
+      clearDropdownCloseTimer();
       setMobileOpen(false);
       setDropdownOpen(false);
     });
     return () => cancelAnimationFrame(raf);
-  }, [pathname]);
+  }, [pathname, clearDropdownCloseTimer]);
+
+  useEffect(() => {
+    return () => {
+      clearDropdownCloseTimer();
+    };
+  }, [clearDropdownCloseTimer]);
 
   // Fetch live status from Sanity via Cloudflare Function
   useEffect(() => {
@@ -163,8 +198,8 @@ export default function Navbar() {
                   {link.hasDropdown ? (
                     <div
                       className="relative"
-                      onMouseEnter={() => setDropdownOpen(true)}
-                      onMouseLeave={() => setDropdownOpen(false)}
+                      onMouseEnter={openDropdown}
+                      onMouseLeave={closeDropdownWithDelay}
                     >
                       <Link
                         href={link.href}
