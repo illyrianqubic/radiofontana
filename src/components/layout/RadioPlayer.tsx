@@ -9,7 +9,7 @@ import { useAudioPlayer } from '@/lib/AudioPlayerContext';
 const MIN_W = 260;
 const MAX_W = 960;
 const MIN_H = 76;
-const MAX_H = 440;
+const MAX_H = 220;
 const STORAGE_KEY = 'rf_player_v3';
 const EDGE_GAP = 16;
 // ─────────────────────────────────────────────────────────────────────────────
@@ -176,8 +176,8 @@ export default function RadioPlayer() {
       Math.min(MAX_W, maxWidth)
     );
     const expandedHeight = clamp(
-      Math.round(viewportH * (viewportW < 640 ? 0.58 : 0.52)),
-      220,
+      Math.round(viewportH * (viewportW < 640 ? 0.29 : 0.26)),
+      110,
       Math.min(MAX_H, maxHeight)
     );
 
@@ -311,7 +311,7 @@ export default function RadioPlayer() {
         {/* ── Expanded info panel ───────────────────────────────────────── */}
         {showExpanded && (
           <div className="flex-1 min-h-0 border-b border-white/[0.06] bg-[radial-gradient(circle_at_top_left,rgba(220,38,38,0.08),transparent_58%)]">
-            <div className="h-full px-5 sm:px-7 lg:px-8 py-5 sm:py-6 lg:py-7 flex items-end justify-end">
+            <div className="h-full px-5 sm:px-7 lg:px-8 py-3 sm:py-4 flex items-center justify-end">
               {currentTime && (
                 <div className="text-4xl sm:text-5xl lg:text-6xl font-mono text-white/25 tabular-nums font-light tracking-[0.14em] leading-none">
                   {currentTime}
