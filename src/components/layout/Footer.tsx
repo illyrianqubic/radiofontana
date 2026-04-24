@@ -9,12 +9,6 @@ import { CATEGORIES } from '@/lib/types';
 export default function Footer() {
   const pathname = usePathname();
 
-  const handleEmailClick = () => {
-    const user = 'rtvfontana';
-    const host = 'gmail.com';
-    window.location.href = `mailto:${user}@${host}`;
-  };
-
   if (pathname.startsWith('/studio')) {
     return null;
   }
@@ -147,13 +141,9 @@ export default function Footer() {
               </li>
               <li className="flex items-center gap-3 text-sm 2xl:text-[15px] text-slate-600">
                 <Mail className="w-4 h-4 text-slate-400 flex-shrink-0" />
-                <button
-                  type="button"
-                  onClick={handleEmailClick}
-                  className="hover:text-red-600 transition-colors break-all text-left"
-                >
-                  rtvfontana [at] gmail.com
-                </button>
+                <a href="mailto:rtvfontana@gmail.com" className="hover:text-red-600 transition-colors break-all text-left">
+                  rtvfontana@gmail.com
+                </a>
               </li>
             </ul>
           </div>
