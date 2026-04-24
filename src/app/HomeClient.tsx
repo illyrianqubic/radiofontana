@@ -5,7 +5,7 @@ import { Article, CATEGORIES, CATEGORY_COLORS } from '@/lib/types';
 import NewsCard from '@/components/news/NewsCard';
 import BreakingNewsTicker from '@/components/layout/BreakingNewsTicker';
 import WeatherWidget from '@/components/home/WeatherWidget';
-import { timeAgo, readTime, optimizeImageUrl } from '@/lib/utils';
+import { timeAgo, optimizeImageUrl } from '@/lib/utils';
 
 interface HomeClientProps {
   articles: Article[];
@@ -17,8 +17,6 @@ export default function HomeClient({ articles }: HomeClientProps) {
   const hero = featured[0] ?? articles[0];
   const sideFeatures = featured.length > 1 ? featured.slice(1, 4) : articles.slice(1, 4);
   const latest = articles.slice(0, 8);
-  const sports = articles.filter((a) => a.category === 'Sport').slice(0, 4);
-  const tech = articles.filter((a) => a.category === 'Teknologji').slice(0, 4);
   const mostRead = articles.slice(0, 5);
   const teJundit = articles.slice(0, 6);
 
@@ -207,50 +205,6 @@ export default function HomeClient({ articles }: HomeClientProps) {
         </div>
       </section>
 
-      {/* ── SPORT & TEKNOLOGJI ── */}
-      <section className="bg-white py-10 sm:py-12 2xl:py-14 border-b border-slate-200/70">
-        <div className="site-container">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 2xl:gap-16 3xl:gap-20">
-
-            {/* Sport */}
-            <div>
-              <div className="flex items-end justify-between gap-4 mb-5">
-                <div>
-                  <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400 mb-2">Kategoria</p>
-                  <h2 className="section-title-bar text-xl 2xl:text-2xl 3xl:text-[1.7rem] font-extrabold text-slate-900">Sport</h2>
-                </div>
-                <Link href="/lajme/?kategoria=Sport" className="touch-target inline-flex items-center text-xs text-red-600 font-bold uppercase tracking-wider hover:underline">
-                  Të gjitha
-                </Link>
-              </div>
-              <div className="space-y-2">
-                {sports.map((article) => (
-                  <NewsCard key={article.id} article={article} variant="horizontal" />
-                ))}
-              </div>
-            </div>
-
-            {/* Teknologji */}
-            <div>
-              <div className="flex items-end justify-between gap-4 mb-5">
-                <div>
-                  <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400 mb-2">Kategoria</p>
-                  <h2 className="section-title-bar text-xl 2xl:text-2xl 3xl:text-[1.7rem] font-extrabold text-slate-900">Teknologji</h2>
-                </div>
-                <Link href="/lajme/?kategoria=Teknologji" className="touch-target inline-flex items-center text-xs text-red-600 font-bold uppercase tracking-wider hover:underline">
-                  Të gjitha
-                </Link>
-              </div>
-              <div className="space-y-2">
-                {tech.map((article) => (
-                  <NewsCard key={article.id} article={article} variant="horizontal" />
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* ── CATEGORY BROWSE ── */}
       <section className="bg-slate-50/70 py-10 sm:py-12 border-b border-slate-200/70">
         <div className="site-container">
@@ -271,46 +225,6 @@ export default function HomeClient({ articles }: HomeClientProps) {
                 className={`${CATEGORY_COLORS[cat]} text-white rounded-xl sm:rounded-2xl p-3 sm:p-4 min-h-11 text-center transition-all duration-200 hover:-translate-y-1 hover:brightness-105 shadow-[0_8px_16px_rgba(15,23,42,0.12)] hover:shadow-[0_14px_26px_rgba(15,23,42,0.22)] inline-flex items-center justify-center`}
               >
                 <span className="font-bold text-sm">{cat}</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── TRENDING ── */}
-      <section className="bg-white py-10 sm:py-12 2xl:py-14">
-        <div className="site-container">
-          <div className="mb-6">
-            <div className="flex items-center gap-2 mb-2">
-              <TrendingUp className="w-4 h-4 text-red-600" />
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400">Në trend</p>
-            </div>
-            <h2 className="section-title-bar text-xl 2xl:text-[1.85rem] 3xl:text-[2.05rem] font-extrabold text-slate-900">Trending</h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 3xl:grid-cols-5 gap-1.5 2xl:gap-2">
-            {articles.slice(0, 6).map((article, i) => (
-              <Link
-                key={article.id}
-                href={`/lajme/${article.slug}`}
-                className="flex items-start gap-4 p-4 rounded-2xl border border-slate-200/70 hover:bg-slate-50 transition-all duration-200 group hover:shadow-[0_12px_26px_rgba(15,23,42,0.10)]"
-              >
-                <span className="text-4xl font-black text-slate-200 w-10 flex-shrink-0 leading-none mt-1 tabular-nums">
-                  {String(i + 1).padStart(2, '0')}
-                </span>
-                <div className="flex-1 min-w-0">
-                  <span className={`category-badge inline-block px-2 py-1 rounded text-white mb-2 ${CATEGORY_COLORS[article.category]}`}>
-                    {article.category}
-                  </span>
-                  <p className="text-sm font-bold text-slate-800 line-clamp-2 group-hover:text-red-600 transition-colors duration-200 leading-snug tracking-[0.01em]">
-                    {article.title}
-                  </p>
-                  <p className="text-[11px] text-slate-400 mt-1.5 flex items-center gap-1">
-                    <Clock className="w-3 h-3" />
-                    {timeAgo(article.publishedAt)}
-                    <span className="mx-1 text-slate-300">·</span>
-                    {article.readMinutes ?? (article.content ? readTime(article.content) : 1)} min lexim
-                  </p>
-                </div>
               </Link>
             ))}
           </div>
