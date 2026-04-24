@@ -8,7 +8,6 @@ import { FacebookIcon, InstagramIcon, YoutubeIcon, TiktokIcon } from '@/componen
 import { CATEGORIES } from '@/lib/types';
 export default function Footer() {
   const pathname = usePathname();
-  const year = new Date().getFullYear();
 
   const handleEmailClick = () => {
     const user = 'rtvfontana';
@@ -27,7 +26,7 @@ export default function Footer() {
 
       {/* Main footer */}
       <div className="site-container py-12 sm:py-14 2xl:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-10 2xl:gap-12 3xl:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 2xl:grid-cols-6 gap-10 2xl:gap-12 3xl:gap-16">
 
           {/* Brand */}
           <div className="xl:col-span-1 2xl:col-span-2">
@@ -111,6 +110,26 @@ export default function Footer() {
             </ul>
           </div>
 
+          {/* Legal */}
+          <div>
+            <h4 className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-400 mb-5">Legal</h4>
+            <ul className="space-y-2.5">
+              {[
+                { label: 'Kushtet e Shërbimit', href: '/terms' },
+                { label: 'Politika e Privatësisë', href: '/privacy' },
+                { label: 'Të Drejtat GDPR', href: '/gdpr' },
+                { label: 'Mohim Përgjegjësie', href: '/disclaimer' },
+                { label: 'Politika e Cookies', href: '/cookies' },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="inline-flex items-center min-h-11 text-slate-600 hover:text-red-600 text-sm 2xl:text-[15px] transition-colors duration-200 hover:pl-1">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* Contact */}
           <div>
             <h4 className="text-[10px] font-extrabold uppercase tracking-[0.18em] text-slate-400 mb-5">Kontakti</h4>
@@ -142,10 +161,11 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div className="mt-12 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs 2xl:text-sm text-slate-500">
-          <p>© {year} Radio Fontana · RTV Fontana. Të gjitha të drejtat e rezervuara.</p>
+          <p>© 2026 Radio Fontana. Të gjitha të drejtat e rezervuara.</p>
           <div className="flex gap-6">
-            <Link href="/kontakt" className="hover:text-red-600 transition-colors min-h-11 inline-flex items-center">Privatësia</Link>
-            <Link href="/kontakt" className="hover:text-red-600 transition-colors min-h-11 inline-flex items-center">Kushtet e Përdorimit</Link>
+            <Link href="/privacy" className="hover:text-red-600 transition-colors min-h-11 inline-flex items-center">Privatësia</Link>
+            <Link href="/terms" className="hover:text-red-600 transition-colors min-h-11 inline-flex items-center">Kushtet</Link>
+            <Link href="/cookies" className="hover:text-red-600 transition-colors min-h-11 inline-flex items-center">Cookies</Link>
           </div>
         </div>
       </div>
