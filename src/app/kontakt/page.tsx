@@ -315,30 +315,6 @@ export default function KontaktPage() {
         </section>
       </div>
 
-      <section className="mt-8 overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_18px_42px_rgba(15,23,42,0.08)]">
-        <div className="relative h-[300px] sm:h-[340px]">
-          <iframe
-            title="Harta e Radio Fontana"
-            src="https://maps.google.com/maps?q=Rruga%20Ibrahim%20Rugova%2056%20Istog%20Kosove&t=&z=14&ie=UTF8&iwloc=&output=embed"
-            loading="lazy"
-            className="absolute inset-0 h-full w-full"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-slate-950/70 via-slate-950/45 to-transparent" />
-          <div className="absolute left-5 sm:left-7 bottom-5 sm:bottom-7 max-w-sm rounded-2xl border border-white/20 bg-white/12 backdrop-blur-md p-4 sm:p-5 text-white">
-            <p className="text-[10px] uppercase tracking-[0.15em] font-extrabold text-white/70 mb-1.5">Lokacioni ynë</p>
-            <p className="text-lg font-bold mb-1">Radio Fontana</p>
-            <p className="text-sm text-white/85 mb-3">Shiko lokacionin tonë të saktë dhe hap navigimin direkt në Google Maps.</p>
-            <a
-              href="https://www.google.com/maps/search/?api=1&query=Rruga+Ibrahim+Rugova+56+Istog+Kosove"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center rounded-xl bg-white px-3.5 py-2 text-sm font-semibold text-slate-900 hover:bg-slate-100 transition-colors"
-            >
-              Hap në Google Maps
-            </a>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

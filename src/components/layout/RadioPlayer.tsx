@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { usePathname } from 'next/navigation';
-import { Play, Pause, Volume2, VolumeX, Radio, ChevronUp, ChevronDown, Mic2, GripHorizontal } from 'lucide-react';
+import { Play, Pause, Volume2, VolumeX, Radio, ChevronUp, ChevronDown, GripHorizontal } from 'lucide-react';
 import { useAudioPlayer } from '@/lib/AudioPlayerContext';
 
 // ── Constraints ──────────────────────────────────────────────────────────────
@@ -167,9 +167,36 @@ export default function RadioPlayer() {
 
   // Expand / collapse
   const toggleExpand = useCallback(() => {
+    const { width: viewportW, height: viewportH } = getViewportSize();
+    const maxWidth = Math.max(MIN_W, viewportW - EDGE_GAP * 2);
+    const maxHeight = Math.max(MIN_H, viewportH - EDGE_GAP * 2);
+    const expandedWidth = clamp(
+      Math.round(viewportW * (viewportW < 640 ? 0.96 : viewportW < 1024 ? 0.9 : 0.82)),
+      MIN_W,
+      Math.min(MAX_W, maxWidth)
+    );
+    const expandedHeight = clamp(
+      Math.round(viewportH * (viewportW < 640 ? 0.58 : 0.52)),
+      220,
+      Math.min(MAX_H, maxHeight)
+    );
+
     setPs(prev => {
       const isExpanded = prev.height > MIN_H + 20;
-      return clampPS({ ...prev, height: isExpanded ? MIN_H : 220 });
+      if (isExpanded) {
+        const compactWidth = clamp(
+          Math.min(prev.width, DEFAULT_W),
+          MIN_W,
+          Math.min(MAX_W, maxWidth)
+        );
+        return clampPS({ ...prev, width: compactWidth, height: MIN_H });
+      }
+
+      return clampPS({
+        ...prev,
+        width: Math.max(prev.width, expandedWidth),
+        height: expandedHeight,
+      });
     });
   }, []);
 
@@ -283,20 +310,10 @@ export default function RadioPlayer() {
 
         {/* ── Expanded info panel ───────────────────────────────────────── */}
         {showExpanded && (
-          <div className="flex-1 min-h-0 overflow-y-auto border-b border-white/[0.06]">
-            <div className="px-4 py-3 flex flex-col sm:flex-row gap-4 items-start sm:items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-xl bg-red-600/15 border border-red-500/20 flex items-center justify-center flex-shrink-0">
-                  <Mic2 className="w-4 h-4 text-red-400" />
-                </div>
-                <div>
-                  <p className="text-[9px] font-extrabold uppercase tracking-[0.18em] text-red-400 mb-0.5">Tani në emision</p>
-                  <p className="text-white font-extrabold text-sm">Mëngjesi me Radio Fontana</p>
-                  <p className="text-slate-500 text-xs">me Arjeta Krasniqi · 06:00 – 09:00</p>
-                </div>
-              </div>
+          <div className="flex-1 min-h-0 border-b border-white/[0.06] bg-[radial-gradient(circle_at_top_left,rgba(220,38,38,0.08),transparent_58%)]">
+            <div className="h-full px-5 sm:px-7 lg:px-8 py-5 sm:py-6 lg:py-7 flex items-end justify-end">
               {currentTime && (
-                <div className="text-2xl font-mono text-white/20 tabular-nums font-light tracking-widest">
+                <div className="text-4xl sm:text-5xl lg:text-6xl font-mono text-white/25 tabular-nums font-light tracking-[0.14em] leading-none">
                   {currentTime}
                 </div>
               )}
@@ -306,22 +323,24 @@ export default function RadioPlayer() {
 
         {/* ── Controls bar ─────────────────────────────────────────────── */}
         <div
-          className={`px-2.5 sm:px-3 py-2 flex items-center gap-2 sm:gap-3 ${
-            showExpanded ? 'flex-shrink-0' : 'flex-1 min-h-[58px]'
+          className={`flex items-center ${
+            showExpanded
+              ? 'px-4 sm:px-6 lg:px-7 py-3.5 sm:py-4 gap-3 sm:gap-4 flex-shrink-0 min-h-[74px] sm:min-h-[88px]'
+              : 'px-2.5 sm:px-3 py-2 gap-2 sm:gap-3 flex-1 min-h-[58px]'
           }`}
         >
 
           {/* Station branding */}
-          <div className="flex items-center gap-2 flex-1 min-w-0">
-            <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 transition-all duration-300 ${playing ? 'bg-red-600/20 border border-red-500/30' : 'bg-white/[0.05] border border-white/[0.08]'}`}>
-              <Radio className={`w-3 h-3 transition-colors duration-300 ${playing ? 'text-red-400' : 'text-slate-500'}`} />
+          <div className={`flex items-center flex-1 min-w-0 ${showExpanded ? 'gap-3 sm:gap-4' : 'gap-2'}`}>
+            <div className={`${showExpanded ? 'w-10 h-10 sm:w-12 sm:h-12 rounded-xl' : 'w-8 h-8 rounded-lg'} flex items-center justify-center flex-shrink-0 transition-all duration-300 ${playing ? 'bg-red-600/20 border border-red-500/30' : 'bg-white/[0.05] border border-white/[0.08]'}`}>
+              <Radio className={`${showExpanded ? 'w-4 h-4 sm:w-5 sm:h-5' : 'w-3 h-3'} transition-colors duration-300 ${playing ? 'text-red-400' : 'text-slate-500'}`} />
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-1.5">
-                <p className="text-xs font-bold text-white leading-tight truncate">Radio Fontana</p>
-                <span className="hidden sm:block text-[10px] text-slate-600">98.8 FM</span>
+                <p className={`${showExpanded ? 'text-sm sm:text-base' : 'text-xs'} font-bold text-white leading-tight truncate`}>Radio Fontana</p>
+                <span className={`${showExpanded ? 'hidden md:block text-xs' : 'hidden sm:block text-[10px]'} text-slate-600`}>98.8 FM</span>
               </div>
-              <p className="text-[9px] text-slate-500 truncate">
+              <p className={`${showExpanded ? 'text-[11px] sm:text-xs' : 'text-[9px]'} text-slate-500 truncate`}>
                 {error
                   ? 'Transmetimi nuk është i disponueshëm'
                   : playing
@@ -333,23 +352,23 @@ export default function RadioPlayer() {
 
           {/* Waveform */}
           {playing && (
-            <div className="hidden sm:flex items-center gap-0.5 h-4 flex-shrink-0">
+            <div className={`hidden sm:flex items-center gap-0.5 ${showExpanded ? 'h-5' : 'h-4'} flex-shrink-0`}>
               {[1, 2, 3, 4, 5].map((n) => (
-                <div key={n} className="waveform-bar w-0.5 rounded-full bg-red-500 opacity-80" style={{ height: '5px' }} />
+                <div key={n} className="waveform-bar w-0.5 rounded-full bg-red-500 opacity-80" style={{ height: showExpanded ? '8px' : '5px' }} />
               ))}
             </div>
           )}
 
           {/* Volume */}
-          <div className="hidden min-[360px]:flex items-center gap-1.5 h-9 flex-shrink-0 bg-white/[0.07] border border-white/[0.14] rounded-md px-1.5">
+          <div className={`hidden min-[360px]:flex items-center gap-1.5 flex-shrink-0 bg-white/[0.07] border border-white/[0.14] ${showExpanded ? 'h-11 rounded-lg px-2.5' : 'h-9 rounded-md px-1.5'}`}>
             <button
               onClick={() => setMuted(!muted)}
-              className="touch-target inline-flex items-center justify-center h-7 w-7 text-white/65 hover:text-white transition-colors flex-shrink-0 leading-none"
+              className={`touch-target inline-flex items-center justify-center ${showExpanded ? 'h-8 w-8' : 'h-7 w-7'} text-white/65 hover:text-white transition-colors flex-shrink-0 leading-none`}
               aria-label={muted ? 'Aktivizo tingullin' : 'Hiqe tingullin'}
             >
               {muted || volume === 0
-                ? <VolumeX className="w-3 h-3" />
-                : <Volume2 className="w-3 h-3" />}
+                ? <VolumeX className={showExpanded ? 'w-3.5 h-3.5' : 'w-3 h-3'} />
+                : <Volume2 className={showExpanded ? 'w-3.5 h-3.5' : 'w-3 h-3'} />}
             </button>
             <input
               type="range"
@@ -361,30 +380,36 @@ export default function RadioPlayer() {
               onChange={handleVolumeChange}
               onPointerDown={(e) => e.stopPropagation()}
               onTouchStart={(e) => e.stopPropagation()}
-              className="volume-slider w-14 sm:w-16"
+              className={`volume-slider ${showExpanded ? 'w-20 sm:w-24' : 'w-14 sm:w-16'}`}
               style={{
                 touchAction: 'pan-x',
                 background: `linear-gradient(to right, #dc2626 ${(muted ? 0 : volume) * 100}%, rgba(255,255,255,0.15) ${(muted ? 0 : volume) * 100}%)`
               }}
               aria-label="Volumi"
             />
-            <span className="text-[9px] text-white/40 tabular-nums w-6 text-right flex-shrink-0 leading-none">
+            <span className={`${showExpanded ? 'text-[10px] w-7' : 'text-[9px] w-6'} text-white/40 tabular-nums text-right flex-shrink-0 leading-none`}>
               {Math.round((muted ? 0 : volume) * 100)}%
             </span>
           </div>
 
           {/* Live badge */}
           {playing && (
-            <span className="hidden sm:flex items-center gap-1 bg-red-600/15 border border-red-500/25 text-red-400 px-2 py-1 rounded-full text-[9px] font-extrabold tracking-wider flex-shrink-0">
+            <span className={`hidden sm:flex items-center gap-1 bg-red-600/15 border border-red-500/25 text-red-400 ${showExpanded ? 'px-2.5 py-1.5 text-[10px]' : 'px-2 py-1 text-[9px]'} rounded-full font-extrabold tracking-wider flex-shrink-0`}>
               <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
               LIVE
             </span>
           )}
 
+          {!showExpanded && currentTime && (
+            <div className="hidden min-[420px]:block text-[11px] sm:text-sm font-mono text-white/35 tabular-nums tracking-[0.08em] flex-shrink-0">
+              {currentTime}
+            </div>
+          )}
+
           {/* Play / Pause */}
           <button
             onClick={togglePlay}
-            className={`touch-target w-11 h-11 rounded-full flex items-center justify-center transition-all duration-200 active:scale-95 shadow-md flex-shrink-0 ${
+            className={`touch-target ${showExpanded ? 'w-12 h-12 sm:w-14 sm:h-14' : 'w-11 h-11'} rounded-full flex items-center justify-center transition-all duration-200 active:scale-95 shadow-md flex-shrink-0 ${
               error
                 ? 'bg-slate-700 hover:bg-slate-600 text-slate-300'
                 : playing
@@ -394,23 +419,23 @@ export default function RadioPlayer() {
             aria-label={playing ? 'Ndalo' : error ? 'Provo përsëri' : 'Luaj'}
           >
             {loading ? (
-              <div className={`w-4 h-4 border-2 rounded-full animate-spin ${playing ? 'border-white border-t-transparent' : 'border-slate-900 border-t-transparent'}`} />
+              <div className={`${showExpanded ? 'w-5 h-5' : 'w-4 h-4'} border-2 rounded-full animate-spin ${playing ? 'border-white border-t-transparent' : 'border-slate-900 border-t-transparent'}`} />
             ) : error ? (
-              <Play className="w-4 h-4 ml-0.5 opacity-60" />
+              <Play className={`${showExpanded ? 'w-5 h-5 sm:w-6 sm:h-6' : 'w-4 h-4'} ml-0.5 opacity-60`} />
             ) : playing ? (
-              <Pause className="w-4 h-4" />
+              <Pause className={showExpanded ? 'w-5 h-5 sm:w-6 sm:h-6' : 'w-4 h-4'} />
             ) : (
-              <Play className="w-4 h-4 ml-0.5" />
+              <Play className={`${showExpanded ? 'w-5 h-5 sm:w-6 sm:h-6' : 'w-4 h-4'} ml-0.5`} />
             )}
           </button>
 
           {/* Expand / collapse */}
           <button
             onClick={toggleExpand}
-            className="hidden sm:flex touch-target p-1 text-slate-600 hover:text-white transition-colors rounded-md hover:bg-white/[0.06] flex-shrink-0"
+            className={`hidden sm:flex touch-target ${showExpanded ? 'p-2' : 'p-1'} text-slate-600 hover:text-white transition-colors rounded-md hover:bg-white/[0.06] flex-shrink-0`}
             aria-label={showExpanded ? 'Mbylle' : 'Hap'}
           >
-            {showExpanded ? <ChevronDown className="w-3.5 h-3.5" /> : <ChevronUp className="w-3.5 h-3.5" />}
+            {showExpanded ? <ChevronDown className={showExpanded ? 'w-4 h-4' : 'w-3.5 h-3.5'} /> : <ChevronUp className={showExpanded ? 'w-4 h-4' : 'w-3.5 h-3.5'} />}
           </button>
 
         </div>
