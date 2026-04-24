@@ -25,7 +25,7 @@ const client = createClient({
 
 // ── Data ─────────────────────────────────────────────────────────────────────
 const categories = [
-  { title: 'Lajme',       slug: 'lajme',       color: 'bg-blue-600'   },
+  { title: 'Politikë',    slug: 'politike',    color: 'bg-blue-600'   },
   { title: 'Sport',       slug: 'sport',       color: 'bg-green-600'  },
   { title: 'Teknologji',  slug: 'teknologji',  color: 'bg-purple-600' },
   { title: 'Showbiz',     slug: 'showbiz',     color: 'bg-pink-600'   },

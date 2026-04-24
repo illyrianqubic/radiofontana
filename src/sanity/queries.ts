@@ -10,7 +10,7 @@ export const ARTICLES_QUERY = `
       length(coalesce(excerpt, "")) > 220 => 2,
       1
     ),
-    "category": coalesce(category->title, "Lajme"),
+    "category": coalesce(category->title, "Politikë"),
     "author": coalesce(author->name, "Radio Fontana"),
     publishedAt,
     "featured": coalesce(featured, false),
@@ -33,7 +33,7 @@ export const ARTICLE_BY_SLUG_QUERY = `
     title,
     excerpt,
     content,
-    "category": coalesce(category->title, "Lajme"),
+    "category": coalesce(category->title, "Politikë"),
     "author": coalesce(author->name, "Radio Fontana"),
     publishedAt,
     "featured": coalesce(featured, false),

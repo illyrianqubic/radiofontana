@@ -31,7 +31,7 @@ export interface LiveStream {
 }
 
 export type Category =
-  | 'Lajme'
+  | 'Politikë'
   | 'Sport'
   | 'Teknologji'
   | 'Showbiz'
@@ -39,7 +39,7 @@ export type Category =
   | 'Nga Bota';
 
 export const CATEGORIES: Category[] = [
-  'Lajme',
+  'Politikë',
   'Sport',
   'Teknologji',
   'Showbiz',
@@ -48,7 +48,7 @@ export const CATEGORIES: Category[] = [
 ];
 
 export const CATEGORY_COLORS: Record<Category, string> = {
-  Lajme: 'bg-blue-600',
+  'Politikë': 'bg-blue-600',
   Sport: 'bg-green-600',
   Teknologji: 'bg-purple-600',
   Showbiz: 'bg-pink-600',
