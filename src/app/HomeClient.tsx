@@ -5,7 +5,6 @@ import { Article, CATEGORIES, CATEGORY_COLORS } from '@/lib/types';
 import NewsCard from '@/components/news/NewsCard';
 import BreakingNewsTicker from '@/components/layout/BreakingNewsTicker';
 import WeatherWidget from '@/components/home/WeatherWidget';
-import NewsletterSection from '@/components/home/NewsletterSection';
 import { timeAgo, readTime, optimizeImageUrl } from '@/lib/utils';
 
 interface HomeClientProps {
@@ -317,8 +316,6 @@ export default function HomeClient({ articles }: HomeClientProps) {
           </div>
         </div>
       </section>
-
-      <NewsletterSection />
     </div>
   );
 }

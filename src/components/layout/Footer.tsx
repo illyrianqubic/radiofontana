@@ -17,35 +17,6 @@ export default function Footer() {
     <footer className="bg-slate-950 text-slate-200 border-t border-slate-800">
       <div className="h-1 gradient-bar" />
 
-      {/* Newsletter row */}
-      <div className="border-b border-slate-800 bg-slate-900/70">
-        <div className="site-container py-6 sm:py-7">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-6 items-center">
-            <div className="lg:col-span-7">
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-red-400 mb-2">Newsletter</p>
-              <h3 className="text-xl sm:text-2xl font-extrabold text-white leading-tight">Qëndro i informuar me lajmet e fundit</h3>
-              <p className="text-slate-400 text-sm mt-1.5">Abonohu me email për përmbledhjen ditore të lajmeve nga Radio Fontana.</p>
-            </div>
-
-            <form method="get" action="/kontakt" className="lg:col-span-5 flex flex-col sm:flex-row gap-2.5">
-              <input
-                type="email"
-                name="email"
-                required
-                placeholder="Emaili juaj"
-                className="w-full min-h-11 rounded-xl border border-slate-700 bg-slate-950 px-4 py-2.5 text-sm text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-red-500/40 focus:border-red-500/60"
-              />
-              <button
-                type="submit"
-                className="touch-target min-h-11 rounded-xl bg-red-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-red-700 transition-colors"
-              >
-                Abonohu
-              </button>
-            </form>
-          </div>
-        </div>
-      </div>
-
       {/* Main footer */}
       <div className="site-container py-12 sm:py-14 2xl:py-16">
         <div className="mb-8 sm:mb-9">
