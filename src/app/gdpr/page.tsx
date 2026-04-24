@@ -39,11 +39,10 @@ const sections: LegalSection[] = [
     title: '4. Si të paraqisni kërkesë GDPR',
     paragraphs: [
       'Për të ushtruar të drejtat tuaja, dërgoni kërkesë në rtvfontana@gmail.com me subjektin “Kërkesë GDPR”.',
-      'Për siguri, mund të kërkojmë verifikim të identitetit para përpunimit të kërkesës suaj.',
     ],
     bullets: [
       'Përshkruani qartë të drejtën që dëshironi të ushtroni.',
-      'Përfshini informacion të mjaftueshëm për identifikim të llogarisë ose komunikimit.',
+      'Përfshini emrin tuaj dhe mënyrën e kontaktit.',
       'Na tregoni mënyrën e preferuar për përgjigje.',
     ],
   },
