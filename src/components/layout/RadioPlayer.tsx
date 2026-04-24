@@ -149,9 +149,21 @@ export default function RadioPlayer() {
     return () => clearInterval(id);
   }, []);
 
-  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setVolume(parseFloat(e.target.value));
-  };
+  const applyVolumeValue = useCallback((rawValue: string) => {
+    const nextVolume = Number(rawValue);
+    if (!Number.isFinite(nextVolume)) {
+      return;
+    }
+    setVolume(clamp(nextVolume, 0, 1));
+  }, [setVolume]);
+
+  const handleVolumeInput = useCallback((e: React.FormEvent<HTMLInputElement>) => {
+    applyVolumeValue(e.currentTarget.value);
+  }, [applyVolumeValue]);
+
+  const handleVolumeChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    applyVolumeValue(e.currentTarget.value);
+  }, [applyVolumeValue]);
 
   // Expand / collapse
   const toggleExpand = useCallback(() => {
@@ -329,7 +341,7 @@ export default function RadioPlayer() {
           )}
 
           {/* Volume */}
-          <div className="hidden min-[430px]:flex items-center gap-1.5 h-9 flex-shrink-0 bg-white/[0.07] border border-white/[0.14] rounded-md px-1.5">
+          <div className="hidden min-[360px]:flex items-center gap-1.5 h-9 flex-shrink-0 bg-white/[0.07] border border-white/[0.14] rounded-md px-1.5">
             <button
               onClick={() => setMuted(!muted)}
               className="touch-target inline-flex items-center justify-center h-7 w-7 text-white/65 hover:text-white transition-colors flex-shrink-0 leading-none"
@@ -345,9 +357,13 @@ export default function RadioPlayer() {
               max="1"
               step="0.05"
               value={muted ? 0 : volume}
+              onInput={handleVolumeInput}
               onChange={handleVolumeChange}
+              onPointerDown={(e) => e.stopPropagation()}
+              onTouchStart={(e) => e.stopPropagation()}
               className="volume-slider w-14 sm:w-16"
               style={{
+                touchAction: 'pan-x',
                 background: `linear-gradient(to right, #dc2626 ${(muted ? 0 : volume) * 100}%, rgba(255,255,255,0.15) ${(muted ? 0 : volume) * 100}%)`
               }}
               aria-label="Volumi"

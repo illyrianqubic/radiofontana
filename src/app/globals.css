@@ -220,6 +220,7 @@ textarea {
   border-radius: 9999px;
   outline: none;
   cursor: pointer;
+  touch-action: pan-x;
 }
 .volume-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
@@ -241,6 +242,22 @@ textarea {
   background: #fff;
   cursor: pointer;
   box-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+@media (pointer: coarse) {
+  .volume-slider {
+    height: 8px;
+  }
+
+  .volume-slider::-webkit-slider-thumb {
+    width: 14px;
+    height: 14px;
+  }
+
+  .volume-slider::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+  }
 }
 
 /* ── Card system ── */

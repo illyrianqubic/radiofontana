@@ -68,13 +68,24 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
   }, [playing, loading]);
 
   const setVolume = useCallback((v: number) => {
-    setVolumeState(v);
-    setMutedState(v === 0);
+    const nextVolume = Math.max(0, Math.min(1, v));
+    const shouldMute = nextVolume === 0;
+    setVolumeState(nextVolume);
+    setMutedState(shouldMute);
+
+    // Apply immediately for touch sliders that emit events rapidly.
+    if (audioRef.current) {
+      audioRef.current.volume = shouldMute ? 0 : nextVolume;
+    }
   }, []);
 
   const setMuted = useCallback((m: boolean) => {
     setMutedState(m);
-  }, []);
+
+    if (audioRef.current) {
+      audioRef.current.volume = m ? 0 : volume;
+    }
+  }, [volume]);
 
   return (
     <AudioPlayerContext.Provider value={{ playing, loading, error, volume, muted, setVolume, setMuted, togglePlay }}>
