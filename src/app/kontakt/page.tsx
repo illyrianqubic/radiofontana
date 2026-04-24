@@ -105,27 +105,6 @@ export default function KontaktPage() {
               <p className="max-w-2xl text-slate-600 text-base sm:text-lg leading-relaxed">
                 Për pyetje, reklama, dërgim lajmesh apo sugjerime për programin, ekipi ynë është i gatshëm të përgjigjet shpejt dhe qartë.
               </p>
-
-              <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3.5 max-w-2xl">
-                <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3">
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white text-[#e63946] shadow-sm">
-                    <Phone className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] uppercase tracking-[0.14em] font-extrabold text-slate-400">Telefon</p>
-                    <p className="text-sm font-semibold text-slate-800">+383 44 150 027</p>
-                  </div>
-                </div>
-                <div className="flex items-center gap-3 rounded-2xl border border-slate-200 bg-slate-50/80 px-4 py-3">
-                  <div className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-white text-[#e63946] shadow-sm">
-                    <Mail className="w-4 h-4" />
-                  </div>
-                  <div>
-                    <p className="text-[10px] uppercase tracking-[0.14em] font-extrabold text-slate-400">Email</p>
-                    <p className="text-sm font-semibold text-slate-800">rtvfontana@gmail.com</p>
-                  </div>
-                </div>
-              </div>
             </div>
 
             <div className="lg:col-span-4 rounded-2xl border border-slate-200 bg-slate-50/80 p-5 sm:p-6">
@@ -348,7 +327,7 @@ export default function KontaktPage() {
           <div className="absolute left-5 sm:left-7 bottom-5 sm:bottom-7 max-w-sm rounded-2xl border border-white/20 bg-white/12 backdrop-blur-md p-4 sm:p-5 text-white">
             <p className="text-[10px] uppercase tracking-[0.15em] font-extrabold text-white/70 mb-1.5">Lokacioni ynë</p>
             <p className="text-lg font-bold mb-1">Radio Fontana</p>
-            <p className="text-sm text-white/85 mb-3">Rruga &quot;Ibrahim Rugova&quot; Nr. 56, Istog, Kosovë</p>
+            <p className="text-sm text-white/85 mb-3">Shiko lokacionin tonë të saktë dhe hap navigimin direkt në Google Maps.</p>
             <a
               href="https://www.google.com/maps/search/?api=1&query=Rruga+Ibrahim+Rugova+56+Istog+Kosove"
               target="_blank"

@@ -18,13 +18,13 @@ export default function BreakingNewsTicker({ articles }: Props) {
   if (items.length === 0) return null;
 
   return (
-    <div className="w-full bg-red-600 text-white overflow-hidden shadow-sm">
-      <div className="flex items-stretch h-9 2xl:h-10 3xl:h-11">
+    <div className="w-full bg-slate-950 text-white overflow-hidden border-y border-red-600/30 shadow-[0_8px_24px_rgba(2,6,23,0.3)]">
+      <div className="flex items-stretch h-10 2xl:h-11 3xl:h-12">
         {/* Label */}
-        <div className="flex-shrink-0 bg-red-800 px-3 sm:px-4 2xl:px-5 flex items-center gap-1.5 z-10 shadow-[2px_0_8px_rgba(0,0,0,0.2)]">
+        <div className="flex-shrink-0 bg-red-700 px-3 sm:px-4 2xl:px-5 flex items-center gap-1.5 z-10 shadow-[2px_0_10px_rgba(0,0,0,0.35)]">
           <Zap className="w-3 h-3 text-yellow-300 flex-shrink-0" fill="currentColor" />
           <span className="text-[9px] sm:text-[10px] 2xl:text-[11px] font-extrabold uppercase tracking-[0.18em] whitespace-nowrap">
-            Breaking
+            Flash
           </span>
         </div>
 
@@ -37,10 +37,10 @@ export default function BreakingNewsTicker({ articles }: Props) {
                   <Link
                     key={`${group}-${article.id || article.slug}`}
                     href={`/lajme/${article.slug}`}
-                    className="inline-flex items-center gap-2 sm:gap-3 text-[11px] sm:text-[12px] 2xl:text-[13px] text-white/90 hover:text-white transition-colors duration-200 px-4 sm:px-8 2xl:px-10 min-h-9"
+                    className="inline-flex items-center gap-2.5 sm:gap-3 text-[11px] sm:text-[12px] 2xl:text-[13px] text-slate-200 hover:text-white transition-colors duration-200 px-4 sm:px-8 2xl:px-10 min-h-10"
                   >
-                    <span className="text-red-300 font-bold text-xs">◆</span>
-                    <span className="font-medium">{article.title}</span>
+                    <span className="text-red-400 font-bold text-xs">◆</span>
+                    <span className="font-semibold tracking-[0.01em]">{article.title}</span>
                   </Link>
                 ))}
               </div>

@@ -16,7 +16,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   if (variant === 'hero') {
     return (
-      <Link href={href} className="group block relative overflow-hidden rounded-2xl news-card h-full">
+      <Link href={href} className="group block relative overflow-hidden rounded-3xl border border-slate-200/70 news-card h-full">
         <div className="relative h-[240px] xs:h-[280px] sm:h-[400px] lg:h-[480px] xl:h-[520px]">
           <Image
             src={optimizeImageUrl(article.imageUrl, 1280, 720, 74)}
@@ -26,7 +26,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
             className="object-cover img-zoom"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-black/10" />
           {/* Top labels */}
           <div className="absolute top-3 sm:top-4 left-3 sm:left-4 flex items-center gap-2 flex-wrap pr-3">
             <span className={`category-badge px-2.5 py-1.5 rounded-md text-white ${categoryColor}`}>
@@ -42,10 +42,10 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-red-400 mb-2">
               Lajm kryesor
             </p>
-            <h2 className="text-white text-lg sm:text-2xl lg:text-[1.75rem] xl:text-[2rem] 2xl:text-[2.2rem] 3xl:text-[2.45rem] font-extrabold leading-[1.2] mb-3 group-hover:text-red-200 transition-colors duration-300">
+            <h2 className="text-white text-lg sm:text-2xl lg:text-[1.85rem] xl:text-[2.1rem] 2xl:text-[2.3rem] 3xl:text-[2.55rem] font-extrabold leading-[1.18] mb-3 group-hover:text-red-200 transition-colors duration-300">
               {article.title}
             </h2>
-            <p className="text-white/65 text-sm 2xl:text-base line-clamp-2 mb-5 max-w-2xl leading-relaxed">{article.excerpt}</p>
+            <p className="text-white/70 text-sm 2xl:text-base line-clamp-2 mb-5 max-w-2xl leading-relaxed">{article.excerpt}</p>
             <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-white/50 text-xs">
               <span className="flex items-center gap-1.5">
                 <User className="w-3.5 h-3.5" />
@@ -68,7 +68,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   if (variant === 'compact') {
     return (
-      <Link href={href} className="group flex gap-3.5 items-start p-3 sm:p-3.5 hover:bg-slate-50 transition-colors duration-200">
+      <Link href={href} className="group flex gap-3.5 items-start p-3.5 sm:p-4 hover:bg-slate-50 transition-all duration-200">
         <div className="relative w-20 h-16 flex-shrink-0 rounded-lg overflow-hidden">
           <Image
             src={optimizeImageUrl(article.imageUrl, 160, 128, 70)}
@@ -83,7 +83,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
           <span className={`category-badge inline-block px-1.5 py-0.5 rounded text-white mb-1.5 ${categoryColor}`}>
             {article.category}
           </span>
-          <h4 className="text-sm font-semibold text-slate-800 leading-snug line-clamp-2 group-hover:text-red-600 transition-colors duration-200">
+          <h4 className="text-sm font-semibold text-slate-800 leading-snug line-clamp-2 group-hover:text-red-600 transition-colors duration-200 tracking-[0.01em]">
             {article.title}
           </h4>
           <p className="text-[10px] text-slate-400 mt-1.5 flex items-center gap-1">
@@ -97,7 +97,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   if (variant === 'horizontal') {
     return (
-      <Link href={href} className="group flex flex-col sm:flex-row gap-3 sm:gap-4 items-start p-3 sm:p-3.5 rounded-xl hover:bg-slate-50 transition-all duration-200 hover:shadow-[0_2px_12px_rgba(0,0,0,0.06)]">
+      <Link href={href} className="group flex flex-col sm:flex-row gap-3 sm:gap-4 items-start p-3.5 sm:p-4 rounded-2xl border border-slate-200/70 bg-white hover:bg-slate-50 transition-all duration-200 hover:shadow-[0_12px_30px_rgba(15,23,42,0.10)] hover:-translate-y-0.5">
         <div className="relative w-full h-44 sm:w-32 sm:h-24 flex-shrink-0 rounded-xl overflow-hidden">
           <Image
             src={optimizeImageUrl(article.imageUrl, 256, 192, 72)}
@@ -112,7 +112,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
           <span className={`category-badge inline-block px-2 py-0.5 rounded text-white mb-1.5 ${categoryColor}`}>
             {article.category}
           </span>
-          <h3 className="font-bold text-slate-800 text-sm leading-snug line-clamp-2 group-hover:text-red-600 transition-colors duration-200 mb-2">
+          <h3 className="font-bold text-slate-800 text-sm leading-snug line-clamp-2 group-hover:text-red-600 transition-colors duration-200 mb-2 tracking-[0.01em]">
             {article.title}
           </h3>
           <div className="flex items-center gap-2.5 text-[10px] text-slate-400 flex-wrap">
@@ -132,7 +132,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   // Default card
   return (
-    <Link href={href} className="group block bg-white rounded-2xl overflow-hidden border border-slate-100 news-card card-accent h-full">
+    <Link href={href} className="group block bg-white rounded-2xl overflow-hidden border border-slate-200/70 news-card card-accent h-full">
       <div className="relative h-44 sm:h-48 2xl:h-56 3xl:h-60 overflow-hidden">
         <Image
           src={optimizeImageUrl(article.imageUrl, 480, 320, 72)}
@@ -155,7 +155,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
         )}
       </div>
       <div className="p-4 sm:p-5">
-        <h3 className="font-bold text-slate-900 text-[0.9rem] 2xl:text-base 3xl:text-[1.05rem] leading-snug mb-2 line-clamp-2 group-hover:text-red-600 transition-colors duration-200">
+        <h3 className="font-bold text-slate-900 text-[0.95rem] 2xl:text-[1.05rem] 3xl:text-[1.12rem] leading-snug mb-2 line-clamp-2 group-hover:text-red-600 transition-colors duration-200 tracking-[0.01em]">
           {article.title}
         </h3>
         <p className="text-slate-500 text-xs 2xl:text-sm line-clamp-2 mb-3.5 leading-relaxed">

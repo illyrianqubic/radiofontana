@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Radio, Play, Pause, Clock, Mic2, Volume2 } from 'lucide-react';
+import { Radio, Play, Pause, Clock, Volume2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useAudioPlayer } from '@/lib/AudioPlayerContext';
 import { LiveStream } from '@/lib/types';
@@ -16,13 +16,6 @@ function buildFbEmbedUrl(facebookUrl: string | null): string {
     `&show_text=false&autoplay=true&width=1280`
   );
 }
-
-const programs = [
-  { time: '06:00 - 09:00', show: 'Mëngjesi me Radio Fontana', host: 'Arjeta Krasniqi', live: true },
-  { time: '09:00 - 12:00', show: 'Magazina e Mëngjesit', host: 'Besnik Gashi', live: false },
-  { time: '12:00 - 14:00', show: 'Lajmet e Drekës', host: 'Valbona Morina', live: false },
-  { time: '14:00 - 17:00', show: 'Pasdite me Fontana', host: 'Rinor Haxhiaj', live: false },
-];
 
 export default function LivePlayer() {
   const { playing, loading, error, togglePlay } = useAudioPlayer();
@@ -161,58 +154,6 @@ export default function LivePlayer() {
               </div>
             </div>
           </motion.div>
-        </div>
-      </div>
-
-      {/* Schedule section */}
-      <div className="bg-white rounded-t-[2rem]">
-        <div className="site-container py-8 sm:py-12 2xl:py-14">
-          <h2 className="text-xl sm:text-2xl 2xl:text-[1.9rem] 3xl:text-[2.1rem] font-bold text-slate-800 section-title mb-5 sm:mb-7">
-            Tani në Emision
-          </h2>
-
-          <div className="bg-[#e63946] rounded-2xl p-4 sm:p-6 text-white mb-7 sm:mb-10 flex items-center gap-3 sm:gap-5">
-            <div className="w-11 h-11 sm:w-14 sm:h-14 bg-white/10 rounded-2xl flex items-center justify-center flex-shrink-0">
-              <Mic2 className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.15em] text-white/70 mb-0.5">Tani</p>
-                <p className="font-bold text-base sm:text-xl 2xl:text-2xl">Mëngjësi me Radio Fontana</p>
-                <p className="text-white/70 text-xs sm:text-sm 2xl:text-base">me Arjeta Krasniqi · 06:00 - 09:00</p>
-            </div>
-            <div className="ml-auto hidden sm:flex items-center gap-1.5 bg-white/20 px-3 py-1.5 rounded-full">
-              <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
-              <span className="text-[10px] font-extrabold tracking-wider">LIVE</span>
-            </div>
-          </div>
-
-          <h3 className="font-bold text-slate-800 text-base sm:text-lg 2xl:text-xl mb-4 sm:mb-5">Emisionet e Sotme</h3>
-          <div className="space-y-2.5">
-            {programs.map((p, i) => (
-              <div
-                key={i}
-                className={`flex items-start sm:items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-2xl border transition-all duration-200 ${
-                  p.live
-                    ? 'bg-[#e63946]/5 border-[#e63946]/20'
-                    : 'bg-white border-slate-100 hover:bg-slate-50'
-                }`}
-              >
-                <div className="text-xs sm:text-sm font-mono text-slate-400 w-24 sm:w-28 flex-shrink-0 pt-0.5 sm:pt-0">{p.time}</div>
-                <div className="flex-1">
-                  <p className={`font-semibold ${p.live ? 'text-[#e63946]' : 'text-slate-800'}`}>
-                    {p.show}
-                  </p>
-                  <p className="text-sm text-slate-400">me {p.host}</p>
-                </div>
-                {p.live && (
-                  <span className="flex items-center gap-1.5 bg-[#e63946] text-white text-[10px] font-extrabold px-2.5 py-1 rounded-full tracking-wider">
-                    <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
-                    LIVE
-                  </span>
-                )}
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </div>
