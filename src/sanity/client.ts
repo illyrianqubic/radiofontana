@@ -14,13 +14,3 @@ export const readClient = createClient({
   useCdn: true,
   stega: false,
 });
-
-// Non-CDN client when freshest data is needed.
-export const liveClient = createClient({
-  ...baseConfig,
-  useCdn: false,
-  stega: false,
-});
-
-// Backward-compatible export for existing imports.
-export const client = readClient;

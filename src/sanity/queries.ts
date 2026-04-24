@@ -42,13 +42,3 @@ export const ARTICLE_BY_SLUG_QUERY = `
     "imageUrl": coalesce(mainImage.asset->url, "/logortvfontana.jpg")
   }
 `;
-
-export const LIVESTREAM_QUERY = `
-  *[_type == "liveStream"][0] {
-    isLive,
-    title,
-    facebookUrl,
-    youtubeUrl,
-    description
-  }
-`;

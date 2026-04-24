@@ -19,8 +19,7 @@ const fetchArticleBySlug = cache(async (slug: string): Promise<Article | null> =
       { slug },
       { next: { revalidate: 300 } },
     );
-  } catch (error) {
-    console.error('[lajme/[slug]] ARTICLE_BY_SLUG_QUERY failed:', error);
+  } catch {
     return null;
   }
 });
@@ -33,8 +32,7 @@ const fetchArticleSlugs = cache(async (): Promise<Array<{ slug: string | null }>
       { next: { revalidate: 300 } },
     );
     return Array.isArray(results) ? results : [];
-  } catch (error) {
-    console.error('[lajme/[slug]] ARTICLE_SLUGS_QUERY failed:', error);
+  } catch {
     return [];
   }
 });

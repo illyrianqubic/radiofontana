@@ -67,8 +67,7 @@ export async function onRequestGet(context: {
         'Access-Control-Allow-Origin': '*',
       },
     });
-  } catch (err) {
-    console.error('[/api/articles] error:', err);
+  } catch {
     return new Response(JSON.stringify([]), {
       status: 200, // return empty array so the UI degrades gracefully
       headers: { 'Content-Type': 'application/json' },

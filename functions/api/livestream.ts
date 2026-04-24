@@ -51,8 +51,7 @@ export async function onRequestGet(context: {
         'Access-Control-Allow-Origin': '*',
       },
     });
-  } catch (err) {
-    console.error('[/api/livestream] error:', err);
+  } catch {
     return new Response(JSON.stringify(FALLBACK), {
       headers: { 'Content-Type': 'application/json' },
     });

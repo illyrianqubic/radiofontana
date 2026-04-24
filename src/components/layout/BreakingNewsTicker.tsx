@@ -6,14 +6,13 @@ interface Props {
 }
 
 const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
+const NOW = Date.now();
 
 export default function BreakingNewsTicker({ articles }: Props) {
-  const now = Date.now();
-
   // Only articles explicitly marked breaking AND published within 24 hours
   const recentBreaking = articles.filter((a) => {
     if (!a.breaking || !a.publishedAt) return false;
-    return now - new Date(a.publishedAt).getTime() < TWENTY_FOUR_HOURS;
+    return NOW - new Date(a.publishedAt).getTime() < TWENTY_FOUR_HOURS;
   });
 
   // Strict deduplication
