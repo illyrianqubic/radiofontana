@@ -16,15 +16,9 @@ const sections: LegalSection[] = [
     ],
   },
   {
-    title: '2. Çfarë të dhënash mbledhim',
+    title: '2. Të dhënat personale',
     paragraphs: [
-      'Ne mbledhim vetëm të dhëna të nevojshme për ofrimin e shërbimeve mediale dhe përmirësimin e përvojës së përdoruesit.',
-    ],
-    bullets: [
-      'Të dhëna që i jepni vetë: emri, email-i, përmbajtja e mesazheve apo materialeve të dërguara te redaksia.',
-      'Të dhëna teknike: adresa IP, lloji i pajisjes, sistemi operativ, shfletuesi, log-et e aksesit.',
-      'Të dhëna përdorimi: faqet e vizituara, kohëzgjatja e vizitës, ndërveprimet me përmbajtjen.',
-      'Të dhëna nga aplikacioni Android: metrika bazë të performancës dhe përdorimit të aplikacionit.',
+      'Ne nuk mbledhim të dhëna personale. Faqja jonë dhe aplikacioni nuk kërkojnë regjistrim ose hyrje me llogari.',
     ],
   },
   {

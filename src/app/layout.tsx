@@ -4,6 +4,7 @@ import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import RadioPlayer from '@/components/layout/RadioPlayer';
+import CookieConsentBanner from '@/components/layout/CookieConsentBanner';
 import { AudioPlayerProvider } from '@/lib/AudioPlayerContext';
 
 const geist = Geist({ subsets: ['latin'] });
@@ -43,6 +44,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Navbar />
           <main className="flex-1 pb-24 sm:pb-28">{children}</main>
           <Footer />
+          <CookieConsentBanner />
           <RadioPlayer />
         </AudioPlayerProvider>
       </body>
