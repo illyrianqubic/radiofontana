@@ -29,10 +29,10 @@ export default function Footer() {
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 xl:gap-10 2xl:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-0 rounded-2xl border border-slate-800/80 overflow-hidden bg-slate-950/40">
           {/* About */}
-          <div>
-            <h4 className="text-sm font-extrabold text-white mb-3">About Radio Fontana</h4>
+          <div className="px-5 py-6 sm:px-6 sm:py-7">
+            <h4 className="text-base sm:text-lg font-black text-white mb-4 uppercase tracking-[0.08em]">Rreth Nesh</h4>
             <p className="text-slate-400 text-sm leading-relaxed mb-5 max-w-md">
               Radio Fontana është media lokale në Istog, Kosovë që sjell lajme të verifikuara,
               transmetim live dhe përmbajtje informative 24/7 për komunitetin.
@@ -79,8 +79,8 @@ export default function Footer() {
           </div>
 
           {/* Quick links */}
-          <div>
-            <h4 className="text-sm font-extrabold text-white mb-3">Quick Links</h4>
+          <div className="px-5 py-6 sm:px-6 sm:py-7 border-t border-slate-800/80 md:border-t-0 md:border-l">
+            <h4 className="text-base sm:text-lg font-black text-white mb-4 uppercase tracking-[0.08em]">Lidhje të Shpejta</h4>
             <ul className="space-y-2.5">
               {[
                 { label: 'Kryefaqja', href: '/' },
@@ -98,8 +98,8 @@ export default function Footer() {
           </div>
 
           {/* Categories */}
-          <div>
-            <h4 className="text-sm font-extrabold text-white mb-3">Categories</h4>
+          <div className="px-5 py-6 sm:px-6 sm:py-7 border-t border-slate-800/80 xl:border-t-0 xl:border-l">
+            <h4 className="text-base sm:text-lg font-black text-white mb-4 uppercase tracking-[0.08em]">Kategorite</h4>
             <ul className="space-y-2.5">
               {CATEGORIES.slice(0, 7).map((cat) => (
                 <li key={cat}>
@@ -115,8 +115,8 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div>
-            <h4 className="text-sm font-extrabold text-white mb-3">Contact Info</h4>
+          <div className="px-5 py-6 sm:px-6 sm:py-7 border-t border-slate-800/80 md:border-l xl:border-t-0">
+            <h4 className="text-base sm:text-lg font-black text-white mb-4 uppercase tracking-[0.08em]">Kontakti</h4>
             <ul className="space-y-3.5 text-sm text-slate-300">
               <li className="flex items-start gap-2.5">
                 <MapPin className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
