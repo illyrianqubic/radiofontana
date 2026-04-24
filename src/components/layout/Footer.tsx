@@ -3,9 +3,26 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { ArrowRight, Mail, Phone, MapPin } from 'lucide-react';
 import { FacebookIcon, InstagramIcon, YoutubeIcon, TiktokIcon } from '@/components/shared/SocialIcons';
-import { CATEGORIES } from '@/lib/types';
+
+const quickLinks = [
+  { label: 'Kryefaqja', href: '/' },
+  { label: 'Lajme', href: '/lajme' },
+  { label: 'Radio Live', href: '/live' },
+  { label: 'Kontakt', href: '/kontakt' },
+];
+
+const footerCategories = [
+  { label: 'Politikë', dotClass: 'bg-red-500' },
+  { label: 'Sport', dotClass: 'bg-emerald-500' },
+  { label: 'Teknologji', dotClass: 'bg-sky-500' },
+  { label: 'Showbiz', dotClass: 'bg-fuchsia-500' },
+  { label: 'Shëndetësi', dotClass: 'bg-lime-500' },
+  { label: 'Nga Bota', dotClass: 'bg-indigo-500' },
+  { label: 'Biznes', dotClass: 'bg-amber-500' },
+];
+
 export default function Footer() {
   const pathname = usePathname();
 
@@ -14,8 +31,8 @@ export default function Footer() {
   }
 
   return (
-    <footer className="bg-slate-950 text-slate-200 border-t border-slate-800">
-      <div className="h-1 gradient-bar" />
+    <footer className="bg-white text-slate-700 border-t border-slate-200">
+      <div className="h-1 bg-gradient-to-r from-red-600 via-red-500 to-red-600" />
 
       {/* Main footer */}
       <div className="site-container py-12 sm:py-14 2xl:py-16">
@@ -29,21 +46,26 @@ export default function Footer() {
           />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-0 rounded-2xl border border-slate-800/80 overflow-hidden bg-slate-950/40">
-          {/* About */}
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-0 rounded-2xl border border-slate-200 overflow-hidden bg-white shadow-[0_14px_34px_rgba(15,23,42,0.06)]">
+          {/* Column 1 */}
           <div className="px-5 py-6 sm:px-6 sm:py-7">
-            <h4 className="text-base sm:text-lg font-black text-white mb-4 uppercase tracking-[0.08em]">Rreth Nesh</h4>
-            <p className="text-slate-400 text-sm leading-relaxed mb-5 max-w-md">
+            <h4 className="relative pl-3 text-sm font-black uppercase tracking-[0.14em] text-slate-900 mb-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-5 before:w-1 before:rounded-full before:bg-red-600">Rreth Nesh</h4>
+            <p className="text-slate-600 text-sm leading-relaxed mb-5 max-w-md">
               Radio Fontana është media lokale në Istog, Kosovë që sjell lajme të verifikuara,
               transmetim live dhe përmbajtje informative 24/7 për komunitetin.
             </p>
+
+            <div className="inline-flex items-center gap-2 rounded-full border border-red-200 bg-red-50 px-3 py-1.5 mb-5">
+              <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
+              <span className="text-sm font-semibold text-slate-700">Istog, Kosovë • 98.8 FM</span>
+            </div>
 
             <div className="flex gap-2.5">
               <a
                 href="https://www.facebook.com/rtvfontanalive"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group touch-target w-11 h-11 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center text-slate-300 hover:bg-[#1877F2] hover:border-[#1877F2] hover:text-white transition-all duration-200"
+                className="group touch-target w-11 h-11 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:text-[#1877F2] hover:border-[#1877F2] hover:shadow-[0_0_0_4px_rgba(24,119,242,0.20)] transition-none"
                 aria-label="Facebook"
               >
                 <FacebookIcon className="w-5 h-5" />
@@ -52,7 +74,7 @@ export default function Footer() {
                 href="https://www.instagram.com/rtvfontana/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group touch-target w-11 h-11 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center text-slate-300 hover:border-transparent hover:bg-[linear-gradient(135deg,#f58529_0%,#dd2a7b_45%,#8134af_75%,#515bd4_100%)] hover:text-white transition-all duration-200"
+                className="group touch-target w-11 h-11 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:text-[#dd2a7b] hover:border-[#dd2a7b] hover:shadow-[0_0_0_4px_rgba(221,42,123,0.20)] transition-none"
                 aria-label="Instagram"
               >
                 <InstagramIcon className="w-5 h-5" />
@@ -61,7 +83,7 @@ export default function Footer() {
                 href="https://www.youtube.com/@RTVFontana"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group touch-target w-11 h-11 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center text-slate-300 hover:bg-red-600 hover:border-red-600 hover:text-white transition-all duration-200"
+                className="group touch-target w-11 h-11 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:text-[#ff0000] hover:border-[#ff0000] hover:shadow-[0_0_0_4px_rgba(255,0,0,0.20)] transition-none"
                 aria-label="YouTube"
               >
                 <YoutubeIcon className="w-5 h-5" />
@@ -70,7 +92,7 @@ export default function Footer() {
                 href="https://www.tiktok.com/@rtvfontanalive"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group touch-target w-11 h-11 rounded-full bg-slate-900 border border-slate-700 flex items-center justify-center text-slate-300 hover:bg-black hover:border-black hover:text-white transition-all duration-200"
+                className="group touch-target w-11 h-11 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-500 hover:text-black hover:border-black hover:shadow-[0_0_0_4px_rgba(15,23,42,0.18)] transition-none"
                 aria-label="TikTok"
               >
                 <TiktokIcon className="w-5 h-5" />
@@ -78,75 +100,72 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick links */}
-          <div className="px-5 py-6 sm:px-6 sm:py-7 border-t border-slate-800/80 md:border-t-0 md:border-l">
-            <h4 className="text-base sm:text-lg font-black text-white mb-4 uppercase tracking-[0.08em]">Lidhje të Shpejta</h4>
+          {/* Column 2 */}
+          <div className="px-5 py-6 sm:px-6 sm:py-7 border-t border-slate-200 md:border-t-0 md:border-l">
+            <h4 className="relative pl-3 text-sm font-black uppercase tracking-[0.14em] text-slate-900 mb-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-5 before:w-1 before:rounded-full before:bg-red-600">Lidhje të Shpejta</h4>
             <ul className="space-y-2.5">
-              {[
-                { label: 'Kryefaqja', href: '/' },
-                { label: 'Lajme', href: '/lajme' },
-                { label: 'Radio Live', href: '/live' },
-                { label: 'Kontakt', href: '/kontakt' },
-              ].map((link) => (
+              {quickLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="inline-flex min-h-11 items-center text-sm text-slate-300 hover:text-red-400 transition-colors">
-                    {link.label}
+                  <Link href={link.href} className="group inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-slate-700 hover:text-red-600 transition-none">
+                    <span>{link.label}</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-red-500 opacity-0 group-hover:opacity-100 transition-none" />
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Categories */}
-          <div className="px-5 py-6 sm:px-6 sm:py-7 border-t border-slate-800/80 xl:border-t-0 xl:border-l">
-            <h4 className="text-base sm:text-lg font-black text-white mb-4 uppercase tracking-[0.08em]">Kategorite</h4>
+          {/* Column 3 */}
+          <div className="px-5 py-6 sm:px-6 sm:py-7 border-t border-slate-200 xl:border-t-0 xl:border-l">
+            <h4 className="relative pl-3 text-sm font-black uppercase tracking-[0.14em] text-slate-900 mb-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-5 before:w-1 before:rounded-full before:bg-red-600">Kategorite</h4>
             <ul className="space-y-2.5">
-              {CATEGORIES.slice(0, 7).map((cat) => (
-                <li key={cat}>
+              {footerCategories.map((cat) => (
+                <li key={cat.label}>
                   <Link
-                    href={`/lajme/?kategoria=${encodeURIComponent(cat)}`}
-                    className="inline-flex min-h-11 items-center text-sm text-slate-300 hover:text-red-400 transition-colors"
+                    href={`/lajme/?kategoria=${encodeURIComponent(cat.label)}`}
+                    className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-slate-700 hover:text-red-600 transition-none"
                   >
-                    {cat}
+                    <span className={`w-2 h-2 rounded-full ${cat.dotClass}`} />
+                    <span>{cat.label}</span>
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Contact */}
-          <div className="px-5 py-6 sm:px-6 sm:py-7 border-t border-slate-800/80 md:border-l xl:border-t-0">
-            <h4 className="text-base sm:text-lg font-black text-white mb-4 uppercase tracking-[0.08em]">Kontakti</h4>
-            <ul className="space-y-3.5 text-sm text-slate-300">
-              <li className="flex items-start gap-2.5">
-                <MapPin className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
-                <span>Rruga &quot;Ibrahim Rugova&quot; Nr. 56, Istog, Kosovë</span>
-              </li>
+          {/* Column 4 */}
+          <div className="px-5 py-6 sm:px-6 sm:py-7 border-t border-slate-200 md:border-l xl:border-t-0">
+            <h4 className="relative pl-3 text-sm font-black uppercase tracking-[0.14em] text-slate-900 mb-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-5 before:w-1 before:rounded-full before:bg-red-600">Kontakti</h4>
+            <ul className="space-y-4 text-sm text-slate-700">
               <li className="flex items-center gap-2.5">
-                <Phone className="w-4 h-4 text-red-400 flex-shrink-0" />
+                <Phone className="w-4 h-4 text-red-600 flex-shrink-0" />
                 <div className="flex flex-col gap-0.5">
-                  <a href="tel:+38344150027" className="hover:text-red-400 transition-colors">+383 44 150 027</a>
-                  <a href="tel:+38344141294" className="hover:text-red-400 transition-colors">+383 44 141 294</a>
+                  <a href="tel:+38344150027" className="font-medium hover:text-red-600 transition-none">+383 44 150 027</a>
+                  <a href="tel:+38344141294" className="font-medium hover:text-red-600 transition-none">+383 44 141 294</a>
                 </div>
               </li>
               <li className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-red-400 flex-shrink-0" />
-                <a href="mailto:rtvfontana@gmail.com" className="hover:text-red-400 transition-colors break-all">
+                <Mail className="w-4 h-4 text-red-600 flex-shrink-0" />
+                <a href="mailto:rtvfontana@gmail.com" className="font-medium hover:text-red-600 transition-none break-all">
                   rtvfontana@gmail.com
                 </a>
+              </li>
+              <li className="flex items-start gap-2.5">
+                <MapPin className="w-4 h-4 text-red-600 flex-shrink-0 mt-0.5" />
+                <span>Rruga &quot;Ibrahim Rugova&quot; Nr. 56, Istog, Kosovë</span>
               </li>
             </ul>
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-10 pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs 2xl:text-sm text-slate-500">
+        <div className="mt-10 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs 2xl:text-sm text-slate-500">
           <p>© 2026 Radio Fontana. Të gjitha të drejtat e rezervuara.</p>
           <div className="flex flex-wrap justify-center gap-5">
-            <Link href="/privacy" className="hover:text-red-400 transition-colors min-h-11 inline-flex items-center">Privatësia</Link>
-            <Link href="/terms" className="hover:text-red-400 transition-colors min-h-11 inline-flex items-center">Kushtet</Link>
-            <Link href="/gdpr" className="hover:text-red-400 transition-colors min-h-11 inline-flex items-center">GDPR</Link>
-            <Link href="/cookies" className="hover:text-red-400 transition-colors min-h-11 inline-flex items-center">Cookies</Link>
+            <Link href="/privacy" className="hover:text-red-600 transition-none min-h-11 inline-flex items-center">Privatësia</Link>
+            <Link href="/terms" className="hover:text-red-600 transition-none min-h-11 inline-flex items-center">Kushtet</Link>
+            <Link href="/gdpr" className="hover:text-red-600 transition-none min-h-11 inline-flex items-center">GDPR</Link>
+            <Link href="/cookies" className="hover:text-red-600 transition-none min-h-11 inline-flex items-center">Cookies</Link>
           </div>
         </div>
       </div>
