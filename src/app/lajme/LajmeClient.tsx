@@ -189,7 +189,6 @@ export default function LajmeClient() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="text-center py-24">
-            <div className="text-5xl mb-5">🔍</div>
             <h3 className="text-xl 2xl:text-2xl 3xl:text-[1.8rem] font-bold text-slate-800 mb-2">
               Nuk u gjetën rezultate
             </h3>

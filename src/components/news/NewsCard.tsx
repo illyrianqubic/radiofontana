@@ -34,7 +34,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
             </span>
             {article.breaking && (
               <span className="category-badge px-2.5 py-1.5 rounded-md bg-red-600 text-white">
-                Breaking
+                Lajm i Fundit
               </span>
             )}
           </div>
@@ -150,7 +150,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
         </div>
         {article.breaking && (
           <div className="absolute top-3 right-3">
-            <span className="category-badge px-2 py-1 rounded-lg bg-red-600 text-white">Breaking</span>
+            <span className="category-badge px-2 py-1 rounded-lg bg-red-600 text-white">Lajm i Fundit</span>
           </div>
         )}
       </div>
