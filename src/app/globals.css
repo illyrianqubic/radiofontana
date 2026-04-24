@@ -158,10 +158,17 @@ textarea {
   0%   { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-.ticker-animate { animation: ticker 50s linear infinite; }
+.ticker-animate { animation: ticker 40s linear infinite; }
 .ticker-track {
   display: flex;
   width: max-content;
+}
+/* Each group must be wider than the viewport so only one is ever visible at a time */
+.ticker-half {
+  display: inline-flex;
+  align-items: center;
+  min-width: 110vw;
+  flex-shrink: 0;
 }
 @media (prefers-reduced-motion: reduce) {
   .ticker-animate { animation: none; }
