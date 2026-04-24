@@ -161,11 +161,14 @@ export default function Footer() {
         {/* Bottom bar */}
         <div className="mt-10 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs 2xl:text-sm text-slate-500">
           <p>© 2026 Radio Fontana. Të gjitha të drejtat e rezervuara.</p>
-          <div className="flex flex-wrap justify-center gap-5">
-            <Link href="/privacy" className="hover:text-red-600 transition-none min-h-11 inline-flex items-center">Privatësia</Link>
-            <Link href="/terms" className="hover:text-red-600 transition-none min-h-11 inline-flex items-center">Kushtet</Link>
-            <Link href="/gdpr" className="hover:text-red-600 transition-none min-h-11 inline-flex items-center">GDPR</Link>
-            <Link href="/cookies" className="hover:text-red-600 transition-none min-h-11 inline-flex items-center">Cookies</Link>
+          <div className="flex flex-wrap items-center justify-center gap-0">
+            <Link href="/privacy" className="hover:text-red-600 transition-none min-h-11 inline-flex items-center px-2.5">Privatësia</Link>
+            <span aria-hidden="true" className="h-3 w-px bg-slate-300" />
+            <Link href="/terms" className="hover:text-red-600 transition-none min-h-11 inline-flex items-center px-2.5">Kushtet</Link>
+            <span aria-hidden="true" className="h-3 w-px bg-slate-300" />
+            <Link href="/gdpr" className="hover:text-red-600 transition-none min-h-11 inline-flex items-center px-2.5">GDPR</Link>
+            <span aria-hidden="true" className="h-3 w-px bg-slate-300" />
+            <Link href="/cookies" className="hover:text-red-600 transition-none min-h-11 inline-flex items-center px-2.5">Cookies</Link>
           </div>
         </div>
       </div>
