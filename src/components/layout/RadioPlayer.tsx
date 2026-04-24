@@ -424,12 +424,6 @@ export default function RadioPlayer() {
             </span>
           )}
 
-          {!showExpanded && currentTime && (
-            <div className="hidden min-[420px]:block text-[11px] sm:text-sm font-mono text-white/35 tabular-nums tracking-[0.08em] flex-shrink-0">
-              {currentTime}
-            </div>
-          )}
-
           {/* Play / Pause */}
           <button
             onClick={togglePlay}
