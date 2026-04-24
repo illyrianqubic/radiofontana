@@ -30,6 +30,7 @@ const categories = [
   { title: 'Teknologji',  slug: 'teknologji',  color: 'bg-purple-600' },
   { title: 'Showbiz',     slug: 'showbiz',     color: 'bg-pink-600'   },
   { title: 'Shëndetësi',  slug: 'shendetesi',  color: 'bg-red-600'    },
+  { title: 'Biznes',      slug: 'biznes',      color: 'bg-amber-600'  },
   { title: 'Nga Bota',    slug: 'nga-bota',    color: 'bg-yellow-600' },
 ];
 

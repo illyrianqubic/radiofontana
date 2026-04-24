@@ -36,7 +36,8 @@ export type Category =
   | 'Teknologji'
   | 'Showbiz'
   | 'Shëndetësi'
-  | 'Nga Bota';
+  | 'Nga Bota'
+  | 'Biznes';
 
 export const CATEGORIES: Category[] = [
   'Politikë',
@@ -44,6 +45,7 @@ export const CATEGORIES: Category[] = [
   'Teknologji',
   'Showbiz',
   'Shëndetësi',
+  'Biznes',
   'Nga Bota',
 ];
 
@@ -52,7 +54,6 @@ export const CATEGORY_COLORS: Record<Category, string> = {
   Sport: 'bg-green-600',
   Teknologji: 'bg-purple-600',
   Showbiz: 'bg-pink-600',
-  Shëndetësi: 'bg-red-600',
-  'Nga Bota': 'bg-orange-600',
+  Shëndetësi: 'bg-red-600',  Biznes: 'bg-amber-600',  'Nga Bota': 'bg-orange-600',
 };
 

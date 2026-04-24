@@ -71,7 +71,7 @@ export default function NewsFilter({
               : 'bg-slate-100 text-slate-500 hover:bg-slate-200'
           }`}
         >
-          Të gjitha
+          Të gjitha lajmet
         </button>
         {CATEGORIES.map((cat) => (
           <button
