@@ -138,6 +138,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
         <div className="grid grid-cols-1 xl:grid-cols-12 3xl:grid-cols-14 gap-8 sm:gap-12 2xl:gap-14">
           {/* Main content */}
           <article className="xl:col-span-8 3xl:col-span-10">
+            <div className="mx-auto w-full max-w-[800px]">
             {/* Breadcrumb */}
             <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400 mb-5">
               <Link href="/" className="hover:text-red-600 transition-colors duration-200">Kryefaqja</Link>
@@ -158,12 +159,12 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
             </span>
 
             {/* Title */}
-            <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl 2xl:text-[2.8rem] 3xl:text-[3.1rem] font-extrabold text-slate-900 leading-tight mb-4 sm:mb-5">
+            <h1 className="text-[1.35rem] sm:text-2xl lg:text-4xl xl:text-[2.7rem] 2xl:text-[2.8rem] 3xl:text-[3rem] font-extrabold text-slate-900 leading-tight mb-4 sm:mb-5 break-words">
               {article.title}
             </h1>
 
             {/* Excerpt */}
-            <p className="text-base sm:text-lg 2xl:text-xl text-slate-500 leading-relaxed mb-7 border-l-4 border-red-600 pl-5 italic">
+            <p className="text-[0.95rem] sm:text-lg 2xl:text-xl text-slate-500 leading-relaxed mb-7 border-l-4 border-red-600 pl-4 sm:pl-5 italic">
               {article.excerpt}
             </p>
 
@@ -182,12 +183,12 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
             </div>
 
             {/* Hero image */}
-            <div className="relative aspect-video rounded-2xl overflow-hidden my-7">
+            <div className="relative aspect-video overflow-hidden my-7 -mx-4 sm:mx-0 rounded-none sm:rounded-2xl">
               <Image
                 src={optimizeImageUrl(article.imageUrl, 1440, 810, 76)}
                 alt={article.title}
                 fill
-                sizes="(max-width: 1024px) 100vw, 66vw"
+                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 92vw, 800px"
                 className="object-cover"
                 priority
               />
@@ -195,12 +196,12 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
 
             {/* Article content */}
             {Array.isArray(article.content) ? (
-              <div className="prose prose-lg max-w-none break-words">
+              <div className="prose prose-slate prose-sm sm:prose-base lg:prose-lg max-w-none break-words">
                 <SanityPortableText value={article.content} />
               </div>
             ) : typeof article.content === 'string' && article.content ? (
               <div
-                className="prose prose-lg max-w-none break-words prose-headings:text-slate-800 prose-p:text-slate-600 prose-p:leading-relaxed"
+                className="prose prose-slate prose-sm sm:prose-base lg:prose-lg max-w-none break-words prose-headings:text-slate-800 prose-p:text-slate-600 prose-p:leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: article.content as string }}
               />
             ) : (
@@ -249,6 +250,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
                   Twitter
                 </a>
               </div>
+            </div>
             </div>
           </article>
 
@@ -305,7 +307,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
                 Lexo Gjithashtu
               </h2>
             </div>
-            <div className="news-grid-responsive gap-5 2xl:gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 2xl:gap-6">
               {related.map((a) => (
                 <NewsCard key={a.id} article={a} />
               ))}

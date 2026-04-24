@@ -147,7 +147,7 @@ export default function LajmeClient() {
           </div>
           <div className="flex items-center gap-3">
             <div className="w-1 h-8 bg-red-600 rounded-full" />
-            <h1 className="text-2xl sm:text-3xl 2xl:text-4xl 3xl:text-[2.7rem] font-extrabold text-slate-900">
+            <h1 className="text-[1.5rem] sm:text-3xl lg:text-4xl 3xl:text-[3rem] font-extrabold text-slate-900 break-words">
               {title}
             </h1>
           </div>

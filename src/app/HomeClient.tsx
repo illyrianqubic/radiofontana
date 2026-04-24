@@ -29,19 +29,19 @@ export default function HomeClient({ articles }: HomeClientProps) {
       {/* ── HERO ── */}
       <section className="bg-white border-b border-slate-200/70">
         <div className="site-container py-7 sm:py-10 2xl:py-12 3xl:py-14">
-          <div className="grid grid-cols-1 xl:grid-cols-12 3xl:grid-cols-15 gap-6 2xl:gap-8 3xl:gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-12 3xl:grid-cols-15 gap-6 2xl:gap-8 3xl:gap-10">
 
             {/* Main hero */}
-            <div className="xl:col-span-8 3xl:col-span-10">
+            <div className="md:col-span-8 3xl:col-span-10">
               {hero && <NewsCard article={hero} variant="hero" />}
             </div>
 
             {/* Right column: weather + featured list */}
-            <div className="xl:col-span-4 3xl:col-span-5 flex flex-col gap-4 2xl:gap-5">
+            <div className="md:col-span-4 3xl:col-span-5 flex flex-col gap-4 2xl:gap-5">
               <WeatherWidget />
 
               {/* Featured side cards */}
-              <div className="bg-white rounded-2xl border border-slate-200/70 overflow-hidden shadow-[0_14px_36px_rgba(15,23,42,0.10)] flex-1">
+              <div className="hidden md:block bg-white rounded-2xl border border-slate-200/70 overflow-hidden shadow-[0_14px_36px_rgba(15,23,42,0.10)] flex-1">
                 <div className="px-4 py-3.5 border-b border-slate-200/70 bg-slate-50/70">
                   <div className="flex items-center gap-2.5 mb-1.5">
                     <Flame className="w-3.5 h-3.5 text-red-500" />
@@ -63,10 +63,10 @@ export default function HomeClient({ articles }: HomeClientProps) {
       {/* ── LATEST NEWS + MOST READ ── */}
       <section className="bg-white py-10 sm:py-12 2xl:py-14 border-b border-slate-200/70">
         <div className="site-container">
-          <div className="grid grid-cols-1 xl:grid-cols-12 3xl:grid-cols-15 gap-9 2xl:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-12 3xl:grid-cols-15 gap-9 2xl:gap-12">
 
             {/* Latest grid */}
-            <div className="xl:col-span-9 3xl:col-span-11">
+            <div className="md:col-span-8 xl:col-span-9 3xl:col-span-11">
               <div className="flex items-end justify-between gap-4 mb-7">
                 <div>
                   <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400 mb-2">Redaksia</p>
@@ -90,7 +90,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
             </div>
 
             {/* Most Read sidebar */}
-            <aside className="xl:col-span-3 3xl:col-span-4">
+            <aside className="hidden md:block md:col-span-4 xl:col-span-3 3xl:col-span-4">
               <div className="bg-white rounded-2xl border border-slate-200/70 overflow-hidden shadow-[0_16px_36px_rgba(15,23,42,0.12)] sticky top-24">
                 <div className="flex items-center gap-2.5 px-4 py-3.5 bg-slate-900 text-white">
                   <TrendingUp className="w-3.5 h-3.5 text-red-400" />
@@ -129,10 +129,10 @@ export default function HomeClient({ articles }: HomeClientProps) {
       {/* ── TË FUNDIT — Live feed ── */}
       <section className="bg-slate-50/70 py-10 sm:py-12 2xl:py-14 border-b border-slate-200/70">
         <div className="site-container">
-          <div className="grid grid-cols-1 xl:grid-cols-12 3xl:grid-cols-15 gap-9 2xl:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-12 3xl:grid-cols-15 gap-9 2xl:gap-12">
 
             {/* Live feed */}
-            <div className="xl:col-span-8 3xl:col-span-10">
+            <div className="md:col-span-8 xl:col-span-8 3xl:col-span-10">
               <div className="flex items-center gap-2.5 mb-6">
                 <div className="flex items-center gap-1.5 bg-red-600 text-white text-[9px] font-black uppercase tracking-[0.15em] px-2.5 py-1 rounded-full">
                   <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
@@ -178,7 +178,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
             </div>
 
             {/* Radio promo */}
-            <aside className="xl:col-span-4 3xl:col-span-5">
+            <aside className="hidden md:block md:col-span-4 xl:col-span-4 3xl:col-span-5">
               <div className="bg-slate-900 rounded-2xl p-6 text-white sticky top-24 overflow-hidden relative shadow-[0_18px_38px_rgba(2,6,23,0.35)]">
                 <div className="absolute inset-0 bg-gradient-to-br from-red-900/30 to-transparent" />
                 <div className="relative z-10">

@@ -17,12 +17,12 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
   if (variant === 'hero') {
     return (
       <Link href={href} className="group block relative overflow-hidden rounded-3xl border border-slate-200/70 news-card h-full">
-        <div className="relative h-[240px] xs:h-[280px] sm:h-[400px] lg:h-[480px] xl:h-[520px]">
+        <div className="relative aspect-video min-h-[220px]">
           <Image
             src={optimizeImageUrl(article.imageUrl, 1280, 720, 74)}
             alt={article.title}
             fill
-            sizes="(max-width: 1280px) 100vw, (max-width: 1920px) 68vw, 70vw"
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 68vw"
             className="object-cover img-zoom"
             priority
           />
@@ -42,7 +42,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
             <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-red-400 mb-2">
               Lajm kryesor
             </p>
-            <h2 className="text-white text-lg sm:text-2xl lg:text-[1.85rem] xl:text-[2.1rem] 2xl:text-[2.3rem] 3xl:text-[2.55rem] font-extrabold leading-[1.18] mb-3 group-hover:text-red-200 transition-colors duration-300">
+            <h2 className="text-white text-[1.25rem] sm:text-2xl lg:text-[1.95rem] xl:text-[2.3rem] 2xl:text-[2.6rem] 3xl:text-[3rem] font-extrabold leading-[1.15] mb-3 group-hover:text-red-200 transition-colors duration-300 break-words">
               {article.title}
             </h2>
             <p className="text-white/70 text-sm 2xl:text-base line-clamp-2 mb-5 max-w-2xl leading-relaxed">{article.excerpt}</p>

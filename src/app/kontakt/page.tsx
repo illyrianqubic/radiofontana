@@ -150,34 +150,36 @@ export default function KontaktPage() {
 
       <div className="mt-8 grid grid-cols-1 xl:grid-cols-12 gap-8 2xl:gap-10">
         <aside className="xl:col-span-4 space-y-4 2xl:space-y-5">
-          {contactCards.map((item) => (
-            <motion.div
-              key={item.label}
-              initial={{ opacity: 0, y: 14 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3 }}
-              className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_10px_24px_rgba(15,23,42,0.06)]"
-            >
-              <div className="pointer-events-none absolute -right-8 -top-8 h-20 w-20 rounded-full bg-[#e63946]/6 blur-2xl" />
-              <div className="relative flex items-start gap-4">
-                <div className="w-11 h-11 rounded-xl bg-[#e63946]/10 flex items-center justify-center flex-shrink-0">
-                  {item.icon}
-                </div>
-                <div>
-                  <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.16em] mb-1.5">
-                    {item.label}
-                  </p>
-                  <div className="space-y-0.5">
-                    {item.values.map((line) => (
-                      <p key={line} className="text-slate-700 text-sm font-semibold">
-                        {line}
-                      </p>
-                    ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2 gap-4 2xl:gap-5">
+            {contactCards.map((item) => (
+              <motion.div
+                key={item.label}
+                initial={{ opacity: 0, y: 14 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3 }}
+                className="relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-5 shadow-[0_10px_24px_rgba(15,23,42,0.06)]"
+              >
+                <div className="pointer-events-none absolute -right-8 -top-8 h-20 w-20 rounded-full bg-[#e63946]/6 blur-2xl" />
+                <div className="relative flex items-start gap-4">
+                  <div className="w-11 h-11 rounded-xl bg-[#e63946]/10 flex items-center justify-center flex-shrink-0">
+                    {item.icon}
+                  </div>
+                  <div>
+                    <p className="text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.16em] mb-1.5">
+                      {item.label}
+                    </p>
+                    <div className="space-y-0.5">
+                      {item.values.map((line) => (
+                        <p key={line} className="text-slate-700 text-sm font-semibold">
+                          {line}
+                        </p>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
+          </div>
 
           <div className="relative overflow-hidden rounded-2xl border border-[#e63946]/25 bg-[#e63946] p-5 text-white shadow-[0_14px_34px_rgba(230,57,70,0.34)]">
             <div className="pointer-events-none absolute -right-10 -bottom-10 h-32 w-32 rounded-full bg-white/15 blur-2xl" />

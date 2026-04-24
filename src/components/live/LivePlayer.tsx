@@ -28,24 +28,23 @@ export default function LivePlayer() {
       .catch(() => {});
   }, []);
 
-  void stream; // used below when embed is re-enabled
-
   return (
     <div className="min-h-screen bg-slate-950 page-shell">
 
-      {/* TODO: ri-aktivizo kur të jetë gati streami */}
-      {/* <div className="w-full bg-black">
-        <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-          <iframe
-            src={buildFbEmbedUrl(stream?.facebookUrl ?? null)}
-            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none', overflow: 'hidden' }}
-            scrolling="no"
-            frameBorder={0}
-            allowFullScreen
-            allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-          />
+      <div className="w-full bg-black/90 border-b border-white/10">
+        <div className="mx-auto w-full max-w-[1120px] overflow-hidden sm:rounded-b-2xl sm:border-x sm:border-b sm:border-white/10">
+          <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
+            <iframe
+              src={buildFbEmbedUrl(stream?.facebookUrl ?? null)}
+              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none', overflow: 'hidden' }}
+              scrolling="no"
+              frameBorder={0}
+              allowFullScreen
+              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+            />
+          </div>
         </div>
-      </div> */}
+      </div>
 
       {/* ── Radio Hero ── */}
       <div className="relative overflow-hidden">
@@ -55,7 +54,7 @@ export default function LivePlayer() {
           <div className="absolute bottom-0 left-1/4 w-[300px] h-[300px] bg-red-900/4 rounded-full blur-[100px]" />
         </div>
 
-        <div className="site-container relative z-10 flex flex-col items-center text-center text-white pt-16 sm:pt-24 lg:pt-28 pb-16 sm:pb-20 lg:pb-24">
+        <div className="site-container relative z-10 flex flex-col items-center text-center text-white pt-14 sm:pt-20 lg:pt-24 pb-16 sm:pb-20 lg:pb-24">
 
           {/* Station icon */}
           <motion.div
@@ -108,7 +107,7 @@ export default function LivePlayer() {
             transition={{ delay: 0.22 }}
             className="mb-8 sm:mb-10"
           >
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-[3.4rem] font-extrabold tracking-tight mb-2 leading-none">
+            <h1 className="text-[1.5rem] sm:text-4xl lg:text-5xl xl:text-[3rem] font-extrabold tracking-tight mb-2 leading-none">
               Radio Fontana
             </h1>
             <p className="text-slate-400 text-sm sm:text-base font-medium">

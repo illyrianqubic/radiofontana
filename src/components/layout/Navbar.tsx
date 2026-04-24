@@ -168,7 +168,7 @@ export default function Navbar() {
     <>
       <TopBar />
       <header
-        className={`sticky top-0 z-50 bg-white transition-all duration-300 ${
+        className={`sticky top-0 z-[90] bg-white transition-all duration-300 ${
           scrolled ? 'shadow-[0_2px_12px_rgba(0,0,0,0.08)]' : 'border-b border-slate-100'
         }`}
         style={{ minWidth: 0 }}
@@ -178,7 +178,7 @@ export default function Navbar() {
 
         {/* Main navbar */}
         <div className="site-container">
-          <div className="flex items-center justify-between h-14 sm:h-16 3xl:h-[72px]">
+          <div className="flex items-center justify-between h-14 sm:h-16 3xl:h-[72px] gap-2 sm:gap-3">
             {/* Logo */}
             <Link href="/" className="flex items-center flex-shrink-0">
               <Image
@@ -186,13 +186,13 @@ export default function Navbar() {
                 alt="Radio Fontana"
                 width={190}
                 height={64}
-                className="h-10 sm:h-12 lg:h-[52px] 3xl:h-[58px] w-auto object-contain translate-y-0.5"
+                className="h-9 tiny:h-10 sm:h-11 md:h-12 lg:h-[52px] 3xl:h-[58px] w-auto object-contain translate-y-0.5"
                 priority
               />
             </Link>
 
-            {/* Desktop nav */}
-            <nav className="hidden lg:flex items-center gap-0.5">
+            {/* Tablet/Desktop nav */}
+            <nav className="hidden md:flex items-center gap-0 md:gap-0.5">
               {navLinks.map((link) => (
                 <div key={link.href} className="relative">
                   {link.hasDropdown ? (
@@ -203,14 +203,14 @@ export default function Navbar() {
                     >
                       <Link
                         href={link.href}
-                        className={`flex items-center gap-1 px-4 2xl:px-5 py-2 rounded-lg text-sm 2xl:text-[15px] 3xl:text-base font-medium transition-all duration-200 ${
+                        className={`flex min-h-11 items-center gap-1 px-2.5 lg:px-4 2xl:px-5 py-2 rounded-lg text-[13px] lg:text-sm 2xl:text-[15px] 3xl:text-base font-medium transition-all duration-200 ${
                           isActive('/lajme')
                             ? 'text-red-600 font-semibold'
                             : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
                         }`}
                       >
                         {link.label}
-                        <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
+                        <ChevronDown className={`hidden lg:block w-3.5 h-3.5 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />
                       </Link>
                       {dropdownOpen && (
                         <div className="absolute top-full left-0 mt-2 w-52 bg-white rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] border border-slate-100 overflow-hidden z-50">
@@ -232,7 +232,7 @@ export default function Navbar() {
                   ) : (
                     <Link
                       href={link.href}
-                      className={`px-4 2xl:px-5 py-2 rounded-lg text-sm 2xl:text-[15px] 3xl:text-base font-medium transition-all duration-200 ${
+                      className={`inline-flex min-h-11 items-center px-2.5 lg:px-4 2xl:px-5 py-2 rounded-lg text-[13px] lg:text-sm 2xl:text-[15px] 3xl:text-base font-medium transition-all duration-200 ${
                         isActive(link.href)
                           ? 'text-red-600 font-semibold'
                           : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
@@ -246,12 +246,12 @@ export default function Navbar() {
             </nav>
 
             {/* Right side */}
-            <div className="flex items-center gap-1.5 2xl:gap-2">
+            <div className="flex items-center gap-1 sm:gap-1.5 2xl:gap-2">
               {/* Live badge — visible only when Sanity liveStream.isLive is true */}
               {isLive && (
                 <Link
                   href="/live"
-                  className="hidden sm:flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-[11px] 2xl:text-xs font-bold px-3 2xl:px-4 py-1.5 rounded-full transition-colors live-glow min-h-11"
+                  className="hidden md:flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-[11px] 2xl:text-xs font-bold px-3 2xl:px-4 py-1.5 rounded-full transition-colors live-glow min-h-11"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                   LIVE
@@ -266,7 +266,7 @@ export default function Navbar() {
                 <Search className="w-[18px] h-[18px]" />
               </button>
               <button
-                className="touch-target h-11 w-11 inline-flex items-center justify-center lg:hidden rounded-xl text-slate-500 hover:bg-slate-100 transition-colors"
+                className="touch-target h-11 w-11 inline-flex items-center justify-center md:hidden rounded-xl text-slate-500 hover:bg-slate-100 transition-colors"
                 onClick={() => setMobileOpen(!mobileOpen)}
                 aria-label="Menu"
               >
@@ -297,7 +297,7 @@ export default function Navbar() {
 
         {/* Mobile menu */}
         {mobileOpen && (
-          <div className="lg:hidden border-t border-slate-100 bg-white overflow-hidden max-h-[70vh] overflow-y-auto">
+          <div className="md:hidden border-t border-slate-100 bg-white overflow-hidden max-h-[70vh] overflow-y-auto">
             <nav className="px-4 py-3 space-y-0.5">
               {navLinks.map((link) => (
                 <Link

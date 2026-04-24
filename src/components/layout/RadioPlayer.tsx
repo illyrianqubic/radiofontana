@@ -46,15 +46,39 @@ function getViewportSize() {
   return { width: window.innerWidth, height: window.innerHeight };
 }
 
-function clampPS(s: PS): PS {
+function getPanelBounds() {
   const { width: viewportW, height: viewportH } = getViewportSize();
-  const maxWidth = Math.max(MIN_W, viewportW - EDGE_GAP * 2);
-  const maxHeight = Math.max(MIN_H, viewportH - EDGE_GAP * 2);
-  const width  = clamp(s.width,  MIN_W, Math.min(MAX_W, maxWidth));
-  const height = clamp(s.height, MIN_H, Math.min(MAX_H, maxHeight));
+  const maxWidth = Math.min(MAX_W, Math.max(1, viewportW - EDGE_GAP * 2));
+  const maxHeight = Math.min(MAX_H, Math.max(1, viewportH - EDGE_GAP * 2));
+
+  return {
+    viewportW,
+    viewportH,
+    minWidth: Math.min(MIN_W, maxWidth),
+    maxWidth,
+    minHeight: Math.min(MIN_H, maxHeight),
+    maxHeight,
+  };
+}
+
+function clampPS(s: PS): PS {
+  const {
+    viewportW,
+    viewportH,
+    minWidth,
+    maxWidth,
+    minHeight,
+    maxHeight,
+  } = getPanelBounds();
+  const width = clamp(s.width, minWidth, maxWidth);
+  const height = clamp(s.height, minHeight, maxHeight);
+
   if (typeof window === 'undefined' || !s.dragged) return { ...s, width, height };
-  const x = clamp(s.x, EDGE_GAP, Math.max(EDGE_GAP, viewportW - width - EDGE_GAP));
-  const y = clamp(s.y, EDGE_GAP, Math.max(EDGE_GAP, viewportH - height - EDGE_GAP));
+
+  const horizontalGap = Math.min(EDGE_GAP, Math.max(0, Math.floor((viewportW - width) / 2)));
+  const verticalGap = Math.min(EDGE_GAP, Math.max(0, Math.floor((viewportH - height) / 2)));
+  const x = clamp(s.x, horizontalGap, Math.max(horizontalGap, viewportW - width - horizontalGap));
+  const y = clamp(s.y, verticalGap, Math.max(verticalGap, viewportH - height - verticalGap));
   return { ...s, x, y, width, height };
 }
 
@@ -167,18 +191,16 @@ export default function RadioPlayer() {
 
   // Expand / collapse
   const toggleExpand = useCallback(() => {
-    const { width: viewportW, height: viewportH } = getViewportSize();
-    const maxWidth = Math.max(MIN_W, viewportW - EDGE_GAP * 2);
-    const maxHeight = Math.max(MIN_H, viewportH - EDGE_GAP * 2);
+    const { viewportW, viewportH, minWidth, maxWidth, maxHeight } = getPanelBounds();
     const expandedWidth = clamp(
       Math.round(viewportW * (viewportW < 640 ? 0.96 : viewportW < 1024 ? 0.9 : 0.82)),
-      MIN_W,
-      Math.min(MAX_W, maxWidth)
+      minWidth,
+      maxWidth,
     );
     const expandedHeight = clamp(
       Math.round(viewportH * (viewportW < 640 ? 0.29 : 0.26)),
-      110,
-      Math.min(MAX_H, maxHeight)
+      Math.min(110, maxHeight),
+      maxHeight,
     );
 
     setPs(prev => {
@@ -186,8 +208,8 @@ export default function RadioPlayer() {
       if (isExpanded) {
         const compactWidth = clamp(
           Math.min(prev.width, DEFAULT_W),
-          MIN_W,
-          Math.min(MAX_W, maxWidth)
+          minWidth,
+          maxWidth,
         );
         return clampPS({ ...prev, width: compactWidth, height: MIN_H });
       }
@@ -241,6 +263,7 @@ export default function RadioPlayer() {
       const sx = e.clientX, sy = e.clientY;
 
       const onMove = (ev: PointerEvent) => {
+        const { minWidth, minHeight } = getPanelBounds();
         const dx = ev.clientX - sx;
         const dy = ev.clientY - sy;
         let nx = x0, ny = y0, nw = w0, nh = h0;
@@ -248,8 +271,8 @@ export default function RadioPlayer() {
         if (edges.l) { nw = w0 - dx; nx = x0 + dx; }
         if (edges.b) nh = h0 + dy;
         if (edges.t) { nh = h0 - dy; ny = y0 + dy; }
-        if (edges.l && nw < MIN_W) { nw = MIN_W; nx = x0 + w0 - MIN_W; }
-        if (edges.t && nh < MIN_H) { nh = MIN_H; ny = y0 + h0 - MIN_H; }
+        if (edges.l && nw < minWidth) { nw = minWidth; nx = x0 + w0 - minWidth; }
+        if (edges.t && nh < minHeight) { nh = minHeight; ny = y0 + h0 - minHeight; }
         setPs(clampPS({ dragged: true, x: nx, y: ny, width: nw, height: nh }));
       };
       const onUp = () => {
@@ -264,9 +287,10 @@ export default function RadioPlayer() {
 
   const showExpanded = ps.height > MIN_H + 20;
   const maxViewportWidth = viewport.width
-    ? Math.max(MIN_W, viewport.width - EDGE_GAP * 2)
+    ? Math.min(MAX_W, Math.max(1, viewport.width - EDGE_GAP * 2))
     : MAX_W;
-  const effectiveWidth = clamp(ps.width, MIN_W, Math.min(MAX_W, maxViewportWidth));
+  const minViewportWidth = Math.min(MIN_W, maxViewportWidth);
+  const effectiveWidth = clamp(ps.width, minViewportWidth, maxViewportWidth);
 
   // Build the outer container style
   // Default (not dragged): CSS-centered at bottom — survives scroll/zoom perfectly

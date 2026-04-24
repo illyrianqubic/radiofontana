@@ -29,10 +29,10 @@ export default function BreakingNewsTicker({ articles }: Props) {
 
   return (
     <div className="w-full bg-[#c0152a] text-white overflow-hidden" role="marquee" aria-label="Lajmet e fundit">
-      <div className="flex items-stretch" style={{ height: '40px' }}>
+      <div className="flex items-stretch" style={{ height: '44px' }}>
 
         {/* Label */}
-        <div className="flex-shrink-0 flex items-center px-4 sm:px-5 gap-3" style={{ background: '#a01020' }}>
+        <div className="flex-shrink-0 flex items-center px-3 sm:px-5 gap-2.5 sm:gap-3" style={{ background: '#a01020' }}>
           <span className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-[0.2em] whitespace-nowrap leading-none">
             Lajm i Fundit
           </span>
@@ -48,8 +48,8 @@ export default function BreakingNewsTicker({ articles }: Props) {
                   <Link
                     key={`${group}-${article.id || article.slug}`}
                     href={`/lajme/${article.slug}`}
-                    className="inline-flex items-center gap-3 whitespace-nowrap px-5 sm:px-7 text-[11px] sm:text-[12px] font-semibold text-white/90 hover:text-white transition-colors duration-200"
-                    style={{ lineHeight: '40px' }}
+                    className="touch-target inline-flex items-center gap-3 whitespace-nowrap px-4 sm:px-7 text-[11px] sm:text-[12px] font-semibold text-white/90 hover:text-white transition-colors duration-200"
+                    style={{ lineHeight: '44px' }}
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-white/50 flex-shrink-0 inline-block" />
                     {article.title}

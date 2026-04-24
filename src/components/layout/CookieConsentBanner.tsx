@@ -54,7 +54,7 @@ export default function CookieConsentBanner() {
             Ne përdorim cookies për të përmirësuar përvojën tuaj. Duke vazhduar, pranoni përdorimin e cookies.
           </p>
 
-          <div className="flex items-center gap-2.5 sm:flex-shrink-0">
+          <div className="flex flex-wrap items-center gap-2.5 sm:flex-shrink-0">
             <button
               type="button"
               onClick={handleAccept}

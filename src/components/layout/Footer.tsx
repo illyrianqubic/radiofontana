@@ -29,9 +29,9 @@ export default function Footer() {
           />
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-12 gap-8 xl:gap-10 2xl:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-8 xl:gap-10 2xl:gap-12">
           {/* About */}
-          <div className="xl:col-span-4">
+          <div>
             <h4 className="text-sm font-extrabold text-white mb-3">About Radio Fontana</h4>
             <p className="text-slate-400 text-sm leading-relaxed mb-5 max-w-md">
               Radio Fontana është media lokale në Istog, Kosovë që sjell lajme të verifikuara,
@@ -79,7 +79,7 @@ export default function Footer() {
           </div>
 
           {/* Quick links */}
-          <div className="xl:col-span-2">
+          <div>
             <h4 className="text-sm font-extrabold text-white mb-3">Quick Links</h4>
             <ul className="space-y-2.5">
               {[
@@ -98,7 +98,7 @@ export default function Footer() {
           </div>
 
           {/* Categories */}
-          <div className="xl:col-span-3">
+          <div>
             <h4 className="text-sm font-extrabold text-white mb-3">Categories</h4>
             <ul className="space-y-2.5">
               {CATEGORIES.slice(0, 7).map((cat) => (
@@ -115,7 +115,7 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div className="xl:col-span-3">
+          <div>
             <h4 className="text-sm font-extrabold text-white mb-3">Contact Info</h4>
             <ul className="space-y-3.5 text-sm text-slate-300">
               <li className="flex items-start gap-2.5">
