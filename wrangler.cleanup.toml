@@ -1,0 +1,9 @@
+name = "radiofontana-cleanup-cron"
+main = "workers/cleanup-cron.ts"
+compatibility_date = "2026-02-04"
+
+[triggers]
+crons = ["0 0 * * *"]
+
+[vars]
+CLEANUP_ENDPOINT = "https://radiofontana.pages.dev/api/cleanup"

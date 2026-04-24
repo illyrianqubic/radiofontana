@@ -6,6 +6,7 @@ interface Env {
   NEXT_PUBLIC_SANITY_DATASET: string;
   NEXT_PUBLIC_SANITY_API_VERSION?: string;
   SANITY_WRITE_TOKEN?: string;
+  CLEANUP_CRON_SECRET?: string;
 }
 
 interface CleanupResult {
@@ -119,8 +120,16 @@ export async function onScheduled(
   );
 }
 
-export async function onRequestPost(context: { env: Env }): Promise<Response> {
+export async function onRequestPost(context: { env: Env; request: Request }): Promise<Response> {
   try {
+    const expectedSecret = context.env.CLEANUP_CRON_SECRET;
+    if (expectedSecret) {
+      const requestSecret = context.request.headers.get('x-cleanup-secret');
+      if (requestSecret !== expectedSecret) {
+        return Response.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
+      }
+    }
+
     const result = await runCleanup(context.env);
     console.log(
       `[cleanup-manual] deleted=${result.deletedCount} scanned=${result.scannedCount} cutoff=${result.cutoff}`,
