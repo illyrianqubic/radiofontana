@@ -8,18 +8,42 @@ import { motion, AnimatePresence } from 'framer-motion';
 export default function KontaktPage() {
   const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
   const inputClassName =
     'w-full px-4 py-3.5 border border-slate-200 rounded-2xl bg-white/80 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#e63946]/25 focus:border-[#e63946]/70 text-sm 2xl:text-base transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]';
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
       setError('Ju lutem plotësoni të gjitha fushat e detyrueshme.');
       return;
     }
     setError('');
-    setSubmitted(true);
+    setSending(true);
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          access_key: '182813ba-cf51-4bd3-936e-a32b78a1bdfd',
+          name: form.name,
+          email: form.email,
+          subject: form.subject ? `[Kontakt] ${form.subject}` : '[Kontakt] Mesazh i ri nga formulari',
+          message: form.message,
+        }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSubmitted(true);
+      } else {
+        setError('Ndodhi një gabim. Ju lutem provoni përsëri.');
+      }
+    } catch {
+      setError('Ndodhi një gabim. Ju lutem provoni përsëri.');
+    } finally {
+      setSending(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -302,10 +326,11 @@ export default function KontaktPage() {
 
                     <button
                       type="submit"
-                      className="w-full sm:w-auto px-8 py-3.5 bg-[#e63946] hover:bg-[#d32f3f] text-white rounded-2xl font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-[#e63946]/25 hover:shadow-xl hover:shadow-[#e63946]/30"
+                      disabled={sending}
+                      className="w-full sm:w-auto px-8 py-3.5 bg-[#e63946] hover:bg-[#d32f3f] disabled:opacity-60 disabled:cursor-not-allowed text-white rounded-2xl font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-[#e63946]/25 hover:shadow-xl hover:shadow-[#e63946]/30"
                     >
                       <Send className="w-4 h-4" />
-                      Dërgo Mesazhin
+                      {sending ? 'Duke dërguar…' : 'Dërgo Mesazhin'}
                     </button>
                   </motion.form>
                 )}
