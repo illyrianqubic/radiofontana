@@ -17,7 +17,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
   if (variant === 'hero') {
     return (
       <Link href={href} className="group block relative overflow-hidden rounded-3xl border border-slate-200/70 news-card h-full">
-        <div className="relative aspect-video min-h-[220px]">
+        <div className="relative aspect-video min-h-[240px] sm:min-h-[320px]">
           <Image
             src={optimizeImageUrl(article.imageUrl, 1280, 720, 74)}
             alt={article.title}
@@ -26,9 +26,9 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
             className="object-cover img-zoom"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/45 to-black/10" />
+          <div className="absolute inset-0 z-0 bg-gradient-to-t from-black/95 via-black/45 to-black/10" />
           {/* Top labels */}
-          <div className="absolute top-3 sm:top-4 left-3 sm:left-4 flex items-center gap-2 flex-wrap pr-3">
+          <div className="absolute z-20 top-3 sm:top-4 left-3 sm:left-4 flex items-center gap-2 flex-wrap pr-3 max-w-[calc(100%-1.5rem)] sm:max-w-[calc(100%-2rem)]">
             <span className={`category-badge px-2.5 py-1.5 rounded-md text-white ${categoryColor}`}>
               {article.category}
             </span>
@@ -38,15 +38,15 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
               </span>
             )}
           </div>
-          <div className="absolute inset-0 flex flex-col justify-end p-4 sm:p-7 lg:p-9">
-            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-red-400 mb-2">
+          <div className="absolute z-10 inset-0 flex flex-col justify-end p-4 sm:p-7 lg:p-9 pt-16 sm:pt-20">
+            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-red-400 mb-2 relative z-10">
               Lajm kryesor
             </p>
-            <h2 className="text-white text-[1.25rem] sm:text-2xl lg:text-[1.95rem] xl:text-[2.3rem] 2xl:text-[2.6rem] 3xl:text-[3rem] font-extrabold leading-[1.15] mb-3 group-hover:text-red-200 transition-colors duration-300 break-words">
+            <h2 className="text-white text-[1.1rem] tiny:text-[1.2rem] sm:text-2xl lg:text-[1.95rem] xl:text-[2.3rem] 2xl:text-[2.6rem] 3xl:text-[3rem] font-extrabold leading-[1.15] mb-2 sm:mb-3 group-hover:text-red-200 transition-colors duration-300 break-words line-clamp-2 sm:line-clamp-3 lg:line-clamp-none relative z-10">
               {article.title}
             </h2>
-            <p className="text-white/70 text-sm 2xl:text-base line-clamp-2 mb-5 max-w-2xl leading-relaxed">{article.excerpt}</p>
-            <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-white/50 text-xs">
+            <p className="hidden sm:block text-white/70 text-sm 2xl:text-base line-clamp-2 mb-4 sm:mb-5 max-w-2xl leading-relaxed relative z-10">{article.excerpt}</p>
+            <div className="hidden tiny:flex flex-wrap items-center gap-2 sm:gap-4 text-white/50 text-[11px] sm:text-xs relative z-10">
               <span className="flex items-center gap-1.5">
                 <User className="w-3.5 h-3.5" />
                 {article.author}
