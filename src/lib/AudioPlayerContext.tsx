@@ -24,25 +24,7 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
   const [volume, setVolumeState] = useState(0.8);
   const [muted, setMutedState] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const shouldPlayRef = useRef(false);
-  const retryTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const startStream = useCallback((audio: HTMLAudioElement, vol: number, mut: boolean) => {
-    if (retryTimerRef.current) {
-      clearTimeout(retryTimerRef.current);
-      retryTimerRef.current = null;
-    }
-    audio.src = `${STREAM_URL}?_t=${Date.now()}`;
-    audio.volume = mut ? 0 : vol;
-    setError(false);
-    setLoading(true);
-    audio.play().catch(() => {
-      if (shouldPlayRef.current) {
-        setLoading(false);
-        setError(true);
-      }
-    });
-  }, []);
+  const wantPlayRef = useRef(false);
 
   useEffect(() => {
     const audio = new Audio();
@@ -50,54 +32,46 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
     audio.volume = 0.8;
     audioRef.current = audio;
 
-    const onWaiting = () => { if (shouldPlayRef.current) setLoading(true); };
-    const onPlaying = () => { setLoading(false); setPlaying(true); setError(false); };
-    const onPause = () => { if (!shouldPlayRef.current) setPlaying(false); };
-
-    // 'ended' fires when Shoutcast closes the TCP connection — auto-reconnect
-    const onEnded = () => {
-      if (shouldPlayRef.current) {
-        setPlaying(false);
-        setLoading(true);
-        retryTimerRef.current = setTimeout(() => startStream(audio, audio.volume, false), 1500);
-      }
-    };
-
-    // 'stalled' is a false-positive on live streams — don't treat as error, just re-attempt
-    const onStalled = () => {
-      if (shouldPlayRef.current) {
-        setLoading(true);
-      }
-    };
-
-    const onError = () => {
-      if (shouldPlayRef.current) {
-        setLoading(false);
-        setPlaying(false);
-        setError(true);
-        // Retry once after 3 s on a real network error
-        retryTimerRef.current = setTimeout(() => {
-          if (shouldPlayRef.current) {
-            startStream(audio, audio.volume, false);
-          }
-        }, 3000);
-      }
-    };
-
-    audio.addEventListener('waiting', onWaiting);
-    audio.addEventListener('playing', onPlaying);
-    audio.addEventListener('pause', onPause);
-    audio.addEventListener('ended', onEnded);
-    audio.addEventListener('stalled', onStalled);
-    audio.addEventListener('error', onError);
+    audio.addEventListener('waiting', () => setLoading(true));
+    audio.addEventListener('playing', () => {
+      setLoading(false);
+      setPlaying(true);
+      setError(false);
+    });
+    audio.addEventListener('pause', () => {
+      setPlaying(false);
+    });
+    // 'stalled' fires constantly on Shoutcast ICY streams — NOT an error, ignore it
+    // 'suspend' is also normal on live streams, ignore it too
+    audio.addEventListener('error', () => {
+      if (!wantPlayRef.current) return;
+      setLoading(false);
+      setPlaying(false);
+      setError(true);
+    });
+    // Shoutcast closes TCP connections periodically; reconnect automatically
+    audio.addEventListener('ended', () => {
+      if (!wantPlayRef.current) return;
+      setPlaying(false);
+      setLoading(true);
+      setTimeout(() => {
+        const a = audioRef.current;
+        if (a && wantPlayRef.current) {
+          a.src = STREAM_URL;
+          a.load();
+          a.play().catch(() => {
+            setLoading(false);
+            setError(true);
+          });
+        }
+      }, 1500);
+    });
 
     return () => {
-      shouldPlayRef.current = false;
-      if (retryTimerRef.current) clearTimeout(retryTimerRef.current);
       audio.pause();
       audio.src = '';
     };
-  }, [startStream]);
+  }, []);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -108,21 +82,28 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
   const togglePlay = useCallback(() => {
     const audio = audioRef.current;
     if (!audio) return;
-    if (shouldPlayRef.current) {
-      // Stop
-      shouldPlayRef.current = false;
-      if (retryTimerRef.current) { clearTimeout(retryTimerRef.current); retryTimerRef.current = null; }
+
+    if (playing || loading) {
+      wantPlayRef.current = false;
       audio.pause();
       audio.src = '';
       setLoading(false);
       setPlaying(false);
       setError(false);
     } else {
-      // Start
-      shouldPlayRef.current = true;
-      startStream(audio, volume, muted);
+      wantPlayRef.current = true;
+      setError(false);
+      setLoading(true);
+      audio.src = STREAM_URL;
+      audio.volume = muted ? 0 : volume;
+      audio.load();
+      audio.play().catch(() => {
+        setLoading(false);
+        setPlaying(false);
+        setError(true);
+      });
     }
-  }, [volume, muted, startStream]);
+  }, [playing, loading, volume, muted]);
 
   const setVolume = useCallback((v: number) => {
     const nextVolume = Math.max(0, Math.min(1, v));
