@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound, usePathname } from 'next/navigation';
 import { Clock, User, Tag, ArrowLeft, Share2, Copy, Check } from 'lucide-react';
-import { FacebookIcon, InstagramIcon, TiktokIcon, WhatsAppIcon } from '@/components/shared/SocialIcons';
+import { FacebookIcon, WhatsAppIcon } from '@/components/shared/SocialIcons';
 import { Article, CATEGORY_COLORS } from '@/lib/types';
 import NewsCard from '@/components/news/NewsCard';
 import SanityPortableText from '@/components/sanity/PortableText';
@@ -251,24 +251,6 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
                 >
                   <WhatsAppIcon className="w-4 h-4" />
                   WhatsApp
-                </a>
-                <a
-                  href="https://www.instagram.com/rtvfontana/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="touch-target inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-br from-[#f77737] via-[#dd2a7b] to-[#515bd4] text-white rounded-xl text-sm md:text-base font-medium hover:brightness-110 transition-all duration-200"
-                >
-                  <InstagramIcon className="w-4 h-4" />
-                  Instagram
-                </a>
-                <a
-                  href="https://www.tiktok.com/@rtvfontanalive"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="touch-target inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 text-white rounded-xl text-sm md:text-base font-medium hover:bg-slate-800 transition-colors duration-200"
-                >
-                  <TiktokIcon className="w-4 h-4" />
-                  TikTok
                 </a>
                 <button
                   onClick={() => {
