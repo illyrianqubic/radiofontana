@@ -438,9 +438,7 @@ export default function RadioPlayer() {
                 <span className={`${showExpanded ? 'text-xs' : compactHideFm ? 'hidden' : 'text-xs'} text-slate-500`}>98.8 FM</span>
               </div>
               <p className={`${showExpanded ? 'text-[11px] sm:text-xs' : compactVeryTight ? 'text-[10px]' : 'text-xs'} text-slate-400 truncate`}>
-                {error
-                  ? 'Transmetimi nuk është i disponueshëm'
-                  : playing
+                {playing
                   ? 'Duke transmetuar live · Istog, Kosovë'
                   : 'Klikoni play për të dëgjuar'}
               </p>

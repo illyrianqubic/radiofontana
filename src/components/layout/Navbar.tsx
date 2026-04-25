@@ -340,6 +340,10 @@ export default function Navbar() {
                   className="touch-target w-11 h-11 rounded-xl bg-slate-100 border border-slate-200 text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition-colors inline-flex items-center justify-center" aria-label="YouTube">
                   <YoutubeIcon className="w-4 h-4" />
                 </a>
+                <a href="https://www.tiktok.com/@rtvfontanalive" target="_blank" rel="noopener noreferrer"
+                  className="touch-target w-11 h-11 rounded-xl bg-slate-100 border border-slate-200 text-slate-500 hover:text-slate-700 hover:bg-slate-50 transition-colors inline-flex items-center justify-center" aria-label="TikTok">
+                  <TiktokIcon className="w-4 h-4" />
+                </a>
                 <span className="ml-auto flex items-center gap-1.5 text-xs text-slate-500">
                   <Radio className="w-3.5 h-3.5 text-red-500" />
                   98.8 FM
