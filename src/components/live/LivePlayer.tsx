@@ -31,6 +31,7 @@ export default function LivePlayer() {
   return (
     <div className="min-h-screen bg-slate-950 page-shell">
 
+      {/* Facebook Live embed — commented out, uncomment to re-enable
       <div className="w-full bg-black/90 border-b border-white/10">
         <div className="mx-auto w-full max-w-[1180px] overflow-hidden sm:rounded-b-2xl sm:border-x sm:border-b sm:border-white/10">
           <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
@@ -45,6 +46,7 @@ export default function LivePlayer() {
           </div>
         </div>
       </div>
+      */}
 
       {/* ── Radio Hero ── */}
       <div className="relative overflow-hidden">
