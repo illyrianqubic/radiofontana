@@ -27,7 +27,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
       {/* ── HERO ── */}
       <section className="bg-white border-b border-slate-200/70">
         <div className="site-container py-7 md:py-12 lg:py-14 2xl:py-14 3xl:py-16">
-          <div className="grid grid-cols-1 md:grid-cols-10 3xl:grid-cols-15 gap-6 md:gap-8 2xl:gap-10">
+          <div className="grid grid-cols-1 md:grid-cols-10 3xl:grid-cols-15 gap-6 md:gap-8 2xl:gap-10 items-start">
 
             {/* Main hero */}
             <div className="md:col-span-7 3xl:col-span-10">

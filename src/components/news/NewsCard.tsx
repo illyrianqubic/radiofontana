@@ -16,7 +16,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   if (variant === 'hero') {
     return (
-      <Link href={href} className="group block relative min-w-0 overflow-hidden rounded-xl border border-slate-200/70 news-card h-full isolate">
+      <Link href={href} className="group block relative min-w-0 overflow-hidden rounded-xl border border-slate-200/70 news-card isolate">
         <div className="relative aspect-video min-h-[240px] md:min-h-[320px] lg:min-h-[360px]">
           <Image
             src={optimizeImageUrl(article.imageUrl, 1280, 720, 74)}

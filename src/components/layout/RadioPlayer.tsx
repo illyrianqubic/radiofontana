@@ -8,9 +8,9 @@ import { useAudioPlayer } from '@/lib/AudioPlayerContext';
 // ── Constraints ──────────────────────────────────────────────────────────────
 const MIN_W = 260;
 const MAX_W = 1040;
-const MIN_H = 96;
+const MIN_H = 84;
 const MAX_H = 220;
-const STORAGE_KEY = 'rf_player_v4';
+const STORAGE_KEY = 'rf_player_v5';
 const EDGE_GAP = 16;
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -422,7 +422,7 @@ export default function RadioPlayer() {
               ? 'px-2 py-2 gap-1.5 flex-1 min-h-[58px]'
               : compactTight
               ? 'px-2.5 py-2 gap-2 flex-1 min-h-[60px]'
-              : 'px-3 md:px-4 py-2.5 md:py-3 gap-2.5 md:gap-3.5 flex-1 min-h-[62px] md:min-h-[70px]'
+              : 'px-3 py-2.5 gap-2.5 flex-1 min-h-[62px]'
           }`}
           style={{ overflow: 'hidden' }}
         >
@@ -435,9 +435,9 @@ export default function RadioPlayer() {
             <div className="min-w-0 flex-1">
               <div className={`flex items-center ${compactTight ? 'gap-1' : 'gap-1.5'}`}>
                 <p className={`${showExpanded ? 'text-sm sm:text-base' : compactTight ? 'text-xs' : 'text-sm md:text-base'} font-bold text-white leading-tight truncate`}>Radio Fontana</p>
-                <span className={`${showExpanded ? 'hidden md:block text-xs' : compactHideFm ? 'hidden' : 'hidden sm:block text-xs md:text-sm'} text-slate-500`}>98.8 FM</span>
+                <span className={`${showExpanded ? 'text-xs' : compactHideFm ? 'hidden' : 'text-xs'} text-slate-500`}>98.8 FM</span>
               </div>
-              <p className={`${showExpanded ? 'text-[11px] sm:text-xs' : compactHideSubline ? 'hidden' : compactTight ? 'text-[10px]' : 'text-xs md:text-sm'} text-slate-400 truncate`}>
+              <p className={`${showExpanded ? 'text-[11px] sm:text-xs' : compactVeryTight ? 'text-[10px]' : 'text-xs'} text-slate-400 truncate`}>
                 {error
                   ? 'Transmetimi nuk është i disponueshëm'
                   : playing
