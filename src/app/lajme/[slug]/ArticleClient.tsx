@@ -154,36 +154,36 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
             </div>
 
             {/* Category */}
-            <span className={`category-badge inline-block px-3 py-1.5 rounded-lg text-white mb-5 ${catColor}`}>
+            <span className={`category-badge inline-block max-w-full truncate px-3 py-1.5 rounded-lg text-white mb-5 ${catColor}`}>
               {article.category}
             </span>
 
             {/* Title */}
-            <h1 className="text-[1.35rem] sm:text-2xl lg:text-4xl xl:text-[2.7rem] 2xl:text-[2.8rem] 3xl:text-[3rem] font-extrabold text-slate-900 leading-tight mb-4 sm:mb-5 break-words">
+            <h1 className="text-[1.2rem] tiny:text-[1.3rem] sm:text-2xl lg:text-4xl xl:text-[2.7rem] 2xl:text-[2.8rem] 3xl:text-[3rem] font-extrabold text-slate-900 leading-tight mb-4 sm:mb-5 break-words">
               {article.title}
             </h1>
 
             {/* Excerpt */}
-            <p className="text-[0.95rem] sm:text-lg 2xl:text-xl text-slate-500 leading-relaxed mb-7 border-l-4 border-red-600 pl-4 sm:pl-5 italic">
+            <p className="text-[0.92rem] sm:text-lg 2xl:text-xl text-slate-500 leading-relaxed mb-7 border-l-4 border-red-600 pl-4 sm:pl-5 italic break-words">
               {article.excerpt}
             </p>
 
             {/* Meta */}
-            <div className="flex flex-wrap items-center gap-4 text-sm text-slate-400 pb-7 border-b border-slate-100">
-              <span className="flex items-center gap-1.5">
+            <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-slate-500 pb-7 border-b border-slate-100">
+              <span className="inline-flex min-w-0 max-w-full items-center gap-1.5">
                 <User className="w-4 h-4" />
-                <span className="font-medium text-slate-600">{article.author}</span>
+                <span className="font-medium text-slate-700 truncate">{article.author}</span>
               </span>
-              <span className="flex items-center gap-1.5">
+              <span className="inline-flex min-w-0 max-w-full items-center gap-1.5">
                 <Clock className="w-4 h-4" />
-                <time dateTime={article.publishedAt}>{formatAlbanianDate(article.publishedAt)}</time>
+                <time dateTime={article.publishedAt} className="truncate">{formatAlbanianDate(article.publishedAt)}</time>
               </span>
               <span className="text-slate-300">/</span>
               <span>{timeAgo(article.publishedAt)}</span>
             </div>
 
             {/* Hero image */}
-            <div className="relative aspect-video overflow-hidden my-7 -mx-4 sm:mx-0 rounded-none sm:rounded-2xl">
+            <div className="relative aspect-video overflow-hidden my-7 mx-0 rounded-2xl">
               <Image
                 src={optimizeImageUrl(article.imageUrl, 1440, 810, 76)}
                 alt={article.title}
@@ -216,7 +216,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
                   <Link
                     key={tag}
                     href={`/lajme/?q=${encodeURIComponent(tag)}`}
-                    className="px-3 py-1.5 bg-slate-100 text-slate-500 rounded-xl text-sm hover:bg-red-50 hover:text-red-600 transition-colors duration-200"
+                    className="px-3 py-1.5 bg-slate-100 text-slate-600 rounded-xl text-xs sm:text-sm hover:bg-red-50 hover:text-red-600 transition-colors duration-200"
                   >
                     #{tag}
                   </Link>
@@ -235,7 +235,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
                   href={`https://facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://radiofontana.org/lajme/${article.slug}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="touch-target inline-flex items-center gap-2 px-4 py-2.5 bg-[#1877F2] text-white rounded-xl text-sm font-medium hover:bg-[#166FE5] transition-colors duration-200"
+                  className="touch-target inline-flex items-center gap-2 px-4 py-2.5 bg-[#1877F2] text-white rounded-xl text-xs sm:text-sm font-medium hover:bg-[#166FE5] transition-colors duration-200"
                 >
                   <FacebookIcon className="w-4 h-4" />
                   Facebook
@@ -244,7 +244,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
                   href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`https://radiofontana.org/lajme/${article.slug}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="touch-target inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 text-white rounded-xl text-sm font-medium hover:bg-slate-800 transition-colors duration-200"
+                  className="touch-target inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 text-white rounded-xl text-xs sm:text-sm font-medium hover:bg-slate-800 transition-colors duration-200"
                 >
                   <TwitterIcon className="w-4 h-4" />
                   Twitter
@@ -258,7 +258,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
           <aside className="xl:col-span-4 3xl:col-span-4 space-y-7">
             <Link
               href="/lajme"
-              className="touch-target inline-flex items-center gap-2 text-sm text-red-600 font-semibold hover:gap-3 transition-all duration-200"
+              className="touch-target inline-flex items-center gap-2 text-sm text-red-600 font-semibold hover:gap-3 transition-all duration-200 break-words"
             >
               <ArrowLeft className="w-4 h-4" />
               Kthehu tek Lajmet

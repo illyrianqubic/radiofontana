@@ -37,7 +37,7 @@ function TopBar() {
   return (
     <div className="bg-slate-950 text-white hidden md:block border-b border-white/[0.06]">
       <div className="site-container">
-        <div className="flex items-center justify-between h-8 3xl:h-9 text-[11px] 2xl:text-xs">
+        <div className="flex items-center justify-between h-8 3xl:h-9 text-[11px] 2xl:text-xs 3xl:text-[13px]">
           <div className="flex items-center gap-4 text-slate-400">
             <span className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
@@ -251,7 +251,7 @@ export default function Navbar() {
               {isLive && (
                 <Link
                   href="/live"
-                  className="hidden md:flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-[11px] 2xl:text-xs font-bold px-3 2xl:px-4 py-1.5 rounded-full transition-colors live-glow min-h-11"
+                  className="hidden md:flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-[11px] 2xl:text-xs 3xl:text-sm font-bold px-3 2xl:px-4 py-1.5 rounded-full transition-colors live-glow min-h-11"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                   LIVE
@@ -287,7 +287,7 @@ export default function Navbar() {
                     onChange={(e) => setSearchQuery(e.target.value)}
                     placeholder="Kërko lajme, tema, autorë..."
                     autoFocus
-                    className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-red-500/25 focus:border-red-500 text-sm 2xl:text-base transition-all"
+                    className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl bg-slate-50 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-red-500/25 focus:border-red-500 text-sm sm:text-base 2xl:text-lg transition-all"
                   />
                 </div>
               </form>
@@ -313,13 +313,13 @@ export default function Navbar() {
                 </Link>
               ))}
               <div className="pt-3 mt-2 border-t border-slate-100">
-                <p className="text-[10px] text-slate-400 px-4 py-1 font-bold uppercase tracking-[0.15em]">Kategoritë</p>
+                <p className="text-[10px] sm:text-[11px] text-slate-400 px-4 py-1 font-bold uppercase tracking-[0.15em]">Kategoritë</p>
                 <div className="grid grid-cols-2 gap-0.5 mt-1">
                   {CATEGORIES.map((cat) => (
                     <Link
                       key={cat}
                       href={`/lajme/?kategoria=${encodeURIComponent(cat)}`}
-                      className="px-4 py-3 text-sm text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors min-h-11 flex items-center"
+                      className="px-4 py-3 text-sm sm:text-base text-slate-500 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors min-h-11 flex items-center break-words"
                     >
                       {cat}
                     </Link>

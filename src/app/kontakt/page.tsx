@@ -11,7 +11,7 @@ export default function KontaktPage() {
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
   const inputClassName =
-    'w-full px-4 py-3.5 border border-slate-200 rounded-2xl bg-white/80 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#e63946]/25 focus:border-[#e63946]/70 text-sm 2xl:text-base transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]';
+    'w-full px-4 py-3.5 border border-slate-200 rounded-2xl bg-white/80 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#e63946]/25 focus:border-[#e63946]/70 text-sm sm:text-base 2xl:text-lg transition-all shadow-[inset_0_1px_0_rgba(255,255,255,0.8)]';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -112,7 +112,7 @@ export default function KontaktPage() {
         <div className="pointer-events-none absolute -bottom-28 -left-16 h-64 w-64 rounded-full bg-slate-900/5 blur-3xl" />
 
         <div className="relative">
-          <div className="flex items-center gap-2 text-xs text-slate-400 mb-4">
+          <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-slate-400 mb-4">
             <span>Kryefaqja</span>
             <span className="text-slate-300">/</span>
             <span className="text-slate-700 font-medium">Kontakt</span>
@@ -123,10 +123,10 @@ export default function KontaktPage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-[#e63946]/20 bg-[#e63946]/5 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#c01f31] mb-4">
                 Studio & Redaksi
               </div>
-              <h1 className="text-3xl sm:text-4xl 2xl:text-[2.8rem] leading-tight font-extrabold text-slate-900 mb-4">
+              <h1 className="text-[1.8rem] sm:text-4xl 2xl:text-[2.8rem] 3xl:text-[3.2rem] leading-tight font-extrabold text-slate-900 mb-4 break-words">
                 Na Kontaktoni me Besim
               </h1>
-              <p className="max-w-2xl text-slate-600 text-base sm:text-lg leading-relaxed">
+              <p className="max-w-2xl text-slate-600 text-sm sm:text-lg 2xl:text-xl leading-relaxed break-words">
                 Për pyetje, reklama, dërgim lajmesh apo sugjerime për programin, ekipi ynë është i gatshëm të përgjigjet shpejt dhe qartë.
               </p>
             </div>
@@ -170,7 +170,7 @@ export default function KontaktPage() {
                     </p>
                     <div className="space-y-0.5">
                       {item.values.map((line) => (
-                        <p key={line} className="text-slate-700 text-sm font-semibold">
+                        <p key={line} className="text-slate-700 text-sm sm:text-base font-semibold break-words">
                           {line}
                         </p>
                       ))}

@@ -59,13 +59,13 @@ export default function HomeClient({ articles }: HomeClientProps) {
       </section>
 
       {/* ── LATEST NEWS + MOST READ ── */}
-      <section className="bg-white py-10 sm:py-12 2xl:py-14 border-b border-slate-200/70">
+      <section className="bg-white py-9 sm:py-12 2xl:py-14 border-b border-slate-200/70">
         <div className="site-container">
           <div className="grid grid-cols-1 md:grid-cols-12 3xl:grid-cols-15 gap-9 2xl:gap-12">
 
             {/* Latest grid */}
             <div className="md:col-span-8 xl:col-span-9 3xl:col-span-11">
-              <div className="flex items-end justify-between gap-4 mb-7">
+              <div className="flex flex-wrap items-end justify-between gap-3 sm:gap-4 mb-7">
                 <div>
                   <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400 mb-2">Redaksia</p>
                   <h2 className="section-title-bar text-xl sm:text-2xl 2xl:text-[1.85rem] 3xl:text-[2.05rem] font-extrabold text-slate-900 tracking-tight">
@@ -125,7 +125,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
       </section>
 
       {/* ── TË FUNDIT — Live feed ── */}
-      <section className="bg-slate-50/70 py-10 sm:py-12 2xl:py-14 border-b border-slate-200/70">
+      <section className="bg-slate-50/70 py-9 sm:py-12 2xl:py-14 border-b border-slate-200/70">
         <div className="site-container">
           <div className="grid grid-cols-1 md:grid-cols-12 3xl:grid-cols-15 gap-9 2xl:gap-12">
 
@@ -157,16 +157,16 @@ export default function HomeClient({ articles }: HomeClientProps) {
                       />
                     </div>
                     <div className="flex-1 min-w-0 flex flex-col justify-center">
-                      <div className="flex items-center gap-2 mb-1.5">
-                        <span className={`category-badge px-2 py-1 rounded text-white ${CATEGORY_COLORS[article.category]}`}>
+                      <div className="flex flex-wrap items-center gap-2 mb-1.5 min-w-0">
+                        <span className={`category-badge inline-block max-w-full truncate px-2 py-1 rounded text-white ${CATEGORY_COLORS[article.category]}`}>
                           {article.category}
                         </span>
-                        <span className="text-[10px] text-slate-400 flex items-center gap-1">
+                        <span className="text-[11px] sm:text-xs text-slate-500 flex items-center gap-1 min-w-0">
                           <Clock className="w-2.5 h-2.5" />
-                          {timeAgo(article.publishedAt)}
+                          <span className="truncate">{timeAgo(article.publishedAt)}</span>
                         </span>
                       </div>
-                      <h3 className="font-bold text-slate-800 text-sm leading-snug line-clamp-2 group-hover:text-red-600 transition-colors tracking-[0.01em]">
+                      <h3 className="font-bold text-[0.93rem] sm:text-sm text-slate-800 leading-snug line-clamp-2 group-hover:text-red-600 transition-colors tracking-[0.01em] break-words">
                         {article.title}
                       </h3>
                     </div>
@@ -206,7 +206,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
       </section>
 
       {/* ── CATEGORY BROWSE ── */}
-      <section className="bg-slate-50/70 py-10 sm:py-12 border-b border-slate-200/70">
+      <section className="bg-slate-50/70 py-9 sm:py-12 border-b border-slate-200/70">
         <div className="site-container">
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-2">
@@ -224,7 +224,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
                 href={`/lajme/?kategoria=${encodeURIComponent(cat)}`}
                 className={`${CATEGORY_COLORS[cat]} text-white rounded-xl sm:rounded-2xl p-3 sm:p-4 min-h-11 text-center transition-all duration-200 hover:-translate-y-1 hover:brightness-105 shadow-[0_8px_16px_rgba(15,23,42,0.12)] hover:shadow-[0_14px_26px_rgba(15,23,42,0.22)] inline-flex items-center justify-center`}
               >
-                <span className="font-bold text-sm">{cat}</span>
+                <span className="font-bold text-[0.78rem] sm:text-sm leading-tight break-words line-clamp-2">{cat}</span>
               </Link>
             ))}
           </div>

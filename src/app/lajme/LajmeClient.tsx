@@ -134,7 +134,7 @@ export default function LajmeClient() {
       <div className="border-b border-slate-100 bg-slate-50/50">
         <div className="site-container py-7 sm:py-10 2xl:py-12">
           {/* Breadcrumb */}
-          <div className="flex items-center gap-2 text-xs text-slate-400 mb-4">
+          <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-slate-400 mb-4">
             <Link href="/" className="hover:text-red-600 transition-colors">Kryefaqja</Link>
             <span className="text-slate-300">/</span>
             <span className="text-slate-700 font-medium">Lajme</span>
@@ -145,16 +145,16 @@ export default function LajmeClient() {
               </>
             )}
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-start sm:items-center gap-3 min-w-0">
             <div className="w-1 h-8 bg-red-600 rounded-full" />
-            <h1 className="text-[1.5rem] sm:text-3xl lg:text-4xl 3xl:text-[3rem] font-extrabold text-slate-900 break-words">
+            <h1 className="text-[1.35rem] sm:text-3xl lg:text-4xl 3xl:text-[3rem] font-extrabold text-slate-900 break-words leading-tight">
               {title}
             </h1>
           </div>
           {activeCategory && (
             <div className="mt-3">
               <span
-                className={`category-badge inline-block px-3 py-1.5 rounded-lg text-white ${CATEGORY_COLORS[activeCategory] ?? 'bg-slate-500'}`}
+                className={`category-badge inline-block max-w-full truncate px-3 py-1.5 rounded-lg text-white ${CATEGORY_COLORS[activeCategory] ?? 'bg-slate-500'}`}
               >
                 {filtered.length} artikuj
               </span>
@@ -188,17 +188,17 @@ export default function LajmeClient() {
             ))}
           </div>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-24">
-            <h3 className="text-xl 2xl:text-2xl 3xl:text-[1.8rem] font-bold text-slate-800 mb-2">
+          <div className="text-center py-20 sm:py-24">
+            <h3 className="text-lg sm:text-xl 2xl:text-2xl 3xl:text-[1.8rem] font-bold text-slate-800 mb-2">
               Nuk u gjetën rezultate
             </h3>
-            <p className="text-slate-400">
+            <p className="text-slate-500 text-sm sm:text-base">
               Provo me fjalë kyçe të ndryshme ose zgjidh një kategori tjetër.
             </p>
           </div>
         ) : (
           <>
-            <p className="text-xs 2xl:text-sm text-slate-400 mb-5 font-medium uppercase tracking-wider">
+            <p className="text-xs sm:text-sm text-slate-500 mb-5 font-medium uppercase tracking-wider">
               {filtered.length} artikuj gjithsej
             </p>
             <div className="news-grid-responsive gap-5 2xl:gap-6">

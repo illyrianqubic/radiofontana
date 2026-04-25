@@ -83,17 +83,17 @@ export default function LivePlayer() {
             className="mb-5"
           >
             {error ? (
-              <span className="inline-flex items-center gap-2 bg-slate-800/80 text-slate-400 text-[11px] font-semibold px-4 py-1.5 rounded-full tracking-widest uppercase">
+              <span className="inline-flex items-center gap-2 bg-slate-800/80 text-slate-300 text-[10px] sm:text-[11px] font-semibold px-4 py-1.5 rounded-full tracking-[0.16em] uppercase">
                 <span className="w-1.5 h-1.5 bg-slate-500 rounded-full" />
                 Transmetimi ndalur
               </span>
             ) : playing ? (
-              <span className="inline-flex items-center gap-2 bg-[#e63946] text-white text-[11px] font-extrabold px-4 py-1.5 rounded-full tracking-widest uppercase shadow-lg shadow-[#e63946]/25">
+              <span className="inline-flex items-center gap-2 bg-[#e63946] text-white text-[10px] sm:text-[11px] font-extrabold px-4 py-1.5 rounded-full tracking-[0.16em] uppercase shadow-lg shadow-[#e63946]/25">
                 <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                 Duke transmetuar live
               </span>
             ) : (
-              <span className="inline-flex items-center gap-2 bg-white/[0.05] border border-white/[0.07] text-white/40 text-[11px] font-semibold px-4 py-1.5 rounded-full tracking-widest uppercase">
+              <span className="inline-flex items-center gap-2 bg-white/[0.05] border border-white/[0.07] text-white/40 text-[10px] sm:text-[11px] font-semibold px-4 py-1.5 rounded-full tracking-[0.16em] uppercase">
                 <span className="w-1.5 h-1.5 bg-white/25 rounded-full" />
                 Ndal
               </span>
@@ -107,13 +107,13 @@ export default function LivePlayer() {
             transition={{ delay: 0.22 }}
             className="mb-8 sm:mb-10"
           >
-            <h1 className="text-[1.5rem] sm:text-4xl lg:text-5xl xl:text-[3rem] font-extrabold tracking-tight mb-2 leading-none">
+            <h1 className="text-[1.35rem] sm:text-4xl lg:text-5xl xl:text-[3rem] 2xl:text-[3.4rem] 3xl:text-[3.8rem] font-extrabold tracking-tight mb-2 leading-none break-words">
               Radio Fontana
             </h1>
-            <p className="text-slate-400 text-sm sm:text-base font-medium">
+            <p className="text-slate-400 text-sm sm:text-base 2xl:text-lg font-medium">
               98.8 FM &middot; Istog, Kosovë
             </p>
-            <p className="text-slate-600 text-xs sm:text-sm mt-1">
+            <p className="text-slate-500 text-xs sm:text-sm 2xl:text-base mt-1">
               Transmetim 24/7 me cilësi të lartë
             </p>
           </motion.div>
@@ -174,17 +174,17 @@ export default function LivePlayer() {
             <div className="bg-white/[0.04] border border-white/[0.07] rounded-2xl px-3 py-4 flex flex-col items-center gap-2">
               <Clock className="w-4 h-4 text-slate-500" />
               <p className="text-lg sm:text-xl font-bold text-white leading-none">24/7</p>
-              <p className="text-[9px] sm:text-[10px] text-slate-600 uppercase tracking-widest font-bold">Live</p>
+              <p className="text-[10px] sm:text-[11px] text-slate-500 uppercase tracking-widest font-bold">Live</p>
             </div>
             <div className="bg-white/[0.04] border border-white/[0.07] rounded-2xl px-3 py-4 flex flex-col items-center gap-2">
               <Volume2 className="w-4 h-4 text-slate-500" />
               <p className="text-lg sm:text-xl font-bold text-white leading-none">HQ</p>
-              <p className="text-[9px] sm:text-[10px] text-slate-600 uppercase tracking-widest font-bold">320kbps</p>
+              <p className="text-[10px] sm:text-[11px] text-slate-500 uppercase tracking-widest font-bold">320kbps</p>
             </div>
             <div className="bg-white/[0.04] border border-white/[0.07] rounded-2xl px-3 py-4 flex flex-col items-center gap-2">
               <Wifi className="w-4 h-4 text-slate-500" />
               <p className="text-lg sm:text-xl font-bold text-white leading-none">FM</p>
-              <p className="text-[9px] sm:text-[10px] text-slate-600 uppercase tracking-widest font-bold">98.8</p>
+              <p className="text-[10px] sm:text-[11px] text-slate-500 uppercase tracking-widest font-bold">98.8</p>
             </div>
           </motion.div>
 

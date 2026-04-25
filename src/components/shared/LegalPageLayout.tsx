@@ -33,10 +33,10 @@ export default function LegalPageLayout({ title, summary, lastUpdated, sections 
             <p className="inline-flex items-center gap-2 rounded-full border border-[#e63946]/20 bg-[#e63946]/5 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#c01f31] mb-4">
               Dokument Ligjor
             </p>
-            <h1 className="text-3xl sm:text-4xl 2xl:text-[2.8rem] leading-tight font-extrabold text-slate-900 mb-4">
+            <h1 className="text-[1.75rem] sm:text-4xl 2xl:text-[2.8rem] 3xl:text-[3.1rem] leading-tight font-extrabold text-slate-900 mb-4 break-words">
               {title}
             </h1>
-            <p className="max-w-3xl text-slate-600 text-base sm:text-lg leading-relaxed">{summary}</p>
+            <p className="max-w-3xl text-slate-600 text-sm sm:text-lg 2xl:text-xl leading-relaxed break-words">{summary}</p>
             <p className="mt-4 text-sm font-semibold text-slate-500">Përditësuar më: {lastUpdated}</p>
           </div>
 
@@ -70,10 +70,10 @@ export default function LegalPageLayout({ title, summary, lastUpdated, sections 
             key={section.title}
             className="rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 lg:p-7 shadow-[0_10px_24px_rgba(15,23,42,0.06)]"
           >
-            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3">{section.title}</h2>
+            <h2 className="text-lg sm:text-2xl 2xl:text-[1.7rem] font-bold text-slate-900 mb-3 break-words">{section.title}</h2>
 
             {section.paragraphs && section.paragraphs.length > 0 ? (
-              <div className="space-y-3 text-sm sm:text-base leading-relaxed text-slate-700">
+              <div className="space-y-3 text-sm sm:text-base 2xl:text-lg leading-relaxed text-slate-700 break-words">
                 {section.paragraphs.map((paragraph) => (
                   <p key={paragraph}>{paragraph}</p>
                 ))}
@@ -81,7 +81,7 @@ export default function LegalPageLayout({ title, summary, lastUpdated, sections 
             ) : null}
 
             {section.bullets && section.bullets.length > 0 ? (
-              <ul className="mt-3 list-disc pl-5 space-y-1.5 text-sm sm:text-base leading-relaxed text-slate-700">
+              <ul className="mt-3 list-disc pl-5 space-y-1.5 text-sm sm:text-base 2xl:text-lg leading-relaxed text-slate-700">
                 {section.bullets.map((bullet) => (
                   <li key={bullet}>{bullet}</li>
                 ))}
@@ -92,13 +92,13 @@ export default function LegalPageLayout({ title, summary, lastUpdated, sections 
       </div>
 
       <section className="mt-8 rounded-2xl border border-[#e63946]/20 bg-[#e63946]/5 p-5 sm:p-6">
-        <h2 className="text-lg sm:text-xl font-bold text-slate-900 mb-3">Dokumente të lidhura</h2>
+        <h2 className="text-lg sm:text-xl 2xl:text-2xl font-bold text-slate-900 mb-3">Dokumente të lidhura</h2>
         <div className="flex flex-wrap gap-2.5">
           {LEGAL_LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
-              className="inline-flex min-h-11 items-center rounded-full border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700 hover:text-[#c01f31] hover:border-[#e63946]/40 transition-colors"
+              className="inline-flex min-h-11 items-center rounded-full border border-slate-200 bg-white px-4 py-2.5 text-xs sm:text-sm 2xl:text-base font-semibold text-slate-700 hover:text-[#c01f31] hover:border-[#e63946]/40 transition-colors"
             >
               {link.label}
             </Link>
