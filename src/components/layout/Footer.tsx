@@ -19,8 +19,8 @@ const footerCategories = [
   { label: 'Teknologji', dotClass: 'bg-sky-500' },
   { label: 'Showbiz', dotClass: 'bg-fuchsia-500' },
   { label: 'Shëndetësi', dotClass: 'bg-lime-500' },
-  { label: 'Nga Bota', dotClass: 'bg-indigo-500' },
   { label: 'Biznes', dotClass: 'bg-amber-500' },
+  { label: 'Nga Bota', dotClass: 'bg-indigo-500' },
 ];
 
 export default function Footer() {
