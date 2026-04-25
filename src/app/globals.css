@@ -32,7 +32,6 @@ body,
   --font-sans: var(--font-geist-sans);
   --breakpoint-tiny: 20rem;
   --breakpoint-xs: 20rem;
-  --breakpoint-ipad-air: 51.25rem;
   --breakpoint-3xl: 120rem;
   --breakpoint-4xl: 160rem;
   --breakpoint-massive: 160rem;
@@ -172,7 +171,7 @@ textarea {
   }
 }
 
-@media (min-width: 80rem) {
+@media (min-width: 90rem) {
   .news-grid-responsive {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }

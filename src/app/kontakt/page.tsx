@@ -215,6 +215,7 @@ export default function KontaktPage() {
               <span className="font-bold text-[#e63946] text-sm md:text-base">98.8 FM</span>
             </div>
           </div>
+
         </aside>
 
         <section className="lg:col-span-8">

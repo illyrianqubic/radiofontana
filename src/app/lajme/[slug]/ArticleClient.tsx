@@ -135,9 +135,9 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
   return (
     <div className="bg-white page-shell">
       <div className="site-container py-8 md:py-12 lg:py-14 2xl:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-10 3xl:grid-cols-14 gap-8 md:gap-10 lg:gap-12 2xl:gap-14">
+        <div className="grid grid-cols-1 md:grid-cols-10 3xl:grid-cols-14 gap-8 md:gap-10 lg:gap-12 2xl:gap-14">
           {/* Main content */}
-          <article className="lg:col-span-7 3xl:col-span-10">
+          <article className="md:col-span-7 3xl:col-span-10">
             <div className="mx-auto w-full max-w-[820px]">
             {/* Breadcrumb */}
             <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 mb-5">
@@ -255,7 +255,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
           </article>
 
           {/* Sidebar */}
-          <aside className="lg:col-span-3 3xl:col-span-4 space-y-7">
+          <aside className="md:col-span-3 3xl:col-span-4 space-y-7">
             <Link
               href="/lajme"
               className="touch-target inline-flex items-center gap-2 text-base text-red-600 font-semibold hover:gap-3 transition-all duration-200 break-words"

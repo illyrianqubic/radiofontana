@@ -69,8 +69,8 @@ function getDefaultCompactWidth() {
       : viewportW < 768
       ? viewportW * 0.94
       : viewportW < 1024
-      ? viewportW * 0.8
-      : DEFAULT_W;
+      ? viewportW * 0.84
+      : Math.min(viewportW * 0.62, 820);
 
   return clamp(Math.round(target), minWidth, maxWidth);
 }
