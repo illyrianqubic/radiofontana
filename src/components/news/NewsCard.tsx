@@ -134,8 +134,8 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   // Default card
   return (
-    <Link href={href} className="group block min-w-0 bg-white rounded-xl overflow-hidden border border-slate-200/70 news-card card-accent h-full">
-      <div className="relative aspect-video overflow-hidden">
+    <Link href={href} className="group flex flex-col min-w-0 bg-white rounded-xl overflow-hidden border border-slate-200/70 news-card card-accent h-full">
+      <div className="relative aspect-video overflow-hidden flex-shrink-0">
         <Image
           src={optimizeImageUrl(article.imageUrl, 640, 360, 74)}
           alt={article.title}
@@ -154,7 +154,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
           )}
         </div>
       </div>
-      <div className="p-3.5 md:p-4 lg:p-5 flex min-h-[188px] md:min-h-[212px] lg:min-h-[206px] flex-col overflow-hidden">
+      <div className="p-3.5 md:p-4 lg:p-5 flex flex-col flex-1">
         <h3 className="font-bold text-slate-900 text-[1rem] md:text-[1.08rem] lg:text-[1.15rem] leading-[1.32] mb-2 line-clamp-2 group-hover:text-red-600 transition-colors duration-200 tracking-[0.01em] break-words">
           {article.title}
         </h3>

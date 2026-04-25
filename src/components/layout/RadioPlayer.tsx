@@ -8,9 +8,9 @@ import { useAudioPlayer } from '@/lib/AudioPlayerContext';
 // ── Constraints ──────────────────────────────────────────────────────────────
 const MIN_W = 260;
 const MAX_W = 1040;
-const MIN_H = 76;
+const MIN_H = 96;
 const MAX_H = 220;
-const STORAGE_KEY = 'rf_player_v3';
+const STORAGE_KEY = 'rf_player_v4';
 const EDGE_GAP = 16;
 // ─────────────────────────────────────────────────────────────────────────────
 
