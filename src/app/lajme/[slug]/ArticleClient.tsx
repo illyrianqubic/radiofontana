@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound, usePathname } from 'next/navigation';
-import { Clock, User, Tag, ArrowLeft, Share2 } from 'lucide-react';
-import { FacebookIcon, TwitterIcon } from '@/components/shared/SocialIcons';
+import { Clock, User, Tag, ArrowLeft, Share2, Copy, Check } from 'lucide-react';
+import { FacebookIcon, InstagramIcon, TiktokIcon } from '@/components/shared/SocialIcons';
 import { Article, CATEGORY_COLORS } from '@/lib/types';
 import NewsCard from '@/components/news/NewsCard';
 import SanityPortableText from '@/components/sanity/PortableText';
@@ -35,6 +35,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
   const [article, setArticle] = useState<Article | null>(initialArticle);
   const [related, setRelated] = useState<Article[]>([]);
   const [loading, setLoading] = useState(!initialArticle);
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -209,20 +210,22 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
             )}
 
             {/* Tags */}
-            <div className="mt-10 pt-7 border-t border-slate-100">
-              <div className="flex flex-wrap gap-2 items-center">
-                <Tag className="w-4 h-4 text-slate-400" />
-                {article.tags.map((tag) => (
-                  <Link
-                    key={tag}
-                    href={`/lajme/?q=${encodeURIComponent(tag)}`}
-                    className="px-3 py-1.5 bg-slate-100 text-slate-600 rounded-xl text-sm md:text-base hover:bg-red-50 hover:text-red-600 transition-colors duration-200"
-                  >
-                    #{tag}
-                  </Link>
-                ))}
+            {(article.tags ?? []).filter(Boolean).length > 0 && (
+              <div className="mt-10 pt-7 border-t border-slate-100">
+                <div className="flex flex-wrap gap-2 items-center">
+                  <Tag className="w-4 h-4 text-slate-400 flex-shrink-0" />
+                  {(article.tags ?? []).filter(Boolean).map((tag) => (
+                    <Link
+                      key={tag}
+                      href={`/lajme/?q=${encodeURIComponent(tag)}`}
+                      className="px-3 py-1.5 bg-slate-100 text-slate-600 rounded-xl text-sm md:text-base hover:bg-red-50 hover:text-red-600 transition-colors duration-200"
+                    >
+                      #{tag}
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Share */}
             <div className="mt-7 pt-7 border-t border-slate-100">
@@ -241,14 +244,37 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
                   Facebook
                 </a>
                 <a
-                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`https://radiofontana.org/lajme/${article.slug}`)}`}
+                  href="https://www.instagram.com/rtvfontana/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="touch-target inline-flex items-center gap-2 px-4 py-2.5 bg-gradient-to-br from-[#f77737] via-[#dd2a7b] to-[#515bd4] text-white rounded-xl text-sm md:text-base font-medium hover:brightness-110 transition-all duration-200"
+                >
+                  <InstagramIcon className="w-4 h-4" />
+                  Instagram
+                </a>
+                <a
+                  href="https://www.tiktok.com/@rtvfontanalive"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="touch-target inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 text-white rounded-xl text-sm md:text-base font-medium hover:bg-slate-800 transition-colors duration-200"
                 >
-                  <TwitterIcon className="w-4 h-4" />
-                  Twitter
+                  <TiktokIcon className="w-4 h-4" />
+                  TikTok
                 </a>
+                <button
+                  onClick={() => {
+                    navigator.clipboard.writeText(`https://radiofontana.org/lajme/${article.slug}`)
+                      .then(() => {
+                        setCopied(true);
+                        setTimeout(() => setCopied(false), 2000);
+                      })
+                      .catch(() => {});
+                  }}
+                  className="touch-target inline-flex items-center gap-2 px-4 py-2.5 bg-slate-100 text-slate-700 rounded-xl text-sm md:text-base font-medium hover:bg-slate-200 transition-colors duration-200"
+                >
+                  {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
+                  {copied ? 'Kopjuar!' : 'Kopjo linkun'}
+                </button>
               </div>
             </div>
             </div>
