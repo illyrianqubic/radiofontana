@@ -132,9 +132,9 @@ export default function LajmeClient() {
   return (
     <div className="bg-white min-h-screen page-shell">
       <div className="border-b border-slate-100 bg-slate-50/50">
-        <div className="site-container py-7 sm:py-10 2xl:py-12">
+        <div className="site-container py-8 md:py-12 lg:py-14 2xl:py-16">
           {/* Breadcrumb */}
-          <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-slate-400 mb-4">
+          <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 mb-4">
             <Link href="/" className="hover:text-red-600 transition-colors">Kryefaqja</Link>
             <span className="text-slate-300">/</span>
             <span className="text-slate-700 font-medium">Lajme</span>
@@ -147,7 +147,7 @@ export default function LajmeClient() {
           </div>
           <div className="flex items-start sm:items-center gap-3 min-w-0">
             <div className="w-1 h-8 bg-red-600 rounded-full" />
-            <h1 className="text-[1.35rem] sm:text-3xl lg:text-4xl 3xl:text-[3rem] font-extrabold text-slate-900 break-words leading-tight">
+            <h1 className="ipad-page-title text-[2rem] md:text-[2.2rem] lg:text-[2.6rem] 2xl:text-[2.9rem] 3xl:text-[3.2rem] font-extrabold text-slate-900 break-words leading-tight">
               {title}
             </h1>
           </div>
@@ -163,7 +163,7 @@ export default function LajmeClient() {
         </div>
       </div>
 
-      <div className="site-container py-6 sm:py-8 2xl:py-10">
+      <div className="site-container py-7 md:py-9 lg:py-10 2xl:py-12">
         <NewsFilter
           activeCategory={activeCategory}
           activeQuery={activeQuery}
@@ -175,33 +175,33 @@ export default function LajmeClient() {
       </div>
 
       {/* Results */}
-      <div className="site-container pb-10 sm:pb-14 2xl:pb-16">
+      <div className="site-container pb-12 md:pb-14 lg:pb-16 2xl:pb-20">
         {loadingArticles && allArticles.length === 0 ? (
-          <div className="news-grid-responsive gap-5 2xl:gap-6">
+          <div className="news-grid-responsive gap-6 lg:gap-7 2xl:gap-8">
             {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="rounded-2xl border border-slate-100 p-4 animate-pulse">
-                <div className="h-40 rounded-xl bg-slate-100 mb-4" />
-                <div className="h-3 bg-slate-100 rounded w-2/3 mb-2" />
-                <div className="h-3 bg-slate-100 rounded w-full mb-2" />
-                <div className="h-3 bg-slate-100 rounded w-5/6" />
+              <div key={i} className="rounded-xl border border-slate-100 p-4 md:p-5 animate-pulse">
+                <div className="aspect-video rounded-xl bg-slate-100 mb-4" />
+                <div className="h-4 bg-slate-100 rounded w-2/3 mb-2" />
+                <div className="h-4 bg-slate-100 rounded w-full mb-2" />
+                <div className="h-4 bg-slate-100 rounded w-5/6" />
               </div>
             ))}
           </div>
         ) : filtered.length === 0 ? (
-          <div className="text-center py-20 sm:py-24">
-            <h3 className="text-lg sm:text-xl 2xl:text-2xl 3xl:text-[1.8rem] font-bold text-slate-800 mb-2">
+          <div className="text-center py-20 md:py-24 lg:py-28">
+            <h3 className="text-xl md:text-2xl 2xl:text-[1.9rem] 3xl:text-[2rem] font-bold text-slate-800 mb-2">
               Nuk u gjetën rezultate
             </h3>
-            <p className="text-slate-500 text-sm sm:text-base">
+            <p className="text-slate-600 text-base md:text-lg">
               Provo me fjalë kyçe të ndryshme ose zgjidh një kategori tjetër.
             </p>
           </div>
         ) : (
           <>
-            <p className="text-xs sm:text-sm text-slate-500 mb-5 font-medium uppercase tracking-wider">
+            <p className="text-sm md:text-base text-slate-600 mb-6 font-medium uppercase tracking-wider">
               {filtered.length} artikuj gjithsej
             </p>
-            <div className="news-grid-responsive gap-5 2xl:gap-6">
+            <div className="news-grid-responsive gap-6 lg:gap-7 2xl:gap-8">
               {filtered.map((article) => (
                 <NewsCard key={article.id} article={article} />
               ))}

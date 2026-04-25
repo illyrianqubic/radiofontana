@@ -16,37 +16,37 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   if (variant === 'hero') {
     return (
-      <Link href={href} className="group block relative min-w-0 overflow-hidden rounded-3xl border border-slate-200/70 news-card h-full">
-        <div className="relative aspect-[16/11] sm:aspect-video min-h-[220px] sm:min-h-[300px]">
+      <Link href={href} className="group block relative min-w-0 overflow-hidden rounded-xl border border-slate-200/70 news-card h-full">
+        <div className="relative aspect-video min-h-[240px] md:min-h-[300px] lg:min-h-[340px]">
           <Image
             src={optimizeImageUrl(article.imageUrl, 1280, 720, 74)}
             alt={article.title}
             fill
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 70vw, 68vw"
+            sizes="(max-width: 767px) 100vw, (max-width: 1023px) 66vw, (max-width: 1366px) 70vw, 68vw"
             className="object-cover img-zoom"
             priority
           />
-          <div className="absolute inset-0 z-0 bg-gradient-to-t from-black/95 via-black/45 to-black/10" />
+          <div className="absolute inset-0 z-0 bg-gradient-to-t from-black/90 via-black/52 to-black/18" />
           {/* Top labels */}
-          <div className="absolute z-20 top-3 sm:top-4 left-3 sm:left-4 flex items-center gap-1.5 sm:gap-2 flex-wrap pr-3 max-w-[calc(100%-1.5rem)] sm:max-w-[calc(100%-2rem)]">
-            <span className={`category-badge max-w-[9.75rem] sm:max-w-[12rem] truncate px-2.5 py-1.5 rounded-md text-white ${categoryColor}`}>
+          <div className="absolute z-20 top-3 md:top-4 left-3 md:left-4 flex items-center gap-1.5 md:gap-2 flex-wrap pr-3 max-w-[calc(100%-1.5rem)] md:max-w-[calc(100%-2rem)]">
+            <span className={`category-badge max-w-[9.75rem] md:max-w-[12rem] truncate px-2.5 py-1.5 rounded-md text-white ${categoryColor}`}>
               {article.category}
             </span>
             {article.breaking && (
-              <span className="category-badge max-w-[9.75rem] sm:max-w-[12rem] truncate px-2.5 py-1.5 rounded-md bg-red-600 text-white">
+              <span className="category-badge max-w-[9.75rem] md:max-w-[12rem] truncate px-2.5 py-1.5 rounded-md bg-red-600 text-white">
                 Lajm i Fundit
               </span>
             )}
           </div>
-          <div className="absolute z-10 inset-0 flex flex-col justify-end p-4 sm:p-7 lg:p-9 pt-16 sm:pt-20">
-            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-red-400 mb-2 relative z-10">
+          <div className="absolute z-10 inset-0 flex flex-col justify-end p-4 md:p-5 lg:p-7 pt-16 md:pt-20">
+            <p className="text-[11px] md:text-xs font-bold uppercase tracking-[0.14em] text-red-300 mb-2 relative z-10">
               Lajm kryesor
             </p>
-            <h2 className="text-white text-[1.02rem] tiny:text-[1.12rem] sm:text-2xl lg:text-[1.95rem] xl:text-[2.3rem] 2xl:text-[2.6rem] 3xl:text-[3rem] font-extrabold leading-[1.15] mb-2 sm:mb-3 group-hover:text-red-200 transition-colors duration-300 break-words line-clamp-2 sm:line-clamp-3 lg:line-clamp-4 relative z-10">
+            <h2 className="text-white text-[1.1rem] tiny:text-[1.2rem] md:text-[1.6rem] lg:text-[2.1rem] xl:text-[2.3rem] 2xl:text-[2.6rem] 3xl:text-[3rem] font-extrabold leading-[1.16] mb-2 md:mb-3 group-hover:text-red-200 transition-colors duration-300 break-words line-clamp-2 lg:line-clamp-3 relative z-10">
               {article.title}
             </h2>
-            <p className="hidden sm:block text-white/70 text-sm 2xl:text-base line-clamp-2 mb-4 sm:mb-5 max-w-2xl leading-relaxed relative z-10">{article.excerpt}</p>
-            <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-white/60 text-[10px] sm:text-xs relative z-10">
+            <p className="hidden md:block text-white/80 text-sm lg:text-base line-clamp-2 mb-4 md:mb-5 max-w-2xl leading-relaxed relative z-10">{article.excerpt}</p>
+            <div className="flex flex-wrap items-center gap-2 md:gap-4 text-white/80 text-xs md:text-sm relative z-10">
               <span className="inline-flex min-w-0 max-w-full items-center gap-1.5">
                 <User className="w-3.5 h-3.5" />
                 <span className="truncate">{article.author}</span>
@@ -68,13 +68,13 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   if (variant === 'compact') {
     return (
-      <Link href={href} className="group flex gap-3 items-start p-3 sm:p-4 hover:bg-slate-50 transition-all duration-200">
-        <div className="relative w-20 h-16 sm:w-[5.5rem] sm:h-[4.25rem] flex-shrink-0 rounded-lg overflow-hidden">
+      <Link href={href} className="group flex gap-3 items-start p-3 md:p-4 hover:bg-slate-50 transition-all duration-200">
+        <div className="relative w-24 h-[3.75rem] md:w-28 md:h-[4.15rem] flex-shrink-0 rounded-lg overflow-hidden">
           <Image
             src={optimizeImageUrl(article.imageUrl, 160, 128, 70)}
             alt={article.title}
             fill
-            sizes="80px"
+            sizes="(max-width: 767px) 96px, 112px"
             className="object-cover img-zoom"
             loading="lazy"
           />
@@ -83,10 +83,10 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
           <span className={`category-badge inline-block max-w-full truncate px-1.5 py-0.5 rounded text-white mb-1.5 ${categoryColor}`}>
             {article.category}
           </span>
-          <h4 className="text-[0.9rem] sm:text-sm font-semibold text-slate-800 leading-snug line-clamp-2 group-hover:text-red-600 transition-colors duration-200 tracking-[0.01em] break-words">
+          <h4 className="text-[0.95rem] md:text-[1.05rem] font-semibold text-slate-800 leading-[1.35] line-clamp-2 group-hover:text-red-600 transition-colors duration-200 tracking-[0.01em] break-words">
             {article.title}
           </h4>
-          <p className="text-[11px] sm:text-xs text-slate-500 mt-1.5 flex items-center gap-1 min-w-0">
+          <p className="text-xs md:text-sm text-slate-600 mt-1.5 flex items-center gap-1 min-w-0">
             <Clock className="w-2.5 h-2.5" />
             <span className="truncate">{timeAgo(article.publishedAt)}</span>
             <span className="text-slate-300">•</span>
@@ -99,13 +99,13 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   if (variant === 'horizontal') {
     return (
-      <Link href={href} className="group flex flex-col sm:flex-row gap-3 sm:gap-4 items-start p-3.5 sm:p-4 rounded-2xl border border-slate-200/70 bg-white hover:bg-slate-50 transition-all duration-200 hover:shadow-[0_12px_30px_rgba(15,23,42,0.10)] hover:-translate-y-0.5">
-        <div className="relative w-full aspect-[4/3] sm:w-32 sm:h-24 sm:aspect-auto flex-shrink-0 rounded-xl overflow-hidden">
+      <Link href={href} className="group flex flex-col sm:flex-row gap-3 sm:gap-4 items-start p-3.5 md:p-4 rounded-xl border border-slate-200/70 bg-white hover:bg-slate-50 transition-all duration-200 hover:shadow-[0_12px_30px_rgba(15,23,42,0.10)] hover:-translate-y-0.5">
+        <div className="relative w-full aspect-video sm:w-40 sm:aspect-video sm:h-auto flex-shrink-0 rounded-xl overflow-hidden">
           <Image
             src={optimizeImageUrl(article.imageUrl, 256, 192, 72)}
             alt={article.title}
             fill
-            sizes="(max-width: 640px) 100vw, 128px"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 160px, 192px"
             className="object-cover img-zoom"
             loading="lazy"
           />
@@ -114,10 +114,10 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
           <span className={`category-badge inline-block max-w-full truncate px-2 py-0.5 rounded text-white mb-1.5 ${categoryColor}`}>
             {article.category}
           </span>
-          <h3 className="font-bold text-[0.93rem] sm:text-sm lg:text-[0.95rem] text-slate-800 leading-snug line-clamp-2 group-hover:text-red-600 transition-colors duration-200 mb-2 tracking-[0.01em] break-words">
+          <h3 className="font-bold text-[1rem] md:text-[1.1rem] text-slate-800 leading-[1.35] line-clamp-2 group-hover:text-red-600 transition-colors duration-200 mb-2 tracking-[0.01em] break-words">
             {article.title}
           </h3>
-          <div className="flex items-center gap-2 sm:gap-2.5 text-[11px] sm:text-xs text-slate-500 flex-wrap min-w-0">
+          <div className="flex items-center gap-2 sm:gap-2.5 text-xs md:text-sm text-slate-600 flex-wrap min-w-0">
             <span className="inline-flex min-w-0 max-w-full items-center gap-1">
               <User className="w-2.5 h-2.5" />
               <span className="truncate">{article.author}</span>
@@ -134,13 +134,13 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   // Default card
   return (
-    <Link href={href} className="group block min-w-0 bg-white rounded-2xl overflow-hidden border border-slate-200/70 news-card card-accent h-full">
-      <div className="relative aspect-[16/10] sm:aspect-[4/3] 2xl:aspect-[16/10] overflow-hidden">
+    <Link href={href} className="group block min-w-0 bg-white rounded-xl overflow-hidden border border-slate-200/70 news-card card-accent h-full">
+      <div className="relative aspect-video overflow-hidden">
         <Image
-          src={optimizeImageUrl(article.imageUrl, 480, 320, 72)}
+          src={optimizeImageUrl(article.imageUrl, 640, 360, 74)}
           alt={article.title}
           fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, (max-width: 1920px) 33vw, 20vw"
+          sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, (max-width: 1366px) 33vw, 25vw"
           className="object-cover img-zoom"
           loading="lazy"
         />
@@ -156,14 +156,14 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
           </div>
         )}
       </div>
-      <div className="p-3.5 sm:p-4 lg:p-5">
-        <h3 className="font-bold text-slate-900 text-[0.95rem] sm:text-[1rem] 2xl:text-[1.08rem] 3xl:text-[1.14rem] leading-snug mb-2 line-clamp-2 group-hover:text-red-600 transition-colors duration-200 tracking-[0.01em] break-words">
+      <div className="p-3.5 md:p-4 lg:p-5 flex min-h-[182px] md:min-h-[200px] flex-col">
+        <h3 className="font-bold text-slate-900 text-[1rem] md:text-[1.15rem] lg:text-[1.15rem] leading-[1.32] mb-2 line-clamp-2 group-hover:text-red-600 transition-colors duration-200 tracking-[0.01em] break-words">
           {article.title}
         </h3>
-        <p className="text-slate-500 text-[0.78rem] sm:text-sm 2xl:text-[0.95rem] line-clamp-2 mb-3.5 leading-relaxed break-words">
+        <p className="text-slate-600 text-[0.88rem] md:text-[0.95rem] lg:text-[0.9rem] line-clamp-2 mb-3.5 leading-relaxed break-words">
           {article.excerpt}
         </p>
-        <div className="flex w-full flex-wrap items-center gap-x-2.5 gap-y-1.5 text-[11px] sm:text-xs text-slate-500 pt-3 border-t border-slate-100">
+        <div className="mt-auto flex w-full flex-wrap items-center gap-x-2.5 gap-y-1.5 text-xs md:text-sm text-slate-600 pt-3 border-t border-slate-100">
           <span className="inline-flex min-w-0 max-w-full items-center gap-1">
             <User className="w-2.5 h-2.5" />
             <span className="truncate">{article.author}</span>

@@ -26,26 +26,26 @@ export default function HomeClient({ articles }: HomeClientProps) {
 
       {/* ── HERO ── */}
       <section className="bg-white border-b border-slate-200/70">
-        <div className="site-container py-7 sm:py-10 2xl:py-12 3xl:py-14">
-          <div className="grid grid-cols-1 md:grid-cols-12 3xl:grid-cols-15 gap-6 2xl:gap-8 3xl:gap-10">
+        <div className="site-container py-7 md:py-12 lg:py-14 2xl:py-14 3xl:py-16">
+          <div className="grid grid-cols-1 min-[820px]:grid-cols-12 lg:grid-cols-10 3xl:grid-cols-15 gap-6 md:gap-8 2xl:gap-10">
 
             {/* Main hero */}
-            <div className="md:col-span-8 3xl:col-span-10">
+            <div className="min-[820px]:col-span-8 lg:col-span-7 3xl:col-span-10">
               {hero && <NewsCard article={hero} variant="hero" />}
             </div>
 
             {/* Right column: weather + featured list */}
-            <div className="md:col-span-4 3xl:col-span-5 flex flex-col gap-4 2xl:gap-5">
+            <div className="min-[820px]:col-span-4 lg:col-span-3 3xl:col-span-5 flex flex-col gap-4 md:gap-5">
               <WeatherWidget />
 
               {/* Featured side cards */}
-              <div className="hidden md:block bg-white rounded-2xl border border-slate-200/70 overflow-hidden shadow-[0_14px_36px_rgba(15,23,42,0.10)] flex-1">
+              <div className="hidden min-[820px]:block bg-white rounded-xl border border-slate-200/70 overflow-hidden shadow-[0_14px_36px_rgba(15,23,42,0.10)] flex-1">
                 <div className="px-4 py-3.5 border-b border-slate-200/70 bg-slate-50/70">
                   <div className="flex items-center gap-2.5 mb-1.5">
                     <Flame className="w-3.5 h-3.5 text-red-500" />
-                    <p className="text-[10px] font-extrabold text-slate-500 uppercase tracking-[0.16em]">Highlights</p>
+                    <p className="text-xs md:text-sm font-extrabold text-slate-500 uppercase tracking-[0.16em]">Highlights</p>
                   </div>
-                  <h3 className="section-title-bar text-sm font-bold text-slate-900">Lajme të Spikatura</h3>
+                  <h3 className="section-title-bar text-base md:text-lg font-bold text-slate-900">Lajme të Spikatura</h3>
                 </div>
                 <div className="divide-y divide-slate-50">
                   {sideFeatures.map((article) => (
@@ -59,16 +59,16 @@ export default function HomeClient({ articles }: HomeClientProps) {
       </section>
 
       {/* ── LATEST NEWS + MOST READ ── */}
-      <section className="bg-white py-9 sm:py-12 2xl:py-14 border-b border-slate-200/70">
+      <section className="bg-white py-10 md:py-12 lg:py-14 2xl:py-16 border-b border-slate-200/70">
         <div className="site-container">
-          <div className="grid grid-cols-1 md:grid-cols-12 3xl:grid-cols-15 gap-9 2xl:gap-12">
+          <div className="grid grid-cols-1 min-[820px]:grid-cols-12 lg:grid-cols-10 3xl:grid-cols-15 gap-8 md:gap-10 2xl:gap-12">
 
             {/* Latest grid */}
-            <div className="md:col-span-8 xl:col-span-9 3xl:col-span-11">
+            <div className="min-[820px]:col-span-8 lg:col-span-7 3xl:col-span-11">
               <div className="flex flex-wrap items-end justify-between gap-3 sm:gap-4 mb-7">
                 <div>
-                  <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400 mb-2">Redaksia</p>
-                  <h2 className="section-title-bar text-xl sm:text-2xl 2xl:text-[1.85rem] 3xl:text-[2.05rem] font-extrabold text-slate-900 tracking-tight">
+                  <p className="text-xs md:text-sm font-extrabold uppercase tracking-[0.16em] text-slate-400 mb-2">Redaksia</p>
+                  <h2 className="section-title-bar ipad-section-title text-[1.45rem] md:text-[1.65rem] lg:text-[1.78rem] 2xl:text-[1.95rem] 3xl:text-[2.05rem] font-extrabold text-slate-900 tracking-tight">
                     Lajmet e Fundit
                   </h2>
                 </div>
@@ -80,7 +80,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
                 </Link>
               </div>
-              <div className="news-grid-responsive gap-5 sm:gap-6 2xl:gap-7">
+              <div className="news-grid-responsive gap-6 lg:gap-7 2xl:gap-8">
                 {latest.map((article) => (
                   <NewsCard key={article.id} article={article} />
                 ))}
@@ -88,11 +88,11 @@ export default function HomeClient({ articles }: HomeClientProps) {
             </div>
 
             {/* Most Read sidebar */}
-            <aside className="hidden md:block md:col-span-4 xl:col-span-3 3xl:col-span-4">
-              <div className="bg-white rounded-2xl border border-slate-200/70 overflow-hidden shadow-[0_16px_36px_rgba(15,23,42,0.12)] sticky top-24">
+            <aside className="hidden min-[820px]:block min-[820px]:col-span-4 lg:col-span-3 3xl:col-span-4">
+              <div className="bg-white rounded-xl border border-slate-200/70 overflow-hidden shadow-[0_16px_36px_rgba(15,23,42,0.12)] sticky top-24">
                 <div className="flex items-center gap-2.5 px-4 py-3.5 bg-slate-900 text-white">
                   <TrendingUp className="w-3.5 h-3.5 text-red-400" />
-                  <h3 className="font-extrabold text-[10px] uppercase tracking-[0.14em]">
+                  <h3 className="font-extrabold text-xs md:text-sm uppercase tracking-[0.14em]">
                     Më të Lexuarat
                   </h3>
                 </div>
@@ -107,10 +107,10 @@ export default function HomeClient({ articles }: HomeClientProps) {
                         {String(i + 1).padStart(2, '0')}
                       </span>
                       <div className="min-w-0">
-                        <p className="text-[0.84rem] font-semibold text-slate-800 line-clamp-2 group-hover:text-red-600 transition-colors leading-snug tracking-[0.01em]">
+                        <p className="text-sm md:text-base font-semibold text-slate-800 line-clamp-2 group-hover:text-red-600 transition-colors leading-snug tracking-[0.01em]">
                           {article.title}
                         </p>
-                        <p className="text-[10px] text-slate-400 mt-2 flex items-center gap-1">
+                        <p className="text-xs md:text-sm text-slate-500 mt-2 flex items-center gap-1">
                           <Clock className="w-2.5 h-2.5" />
                           {timeAgo(article.publishedAt)}
                         </p>
@@ -125,18 +125,18 @@ export default function HomeClient({ articles }: HomeClientProps) {
       </section>
 
       {/* ── TË FUNDIT — Live feed ── */}
-      <section className="bg-slate-50/70 py-9 sm:py-12 2xl:py-14 border-b border-slate-200/70">
+      <section className="bg-slate-50/70 py-10 md:py-12 lg:py-14 2xl:py-16 border-b border-slate-200/70">
         <div className="site-container">
-          <div className="grid grid-cols-1 md:grid-cols-12 3xl:grid-cols-15 gap-9 2xl:gap-12">
+          <div className="grid grid-cols-1 min-[820px]:grid-cols-12 lg:grid-cols-10 3xl:grid-cols-15 gap-8 md:gap-10 2xl:gap-12">
 
             {/* Live feed */}
-            <div className="md:col-span-8 xl:col-span-8 3xl:col-span-10">
+            <div className="min-[820px]:col-span-8 lg:col-span-7 3xl:col-span-10">
               <div className="flex items-center gap-2.5 mb-6">
-                <div className="flex items-center gap-1.5 bg-red-600 text-white text-[9px] font-black uppercase tracking-[0.15em] px-2.5 py-1 rounded-full">
+                <div className="flex items-center gap-1.5 bg-red-600 text-white text-xs font-black uppercase tracking-[0.15em] px-2.5 py-1 rounded-full">
                   <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                   LIVE
                 </div>
-                <h2 className="section-title-bar text-xl 2xl:text-[1.85rem] 3xl:text-[2.05rem] font-extrabold text-slate-900 tracking-tight">Të Fundit</h2>
+                <h2 className="section-title-bar ipad-section-title text-[1.45rem] md:text-[1.65rem] lg:text-[1.78rem] 2xl:text-[1.95rem] 3xl:text-[2.05rem] font-extrabold text-slate-900 tracking-tight">Të Fundit</h2>
               </div>
 
               <div className="space-y-3.5 2xl:space-y-4">
@@ -144,14 +144,14 @@ export default function HomeClient({ articles }: HomeClientProps) {
                   <Link
                     key={article.id}
                     href={`/lajme/${article.slug}`}
-                    className="group flex flex-col sm:flex-row gap-3 sm:gap-4 bg-white rounded-2xl p-3.5 border border-slate-200/80 hover:border-red-200 hover:shadow-[0_14px_30px_rgba(220,38,38,0.12)] transition-all duration-200 hover:-translate-y-0.5"
+                    className="group flex flex-col sm:flex-row gap-3 sm:gap-4 bg-white rounded-xl p-4 md:p-5 border border-slate-200/80 hover:border-red-200 hover:shadow-[0_14px_30px_rgba(220,38,38,0.12)] transition-all duration-200 hover:-translate-y-0.5"
                   >
-                    <div className="relative w-full h-44 sm:w-32 sm:h-24 flex-shrink-0 rounded-lg overflow-hidden">
+                    <div className="relative w-full aspect-video sm:w-40 sm:aspect-video sm:h-auto flex-shrink-0 rounded-lg overflow-hidden">
                       <Image
                         src={optimizeImageUrl(article.imageUrl, 256, 192, 72)}
                         alt={article.title}
                         fill
-                        sizes="(max-width: 640px) 100vw, 128px"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 160px, 192px"
                         className="object-cover img-zoom"
                         loading="lazy"
                       />
@@ -161,12 +161,12 @@ export default function HomeClient({ articles }: HomeClientProps) {
                         <span className={`category-badge inline-block max-w-full truncate px-2 py-1 rounded text-white ${CATEGORY_COLORS[article.category]}`}>
                           {article.category}
                         </span>
-                        <span className="text-[11px] sm:text-xs text-slate-500 flex items-center gap-1 min-w-0">
+                        <span className="text-xs md:text-sm text-slate-600 flex items-center gap-1 min-w-0">
                           <Clock className="w-2.5 h-2.5" />
                           <span className="truncate">{timeAgo(article.publishedAt)}</span>
                         </span>
                       </div>
-                      <h3 className="font-bold text-[0.93rem] sm:text-sm text-slate-800 leading-snug line-clamp-2 group-hover:text-red-600 transition-colors tracking-[0.01em] break-words">
+                      <h3 className="font-bold text-[1.02rem] md:text-[1.15rem] text-slate-800 leading-[1.35] line-clamp-2 group-hover:text-red-600 transition-colors tracking-[0.01em] break-words">
                         {article.title}
                       </h3>
                     </div>
@@ -176,24 +176,24 @@ export default function HomeClient({ articles }: HomeClientProps) {
             </div>
 
             {/* Radio promo */}
-            <aside className="hidden md:block md:col-span-4 xl:col-span-4 3xl:col-span-5">
-              <div className="bg-slate-900 rounded-2xl p-6 text-white sticky top-24 overflow-hidden relative shadow-[0_18px_38px_rgba(2,6,23,0.35)]">
+            <aside className="hidden min-[820px]:block min-[820px]:col-span-4 lg:col-span-3 3xl:col-span-5">
+              <div className="bg-slate-900 rounded-xl p-6 text-white sticky top-24 overflow-hidden relative shadow-[0_18px_38px_rgba(2,6,23,0.35)]">
                 <div className="absolute inset-0 bg-gradient-to-br from-red-900/30 to-transparent" />
                 <div className="relative z-10">
                   <div className="w-14 h-14 rounded-2xl bg-red-600/20 border border-red-500/30 flex items-center justify-center mb-4">
                     <Radio className="w-6 h-6 text-red-400" />
                   </div>
-                  <p className="text-[10px] font-black uppercase tracking-[0.18em] text-red-400 mb-1">
+                  <p className="text-xs md:text-sm font-black uppercase tracking-[0.18em] text-red-400 mb-1">
                     Dëgjo Tani
                   </p>
-                  <h3 className="text-xl font-extrabold mb-1">Radio Fontana</h3>
-                  <p className="text-slate-400 text-sm mb-5">98.8 FM · Istog, Kosovë</p>
-                  <p className="text-sm text-slate-400 leading-relaxed mb-6">
+                  <h3 className="text-xl md:text-2xl font-extrabold mb-1">Radio Fontana</h3>
+                  <p className="text-slate-300 text-sm md:text-base mb-5">98.8 FM · Istog, Kosovë</p>
+                  <p className="text-sm md:text-base text-slate-300 leading-relaxed mb-6">
                     Muzikë, lajme dhe emisionet e preferuara — 24 orë në ditë.
                   </p>
                   <Link
                     href="/live"
-                    className="flex items-center justify-center gap-2 w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl transition-colors duration-200 text-sm"
+                    className="touch-target flex items-center justify-center gap-2 w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 rounded-xl transition-colors duration-200 text-sm md:text-base min-h-11"
                   >
                     <span className="w-2 h-2 rounded-full bg-white animate-pulse" />
                     Dëgjo Live
@@ -206,25 +206,25 @@ export default function HomeClient({ articles }: HomeClientProps) {
       </section>
 
       {/* ── CATEGORY BROWSE ── */}
-      <section className="bg-slate-50/70 py-9 sm:py-12 border-b border-slate-200/70">
+      <section className="bg-slate-50/70 py-10 md:py-12 lg:py-14 border-b border-slate-200/70">
         <div className="site-container">
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-2">
               <Rss className="w-4 h-4 text-red-600" />
-              <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400">Navigim</p>
+              <p className="text-xs md:text-sm font-extrabold uppercase tracking-[0.16em] text-slate-400">Navigim</p>
             </div>
-            <h2 className="section-title-bar text-lg 2xl:text-xl 3xl:text-2xl font-extrabold text-slate-900 tracking-wide">
+            <h2 className="section-title-bar ipad-section-title text-[1.35rem] md:text-[1.6rem] lg:text-[1.75rem] 2xl:text-xl 3xl:text-2xl font-extrabold text-slate-900 tracking-wide">
               Shfletoni Kategoritë
             </h2>
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 2xl:grid-cols-7 3xl:grid-cols-8 gap-2.5 sm:gap-3.5 2xl:gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 2xl:grid-cols-7 3xl:grid-cols-8 gap-3.5 md:gap-4 lg:gap-5 2xl:gap-6">
             {CATEGORIES.map((cat) => (
               <Link
                 key={cat}
                 href={`/lajme/?kategoria=${encodeURIComponent(cat)}`}
-                className={`${CATEGORY_COLORS[cat]} text-white rounded-xl sm:rounded-2xl p-3 sm:p-4 min-h-11 text-center transition-all duration-200 hover:-translate-y-1 hover:brightness-105 shadow-[0_8px_16px_rgba(15,23,42,0.12)] hover:shadow-[0_14px_26px_rgba(15,23,42,0.22)] inline-flex items-center justify-center`}
+                className={`${CATEGORY_COLORS[cat]} text-white rounded-xl p-3 md:p-4 lg:p-5 min-h-11 text-center transition-all duration-200 hover:-translate-y-1 hover:brightness-105 shadow-[0_8px_16px_rgba(15,23,42,0.12)] hover:shadow-[0_14px_26px_rgba(15,23,42,0.22)] inline-flex items-center justify-center`}
               >
-                <span className="font-bold text-[0.78rem] sm:text-sm leading-tight break-words line-clamp-2">{cat}</span>
+                <span className="font-bold text-sm md:text-base leading-tight break-words line-clamp-2">{cat}</span>
               </Link>
             ))}
           </div>

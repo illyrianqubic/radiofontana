@@ -32,6 +32,7 @@ body,
   --font-sans: var(--font-geist-sans);
   --breakpoint-tiny: 20rem;
   --breakpoint-xs: 20rem;
+  --breakpoint-ipad-air: 51.25rem;
   --breakpoint-3xl: 120rem;
   --breakpoint-4xl: 160rem;
   --breakpoint-massive: 160rem;
@@ -126,13 +127,19 @@ textarea {
 
 @media (min-width: 768px) {
   .site-container {
-    width: min(100% - 3rem, 1600px);
+    width: min(100% - 3rem, 720px);
   }
 }
 
 @media (min-width: 1024px) {
   .site-container {
     width: min(100% - 4rem, 1600px);
+  }
+}
+
+@media (min-width: 1024px) and (max-width: 1366px) {
+  .site-container {
+    width: min(100% - 4rem, 1180px);
   }
 }
 
@@ -153,13 +160,13 @@ textarea {
   grid-template-columns: minmax(0, 1fr);
 }
 
-@media (min-width: 40rem) {
+@media (min-width: 48rem) {
   .news-grid-responsive {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
-@media (min-width: 60rem) {
+@media (min-width: 64rem) {
   .news-grid-responsive {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -176,6 +183,73 @@ textarea {
     grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 }
+
+  .news-grid-responsive > * {
+    height: 100%;
+    align-self: stretch;
+  }
+
+  .news-grid-responsive .news-card {
+    height: 100%;
+  }
+
+  @media (min-width: 768px) and (max-width: 1023px) {
+    html {
+      font-size: 16px;
+    }
+
+    body {
+      line-height: 1.58;
+    }
+
+    .ipad-page-title {
+      font-size: clamp(2rem, 3.6vw, 2.5rem);
+      line-height: 1.15;
+    }
+
+    .ipad-section-title {
+      font-size: clamp(1.5rem, 2.45vw, 1.75rem);
+      line-height: 1.2;
+    }
+
+    .ipad-body {
+      font-size: 1rem;
+      line-height: 1.58;
+    }
+
+    .ticker-animate {
+      animation-duration: 48s;
+    }
+
+    .ticker-half {
+      min-width: 120vw;
+    }
+  }
+
+  @media (min-width: 1024px) and (max-width: 1366px) {
+    html {
+      font-size: 17px;
+    }
+
+    body {
+      line-height: 1.6;
+    }
+
+    .ipad-page-title {
+      font-size: clamp(2.4rem, 3.1vw, 3rem);
+      line-height: 1.12;
+    }
+
+    .ipad-section-title {
+      font-size: clamp(1.7rem, 2.2vw, 1.95rem);
+      line-height: 1.2;
+    }
+
+    .ipad-body {
+      font-size: 1.05rem;
+      line-height: 1.62;
+    }
+  }
 
 /* ── Selection ── */
 ::selection { background: rgba(220,38,38,0.12); color: #b91c1c; }
@@ -335,6 +409,23 @@ textarea {
   font-size: 0.6rem;
   font-weight: 800;
   line-height: 1;
+}
+
+@media (min-width: 768px) and (max-width: 1366px) {
+  .category-badge {
+    font-size: 0.72rem;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  a:active,
+  button:active {
+    opacity: 0.96;
+  }
+
+  .news-card:active {
+    transform: translateY(-2px);
+  }
 }
 
 /* ── LIVE glow pulse ── */

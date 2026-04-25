@@ -34,19 +34,19 @@ export default function Footer() {
       <div className="h-1 bg-gradient-to-r from-red-600 via-red-500 to-red-600" />
 
       {/* Main footer */}
-      <div className="site-container py-12 sm:py-14 2xl:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-0 rounded-2xl border border-slate-800/80 overflow-hidden bg-[#0f172a] shadow-[0_18px_40px_rgba(2,6,23,0.45)]">
+      <div className="site-container py-12 md:py-14 lg:py-16 2xl:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-3 min-[820px]:grid-cols-4 gap-0 rounded-2xl border border-slate-800/80 overflow-hidden bg-[#0f172a] shadow-[0_18px_40px_rgba(2,6,23,0.45)]">
           {/* Column 1 */}
           <div className="px-5 py-6 sm:px-6 sm:py-7">
-            <h4 className="relative pl-3 text-sm font-black uppercase tracking-[0.14em] text-white mb-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-5 before:w-1 before:rounded-full before:bg-red-600">Rreth Nesh</h4>
-            <p className="text-slate-300 text-sm leading-relaxed mb-5 max-w-md">
+            <h4 className="relative pl-3 text-sm md:text-base font-black uppercase tracking-[0.14em] text-white mb-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-5 before:w-1 before:rounded-full before:bg-red-600">Rreth Nesh</h4>
+            <p className="text-slate-300 text-sm md:text-base leading-relaxed mb-5 max-w-md">
               Radio Fontana është media lokale në Istog, Kosovë që sjell lajme të verifikuara,
               transmetim live dhe përmbajtje informative 24/7 për komunitetin.
             </p>
 
             <div className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1.5 mb-5">
               <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
-              <span className="text-sm font-semibold text-slate-100">Istog, Kosovë • 98.8 FM</span>
+              <span className="text-sm md:text-base font-semibold text-slate-100">Istog, Kosovë • 98.8 FM</span>
             </div>
 
             <div className="flex gap-2.5">
@@ -91,11 +91,11 @@ export default function Footer() {
 
           {/* Column 2 */}
           <div className="px-5 py-6 sm:px-6 sm:py-7 border-t border-slate-800/80 md:border-t-0 md:border-l">
-            <h4 className="relative pl-3 text-sm font-black uppercase tracking-[0.14em] text-white mb-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-5 before:w-1 before:rounded-full before:bg-red-600">Lidhje të Shpejta</h4>
+            <h4 className="relative pl-3 text-sm md:text-base font-black uppercase tracking-[0.14em] text-white mb-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-5 before:w-1 before:rounded-full before:bg-red-600">Lidhje të Shpejta</h4>
             <ul className="space-y-2.5">
               {quickLinks.map((link) => (
                 <li key={link.href}>
-                  <Link href={link.href} className="group inline-flex min-h-11 items-center gap-1.5 text-sm font-medium text-slate-200 hover:text-red-400 transition-none">
+                  <Link href={link.href} className="group inline-flex min-h-11 items-center gap-1.5 text-sm md:text-base font-medium text-slate-200 hover:text-red-400 transition-none">
                     <span>{link.label}</span>
                     <ArrowRight className="w-3.5 h-3.5 text-red-500 opacity-0 group-hover:opacity-100 transition-none" />
                   </Link>
@@ -105,14 +105,14 @@ export default function Footer() {
           </div>
 
           {/* Column 3 */}
-          <div className="px-5 py-6 sm:px-6 sm:py-7 border-t border-slate-800/80 xl:border-t-0 xl:border-l">
-            <h4 className="relative pl-3 text-sm font-black uppercase tracking-[0.14em] text-white mb-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-5 before:w-1 before:rounded-full before:bg-red-600">Kategorite</h4>
+          <div className="px-5 py-6 sm:px-6 sm:py-7 border-t border-slate-800/80 md:border-t-0 md:border-l">
+            <h4 className="relative pl-3 text-sm md:text-base font-black uppercase tracking-[0.14em] text-white mb-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-5 before:w-1 before:rounded-full before:bg-red-600">Kategorite</h4>
             <ul className="space-y-2.5">
               {footerCategories.map((cat) => (
                 <li key={cat.label}>
                   <Link
                     href={`/lajme/?kategoria=${encodeURIComponent(cat.label)}`}
-                    className="inline-flex min-h-11 items-center gap-2 text-sm font-medium text-slate-200 hover:text-red-400 transition-none"
+                    className="inline-flex min-h-11 items-center gap-2 text-sm md:text-base font-medium text-slate-200 hover:text-red-400 transition-none"
                   >
                     <span className={`w-2 h-2 rounded-full ${cat.dotClass}`} />
                     <span>{cat.label}</span>
@@ -123,9 +123,9 @@ export default function Footer() {
           </div>
 
           {/* Column 4 */}
-          <div className="px-5 py-6 sm:px-6 sm:py-7 border-t border-slate-800/80 md:border-l xl:border-t-0">
-            <h4 className="relative pl-3 text-sm font-black uppercase tracking-[0.14em] text-white mb-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-5 before:w-1 before:rounded-full before:bg-red-600">Kontakti</h4>
-            <ul className="space-y-4 text-sm text-slate-200">
+          <div className="px-5 py-6 sm:px-6 sm:py-7 border-t border-slate-800/80 md:col-span-3 md:border-t md:border-l-0 min-[820px]:col-span-1 min-[820px]:border-t-0 min-[820px]:border-l">
+            <h4 className="relative pl-3 text-sm md:text-base font-black uppercase tracking-[0.14em] text-white mb-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-5 before:w-1 before:rounded-full before:bg-red-600">Kontakti</h4>
+            <ul className="space-y-4 text-sm md:text-base text-slate-200">
               <li className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-red-600 flex-shrink-0" />
                 <div className="flex flex-col gap-0.5">
@@ -148,8 +148,8 @@ export default function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-10 pt-6 border-t border-slate-700 bg-[#0a1020] px-4 sm:px-5 pb-4 sm:pb-5 rounded-b-xl flex flex-col sm:flex-row items-center justify-between gap-3 text-xs 2xl:text-sm text-slate-300">
-          <p>© 2026 Radio Fontana. Të gjitha të drejtat e rezervuara.</p>
+        <div className="mt-10 pt-6 border-t border-slate-700 bg-[#0a1020] px-4 sm:px-5 pb-4 sm:pb-5 rounded-b-xl flex flex-col md:flex-row items-center justify-between gap-3 text-sm md:text-base 2xl:text-lg text-slate-300">
+          <p className="text-center md:text-left">© 2026 Radio Fontana. Të gjitha të drejtat e rezervuara.</p>
           <div className="flex flex-wrap items-center justify-center gap-0">
             <Link href="/privacy" className="hover:text-red-400 transition-none min-h-11 inline-flex items-center px-2.5">Privatësia</Link>
             <span aria-hidden="true" className="h-3 w-px bg-slate-600" />

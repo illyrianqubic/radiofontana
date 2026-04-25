@@ -134,13 +134,13 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
 
   return (
     <div className="bg-white page-shell">
-      <div className="site-container py-7 sm:py-10 2xl:py-12">
-        <div className="grid grid-cols-1 xl:grid-cols-12 3xl:grid-cols-14 gap-8 sm:gap-12 2xl:gap-14">
+      <div className="site-container py-8 md:py-12 lg:py-14 2xl:py-16">
+        <div className="grid grid-cols-1 lg:grid-cols-10 3xl:grid-cols-14 gap-8 md:gap-10 lg:gap-12 2xl:gap-14">
           {/* Main content */}
-          <article className="xl:col-span-8 3xl:col-span-10">
-            <div className="mx-auto w-full max-w-[800px]">
+          <article className="lg:col-span-7 3xl:col-span-10">
+            <div className="mx-auto w-full max-w-[820px]">
             {/* Breadcrumb */}
-            <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400 mb-5">
+            <div className="flex flex-wrap items-center gap-2 text-sm text-slate-500 mb-5">
               <Link href="/" className="hover:text-red-600 transition-colors duration-200">Kryefaqja</Link>
               <span className="text-slate-300">/</span>
               <Link href="/lajme" className="hover:text-red-600 transition-colors duration-200">Lajme</Link>
@@ -159,17 +159,17 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
             </span>
 
             {/* Title */}
-            <h1 className="text-[1.2rem] tiny:text-[1.3rem] sm:text-2xl lg:text-4xl xl:text-[2.7rem] 2xl:text-[2.8rem] 3xl:text-[3rem] font-extrabold text-slate-900 leading-tight mb-4 sm:mb-5 break-words">
+            <h1 className="ipad-page-title text-[2rem] md:text-[2.2rem] lg:text-[2.6rem] 2xl:text-[2.95rem] 3xl:text-[3.2rem] font-extrabold text-slate-900 leading-tight mb-4 md:mb-5 break-words">
               {article.title}
             </h1>
 
             {/* Excerpt */}
-            <p className="text-[0.92rem] sm:text-lg 2xl:text-xl text-slate-500 leading-relaxed mb-7 border-l-4 border-red-600 pl-4 sm:pl-5 italic break-words">
+            <p className="text-base md:text-[1.1rem] lg:text-[1.12rem] 2xl:text-[1.2rem] text-slate-600 leading-relaxed mb-7 border-l-4 border-red-600 pl-4 md:pl-5 italic break-words ipad-body">
               {article.excerpt}
             </p>
 
             {/* Meta */}
-            <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs sm:text-sm text-slate-500 pb-7 border-b border-slate-100">
+            <div className="flex flex-wrap items-center gap-3 md:gap-4 text-sm md:text-base text-slate-600 pb-7 border-b border-slate-100">
               <span className="inline-flex min-w-0 max-w-full items-center gap-1.5">
                 <User className="w-4 h-4" />
                 <span className="font-medium text-slate-700 truncate">{article.author}</span>
@@ -188,7 +188,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
                 src={optimizeImageUrl(article.imageUrl, 1440, 810, 76)}
                 alt={article.title}
                 fill
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 92vw, 800px"
+                sizes="(max-width: 640px) 100vw, (max-width: 1023px) 100vw, (max-width: 1366px) 72vw, 820px"
                 className="object-cover"
                 priority
               />
@@ -196,12 +196,12 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
 
             {/* Article content */}
             {Array.isArray(article.content) ? (
-              <div className="prose prose-slate prose-sm sm:prose-base lg:prose-lg max-w-none break-words">
+              <div className="prose prose-slate prose-base md:prose-lg max-w-none break-words md:prose-p:text-[1.125rem] md:prose-p:leading-[1.72] md:prose-li:text-[1.08rem] md:prose-li:leading-[1.7] md:prose-headings:leading-tight">
                 <SanityPortableText value={article.content} />
               </div>
             ) : typeof article.content === 'string' && article.content ? (
               <div
-                className="prose prose-slate prose-sm sm:prose-base lg:prose-lg max-w-none break-words prose-headings:text-slate-800 prose-p:text-slate-600 prose-p:leading-relaxed"
+                className="prose prose-slate prose-base md:prose-lg max-w-none break-words prose-headings:text-slate-800 prose-p:text-slate-700 prose-p:leading-[1.72] md:prose-p:text-[1.125rem] md:prose-li:text-[1.08rem]"
                 dangerouslySetInnerHTML={{ __html: article.content as string }}
               />
             ) : (
@@ -216,7 +216,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
                   <Link
                     key={tag}
                     href={`/lajme/?q=${encodeURIComponent(tag)}`}
-                    className="px-3 py-1.5 bg-slate-100 text-slate-600 rounded-xl text-xs sm:text-sm hover:bg-red-50 hover:text-red-600 transition-colors duration-200"
+                    className="px-3 py-1.5 bg-slate-100 text-slate-600 rounded-xl text-sm md:text-base hover:bg-red-50 hover:text-red-600 transition-colors duration-200"
                   >
                     #{tag}
                   </Link>
@@ -226,7 +226,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
 
             {/* Share */}
             <div className="mt-7 pt-7 border-t border-slate-100">
-              <p className="text-sm font-semibold text-slate-600 mb-3 flex items-center gap-2">
+              <p className="text-base md:text-lg font-semibold text-slate-700 mb-3 flex items-center gap-2">
                 <Share2 className="w-4 h-4" />
                 Shpërnda këtë artikull
               </p>
@@ -235,7 +235,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
                   href={`https://facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://radiofontana.org/lajme/${article.slug}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="touch-target inline-flex items-center gap-2 px-4 py-2.5 bg-[#1877F2] text-white rounded-xl text-xs sm:text-sm font-medium hover:bg-[#166FE5] transition-colors duration-200"
+                  className="touch-target inline-flex items-center gap-2 px-4 py-2.5 bg-[#1877F2] text-white rounded-xl text-sm md:text-base font-medium hover:bg-[#166FE5] transition-colors duration-200"
                 >
                   <FacebookIcon className="w-4 h-4" />
                   Facebook
@@ -244,7 +244,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
                   href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(article.title)}&url=${encodeURIComponent(`https://radiofontana.org/lajme/${article.slug}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="touch-target inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 text-white rounded-xl text-xs sm:text-sm font-medium hover:bg-slate-800 transition-colors duration-200"
+                  className="touch-target inline-flex items-center gap-2 px-4 py-2.5 bg-slate-900 text-white rounded-xl text-sm md:text-base font-medium hover:bg-slate-800 transition-colors duration-200"
                 >
                   <TwitterIcon className="w-4 h-4" />
                   Twitter
@@ -255,10 +255,10 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
           </article>
 
           {/* Sidebar */}
-          <aside className="xl:col-span-4 3xl:col-span-4 space-y-7">
+          <aside className="lg:col-span-3 3xl:col-span-4 space-y-7">
             <Link
               href="/lajme"
-              className="touch-target inline-flex items-center gap-2 text-sm text-red-600 font-semibold hover:gap-3 transition-all duration-200 break-words"
+              className="touch-target inline-flex items-center gap-2 text-base text-red-600 font-semibold hover:gap-3 transition-all duration-200 break-words"
             >
               <ArrowLeft className="w-4 h-4" />
               Kthehu tek Lajmet
@@ -266,9 +266,9 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
 
             {/* Related */}
             {related.length > 0 && (
-              <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+              <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
                 <div className="px-5 py-3.5 bg-red-600 text-white">
-                  <h3 className="font-extrabold text-[10px] uppercase tracking-[0.14em]">Artikuj të Ngjashëm</h3>
+                  <h3 className="font-extrabold text-xs md:text-sm uppercase tracking-[0.14em]">Artikuj të Ngjashëm</h3>
                 </div>
                 <div className="divide-y divide-slate-50">
                   {related.map((a) => (
@@ -281,9 +281,9 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
             )}
 
             {/* All recent */}
-            <div className="bg-white rounded-2xl border border-slate-100 overflow-hidden">
+            <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
               <div className="px-5 py-3.5 border-b border-slate-100 bg-slate-50/50">
-                <h3 className="font-extrabold text-[10px] text-slate-700 uppercase tracking-[0.14em]">Lajmet e Fundit</h3>
+                <h3 className="font-extrabold text-xs md:text-sm text-slate-700 uppercase tracking-[0.14em]">Lajmet e Fundit</h3>
               </div>
               <div className="divide-y divide-slate-50">
                 {related
@@ -303,11 +303,11 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
           <section className="mt-14 sm:mt-16 pt-8 sm:pt-10 border-t border-slate-100">
             <div className="flex items-center gap-2.5 mb-5 sm:mb-7">
               <div className="w-1 h-6 bg-red-600 rounded-full" />
-              <h2 className="text-xl sm:text-2xl 2xl:text-[1.9rem] 3xl:text-[2.1rem] font-extrabold text-slate-900">
+              <h2 className="ipad-section-title text-[1.5rem] md:text-[1.7rem] lg:text-[1.85rem] 2xl:text-[1.95rem] 3xl:text-[2.1rem] font-extrabold text-slate-900">
                 Lexo Gjithashtu
               </h2>
             </div>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 2xl:gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 2xl:gap-7">
               {related.map((a) => (
                 <NewsCard key={a.id} article={a} />
               ))}

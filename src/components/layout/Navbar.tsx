@@ -37,7 +37,7 @@ function TopBar() {
   return (
     <div className="bg-slate-950 text-white hidden md:block border-b border-white/[0.06]">
       <div className="site-container">
-        <div className="flex items-center justify-between h-8 3xl:h-9 text-[11px] 2xl:text-xs 3xl:text-[13px]">
+        <div className="flex items-center justify-between h-9 3xl:h-10 text-xs 2xl:text-sm 3xl:text-[14px]">
           <div className="flex items-center gap-4 text-slate-400">
             <span className="flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
@@ -178,7 +178,7 @@ export default function Navbar() {
 
         {/* Main navbar */}
         <div className="site-container">
-          <div className="flex items-center justify-between h-14 sm:h-16 3xl:h-[72px] gap-2 sm:gap-3">
+          <div className="flex items-center justify-between h-14 md:h-[68px] 3xl:h-[74px] gap-2 md:gap-3">
             {/* Logo */}
             <Link href="/" className="flex items-center flex-shrink-0">
               <Image
@@ -186,13 +186,13 @@ export default function Navbar() {
                 alt="Radio Fontana"
                 width={190}
                 height={64}
-                className="h-9 tiny:h-10 sm:h-11 md:h-12 lg:h-[52px] 3xl:h-[58px] w-auto object-contain translate-y-0.5"
+                className="h-9 tiny:h-10 sm:h-11 md:h-[50px] lg:h-[54px] 3xl:h-[60px] w-auto object-contain translate-y-0.5"
                 priority
               />
             </Link>
 
             {/* Tablet/Desktop nav */}
-            <nav className="hidden md:flex items-center gap-0 md:gap-0.5">
+            <nav className="hidden md:flex items-center gap-0.5 md:gap-1">
               {navLinks.map((link) => (
                 <div key={link.href} className="relative">
                   {link.hasDropdown ? (
@@ -203,7 +203,7 @@ export default function Navbar() {
                     >
                       <Link
                         href={link.href}
-                        className={`flex min-h-11 items-center gap-1 px-2.5 lg:px-4 2xl:px-5 py-2 rounded-lg text-[13px] lg:text-sm 2xl:text-[15px] 3xl:text-base font-medium transition-all duration-200 ${
+                        className={`flex min-h-11 items-center gap-1 px-2.5 md:px-3 lg:px-4 2xl:px-5 py-2 rounded-lg text-[0.9rem] lg:text-base 2xl:text-[1.02rem] 3xl:text-[1.08rem] font-medium transition-all duration-200 ${
                           isActive('/lajme')
                             ? 'text-red-600 font-semibold'
                             : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
@@ -232,7 +232,7 @@ export default function Navbar() {
                   ) : (
                     <Link
                       href={link.href}
-                      className={`inline-flex min-h-11 items-center px-2.5 lg:px-4 2xl:px-5 py-2 rounded-lg text-[13px] lg:text-sm 2xl:text-[15px] 3xl:text-base font-medium transition-all duration-200 ${
+                      className={`inline-flex min-h-11 items-center px-2.5 md:px-3 lg:px-4 2xl:px-5 py-2 rounded-lg text-[0.9rem] lg:text-base 2xl:text-[1.02rem] 3xl:text-[1.08rem] font-medium transition-all duration-200 ${
                         isActive(link.href)
                           ? 'text-red-600 font-semibold'
                           : 'text-slate-700 hover:text-slate-900 hover:bg-slate-50'
@@ -246,12 +246,12 @@ export default function Navbar() {
             </nav>
 
             {/* Right side */}
-            <div className="flex items-center gap-1 sm:gap-1.5 2xl:gap-2">
+            <div className="flex items-center gap-1 md:gap-1.5 2xl:gap-2">
               {/* Live badge — visible only when Sanity liveStream.isLive is true */}
               {isLive && (
                 <Link
                   href="/live"
-                  className="hidden md:flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-[11px] 2xl:text-xs 3xl:text-sm font-bold px-3 2xl:px-4 py-1.5 rounded-full transition-colors live-glow min-h-11"
+                  className="hidden lg:flex items-center gap-1.5 bg-red-600 hover:bg-red-700 text-white text-xs 2xl:text-sm 3xl:text-base font-bold px-3 2xl:px-4 py-1.5 rounded-full transition-colors live-glow min-h-11"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
                   LIVE

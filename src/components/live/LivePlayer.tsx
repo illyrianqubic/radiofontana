@@ -32,7 +32,7 @@ export default function LivePlayer() {
     <div className="min-h-screen bg-slate-950 page-shell">
 
       <div className="w-full bg-black/90 border-b border-white/10">
-        <div className="mx-auto w-full max-w-[1120px] overflow-hidden sm:rounded-b-2xl sm:border-x sm:border-b sm:border-white/10">
+        <div className="mx-auto w-full max-w-[1180px] overflow-hidden sm:rounded-b-2xl sm:border-x sm:border-b sm:border-white/10">
           <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
             <iframe
               src={buildFbEmbedUrl(stream?.facebookUrl ?? null)}
@@ -54,7 +54,7 @@ export default function LivePlayer() {
           <div className="absolute bottom-0 left-1/4 w-[300px] h-[300px] bg-red-900/4 rounded-full blur-[100px]" />
         </div>
 
-        <div className="site-container relative z-10 flex flex-col items-center text-center text-white pt-14 sm:pt-20 lg:pt-24 pb-16 sm:pb-20 lg:pb-24">
+        <div className="site-container relative z-10 flex flex-col items-center text-center text-white pt-14 md:pt-20 lg:pt-24 pb-16 md:pb-20 lg:pb-24">
 
           {/* Station icon */}
           <motion.div
@@ -83,17 +83,17 @@ export default function LivePlayer() {
             className="mb-5"
           >
             {error ? (
-              <span className="inline-flex items-center gap-2 bg-slate-800/80 text-slate-300 text-[10px] sm:text-[11px] font-semibold px-4 py-1.5 rounded-full tracking-[0.16em] uppercase">
+              <span className="inline-flex items-center gap-2 bg-slate-800/80 text-slate-300 text-[11px] md:text-sm font-semibold px-4 py-1.5 rounded-full tracking-[0.16em] uppercase">
                 <span className="w-1.5 h-1.5 bg-slate-500 rounded-full" />
                 Transmetimi ndalur
               </span>
             ) : playing ? (
-              <span className="inline-flex items-center gap-2 bg-[#e63946] text-white text-[10px] sm:text-[11px] font-extrabold px-4 py-1.5 rounded-full tracking-[0.16em] uppercase shadow-lg shadow-[#e63946]/25">
+              <span className="inline-flex items-center gap-2 bg-[#e63946] text-white text-[11px] md:text-sm font-extrabold px-4 py-1.5 rounded-full tracking-[0.16em] uppercase shadow-lg shadow-[#e63946]/25">
                 <span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse" />
                 Duke transmetuar live
               </span>
             ) : (
-              <span className="inline-flex items-center gap-2 bg-white/[0.05] border border-white/[0.07] text-white/40 text-[10px] sm:text-[11px] font-semibold px-4 py-1.5 rounded-full tracking-[0.16em] uppercase">
+              <span className="inline-flex items-center gap-2 bg-white/[0.05] border border-white/[0.07] text-white/40 text-[11px] md:text-sm font-semibold px-4 py-1.5 rounded-full tracking-[0.16em] uppercase">
                 <span className="w-1.5 h-1.5 bg-white/25 rounded-full" />
                 Ndal
               </span>
@@ -107,13 +107,13 @@ export default function LivePlayer() {
             transition={{ delay: 0.22 }}
             className="mb-8 sm:mb-10"
           >
-            <h1 className="text-[1.35rem] sm:text-4xl lg:text-5xl xl:text-[3rem] 2xl:text-[3.4rem] 3xl:text-[3.8rem] font-extrabold tracking-tight mb-2 leading-none break-words">
+            <h1 className="ipad-page-title text-[2rem] md:text-[2.3rem] lg:text-[2.8rem] xl:text-[3rem] 2xl:text-[3.4rem] 3xl:text-[3.8rem] font-extrabold tracking-tight mb-2 leading-none break-words">
               Radio Fontana
             </h1>
-            <p className="text-slate-400 text-sm sm:text-base 2xl:text-lg font-medium">
+            <p className="text-slate-300 text-base md:text-lg 2xl:text-xl font-medium">
               98.8 FM &middot; Istog, Kosovë
             </p>
-            <p className="text-slate-500 text-xs sm:text-sm 2xl:text-base mt-1">
+            <p className="text-slate-400 text-sm md:text-base 2xl:text-lg mt-1">
               Transmetim 24/7 me cilësi të lartë
             </p>
           </motion.div>
@@ -126,7 +126,7 @@ export default function LivePlayer() {
             transition={{ delay: 0.3 }}
             whileHover={{ scale: 1.06 }}
             whileTap={{ scale: 0.95 }}
-            className={`w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center mb-10 sm:mb-12 transition-colors duration-300 ${
+            className={`touch-target w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full flex items-center justify-center mb-10 sm:mb-12 transition-colors duration-300 ${
               error
                 ? 'bg-slate-700 hover:bg-slate-600 text-slate-300 shadow-2xl'
                 : playing
@@ -169,22 +169,22 @@ export default function LivePlayer() {
             initial={{ y: 16, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.38 }}
-            className="grid grid-cols-3 gap-3 sm:gap-4 w-full max-w-xs sm:max-w-sm"
+            className="grid grid-cols-3 gap-3 md:gap-4 w-full max-w-xs md:max-w-2xl"
           >
-            <div className="bg-white/[0.04] border border-white/[0.07] rounded-2xl px-3 py-4 flex flex-col items-center gap-2">
+            <div className="bg-white/[0.04] border border-white/[0.07] rounded-2xl px-3 md:px-5 py-4 md:py-5 flex flex-col items-center gap-2">
               <Clock className="w-4 h-4 text-slate-500" />
-              <p className="text-lg sm:text-xl font-bold text-white leading-none">24/7</p>
-              <p className="text-[10px] sm:text-[11px] text-slate-500 uppercase tracking-widest font-bold">Live</p>
+              <p className="text-lg md:text-2xl font-bold text-white leading-none">24/7</p>
+              <p className="text-xs md:text-sm text-slate-400 uppercase tracking-widest font-bold">Live</p>
             </div>
-            <div className="bg-white/[0.04] border border-white/[0.07] rounded-2xl px-3 py-4 flex flex-col items-center gap-2">
+            <div className="bg-white/[0.04] border border-white/[0.07] rounded-2xl px-3 md:px-5 py-4 md:py-5 flex flex-col items-center gap-2">
               <Volume2 className="w-4 h-4 text-slate-500" />
-              <p className="text-lg sm:text-xl font-bold text-white leading-none">HQ</p>
-              <p className="text-[10px] sm:text-[11px] text-slate-500 uppercase tracking-widest font-bold">320kbps</p>
+              <p className="text-lg md:text-2xl font-bold text-white leading-none">HQ</p>
+              <p className="text-xs md:text-sm text-slate-400 uppercase tracking-widest font-bold">320kbps</p>
             </div>
-            <div className="bg-white/[0.04] border border-white/[0.07] rounded-2xl px-3 py-4 flex flex-col items-center gap-2">
+            <div className="bg-white/[0.04] border border-white/[0.07] rounded-2xl px-3 md:px-5 py-4 md:py-5 flex flex-col items-center gap-2">
               <Wifi className="w-4 h-4 text-slate-500" />
-              <p className="text-lg sm:text-xl font-bold text-white leading-none">FM</p>
-              <p className="text-[10px] sm:text-[11px] text-slate-500 uppercase tracking-widest font-bold">98.8</p>
+              <p className="text-lg md:text-2xl font-bold text-white leading-none">FM</p>
+              <p className="text-xs md:text-sm text-slate-400 uppercase tracking-widest font-bold">98.8</p>
             </div>
           </motion.div>
 

@@ -106,7 +106,7 @@ export default function KontaktPage() {
   ];
 
   return (
-    <div className="site-container py-7 sm:py-10 2xl:py-12 page-shell">
+    <div className="site-container py-8 md:py-12 lg:py-14 2xl:py-16 page-shell">
       <section className="relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white px-5 sm:px-7 lg:px-10 py-7 sm:py-9 lg:py-10 shadow-[0_20px_45px_rgba(15,23,42,0.08)]">
         <div className="pointer-events-none absolute -top-24 -right-16 h-56 w-56 rounded-full bg-[#e63946]/10 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-28 -left-16 h-64 w-64 rounded-full bg-slate-900/5 blur-3xl" />
@@ -123,10 +123,10 @@ export default function KontaktPage() {
               <div className="inline-flex items-center gap-2 rounded-full border border-[#e63946]/20 bg-[#e63946]/5 px-3 py-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#c01f31] mb-4">
                 Studio & Redaksi
               </div>
-              <h1 className="text-[1.8rem] sm:text-4xl 2xl:text-[2.8rem] 3xl:text-[3.2rem] leading-tight font-extrabold text-slate-900 mb-4 break-words">
+              <h1 className="ipad-page-title text-[2rem] md:text-[2.3rem] lg:text-[2.6rem] 2xl:text-[2.95rem] 3xl:text-[3.2rem] leading-tight font-extrabold text-slate-900 mb-4 break-words">
                 Na Kontaktoni me Besim
               </h1>
-              <p className="max-w-2xl text-slate-600 text-sm sm:text-lg 2xl:text-xl leading-relaxed break-words">
+              <p className="max-w-2xl text-slate-600 text-base md:text-lg 2xl:text-xl leading-relaxed break-words ipad-body">
                 Për pyetje, reklama, dërgim lajmesh apo sugjerime për programin, ekipi ynë është i gatshëm të përgjigjet shpejt dhe qartë.
               </p>
             </div>
@@ -135,12 +135,12 @@ export default function KontaktPage() {
               <p className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400 mb-3">Shërbim Profesional</p>
               <div className="space-y-3.5">
                 <div className="rounded-xl bg-white border border-slate-200 px-4 py-3">
-                  <p className="text-sm font-semibold text-slate-800">Përgjigje brenda 24 orëve</p>
-                  <p className="text-xs text-slate-500 mt-1">Mesazhet trajtohen nga redaksia dhe administrata.</p>
+                  <p className="text-sm md:text-base font-semibold text-slate-800">Përgjigje brenda 24 orëve</p>
+                  <p className="text-sm text-slate-500 mt-1">Mesazhet trajtohen nga redaksia dhe administrata.</p>
                 </div>
                 <div className="rounded-xl bg-white border border-slate-200 px-4 py-3">
-                  <p className="text-sm font-semibold text-slate-800">Komunikim i qartë</p>
-                  <p className="text-xs text-slate-500 mt-1">Do të merrni përgjigje të detajuar për secilën kërkesë.</p>
+                  <p className="text-sm md:text-base font-semibold text-slate-800">Komunikim i qartë</p>
+                  <p className="text-sm text-slate-500 mt-1">Do të merrni përgjigje të detajuar për secilën kërkesë.</p>
                 </div>
               </div>
             </div>
@@ -148,9 +148,9 @@ export default function KontaktPage() {
         </div>
       </section>
 
-      <div className="mt-8 grid grid-cols-1 xl:grid-cols-12 gap-8 2xl:gap-10">
-        <aside className="xl:col-span-4 space-y-4 2xl:space-y-5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-1 2xl:grid-cols-2 gap-4 2xl:gap-5">
+      <div className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 2xl:gap-10">
+        <aside className="lg:col-span-4 space-y-4 2xl:space-y-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 2xl:gap-5">
             {contactCards.map((item) => (
               <motion.div
                 key={item.label}
@@ -170,7 +170,7 @@ export default function KontaktPage() {
                     </p>
                     <div className="space-y-0.5">
                       {item.values.map((line) => (
-                        <p key={line} className="text-slate-700 text-sm sm:text-base font-semibold break-words">
+                        <p key={line} className="text-slate-700 text-sm md:text-base font-semibold break-words">
                           {line}
                         </p>
                       ))}
@@ -193,7 +193,7 @@ export default function KontaktPage() {
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`group touch-target inline-flex items-center gap-2 rounded-xl bg-white/12 px-3 py-2.5 text-xs font-semibold transition-all duration-200 min-h-11 ${item.className}`}
+                    className={`group touch-target inline-flex items-center gap-2 rounded-xl bg-white/12 px-3 py-2.5 text-sm md:text-base font-semibold transition-all duration-200 min-h-11 ${item.className}`}
                   >
                     <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/20 transition-colors duration-200 group-hover:bg-white/28">
                       {item.icon}
@@ -211,18 +211,33 @@ export default function KontaktPage() {
               <p className="font-bold text-slate-800 text-sm">Frekuenca Kryesore</p>
             </div>
             <div className="rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-3 flex items-center justify-between">
-              <span className="text-slate-500 text-sm">Istog</span>
-              <span className="font-bold text-[#e63946]">98.8 FM</span>
+              <span className="text-slate-500 text-sm md:text-base">Istog</span>
+              <span className="font-bold text-[#e63946] text-sm md:text-base">98.8 FM</span>
+            </div>
+          </div>
+
+          <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-[0_10px_24px_rgba(15,23,42,0.06)]">
+            <div className="px-4 py-3 border-b border-slate-100 bg-slate-50/70">
+              <p className="text-sm md:text-base font-semibold text-slate-800">Lokacioni ynë</p>
+            </div>
+            <div className="relative aspect-[4/3]">
+              <iframe
+                title="Radio Fontana Location"
+                src="https://www.google.com/maps?q=Istog%20Kosovo&output=embed"
+                className="absolute inset-0 w-full h-full border-0"
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
             </div>
           </div>
         </aside>
 
-        <section className="xl:col-span-8">
+        <section className="lg:col-span-8">
           <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-[0_20px_44px_rgba(15,23,42,0.08)]">
             <div className="absolute inset-x-0 top-0 h-1 gradient-bar" />
             <div className="px-6 sm:px-7 py-6 border-b border-slate-100 bg-[linear-gradient(180deg,rgba(248,250,252,0.95)_0%,rgba(255,255,255,1)_100%)]">
-              <h2 className="font-bold text-xl sm:text-2xl text-slate-900">Dërgoni Mesazhin Tuaj</h2>
-              <p className="text-slate-500 text-sm sm:text-base mt-1.5">
+              <h2 className="font-bold text-2xl md:text-[1.7rem] text-slate-900">Dërgoni Mesazhin Tuaj</h2>
+              <p className="text-slate-500 text-base md:text-lg mt-1.5">
                 Plotësoni formularin dhe ekipi ynë do t&apos;ju kontaktojë sa më shpejt.
               </p>
             </div>

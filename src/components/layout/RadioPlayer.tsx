@@ -6,8 +6,8 @@ import { Play, Pause, Volume2, VolumeX, Radio, ChevronUp, ChevronDown, GripHoriz
 import { useAudioPlayer } from '@/lib/AudioPlayerContext';
 
 // ── Constraints ──────────────────────────────────────────────────────────────
-const MIN_W = 260;
-const MAX_W = 960;
+const MIN_W = 320;
+const MAX_W = 1040;
 const MIN_H = 76;
 const MAX_H = 220;
 const STORAGE_KEY = 'rf_player_v3';
@@ -26,7 +26,7 @@ interface PS {
   height: number;
 }
 
-const DEFAULT_W = 520;
+const DEFAULT_W = 620;
 
 function clamp(v: number, lo: number, hi: number) { return Math.max(lo, Math.min(hi, v)); }
 
@@ -350,21 +350,21 @@ export default function RadioPlayer() {
           className={`flex items-center ${
             showExpanded
               ? 'px-4 sm:px-6 lg:px-7 py-3.5 sm:py-4 gap-3 sm:gap-4 flex-shrink-0 min-h-[74px] sm:min-h-[88px]'
-              : 'px-2.5 sm:px-3 py-2 gap-2 sm:gap-3 flex-1 min-h-[58px]'
+              : 'px-3 md:px-4 py-2.5 md:py-3 gap-2.5 md:gap-3.5 flex-1 min-h-[62px] md:min-h-[70px]'
           }`}
         >
 
           {/* Station branding */}
           <div className={`flex items-center flex-1 min-w-0 ${showExpanded ? 'gap-3 sm:gap-4' : 'gap-2'}`}>
-            <div className={`${showExpanded ? 'w-10 h-10 sm:w-12 sm:h-12 rounded-xl' : 'w-8 h-8 rounded-lg'} flex items-center justify-center flex-shrink-0 transition-all duration-300 ${playing ? 'bg-red-600/20 border border-red-500/30' : 'bg-white/[0.05] border border-white/[0.08]'}`}>
-              <Radio className={`${showExpanded ? 'w-4 h-4 sm:w-5 sm:h-5' : 'w-3 h-3'} transition-colors duration-300 ${playing ? 'text-red-400' : 'text-slate-500'}`} />
+            <div className={`${showExpanded ? 'w-10 h-10 sm:w-12 sm:h-12 rounded-xl' : 'w-9 h-9 md:w-10 md:h-10 rounded-lg'} flex items-center justify-center flex-shrink-0 transition-all duration-300 ${playing ? 'bg-red-600/20 border border-red-500/30' : 'bg-white/[0.05] border border-white/[0.08]'}`}>
+              <Radio className={`${showExpanded ? 'w-4 h-4 sm:w-5 sm:h-5' : 'w-3.5 h-3.5 md:w-4 md:h-4'} transition-colors duration-300 ${playing ? 'text-red-400' : 'text-slate-500'}`} />
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-1.5">
-                <p className={`${showExpanded ? 'text-sm sm:text-base' : 'text-xs'} font-bold text-white leading-tight truncate`}>Radio Fontana</p>
-                <span className={`${showExpanded ? 'hidden md:block text-xs' : 'hidden sm:block text-[10px]'} text-slate-600`}>98.8 FM</span>
+                <p className={`${showExpanded ? 'text-sm sm:text-base' : 'text-sm md:text-base'} font-bold text-white leading-tight truncate`}>Radio Fontana</p>
+                <span className={`${showExpanded ? 'hidden md:block text-xs' : 'hidden sm:block text-xs md:text-sm'} text-slate-500`}>98.8 FM</span>
               </div>
-              <p className={`${showExpanded ? 'text-[11px] sm:text-xs' : 'text-[9px]'} text-slate-500 truncate`}>
+              <p className={`${showExpanded ? 'text-[11px] sm:text-xs' : 'text-xs md:text-sm'} text-slate-400 truncate`}>
                 {error
                   ? 'Transmetimi nuk është i disponueshëm'
                   : playing
@@ -427,7 +427,7 @@ export default function RadioPlayer() {
           {/* Play / Pause */}
           <button
             onClick={togglePlay}
-            className={`touch-target ${showExpanded ? 'w-12 h-12 sm:w-14 sm:h-14' : 'w-11 h-11'} rounded-full flex items-center justify-center transition-all duration-200 active:scale-95 shadow-md flex-shrink-0 ${
+            className={`touch-target ${showExpanded ? 'w-12 h-12 sm:w-14 sm:h-14' : 'w-11 h-11 md:w-12 md:h-12'} rounded-full flex items-center justify-center transition-all duration-200 active:scale-95 shadow-md flex-shrink-0 ${
               error
                 ? 'bg-slate-700 hover:bg-slate-600 text-slate-300'
                 : playing
