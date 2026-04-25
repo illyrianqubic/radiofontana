@@ -108,7 +108,7 @@ export default function LivePlayer() {
             className="mb-8 sm:mb-10"
           >
             <h1 className="ipad-page-title text-[2rem] md:text-[2.3rem] lg:text-[2.8rem] xl:text-[3rem] 2xl:text-[3.4rem] 3xl:text-[3.8rem] font-extrabold tracking-tight mb-2 leading-none break-words">
-              Radio Fontana
+              Radio Fontana 98.8 FM
             </h1>
             <p className="text-slate-300 text-base md:text-lg 2xl:text-xl font-medium">
               98.8 FM &middot; Istog, Kosovë

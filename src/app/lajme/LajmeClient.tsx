@@ -127,7 +127,7 @@ export default function LajmeClient() {
     ? activeCategory
     : activeQuery
     ? `Rezultate për "${activeQuery}"`
-    : 'Të gjitha lajmet';
+    : 'Lajmet e Fundit nga Radio Fontana';
 
   return (
     <div className="bg-white min-h-screen page-shell">

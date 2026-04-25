@@ -22,6 +22,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
 
   return (
     <div className="min-h-screen bg-[linear-gradient(180deg,#ffffff_0%,#f8fafc_45%,#ffffff_100%)] page-shell">
+      <h1 className="sr-only">Radio Fontana 98.8 FM - Radio Shqip Live nga Istog, Kosovë</h1>
       <BreakingNewsTicker articles={articles} />
 
       {/* ── HERO ── */}
