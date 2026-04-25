@@ -21,3 +21,37 @@
 
 /*.ico
   Cache-Control: public,max-age=31536000,immutable
+
+/rss.xml
+  Cache-Control: public,max-age=3600,stale-while-revalidate=86400
+  Content-Type: application/rss+xml; charset=utf-8
+
+/atom.xml
+  Cache-Control: public,max-age=3600,stale-while-revalidate=86400
+  Content-Type: application/atom+xml; charset=utf-8
+
+/sitemap.xml
+  Cache-Control: public,max-age=3600,stale-while-revalidate=86400
+  Content-Type: application/xml; charset=utf-8
+
+/news-sitemap.xml
+  Cache-Control: public,max-age=3600,stale-while-revalidate=86400
+  Content-Type: application/xml; charset=utf-8
+
+/robots.txt
+  Cache-Control: public,max-age=86400
+
+/studio/*
+  X-Robots-Tag: noindex, nofollow
+
+/api/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: public,max-age=60,stale-while-revalidate=300
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+

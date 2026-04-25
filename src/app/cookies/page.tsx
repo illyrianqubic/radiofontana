@@ -2,9 +2,11 @@ import type { Metadata } from 'next';
 import LegalPageLayout, { type LegalSection } from '@/components/shared/LegalPageLayout';
 
 export const metadata: Metadata = {
-  title: 'Politika e Cookies',
+  title: 'Politika e Cookies | Radio Fontana',
   description:
-    'Politika e cookies e Radio Fontana që shpjegon llojet e cookies, përdorimin për analytics dhe kontrollin nga përdoruesi.',
+    'Politika e cookies e Radio Fontana — llojet e cookies, si i përdorim, cookies analitike dhe si t\'i kontrolloni nga shfletuesi juaj.',
+  alternates: { canonical: 'https://radiofontana.org/cookies' },
+  robots: { index: true, follow: false },
 };
 
 const sections: LegalSection[] = [

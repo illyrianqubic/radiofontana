@@ -2,9 +2,11 @@ import type { Metadata } from 'next';
 import LegalPageLayout, { type LegalSection } from '@/components/shared/LegalPageLayout';
 
 export const metadata: Metadata = {
-  title: 'Të Drejtat GDPR',
+  title: 'Të Drejtat GDPR | Radio Fontana',
   description:
-    'Informacion i detajuar mbi të drejtat tuaja sipas GDPR dhe mënyrën e ushtrimit të tyre te Radio Fontana.',
+    'Të drejtat tuaja sipas GDPR te Radio Fontana — qasja, korrigjimi, fërja dhe bartësia e të dhënave personale. Informacion i plotë.',
+  alternates: { canonical: 'https://radiofontana.org/gdpr' },
+  robots: { index: true, follow: false },
 };
 
 const sections: LegalSection[] = [

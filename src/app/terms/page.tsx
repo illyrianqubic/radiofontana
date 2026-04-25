@@ -2,9 +2,11 @@ import type { Metadata } from 'next';
 import LegalPageLayout, { type LegalSection } from '@/components/shared/LegalPageLayout';
 
 export const metadata: Metadata = {
-  title: 'Kushtet e Shërbimit',
+  title: 'Kushtet e Shërbimit | Radio Fontana',
   description:
-    'Kushtet e shërbimit për përdorimin e faqes, aplikacionit Android dhe përmbajtjes së Radio Fontana.',
+    'Kushtet e shërbimit të Radio Fontana për përdorimin e faqes radiofontana.org, aplikacionit Android dhe të gjitha shërbimeve dixhitale.',
+  alternates: { canonical: 'https://radiofontana.org/terms' },
+  robots: { index: true, follow: false },
 };
 
 const sections: LegalSection[] = [

@@ -2,9 +2,11 @@ import type { Metadata } from 'next';
 import LegalPageLayout, { type LegalSection } from '@/components/shared/LegalPageLayout';
 
 export const metadata: Metadata = {
-  title: 'Mohim Përgjegjësie',
+  title: 'Mohim Përgjegjësie | Radio Fontana',
   description:
-    'Mohimi i përgjegjësisë për përmbajtjen, shërbimet dhe informacionet e publikuara nga Radio Fontana.',
+    'Mohimi i përgjegjësisë ligjore për përmbajtjen, shërbimet dhe informacionet e publikuara nga Radio Fontana. Lexoni kushtet e detajuara.',
+  alternates: { canonical: 'https://radiofontana.org/disclaimer' },
+  robots: { index: true, follow: false },
 };
 
 const sections: LegalSection[] = [
