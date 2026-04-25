@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { notFound, usePathname } from 'next/navigation';
 import { Clock, User, Tag, ArrowLeft, Share2, Copy, Check } from 'lucide-react';
-import { FacebookIcon, InstagramIcon, TiktokIcon } from '@/components/shared/SocialIcons';
+import { FacebookIcon, InstagramIcon, TiktokIcon, WhatsAppIcon } from '@/components/shared/SocialIcons';
 import { Article, CATEGORY_COLORS } from '@/lib/types';
 import NewsCard from '@/components/news/NewsCard';
 import SanityPortableText from '@/components/sanity/PortableText';
@@ -235,13 +235,22 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
               </p>
               <div className="flex flex-wrap gap-2 sm:gap-2.5">
                 <a
-                  href={`https://facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://radiofontana.org/lajme/${article.slug}`)}`}
+                  href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`https://radiofontana.org/lajme/${article.slug}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="touch-target inline-flex items-center gap-2 px-4 py-2.5 bg-[#1877F2] text-white rounded-xl text-sm md:text-base font-medium hover:bg-[#166FE5] transition-colors duration-200"
                 >
                   <FacebookIcon className="w-4 h-4" />
                   Facebook
+                </a>
+                <a
+                  href={`https://wa.me/?text=${encodeURIComponent(`${article.title} https://radiofontana.org/lajme/${article.slug}`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="touch-target inline-flex items-center gap-2 px-4 py-2.5 bg-[#25D366] text-white rounded-xl text-sm md:text-base font-medium hover:bg-[#1ebe5d] transition-colors duration-200"
+                >
+                  <WhatsAppIcon className="w-4 h-4" />
+                  WhatsApp
                 </a>
                 <a
                   href="https://www.instagram.com/rtvfontana/"
