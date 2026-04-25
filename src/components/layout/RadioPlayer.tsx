@@ -307,10 +307,12 @@ export default function RadioPlayer() {
   const effectiveWidth = clamp(ps.width, minViewportWidth, maxViewportWidth);
   const compactTight = !showExpanded && effectiveWidth < 420;
   const compactVeryTight = !showExpanded && effectiveWidth < 360;
-  const showWaveform = playing && (showExpanded || effectiveWidth >= 520);
-  const showLiveBadge = playing && (showExpanded || effectiveWidth >= 560);
-  const showFullVolume = showExpanded || effectiveWidth >= 500;
-  const showMuteOnly = !showExpanded && effectiveWidth >= 390 && effectiveWidth < 500;
+  const compactHideFm = !showExpanded && effectiveWidth < 500;
+  const compactHideSubline = !showExpanded && effectiveWidth < 390;
+  const showWaveform = playing && (showExpanded || effectiveWidth >= 760);
+  const showLiveBadge = playing && (showExpanded || effectiveWidth >= 820);
+  const showFullVolume = showExpanded || effectiveWidth >= 700;
+  const showMuteOnly = !showExpanded && effectiveWidth >= 520 && effectiveWidth < 700;
 
   // Build the outer container style
   // Default (not dragged): CSS-centered at bottom — survives scroll/zoom perfectly
@@ -382,6 +384,7 @@ export default function RadioPlayer() {
               ? 'px-2.5 py-2 gap-2 flex-1 min-h-[60px]'
               : 'px-3 md:px-4 py-2.5 md:py-3 gap-2.5 md:gap-3.5 flex-1 min-h-[62px] md:min-h-[70px]'
           }`}
+          style={{ overflow: 'hidden' }}
         >
 
           {/* Station branding */}
@@ -392,9 +395,9 @@ export default function RadioPlayer() {
             <div className="min-w-0 flex-1">
               <div className={`flex items-center ${compactTight ? 'gap-1' : 'gap-1.5'}`}>
                 <p className={`${showExpanded ? 'text-sm sm:text-base' : compactTight ? 'text-xs' : 'text-sm md:text-base'} font-bold text-white leading-tight truncate`}>Radio Fontana</p>
-                <span className={`${showExpanded ? 'hidden md:block text-xs' : compactTight ? 'hidden' : 'hidden sm:block text-xs md:text-sm'} text-slate-500`}>98.8 FM</span>
+                <span className={`${showExpanded ? 'hidden md:block text-xs' : compactHideFm ? 'hidden' : 'hidden sm:block text-xs md:text-sm'} text-slate-500`}>98.8 FM</span>
               </div>
-              <p className={`${showExpanded ? 'text-[11px] sm:text-xs' : compactVeryTight ? 'hidden' : compactTight ? 'text-[10px]' : 'text-xs md:text-sm'} text-slate-400 truncate`}>
+              <p className={`${showExpanded ? 'text-[11px] sm:text-xs' : compactHideSubline ? 'hidden' : compactTight ? 'text-[10px]' : 'text-xs md:text-sm'} text-slate-400 truncate`}>
                 {error
                   ? 'Transmetimi nuk është i disponueshëm'
                   : playing
@@ -471,7 +474,7 @@ export default function RadioPlayer() {
           {/* Play / Pause */}
           <button
             onClick={togglePlay}
-            className={`touch-target ${showExpanded ? 'w-12 h-12 sm:w-14 sm:h-14' : 'w-11 h-11 md:w-12 md:h-12'} rounded-full flex items-center justify-center transition-all duration-200 active:scale-95 shadow-md flex-shrink-0 ${
+            className={`touch-target ${showExpanded ? 'w-12 h-12 sm:w-14 sm:h-14' : compactVeryTight ? 'w-10 h-10' : 'w-11 h-11 md:w-12 md:h-12'} rounded-full flex items-center justify-center transition-all duration-200 active:scale-95 shadow-md flex-shrink-0 ${
               error
                 ? 'bg-slate-700 hover:bg-slate-600 text-slate-300'
                 : playing
@@ -481,13 +484,13 @@ export default function RadioPlayer() {
             aria-label={playing ? 'Ndalo' : error ? 'Provo përsëri' : 'Luaj'}
           >
             {loading ? (
-              <div className={`${showExpanded ? 'w-5 h-5' : 'w-4 h-4'} border-2 rounded-full animate-spin ${playing ? 'border-white border-t-transparent' : 'border-slate-900 border-t-transparent'}`} />
+              <div className={`${showExpanded ? 'w-5 h-5' : compactVeryTight ? 'w-3.5 h-3.5' : 'w-4 h-4'} border-2 rounded-full animate-spin ${playing ? 'border-white border-t-transparent' : 'border-slate-900 border-t-transparent'}`} />
             ) : error ? (
-              <Play className={`${showExpanded ? 'w-5 h-5 sm:w-6 sm:h-6' : 'w-4 h-4'} ml-0.5 opacity-60`} />
+              <Play className={`${showExpanded ? 'w-5 h-5 sm:w-6 sm:h-6' : compactVeryTight ? 'w-3.5 h-3.5' : 'w-4 h-4'} ml-0.5 opacity-60`} />
             ) : playing ? (
-              <Pause className={showExpanded ? 'w-5 h-5 sm:w-6 sm:h-6' : 'w-4 h-4'} />
+              <Pause className={showExpanded ? 'w-5 h-5 sm:w-6 sm:h-6' : compactVeryTight ? 'w-3.5 h-3.5' : 'w-4 h-4'} />
             ) : (
-              <Play className={`${showExpanded ? 'w-5 h-5 sm:w-6 sm:h-6' : 'w-4 h-4'} ml-0.5`} />
+              <Play className={`${showExpanded ? 'w-5 h-5 sm:w-6 sm:h-6' : compactVeryTight ? 'w-3.5 h-3.5' : 'w-4 h-4'} ml-0.5`} />
             )}
           </button>
 

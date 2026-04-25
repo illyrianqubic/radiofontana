@@ -215,21 +215,6 @@ export default function KontaktPage() {
               <span className="font-bold text-[#e63946] text-sm md:text-base">98.8 FM</span>
             </div>
           </div>
-
-          <div className="rounded-2xl border border-slate-200 bg-white overflow-hidden shadow-[0_10px_24px_rgba(15,23,42,0.06)]">
-            <div className="px-4 py-3 border-b border-slate-100 bg-slate-50/70">
-              <p className="text-sm md:text-base font-semibold text-slate-800">Lokacioni ynë</p>
-            </div>
-            <div className="relative aspect-[4/3]">
-              <iframe
-                title="Radio Fontana Location"
-                src="https://www.google.com/maps?q=Istog%20Kosovo&output=embed"
-                className="absolute inset-0 w-full h-full border-0"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
-          </div>
         </aside>
 
         <section className="lg:col-span-8">
