@@ -26,8 +26,8 @@ export default function HomeClient({ articles }: HomeClientProps) {
 
       {/* ── HERO ── */}
       <section className="bg-white border-b border-slate-200/70">
-        <div className="site-container py-7 md:py-12 lg:py-14 2xl:py-14 3xl:py-16">
-          <div className="grid grid-cols-1 md:grid-cols-10 3xl:grid-cols-15 gap-6 md:gap-8 2xl:gap-10 items-start">
+          <div className="site-container py-4 md:py-10 lg:py-14 2xl:py-14 3xl:py-16">
+          <div className="grid grid-cols-1 md:grid-cols-10 3xl:grid-cols-15 gap-4 md:gap-8 2xl:gap-10">
 
             {/* Main hero */}
             <div className="md:col-span-7 3xl:col-span-10">
@@ -59,7 +59,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
       </section>
 
       {/* ── LATEST NEWS + MOST READ ── */}
-      <section className="bg-white py-10 md:py-12 lg:py-14 2xl:py-16 border-b border-slate-200/70">
+      <section className="bg-white py-7 md:py-12 lg:py-14 2xl:py-16 border-b border-slate-200/70">
         <div className="site-container">
           <div className="grid grid-cols-1 md:grid-cols-10 3xl:grid-cols-15 gap-8 md:gap-10 2xl:gap-12">
 
@@ -125,7 +125,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
       </section>
 
       {/* ── TË FUNDIT — Live feed ── */}
-      <section className="bg-slate-50/70 py-10 md:py-12 lg:py-14 2xl:py-16 border-b border-slate-200/70">
+      <section className="bg-slate-50/70 py-7 md:py-12 lg:py-14 2xl:py-16 border-b border-slate-200/70">
         <div className="site-container">
           <div className="grid grid-cols-1 md:grid-cols-10 3xl:grid-cols-15 gap-8 md:gap-10 2xl:gap-12">
 
@@ -206,7 +206,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
       </section>
 
       {/* ── CATEGORY BROWSE ── */}
-      <section className="bg-slate-50/70 py-10 md:py-12 lg:py-14 border-b border-slate-200/70">
+      <section className="bg-slate-50/70 py-7 md:py-12 lg:py-14 border-b border-slate-200/70">
         <div className="site-container">
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-2">
