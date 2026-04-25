@@ -27,6 +27,15 @@ interface PS {
 }
 
 const DEFAULT_W = 620;
+type PlayerTier = 'tiny' | 'small' | 'mid' | 'big' | 'massive';
+
+function getPlayerTier(width: number): PlayerTier {
+  if (width < 360) return 'tiny';
+  if (width < 520) return 'small';
+  if (width < 768) return 'mid';
+  if (width < 1200) return 'big';
+  return 'massive';
+}
 
 function clamp(v: number, lo: number, hi: number) { return Math.max(lo, Math.min(hi, v)); }
 
@@ -63,14 +72,17 @@ function getPanelBounds() {
 
 function getDefaultCompactWidth() {
   const { viewportW, minWidth, maxWidth } = getPanelBounds();
+  const tier = getPlayerTier(viewportW);
   const target =
-    viewportW < 480
+    tier === 'tiny'
       ? viewportW - EDGE_GAP * 2
-      : viewportW < 768
+      : tier === 'small'
       ? viewportW * 0.94
-      : viewportW < 1024
-      ? viewportW * 0.84
-      : Math.min(viewportW * 0.62, 820);
+      : tier === 'mid'
+      ? viewportW * 0.9
+      : tier === 'big'
+      ? viewportW * 0.78
+      : Math.min(viewportW * 0.58, 900);
 
   return clamp(Math.round(target), minWidth, maxWidth);
 }
@@ -210,13 +222,26 @@ export default function RadioPlayer() {
   // Expand / collapse
   const toggleExpand = useCallback(() => {
     const { viewportW, viewportH, minWidth, maxWidth, maxHeight } = getPanelBounds();
+    const tier = getPlayerTier(viewportW);
+    const expandedWidthFactor =
+      tier === 'tiny' ? 0.98 :
+      tier === 'small' ? 0.95 :
+      tier === 'mid' ? 0.92 :
+      tier === 'big' ? 0.86 :
+      0.8;
+    const expandedHeightFactor =
+      tier === 'tiny' ? 0.35 :
+      tier === 'small' ? 0.32 :
+      tier === 'mid' ? 0.29 :
+      0.26;
+
     const expandedWidth = clamp(
-      Math.round(viewportW * (viewportW < 640 ? 0.96 : viewportW < 1024 ? 0.9 : 0.82)),
+      Math.round(viewportW * expandedWidthFactor),
       minWidth,
       maxWidth,
     );
     const expandedHeight = clamp(
-      Math.round(viewportH * (viewportW < 640 ? 0.29 : 0.26)),
+      Math.round(viewportH * expandedHeightFactor),
       Math.min(110, maxHeight),
       maxHeight,
     );
@@ -305,14 +330,27 @@ export default function RadioPlayer() {
     : MAX_W;
   const minViewportWidth = Math.min(MIN_W, maxViewportWidth);
   const effectiveWidth = clamp(ps.width, minViewportWidth, maxViewportWidth);
-  const compactTight = !showExpanded && effectiveWidth < 420;
-  const compactVeryTight = !showExpanded && effectiveWidth < 360;
-  const compactHideFm = !showExpanded && effectiveWidth < 500;
-  const compactHideSubline = !showExpanded && effectiveWidth < 390;
-  const showWaveform = playing && (showExpanded || effectiveWidth >= 760);
-  const showLiveBadge = playing && (showExpanded || effectiveWidth >= 820);
-  const showFullVolume = showExpanded || effectiveWidth >= 700;
-  const showMuteOnly = !showExpanded && effectiveWidth >= 520 && effectiveWidth < 700;
+  const playerTier = getPlayerTier(effectiveWidth);
+  const compactVeryTight = !showExpanded && playerTier === 'tiny';
+  const compactTight = !showExpanded && (playerTier === 'tiny' || playerTier === 'small');
+  const compactHideFm = !showExpanded && (playerTier === 'tiny' || playerTier === 'small');
+  const compactHideSubline = !showExpanded && playerTier === 'tiny';
+  const showWaveform = playing && (showExpanded || playerTier === 'big' || playerTier === 'massive');
+  const showLiveBadge = playing && (showExpanded || playerTier === 'massive');
+  const showVolumePercent = showExpanded || playerTier === 'big' || playerTier === 'massive';
+  const volumeSliderWidthClass = showExpanded
+    ? playerTier === 'massive'
+      ? 'w-32'
+      : 'w-24'
+    : playerTier === 'tiny'
+    ? 'w-12'
+    : playerTier === 'small'
+    ? 'w-16'
+    : playerTier === 'mid'
+    ? 'w-20'
+    : playerTier === 'big'
+    ? 'w-24'
+    : 'w-28';
 
   // Build the outer container style
   // Default (not dragged): CSS-centered at bottom — survives scroll/zoom perfectly
@@ -380,6 +418,8 @@ export default function RadioPlayer() {
           className={`flex items-center ${
             showExpanded
               ? 'px-4 sm:px-6 lg:px-7 py-3.5 sm:py-4 gap-3 sm:gap-4 flex-shrink-0 min-h-[74px] sm:min-h-[88px]'
+              : compactVeryTight
+              ? 'px-2 py-2 gap-1.5 flex-1 min-h-[58px]'
               : compactTight
               ? 'px-2.5 py-2 gap-2 flex-1 min-h-[60px]'
               : 'px-3 md:px-4 py-2.5 md:py-3 gap-2.5 md:gap-3.5 flex-1 min-h-[62px] md:min-h-[70px]'
@@ -388,7 +428,7 @@ export default function RadioPlayer() {
         >
 
           {/* Station branding */}
-          <div className={`flex items-center flex-1 min-w-0 ${showExpanded ? 'gap-3 sm:gap-4' : compactTight ? 'gap-1.5' : 'gap-2'}`}>
+          <div className={`flex items-center flex-1 min-w-0 ${showExpanded ? 'gap-3 sm:gap-4' : compactVeryTight ? 'gap-1' : compactTight ? 'gap-1.5' : 'gap-2'}`}>
             <div className={`${showExpanded ? 'w-10 h-10 sm:w-12 sm:h-12 rounded-xl' : compactTight ? 'w-8 h-8 rounded-md' : 'w-9 h-9 md:w-10 md:h-10 rounded-lg'} flex items-center justify-center flex-shrink-0 transition-all duration-300 ${playing ? 'bg-red-600/20 border border-red-500/30' : 'bg-white/[0.05] border border-white/[0.08]'}`}>
               <Radio className={`${showExpanded ? 'w-4 h-4 sm:w-5 sm:h-5' : compactTight ? 'w-3 h-3' : 'w-3.5 h-3.5 md:w-4 md:h-4'} transition-colors duration-300 ${playing ? 'text-red-400' : 'text-slate-500'}`} />
             </div>
@@ -417,51 +457,39 @@ export default function RadioPlayer() {
           )}
 
           {/* Volume */}
-          {showFullVolume && (
-            <div className={`hidden min-[360px]:flex items-center gap-1.5 flex-shrink-0 bg-white/[0.07] border border-white/[0.14] ${showExpanded ? 'h-11 rounded-lg px-2.5' : 'h-9 rounded-md px-1.5'}`}>
-              <button
-                onClick={() => setMuted(!muted)}
-                className={`touch-target inline-flex items-center justify-center ${showExpanded ? 'h-8 w-8' : 'h-7 w-7'} text-white/65 hover:text-white transition-colors flex-shrink-0 leading-none`}
-                aria-label={muted ? 'Aktivizo tingullin' : 'Hiqe tingullin'}
-              >
-                {muted || volume === 0
-                  ? <VolumeX className={showExpanded ? 'w-3.5 h-3.5' : 'w-3 h-3'} />
-                  : <Volume2 className={showExpanded ? 'w-3.5 h-3.5' : 'w-3 h-3'} />}
-              </button>
-              <input
-                type="range"
-                min="0"
-                max="1"
-                step="0.05"
-                value={muted ? 0 : volume}
-                onInput={handleVolumeInput}
-                onChange={handleVolumeChange}
-                onPointerDown={(e) => e.stopPropagation()}
-                onTouchStart={(e) => e.stopPropagation()}
-                className={`volume-slider ${showExpanded ? 'w-20 sm:w-24' : 'w-12 sm:w-14 md:w-16'}`}
-                style={{
-                  touchAction: 'pan-x',
-                  background: `linear-gradient(to right, #dc2626 ${(muted ? 0 : volume) * 100}%, rgba(255,255,255,0.15) ${(muted ? 0 : volume) * 100}%)`
-                }}
-                aria-label="Volumi"
-              />
-              <span className={`${showExpanded ? 'text-[10px] w-7' : 'text-[9px] w-6'} text-white/40 tabular-nums text-right flex-shrink-0 leading-none`}>
-                {Math.round((muted ? 0 : volume) * 100)}%
-              </span>
-            </div>
-          )}
-
-          {showMuteOnly && (
+          <div className={`flex items-center gap-1.5 flex-shrink-0 bg-white/[0.07] border border-white/[0.14] ${showExpanded ? 'h-11 rounded-lg px-2.5' : compactVeryTight ? 'h-8 rounded-md px-1' : 'h-9 rounded-md px-1.5'}`}>
             <button
               onClick={() => setMuted(!muted)}
-              className="touch-target inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/[0.14] bg-white/[0.07] text-white/65 hover:text-white transition-colors flex-shrink-0"
+              className={`inline-flex items-center justify-center ${showExpanded ? 'h-8 w-8' : compactVeryTight ? 'h-6 w-6' : 'h-7 w-7'} text-white/65 hover:text-white transition-colors flex-shrink-0 leading-none`}
               aria-label={muted ? 'Aktivizo tingullin' : 'Hiqe tingullin'}
             >
               {muted || volume === 0
-                ? <VolumeX className="w-3.5 h-3.5" />
-                : <Volume2 className="w-3.5 h-3.5" />}
+                ? <VolumeX className={showExpanded ? 'w-3.5 h-3.5' : 'w-3 h-3'} />
+                : <Volume2 className={showExpanded ? 'w-3.5 h-3.5' : 'w-3 h-3'} />}
             </button>
-          )}
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.05"
+              value={muted ? 0 : volume}
+              onInput={handleVolumeInput}
+              onChange={handleVolumeChange}
+              onPointerDown={(e) => e.stopPropagation()}
+              onTouchStart={(e) => e.stopPropagation()}
+              className={`volume-slider ${volumeSliderWidthClass}`}
+              style={{
+                touchAction: 'pan-x',
+                background: `linear-gradient(to right, #dc2626 ${(muted ? 0 : volume) * 100}%, rgba(255,255,255,0.15) ${(muted ? 0 : volume) * 100}%)`
+              }}
+              aria-label="Volumi"
+            />
+            {showVolumePercent && (
+              <span className={`${showExpanded ? 'text-[10px] w-7' : 'text-[9px] w-6'} text-white/40 tabular-nums text-right flex-shrink-0 leading-none`}>
+                {Math.round((muted ? 0 : volume) * 100)}%
+              </span>
+            )}
+          </div>
 
           {/* Live badge */}
           {showLiveBadge && (
@@ -495,13 +523,15 @@ export default function RadioPlayer() {
           </button>
 
           {/* Expand / collapse */}
-          <button
-            onClick={toggleExpand}
-            className={`hidden sm:flex touch-target ${showExpanded ? 'p-2' : 'p-1'} text-slate-600 hover:text-white transition-colors rounded-md hover:bg-white/[0.06] flex-shrink-0`}
-            aria-label={showExpanded ? 'Mbylle' : 'Hap'}
-          >
-            {showExpanded ? <ChevronDown className={showExpanded ? 'w-4 h-4' : 'w-3.5 h-3.5'} /> : <ChevronUp className={showExpanded ? 'w-4 h-4' : 'w-3.5 h-3.5'} />}
-          </button>
+          {playerTier !== 'tiny' && (
+            <button
+              onClick={toggleExpand}
+              className={`touch-target inline-flex items-center justify-center ${showExpanded ? 'p-2' : 'p-1'} text-slate-600 hover:text-white transition-colors rounded-md hover:bg-white/[0.06] flex-shrink-0`}
+              aria-label={showExpanded ? 'Mbylle' : 'Hap'}
+            >
+              {showExpanded ? <ChevronDown className={showExpanded ? 'w-4 h-4' : 'w-3.5 h-3.5'} /> : <ChevronUp className={showExpanded ? 'w-4 h-4' : 'w-3.5 h-3.5'} />}
+            </button>
+          )}
 
         </div>
       </div>
