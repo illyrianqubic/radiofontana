@@ -6,7 +6,7 @@ import { Play, Pause, Volume2, VolumeX, Radio, ChevronUp, ChevronDown, GripHoriz
 import { useAudioPlayer } from '@/lib/AudioPlayerContext';
 
 // ── Constraints ──────────────────────────────────────────────────────────────
-const MIN_W = 320;
+const MIN_W = 260;
 const MAX_W = 1040;
 const MIN_H = 76;
 const MAX_H = 220;
@@ -61,6 +61,20 @@ function getPanelBounds() {
   };
 }
 
+function getDefaultCompactWidth() {
+  const { viewportW, minWidth, maxWidth } = getPanelBounds();
+  const target =
+    viewportW < 480
+      ? viewportW - EDGE_GAP * 2
+      : viewportW < 768
+      ? viewportW * 0.94
+      : viewportW < 1024
+      ? viewportW * 0.8
+      : DEFAULT_W;
+
+  return clamp(Math.round(target), minWidth, maxWidth);
+}
+
 function clampPS(s: PS): PS {
   const {
     viewportW,
@@ -98,7 +112,7 @@ export default function RadioPlayer() {
   const { playing, loading, error, volume, muted, setVolume, setMuted, togglePlay } = useAudioPlayer();
   const pathname = usePathname();
   const [currentTime, setCurrentTime] = useState('');
-  const [ps, setPs] = useState<PS>(() => loadPS() ?? ({ dragged: false, x: 0, y: 0, width: DEFAULT_W, height: MIN_H }));
+  const [ps, setPs] = useState<PS>(() => loadPS() ?? ({ dragged: false, x: 0, y: 0, width: getDefaultCompactWidth(), height: MIN_H }));
   const [mounted, setMounted] = useState(false);
   const [viewport, setViewport] = useState({ width: 0, height: 0 });
   const panelRef = useRef<HTMLDivElement>(null);
@@ -143,15 +157,19 @@ export default function RadioPlayer() {
     return () => cancelAnimationFrame(raf);
   }, [viewport]);
 
-  // Keep the first-landing centered player a bit wider unless user has manually moved/resized it.
+  // Keep the centered compact player sized appropriately for the current viewport.
   useEffect(() => {
     if (!mounted || !viewport.width) return;
     const raf = requestAnimationFrame(() => {
+      const compactWidth = getDefaultCompactWidth();
       setPs((prev) => {
-        if (prev.dragged || prev.width >= DEFAULT_W) {
+        if (prev.dragged || prev.height > MIN_H + 20) {
           return prev;
         }
-        return clampPS({ ...prev, width: DEFAULT_W });
+        if (Math.abs(prev.width - compactWidth) < 2) {
+          return prev;
+        }
+        return clampPS({ ...prev, width: compactWidth });
       });
     });
     return () => cancelAnimationFrame(raf);
@@ -206,11 +224,7 @@ export default function RadioPlayer() {
     setPs(prev => {
       const isExpanded = prev.height > MIN_H + 20;
       if (isExpanded) {
-        const compactWidth = clamp(
-          Math.min(prev.width, DEFAULT_W),
-          minWidth,
-          maxWidth,
-        );
+        const compactWidth = clamp(getDefaultCompactWidth(), minWidth, maxWidth);
         return clampPS({ ...prev, width: compactWidth, height: MIN_H });
       }
 
@@ -291,13 +305,27 @@ export default function RadioPlayer() {
     : MAX_W;
   const minViewportWidth = Math.min(MIN_W, maxViewportWidth);
   const effectiveWidth = clamp(ps.width, minViewportWidth, maxViewportWidth);
+  const compactTight = !showExpanded && effectiveWidth < 420;
+  const compactVeryTight = !showExpanded && effectiveWidth < 360;
+  const showWaveform = playing && (showExpanded || effectiveWidth >= 520);
+  const showLiveBadge = playing && (showExpanded || effectiveWidth >= 560);
+  const showFullVolume = showExpanded || effectiveWidth >= 500;
+  const showMuteOnly = !showExpanded && effectiveWidth >= 390 && effectiveWidth < 500;
 
   // Build the outer container style
   // Default (not dragged): CSS-centered at bottom — survives scroll/zoom perfectly
   // Dragged: explicit left/top so it stays exactly where the user put it
   const outerStyle: React.CSSProperties = ps.dragged
     ? { position: 'fixed', left: ps.x, top: ps.y, width: effectiveWidth, height: ps.height, zIndex: 9999 }
-    : { position: 'fixed', bottom: EDGE_GAP, left: '50%', transform: 'translateX(-50%)', width: effectiveWidth, height: ps.height, zIndex: 9999 };
+    : {
+        position: 'fixed',
+        bottom: 'calc(16px + env(safe-area-inset-bottom))',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        width: effectiveWidth,
+        height: ps.height,
+        zIndex: 9999,
+      };
 
   if (pathname.startsWith('/studio')) return null;
   if (!mounted) return null;
@@ -350,21 +378,23 @@ export default function RadioPlayer() {
           className={`flex items-center ${
             showExpanded
               ? 'px-4 sm:px-6 lg:px-7 py-3.5 sm:py-4 gap-3 sm:gap-4 flex-shrink-0 min-h-[74px] sm:min-h-[88px]'
+              : compactTight
+              ? 'px-2.5 py-2 gap-2 flex-1 min-h-[60px]'
               : 'px-3 md:px-4 py-2.5 md:py-3 gap-2.5 md:gap-3.5 flex-1 min-h-[62px] md:min-h-[70px]'
           }`}
         >
 
           {/* Station branding */}
-          <div className={`flex items-center flex-1 min-w-0 ${showExpanded ? 'gap-3 sm:gap-4' : 'gap-2'}`}>
-            <div className={`${showExpanded ? 'w-10 h-10 sm:w-12 sm:h-12 rounded-xl' : 'w-9 h-9 md:w-10 md:h-10 rounded-lg'} flex items-center justify-center flex-shrink-0 transition-all duration-300 ${playing ? 'bg-red-600/20 border border-red-500/30' : 'bg-white/[0.05] border border-white/[0.08]'}`}>
-              <Radio className={`${showExpanded ? 'w-4 h-4 sm:w-5 sm:h-5' : 'w-3.5 h-3.5 md:w-4 md:h-4'} transition-colors duration-300 ${playing ? 'text-red-400' : 'text-slate-500'}`} />
+          <div className={`flex items-center flex-1 min-w-0 ${showExpanded ? 'gap-3 sm:gap-4' : compactTight ? 'gap-1.5' : 'gap-2'}`}>
+            <div className={`${showExpanded ? 'w-10 h-10 sm:w-12 sm:h-12 rounded-xl' : compactTight ? 'w-8 h-8 rounded-md' : 'w-9 h-9 md:w-10 md:h-10 rounded-lg'} flex items-center justify-center flex-shrink-0 transition-all duration-300 ${playing ? 'bg-red-600/20 border border-red-500/30' : 'bg-white/[0.05] border border-white/[0.08]'}`}>
+              <Radio className={`${showExpanded ? 'w-4 h-4 sm:w-5 sm:h-5' : compactTight ? 'w-3 h-3' : 'w-3.5 h-3.5 md:w-4 md:h-4'} transition-colors duration-300 ${playing ? 'text-red-400' : 'text-slate-500'}`} />
             </div>
             <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-1.5">
-                <p className={`${showExpanded ? 'text-sm sm:text-base' : 'text-sm md:text-base'} font-bold text-white leading-tight truncate`}>Radio Fontana</p>
-                <span className={`${showExpanded ? 'hidden md:block text-xs' : 'hidden sm:block text-xs md:text-sm'} text-slate-500`}>98.8 FM</span>
+              <div className={`flex items-center ${compactTight ? 'gap-1' : 'gap-1.5'}`}>
+                <p className={`${showExpanded ? 'text-sm sm:text-base' : compactTight ? 'text-xs' : 'text-sm md:text-base'} font-bold text-white leading-tight truncate`}>Radio Fontana</p>
+                <span className={`${showExpanded ? 'hidden md:block text-xs' : compactTight ? 'hidden' : 'hidden sm:block text-xs md:text-sm'} text-slate-500`}>98.8 FM</span>
               </div>
-              <p className={`${showExpanded ? 'text-[11px] sm:text-xs' : 'text-xs md:text-sm'} text-slate-400 truncate`}>
+              <p className={`${showExpanded ? 'text-[11px] sm:text-xs' : compactVeryTight ? 'hidden' : compactTight ? 'text-[10px]' : 'text-xs md:text-sm'} text-slate-400 truncate`}>
                 {error
                   ? 'Transmetimi nuk është i disponueshëm'
                   : playing
@@ -375,7 +405,7 @@ export default function RadioPlayer() {
           </div>
 
           {/* Waveform */}
-          {playing && (
+          {showWaveform && (
             <div className={`hidden sm:flex items-center gap-0.5 ${showExpanded ? 'h-5' : 'h-4'} flex-shrink-0`}>
               {[1, 2, 3, 4, 5].map((n) => (
                 <div key={n} className="waveform-bar w-0.5 rounded-full bg-red-500 opacity-80" style={{ height: showExpanded ? '8px' : '5px' }} />
@@ -384,40 +414,54 @@ export default function RadioPlayer() {
           )}
 
           {/* Volume */}
-          <div className={`hidden min-[360px]:flex items-center gap-1.5 flex-shrink-0 bg-white/[0.07] border border-white/[0.14] ${showExpanded ? 'h-11 rounded-lg px-2.5' : 'h-9 rounded-md px-1.5'}`}>
+          {showFullVolume && (
+            <div className={`hidden min-[360px]:flex items-center gap-1.5 flex-shrink-0 bg-white/[0.07] border border-white/[0.14] ${showExpanded ? 'h-11 rounded-lg px-2.5' : 'h-9 rounded-md px-1.5'}`}>
+              <button
+                onClick={() => setMuted(!muted)}
+                className={`touch-target inline-flex items-center justify-center ${showExpanded ? 'h-8 w-8' : 'h-7 w-7'} text-white/65 hover:text-white transition-colors flex-shrink-0 leading-none`}
+                aria-label={muted ? 'Aktivizo tingullin' : 'Hiqe tingullin'}
+              >
+                {muted || volume === 0
+                  ? <VolumeX className={showExpanded ? 'w-3.5 h-3.5' : 'w-3 h-3'} />
+                  : <Volume2 className={showExpanded ? 'w-3.5 h-3.5' : 'w-3 h-3'} />}
+              </button>
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.05"
+                value={muted ? 0 : volume}
+                onInput={handleVolumeInput}
+                onChange={handleVolumeChange}
+                onPointerDown={(e) => e.stopPropagation()}
+                onTouchStart={(e) => e.stopPropagation()}
+                className={`volume-slider ${showExpanded ? 'w-20 sm:w-24' : 'w-12 sm:w-14 md:w-16'}`}
+                style={{
+                  touchAction: 'pan-x',
+                  background: `linear-gradient(to right, #dc2626 ${(muted ? 0 : volume) * 100}%, rgba(255,255,255,0.15) ${(muted ? 0 : volume) * 100}%)`
+                }}
+                aria-label="Volumi"
+              />
+              <span className={`${showExpanded ? 'text-[10px] w-7' : 'text-[9px] w-6'} text-white/40 tabular-nums text-right flex-shrink-0 leading-none`}>
+                {Math.round((muted ? 0 : volume) * 100)}%
+              </span>
+            </div>
+          )}
+
+          {showMuteOnly && (
             <button
               onClick={() => setMuted(!muted)}
-              className={`touch-target inline-flex items-center justify-center ${showExpanded ? 'h-8 w-8' : 'h-7 w-7'} text-white/65 hover:text-white transition-colors flex-shrink-0 leading-none`}
+              className="touch-target inline-flex h-10 w-10 items-center justify-center rounded-md border border-white/[0.14] bg-white/[0.07] text-white/65 hover:text-white transition-colors flex-shrink-0"
               aria-label={muted ? 'Aktivizo tingullin' : 'Hiqe tingullin'}
             >
               {muted || volume === 0
-                ? <VolumeX className={showExpanded ? 'w-3.5 h-3.5' : 'w-3 h-3'} />
-                : <Volume2 className={showExpanded ? 'w-3.5 h-3.5' : 'w-3 h-3'} />}
+                ? <VolumeX className="w-3.5 h-3.5" />
+                : <Volume2 className="w-3.5 h-3.5" />}
             </button>
-            <input
-              type="range"
-              min="0"
-              max="1"
-              step="0.05"
-              value={muted ? 0 : volume}
-              onInput={handleVolumeInput}
-              onChange={handleVolumeChange}
-              onPointerDown={(e) => e.stopPropagation()}
-              onTouchStart={(e) => e.stopPropagation()}
-              className={`volume-slider ${showExpanded ? 'w-20 sm:w-24' : 'w-14 sm:w-16'}`}
-              style={{
-                touchAction: 'pan-x',
-                background: `linear-gradient(to right, #dc2626 ${(muted ? 0 : volume) * 100}%, rgba(255,255,255,0.15) ${(muted ? 0 : volume) * 100}%)`
-              }}
-              aria-label="Volumi"
-            />
-            <span className={`${showExpanded ? 'text-[10px] w-7' : 'text-[9px] w-6'} text-white/40 tabular-nums text-right flex-shrink-0 leading-none`}>
-              {Math.round((muted ? 0 : volume) * 100)}%
-            </span>
-          </div>
+          )}
 
           {/* Live badge */}
-          {playing && (
+          {showLiveBadge && (
             <span className={`hidden sm:flex items-center gap-1 bg-red-600/15 border border-red-500/25 text-red-400 ${showExpanded ? 'px-2.5 py-1.5 text-[10px]' : 'px-2 py-1 text-[9px]'} rounded-full font-extrabold tracking-wider flex-shrink-0`}>
               <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
               LIVE
