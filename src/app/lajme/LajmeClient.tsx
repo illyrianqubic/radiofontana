@@ -6,6 +6,8 @@ import { Article, Category, CATEGORIES, CATEGORY_COLORS } from '@/lib/types';
 import NewsCard from '@/components/news/NewsCard';
 import NewsFilter from '@/components/news/NewsFilter';
 
+const ARTICLES_PER_PAGE = 12;
+
 let articlesCache: Article[] | null = null;
 let articlesRequest: Promise<Article[]> | null = null;
 
@@ -47,6 +49,7 @@ export default function LajmeClient() {
   const [loadingArticles, setLoadingArticles] = useState(!articlesCache);
   const [activeCategory, setActiveCategory] = useState<Category | null>(null);
   const [activeQuery, setActiveQuery] = useState('');
+  const [visibleCount, setVisibleCount] = useState(ARTICLES_PER_PAGE);
 
   const syncUrl = useCallback((category: Category | null, query: string) => {
     if (typeof window === 'undefined') return;
@@ -88,18 +91,21 @@ export default function LajmeClient() {
 
   const handleCategoryChange = useCallback((category: Category | null) => {
     setActiveCategory(category);
+    setVisibleCount(ARTICLES_PER_PAGE);
     syncUrl(category, activeQuery);
   }, [activeQuery, syncUrl]);
 
   const handleSearchApply = useCallback((query: string) => {
     const normalizedQuery = query.trim();
     setActiveQuery(normalizedQuery);
+    setVisibleCount(ARTICLES_PER_PAGE);
     syncUrl(activeCategory, normalizedQuery);
   }, [activeCategory, syncUrl]);
 
   const handleClear = useCallback(() => {
     setActiveCategory(null);
     setActiveQuery('');
+    setVisibleCount(ARTICLES_PER_PAGE);
     syncUrl(null, '');
   }, [syncUrl]);
 
@@ -202,10 +208,26 @@ export default function LajmeClient() {
               {filtered.length} artikuj gjithsej
             </p>
             <div className="news-grid-responsive gap-6 lg:gap-7 2xl:gap-8">
-              {filtered.map((article) => (
+              {filtered.slice(0, visibleCount).map((article) => (
                 <NewsCard key={article.id} article={article} />
               ))}
             </div>
+            {visibleCount < filtered.length && (
+              <div className="mt-10 md:mt-12 flex flex-col items-center gap-2">
+                <button
+                  onClick={() => setVisibleCount((c) => c + ARTICLES_PER_PAGE)}
+                  className="inline-flex items-center gap-2.5 bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-3.5 rounded-xl text-base transition-colors shadow-md"
+                >
+                  Shfaq Më Shumë
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                <p className="text-sm text-slate-500">
+                  {Math.min(visibleCount, filtered.length)} / {filtered.length} artikuj
+                </p>
+              </div>
+            )}
           </>
         )}
       </div>

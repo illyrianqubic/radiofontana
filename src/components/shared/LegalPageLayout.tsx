@@ -1,5 +1,21 @@
 import Link from 'next/link';
 
+const EMAIL_RE = /(rtvfontana@gmail\.com)/g;
+
+function renderWithEmailLinks(text: string) {
+  const parts = text.split(EMAIL_RE);
+  if (parts.length === 1) return text;
+  return parts.map((part, i) =>
+    part === 'rtvfontana@gmail.com' ? (
+      <a key={i} href="mailto:rtvfontana@gmail.com" className="font-semibold text-[#c01f31] hover:underline">
+        rtvfontana@gmail.com
+      </a>
+    ) : (
+      part
+    ),
+  );
+}
+
 export type LegalSection = {
   title: string;
   paragraphs?: string[];
@@ -75,7 +91,7 @@ export default function LegalPageLayout({ title, summary, lastUpdated, sections 
             {section.paragraphs && section.paragraphs.length > 0 ? (
               <div className="space-y-3 text-sm sm:text-base 2xl:text-lg leading-relaxed text-slate-700 break-words">
                 {section.paragraphs.map((paragraph) => (
-                  <p key={paragraph}>{paragraph}</p>
+                  <p key={paragraph}>{renderWithEmailLinks(paragraph)}</p>
                 ))}
               </div>
             ) : null}
