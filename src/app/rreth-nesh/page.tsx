@@ -8,7 +8,7 @@ const SITE_URL = 'https://radiofontana.org';
 export const metadata: Metadata = {
   title: 'Rreth Nesh | Radio Fontana 98.8 FM',
   description:
-    'Mëso më shumë rreth Radio Fontana — stacioni i parë privat i transmetimit nga Istog, Kosovë. Historia jonë, misioni, ekipi dhe frekuenca 98.8 FM.',
+    'Mëso më shumë rreth Radio Fontana, stacioni i parë privat i transmetimit nga Istog, Kosovë. Historia jonë, misioni, ekipi dhe frekuenca 98.8 FM.',
   keywords: [
     'rreth radio fontana', 'historia radio fontana', 'rtv fontana istog',
     'radio 98.8 fm kosovë', 'radio shqip istog', 'media kosovë',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     type: 'website',
     url: `${SITE_URL}/rreth-nesh`,
     title: 'Rreth Nesh | Radio Fontana 98.8 FM',
-    description: 'Historia, misioni dhe ekipi i Radio Fontana — zëri i Istogut dhe Kosovës.',
+    description: 'Historia, misioni dhe ekipi i Radio Fontana, zëri i Istogut dhe Kosovës.',
     images: [{ url: `${SITE_URL}/logortvfontana.jpg`, width: 1200, height: 630, alt: 'Radio Fontana' }],
   },
 };
@@ -146,7 +146,7 @@ export default function RrethNeshPage() {
               </p>
               <p>
                 Sot, Radio Fontana transmeton <strong className="text-slate-900">24 orë në ditë, 7 ditë 
-                në javë</strong> — si në frekuencën FM ashtu edhe online përmes platformës dixhitale,
+                në javë</strong>, si në frekuencën FM ashtu edhe online përmes platformës dixhitale,
                 duke arritur dëgjues jo vetëm në Kosovë por kudo në botë ku jetojnë shqiptarë.
               </p>
             </div>
@@ -191,7 +191,7 @@ export default function RrethNeshPage() {
               </div>
               <div className="space-y-4 text-slate-700 text-base md:text-lg leading-relaxed">
                 <p>
-                  Programi i Radio Fontana përfshin një gamë të gjerë formatesh — nga buletinet e lajmeve
+                  Programi i Radio Fontana përfshin një gamë të gjerë formatesh: nga buletinet e lajmeve
                   çdo orë, debatet politike, rubrikat sportive dhe muzikën shqiptare dhe ndërkombëtare.
                 </p>
                 <p>
@@ -234,7 +234,7 @@ export default function RrethNeshPage() {
                     <p className="font-bold text-slate-900 mb-0.5">Adresa</p>
                     <p className="text-slate-600 text-sm leading-relaxed">
                       Rruga &ldquo;Ibrahim Rugova&rdquo; Nr. 56<br />
-                      Istog, Pejë — 50250<br />
+                      Istog, Pejë - 50250<br />
                       Kosovë
                     </p>
                   </div>
@@ -273,7 +273,7 @@ export default function RrethNeshPage() {
                   </div>
                   <div>
                     <p className="font-bold text-slate-900 mb-0.5">Frekuenca</p>
-                    <p className="text-sm text-slate-600">98.8 FM — Istog dhe rajoni</p>
+                    <p className="text-sm text-slate-600">98.8 FM, Istog dhe rajoni</p>
                   </div>
                 </div>
 

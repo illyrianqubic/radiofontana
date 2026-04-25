@@ -6,7 +6,7 @@ const SITE_URL = 'https://radiofontana.org';
 export const metadata: Metadata = {
   title: 'Na Kontaktoni | Radio Fontana 98.8 FM',
   description:
-    'Na kontaktoni për reklama, lajme ose pyetje. Studio e Radio Fontana — Rruga Ibrahim Rugova Nr. 56, Istog, Kosovë. Tel: +383 44 150 027.',
+    'Na kontaktoni për reklama, lajme ose pyetje. Studio e Radio Fontana, Rruga Ibrahim Rugova Nr. 56, Istog, Kosovë. Tel: +383 44 150 027.',
   keywords: [
     'kontakt radio fontana', 'reklama radio kosovë', 'studio radio istog',
     'rtvfontana@gmail.com', 'Radio Fontana adresa', 'kontakt media kosovë',
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     type: 'website',
     url: `${SITE_URL}/kontakt`,
     title: 'Na Kontaktoni | Radio Fontana 98.8 FM',
-    description: 'Kontaktoni Radio Fontana — studio Istog, Kosovë. Tel: +383 44 150 027.',
+    description: 'Kontaktoni Radio Fontana, studio Istog, Kosovë. Tel: +383 44 150 027.',
     images: [{ url: `${SITE_URL}/logortvfontana.jpg`, width: 1200, height: 630, alt: 'Radio Fontana - Kontakt' }],
   },
 };

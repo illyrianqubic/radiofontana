@@ -4,7 +4,7 @@ import LegalPageLayout, { type LegalSection } from '@/components/shared/LegalPag
 export const metadata: Metadata = {
   title: 'Politika e Privatësisë | Radio Fontana',
   description:
-    'Politika e privatësisë e Radio Fontana — si mbledhim, përdorim dhe mbrojmë të dhënat personale sipas GDPR. Cookies, analytics dhe të drejtat tuaja.',
+    'Politika e privatësisë e Radio Fontana: si mbledhim, përdorim dhe mbrojmë të dhënat personale sipas GDPR. Cookies, analytics dhe të drejtat tuaja.',
   alternates: { canonical: 'https://radiofontana.org/privacy' },
   robots: { index: true, follow: false },
 };

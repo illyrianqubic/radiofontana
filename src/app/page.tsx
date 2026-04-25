@@ -9,7 +9,7 @@ const SITE_URL = 'https://radiofontana.org';
 export const metadata: Metadata = {
   title: 'Radio Fontana 98.8 FM | Radio Shqip Live nga Kosova',
   description:
-    'Radio Fontana 98.8 FM — lajmet e fundit nga Istog dhe Kosova. Politikë, sport, teknologji, showbiz. Dëgjo live 24 orë në ditë.',
+    'Radio Fontana 98.8 FM, lajmet e fundit nga Istog dhe Kosova. Politikë, sport, teknologji, showbiz. Dëgjo live 24 orë në ditë.',
   keywords: [
     'Radio Fontana', 'radio shqip', 'radio kosovë', '98.8 FM', 'lajme istog',
     'lajme kosovë', 'radio live', 'rtv fontana', 'lajme shqip online',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     url: SITE_URL,
     title: 'Radio Fontana 98.8 FM | Radio Shqip Live nga Kosova',
     description:
-      'Radio Fontana 98.8 FM — lajmet e fundit nga Istog dhe Kosova. Dëgjo live 24 orë.',
+      'Radio Fontana 98.8 FM, lajmet e fundit nga Istog dhe Kosova. Dëgjo live 24 orë.',
     images: [{ url: `${SITE_URL}/logortvfontana.jpg`, width: 1200, height: 630, alt: 'Radio Fontana 98.8 FM' }],
   },
 };

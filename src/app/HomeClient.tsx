@@ -125,8 +125,8 @@ export default function HomeClient({ articles }: HomeClientProps) {
         </div>
       </section>
 
-      {/* ── TË FUNDIT — Live feed ── */}
-      <section className="bg-slate-50/70 py-7 md:py-12 lg:py-14 2xl:py-16 border-b border-slate-200/70">
+      {/* ── TË FUNDIT - Live feed ── */}
+      <section className="cv-auto bg-slate-50/70 py-7 md:py-12 lg:py-14 2xl:py-16 border-b border-slate-200/70">
         <div className="site-container">
           <div className="grid grid-cols-1 md:grid-cols-10 3xl:grid-cols-15 gap-8 md:gap-10 2xl:gap-12">
 
@@ -190,7 +190,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
                   <h3 className="text-xl md:text-2xl font-extrabold mb-1">Radio Fontana</h3>
                   <p className="text-slate-300 text-sm md:text-base mb-5">98.8 FM · Istog, Kosovë</p>
                   <p className="text-sm md:text-base text-slate-300 leading-relaxed mb-6">
-                    Muzikë, lajme dhe emisionet e preferuara — 24 orë në ditë.
+                    Muzikë, lajme dhe emisionet e preferuara, 24 orë në ditë.
                   </p>
                   <Link
                     href="/live"
@@ -207,7 +207,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
       </section>
 
       {/* ── CATEGORY BROWSE ── */}
-      <section className="bg-slate-50/70 py-7 md:py-12 lg:py-14 border-b border-slate-200/70">
+      <section className="cv-auto bg-slate-50/70 py-7 md:py-12 lg:py-14 border-b border-slate-200/70">
         <div className="site-container">
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-2">

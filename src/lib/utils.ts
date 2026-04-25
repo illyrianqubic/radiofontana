@@ -44,7 +44,7 @@ export function optimizeImageUrl(
   imageUrl: string,
   width: number,
   height?: number,
-  quality = 72,
+  quality = 80,
 ): string {
   if (!imageUrl || imageUrl.startsWith('/')) {
     return imageUrl;
@@ -63,6 +63,8 @@ export function optimizeImageUrl(
       url.searchParams.set('h', String(Math.round(height)));
       url.searchParams.set('fit', 'crop');
     }
+    // Sharp-format hints: prefer avif then webp via Sanity's CDN
+    url.searchParams.set('fm', 'webp');
 
     return url.toString();
   } catch {

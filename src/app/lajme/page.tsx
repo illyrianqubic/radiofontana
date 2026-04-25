@@ -7,7 +7,7 @@ const SITE_URL = 'https://radiofontana.org';
 export const metadata: Metadata = {
   title: 'Lajmet e Fundit | Radio Fontana 98.8 FM',
   description:
-    'Lajmet e fundit nga Istog, Kosova dhe bota. Politikë, sport, teknologji, showbiz, shëndetësi dhe biznes — të gjitha tek Radio Fontana.',
+    'Lajmet e fundit nga Istog, Kosova dhe bota. Politikë, sport, teknologji, showbiz, shëndetësi dhe biznes, të gjitha tek Radio Fontana.',
   keywords: [
     'lajme kosovë', 'lajme istog', 'lajme shqip', 'lajme politike', 'lajme sport',
     'radio fontana lajme', 'lajme sot', 'lajme fundit',

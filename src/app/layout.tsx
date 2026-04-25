@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     template: '%s | Radio Fontana',
   },
   description:
-    'Radio Fontana 98.8 FM — stacioni kryesor i radios dhe lajmeve në Istog, Kosovë. Lajme live, muzikë shqip dhe transmetim 24 orë.',
+    'Radio Fontana 98.8 FM, stacioni kryesor i radios dhe lajmeve në Istog, Kosovë. Lajme live, muzikë shqip dhe transmetim 24 orë.',
   keywords: [
     'Radio Fontana', 'radio shqip', 'radio kosovë', 'radio 98.8 FM', 'lajme istog',
     'lajme kosovë', 'rtv fontana', 'radio live kosovë', 'lajme shqip', 'radio istog',
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     siteName: SITE_NAME,
     title: 'Radio Fontana 98.8 FM | Radio Shqip Live nga Kosova',
     description:
-      'Radio Fontana 98.8 FM — stacioni kryesor i radios dhe lajmeve në Istog, Kosovë. Lajme live dhe muzikë shqip 24 orë.',
+      'Radio Fontana 98.8 FM, stacioni kryesor i radios dhe lajmeve në Istog, Kosovë. Lajme live dhe muzikë shqip 24 orë.',
     images: [
       {
         url: OG_IMAGE,
@@ -80,15 +80,15 @@ export const metadata: Metadata = {
     site: '@rtvfontana',
     creator: '@rtvfontana',
     title: 'Radio Fontana 98.8 FM | Radio Shqip Live nga Kosova',
-    description: 'Radio Fontana 98.8 FM — lajme dhe muzikë shqip 24 orë nga Istog, Kosovë.',
+    description: 'Radio Fontana 98.8 FM, lajme dhe muzikë shqip 24 orë nga Istog, Kosovë.',
     images: [OG_IMAGE],
   },
   alternates: {
     canonical: SITE_URL,
     languages: { 'sq-AL': SITE_URL },
     types: {
-      'application/rss+xml': [{ url: '/rss.xml', title: 'Radio Fontana — RSS Feed' }],
-      'application/atom+xml': [{ url: '/atom.xml', title: 'Radio Fontana — Atom Feed' }],
+      'application/rss+xml': [{ url: '/rss.xml', title: 'Radio Fontana - RSS Feed' }],
+      'application/atom+xml': [{ url: '/atom.xml', title: 'Radio Fontana - Atom Feed' }],
     },
   },
   other: {
@@ -190,7 +190,7 @@ const websiteSchema = {
   '@id': `${SITE_URL}/#website`,
   name: SITE_NAME,
   url: SITE_URL,
-  description: 'Radio Fontana 98.8 FM — lajme dhe muzikë shqip nga Istog, Kosovë',
+  description: 'Radio Fontana 98.8 FM, lajme dhe muzikë shqip nga Istog, Kosovë',
   publisher: { '@id': `${SITE_URL}/#organization` },
   inLanguage: 'sq-AL',
   potentialAction: {
@@ -212,6 +212,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="dns-prefetch" href="https://cdn.sanity.io" />
         <link rel="preconnect" href="https://live.radiostreaming.al" />
         <link rel="dns-prefetch" href="https://live.radiostreaming.al" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.google-analytics.com" />
         {/* Hreflang */}
         <link rel="alternate" hrefLang="sq-AL" href={SITE_URL} />
         <link rel="alternate" hrefLang="x-default" href={SITE_URL} />

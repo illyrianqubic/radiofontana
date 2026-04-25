@@ -475,3 +475,21 @@ input[type="range"]:not(.volume-slider)::-webkit-slider-thumb:hover { transform:
   height: 2px;
   background: linear-gradient(90deg, var(--rf-red) 0%, transparent 100%);
 }
+
+/* ── Performance: content-visibility for below-fold sections ── */
+.cv-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 400px;
+}
+
+/* ── Performance: GPU-composited animations only ── */
+.animate-pulse,
+.animate-spin,
+.animate-ping {
+  will-change: transform, opacity;
+}
+
+/* ── Performance: contain layout for card grids ── */
+.news-grid-responsive > * {
+  contain: layout style;
+}
