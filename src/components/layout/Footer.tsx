@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { ArrowRight, Mail, Phone, MapPin } from 'lucide-react';
 import { FacebookIcon, InstagramIcon, YoutubeIcon, TiktokIcon } from '@/components/shared/SocialIcons';
@@ -36,16 +35,6 @@ export default function Footer() {
 
       {/* Main footer */}
       <div className="site-container py-12 sm:py-14 2xl:py-16">
-        <div className="mb-8 sm:mb-9">
-          <Image
-            src="/logortvfontana.jpg"
-            alt="Radio Fontana"
-            width={148}
-            height={48}
-            className="h-12 w-auto object-contain rounded"
-          />
-        </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-0 rounded-2xl border border-slate-800/80 overflow-hidden bg-[#0f172a] shadow-[0_18px_40px_rgba(2,6,23,0.45)]">
           {/* Column 1 */}
           <div className="px-5 py-6 sm:px-6 sm:py-7">

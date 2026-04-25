@@ -70,7 +70,7 @@ export default function KontaktPage() {
     {
       icon: <Clock className="w-5 h-5 text-[#e63946]" />,
       label: 'Orari i Punës',
-      values: ['E Hënë - E Premte', '08:00 - 17:00'],
+      values: ['E Hënë - E Premte', '08:00 - 20:00'],
     },
   ];
 
