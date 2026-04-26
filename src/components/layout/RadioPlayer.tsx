@@ -475,9 +475,13 @@ export default function RadioPlayer() {
               onChange={handleVolumeChange}
               onPointerDown={(e) => e.stopPropagation()}
               onTouchStart={(e) => e.stopPropagation()}
+              onTouchMove={(e) => {
+                e.stopPropagation();
+                applyVolumeValue((e.currentTarget as HTMLInputElement).value);
+              }}
               className={`volume-slider ${volumeSliderWidthClass}`}
               style={{
-                touchAction: 'pan-x',
+                touchAction: 'none',
                 background: `linear-gradient(to right, #dc2626 ${(muted ? 0 : volume) * 100}%, rgba(255,255,255,0.15) ${(muted ? 0 : volume) * 100}%)`
               }}
               aria-label="Volumi"

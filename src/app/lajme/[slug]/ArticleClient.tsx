@@ -253,18 +253,33 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
                   WhatsApp
                 </a>
                 <button
+                  type="button"
                   onClick={() => {
-                    navigator.clipboard.writeText(`https://radiofontana.org/lajme/${article.slug}`)
-                      .then(() => {
-                        setCopied(true);
-                        setTimeout(() => setCopied(false), 2000);
-                      })
-                      .catch(() => {});
+                    const url = window.location.href;
+                    const doSet = () => { setCopied(true); setTimeout(() => setCopied(false), 2500); };
+                    const fallback = () => {
+                      try {
+                        const ta = document.createElement('textarea');
+                        ta.value = url;
+                        ta.style.cssText = 'position:fixed;top:0;left:0;opacity:0;pointer-events:none';
+                        document.body.appendChild(ta);
+                        ta.focus();
+                        ta.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(ta);
+                        doSet();
+                      } catch {}
+                    };
+                    if (navigator.clipboard?.writeText) {
+                      navigator.clipboard.writeText(url).then(doSet).catch(fallback);
+                    } else {
+                      fallback();
+                    }
                   }}
                   className="touch-target inline-flex items-center gap-2 px-4 py-2.5 bg-slate-100 text-slate-700 rounded-xl text-sm md:text-base font-medium hover:bg-slate-200 transition-colors duration-200"
                 >
                   {copied ? <Check className="w-4 h-4 text-green-600" /> : <Copy className="w-4 h-4" />}
-                  {copied ? 'Kopjuar!' : 'Kopjo linkun'}
+                  {copied ? 'Linku u kopjua!' : 'Kopjo linkun'}
                 </button>
               </div>
             </div>
@@ -332,6 +347,12 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
           </section>
         )}
       </div>
+      {/* Copy toast */}
+      {copied && (
+        <div className="fixed bottom-32 left-1/2 -translate-x-1/2 z-[10040] px-5 py-3 bg-slate-900 text-white text-sm font-semibold rounded-2xl shadow-2xl pointer-events-none whitespace-nowrap">
+          ✓ Linku u kopjua!
+        </div>
+      )}
     </div>
   );
 }
