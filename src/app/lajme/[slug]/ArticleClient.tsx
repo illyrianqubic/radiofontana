@@ -231,7 +231,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
             <div className="mt-7 pt-7 border-t border-slate-100">
               <p className="text-base md:text-lg font-semibold text-slate-700 mb-3 flex items-center gap-2">
                 <Share2 className="w-4 h-4" />
-                Shpërnda këtë artikull
+                Shpërndaje këtë artikull
               </p>
               <div className="flex flex-wrap gap-2 sm:gap-2.5">
                 <a
