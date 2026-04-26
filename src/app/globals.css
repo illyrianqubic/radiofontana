@@ -39,7 +39,7 @@ body,
 
 /* ── Base ── */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
   font-size: clamp(14px, 0.22vw + 13px, 18px);
   min-height: 100%;
   width: 100%;
