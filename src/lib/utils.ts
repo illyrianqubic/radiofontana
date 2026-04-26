@@ -12,13 +12,21 @@ export function timeAgo(dateString: string): string {
   const now = new Date();
   const past = new Date(dateString);
   const diffMs = now.getTime() - past.getTime();
+  if (diffMs < 0) return 'tani';
   const diffMins = Math.floor(diffMs / 60000);
   const diffHours = Math.floor(diffMins / 60);
   const diffDays = Math.floor(diffHours / 24);
+  const diffWeeks = Math.floor(diffDays / 7);
+  const diffMonths = Math.floor(diffDays / 30);
 
+  if (diffMins < 1) return 'tani';
   if (diffMins < 60) return `${diffMins} minuta më parë`;
   if (diffHours < 24) return `${diffHours} orë më parë`;
-  return `${diffDays} ditë më parë`;
+  if (diffDays === 1) return 'dje';
+  if (diffDays < 7) return `${diffDays} ditë më parë`;
+  if (diffWeeks < 5) return `${diffWeeks === 1 ? '1' : diffWeeks} javë më parë`;
+  if (diffMonths < 12) return `${diffMonths === 1 ? '1' : diffMonths} muaj më parë`;
+  return formatAlbanianDate(dateString);
 }
 
 /** Estimated reading time in minutes (avg 200 words/min).
