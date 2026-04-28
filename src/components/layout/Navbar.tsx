@@ -187,7 +187,6 @@ export default function Navbar() {
                 width={190}
                 height={64}
                 className="h-9 tiny:h-10 sm:h-11 md:h-[50px] lg:h-[54px] 3xl:h-[60px] w-auto object-contain translate-y-0.5"
-                priority
               />
             </Link>
 
