@@ -64,31 +64,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const articleUrl = `${SITE_URL}/lajme/${slug}`;
-  // Build a 1200x630 cropped JPEG via Sanity CDN params for the perfect OG
-  // card. Falling back to the site logo when the article has no main image.
-  // (WhatsApp/Facebook prefer JPEG and an absolute URL — Sanity URLs are
-  // already absolute; we only resize/crop them.)
-  let ogImage = `${SITE_URL}/logortvfontana.jpg`;
-  if (article.imageUrl) {
-    try {
-      const u = new URL(article.imageUrl);
-      if (u.hostname.endsWith('sanity.io')) {
-        u.searchParams.set('w', '1200');
-        u.searchParams.set('h', '630');
-        u.searchParams.set('fit', 'crop');
-        u.searchParams.set('crop', 'entropy');
-        u.searchParams.set('fm', 'jpg');
-        u.searchParams.set('q', '82');
-        u.searchParams.set('auto', 'format');
-        ogImage = u.toString();
-      } else {
-        ogImage = article.imageUrl;
-      }
-    } catch {
-      ogImage = article.imageUrl;
-    }
-  }
+  // Use trailing slash to match the actual canonical URL (next.config
+  // trailingSlash: true) so WhatsApp doesn't follow a 308 redirect when
+  // it crawls og:url.
+  const articleUrl = `${SITE_URL}/lajme/${slug}/`;
+
+  // Serve the OG image through our own domain at a clean .jpg URL.
+  // WhatsApp's scraper sniffs the URL extension; Sanity asset URLs end in
+  // `.webp`/`.png` (the original asset extension is immutable), which
+  // breaks WhatsApp previews even though `?fm=jpg` returns JPEG bytes.
+  // /og/<slug>.jpg is handled by functions/og/[slug].jpg.ts which proxies
+  // the resized Sanity JPEG.
+  const ogImage = article.imageUrl
+    ? `${SITE_URL}/og/${slug}.jpg`
+    : `${SITE_URL}/logortvfontana.jpg`;
 
   return {
     title: article.title,
@@ -103,7 +92,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: articleUrl,
       title: article.title,
       description: article.excerpt,
-      images: [{ url: ogImage, width: 1200, height: 630, alt: article.title }],
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: article.title,
+          type: 'image/jpeg',
+        },
+      ],
       locale: 'sq_AL',
       siteName: 'Radio Fontana',
       publishedTime: article.publishedAt,

@@ -27,6 +27,10 @@ const DEFAULT_PROJECT_ID = 'ksakxvtt';
 const DEFAULT_DATASET = 'production';
 const DEFAULT_API_VERSION = '2024-01-01';
 const FALLBACK_OG_IMAGE = `${SITE_URL}/logortvfontana.jpg`;
+// Per-slug OG image proxy at a clean .jpg URL — see functions/og/[slug].jpg.ts.
+// WhatsApp sniffs URL extension, so direct cdn.sanity.io URLs ending in
+// `.webp` break previews even with `?fm=jpg`.
+const OG_IMAGE_PROXY = (slug: string) => `${SITE_URL}/og/${encodeURIComponent(slug)}.jpg`;
 
 // Minimal projection — just what we need for OG metadata.
 const OG_QUERY = `*[_type == "post" && slug.current == $slug && !(_id in path("drafts.**"))][0]{
@@ -49,26 +53,6 @@ function escapeHtmlAttr(value: string): string {
     .replace(/"/g, '&quot;')
     .replace(/</g, '&lt;')
     .replace(/>/g, '&gt;');
-}
-
-function buildSanityOgImage(rawUrl: string): string {
-  // Resize to 1200x630 JPEG via Sanity CDN params for the perfect OG card.
-  // (WhatsApp doesn't reliably render WebP for previews — use JPEG.)
-  // Non-Sanity URLs (the local logo fallback) are returned untouched.
-  try {
-    const u = new URL(rawUrl);
-    if (!u.hostname.endsWith('sanity.io')) return rawUrl;
-    u.searchParams.set('w', '1200');
-    u.searchParams.set('h', '630');
-    u.searchParams.set('fit', 'crop');
-    u.searchParams.set('crop', 'entropy');
-    u.searchParams.set('fm', 'jpg');
-    u.searchParams.set('q', '82');
-    u.searchParams.set('auto', 'format');
-    return u.toString();
-  } catch {
-    return rawUrl;
-  }
 }
 
 async function fetchArticleForOg(env: Env, slug: string): Promise<OgArticle | null> {
@@ -99,11 +83,14 @@ async function fetchArticleForOg(env: Env, slug: string): Promise<OgArticle | nu
 }
 
 function rewriteShellMeta(html: string, slug: string, article: OgArticle | null): string {
-  const articleUrl = `${SITE_URL}/lajme/${slug}`;
+  // Trailing slash matches next.config trailingSlash:true so WhatsApp
+  // doesn't follow a 308 when it crawls og:url.
+  const articleUrl = `${SITE_URL}/lajme/${slug}/`;
   const title = article?.title ?? '';
   const excerpt = article?.excerpt ?? '';
-  const rawImage = article?.imageUrl;
-  const ogImage = rawImage ? buildSanityOgImage(rawImage) : FALLBACK_OG_IMAGE;
+  // Use the per-slug .jpg proxy when we have a real Sanity image; the
+  // proxy itself falls back to the logo when Sanity has no mainImage.
+  const ogImage = article?.imageUrl ? OG_IMAGE_PROXY(slug) : FALLBACK_OG_IMAGE;
 
   const fullTitle = title ? `${title} | Radio Fontana` : 'Artikull | Radio Fontana';
   const description =
@@ -120,6 +107,7 @@ function rewriteShellMeta(html: string, slug: string, article: OgArticle | null)
     `<meta property="og:description" content="${escapeHtmlAttr(description)}" />`,
     `<meta property="og:image" content="${escapeHtmlAttr(ogImage)}" />`,
     `<meta property="og:image:secure_url" content="${escapeHtmlAttr(ogImage)}" />`,
+    `<meta property="og:image:type" content="image/jpeg" />`,
     `<meta property="og:image:width" content="1200" />`,
     `<meta property="og:image:height" content="630" />`,
     `<meta property="og:image:alt" content="${escapeHtmlAttr(title || 'Radio Fontana')}" />`,
