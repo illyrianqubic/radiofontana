@@ -9,7 +9,8 @@ import { FacebookIcon, WhatsAppIcon } from '@/components/shared/SocialIcons';
 import { Article, CATEGORY_COLORS } from '@/lib/types';
 import NewsCard from '@/components/news/NewsCard';
 import SanityPortableText from '@/components/sanity/PortableText';
-import { formatAlbanianDate, timeAgo, optimizeImageUrl } from '@/lib/utils';
+import TimeAgo from '@/components/shared/TimeAgo';
+import { formatAlbanianDate, optimizeImageUrl } from '@/lib/utils';
 
 interface Props {
   slug: string;
@@ -176,7 +177,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
                 <time dateTime={article.publishedAt} className="truncate">{formatAlbanianDate(article.publishedAt)}</time>
               </span>
               <span className="text-slate-300">/</span>
-              <span>{timeAgo(article.publishedAt)}</span>
+              <TimeAgo dateString={article.publishedAt} />
             </div>
 
             {/* Hero image */}

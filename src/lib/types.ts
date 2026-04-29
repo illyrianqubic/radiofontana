@@ -16,6 +16,8 @@ export interface Article {
   category: Category;
   author: string;
   publishedAt: string;
+  /** Sanity-managed last-edit timestamp; used for OG modifiedTime / sitemap. */
+  _updatedAt?: string;
   imageUrl: string;
   tags: string[];
   featured?: boolean;

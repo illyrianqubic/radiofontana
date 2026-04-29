@@ -187,9 +187,12 @@ export default function RadioPlayer() {
     return () => cancelAnimationFrame(raf);
   }, [mounted, viewport.width]);
 
-  // Persist after mount
+  // Persist after mount — debounced so drag/resize doesn't write localStorage
+  // on every pointer frame (audit P2-H7).
   useEffect(() => {
-    if (mounted) savePS(ps);
+    if (!mounted) return;
+    const id = setTimeout(() => savePS(ps), 400);
+    return () => clearTimeout(id);
   }, [ps, mounted]);
 
   // Clock
@@ -258,6 +261,28 @@ export default function RadioPlayer() {
         width: Math.max(prev.width, expandedWidth),
         height: expandedHeight,
       });
+    });
+  }, []);
+
+  // ── Keyboard a11y: arrow keys move the panel by 16px increments ─────────
+  // Addresses audit P3-H12 (WCAG 2.1.1 — keyboard-operable drag handle).
+  const onDragKeyDown = useCallback((e: React.KeyboardEvent<HTMLDivElement>) => {
+    const STEP = e.shiftKey ? 64 : 16;
+    let dx = 0;
+    let dy = 0;
+    switch (e.key) {
+      case 'ArrowLeft':  dx = -STEP; break;
+      case 'ArrowRight': dx =  STEP; break;
+      case 'ArrowUp':    dy = -STEP; break;
+      case 'ArrowDown':  dy =  STEP; break;
+      default: return;
+    }
+    e.preventDefault();
+    const rect = panelRef.current?.getBoundingClientRect();
+    setPs(prev => {
+      const baseX = prev.dragged ? prev.x : (rect?.left ?? prev.x);
+      const baseY = prev.dragged ? prev.y : (rect?.top  ?? prev.y);
+      return clampPS({ ...prev, dragged: true, x: baseX + dx, y: baseY + dy });
     });
   }, []);
 
@@ -389,10 +414,14 @@ export default function RadioPlayer() {
       >
         {/* ── Drag handle bar ──────────────────────────────────────────── */}
         <div
-          className="flex-shrink-0 h-5 flex items-center justify-center cursor-grab active:cursor-grabbing border-b border-white/[0.05] group"
+          className="flex-shrink-0 h-5 flex items-center justify-center cursor-grab active:cursor-grabbing border-b border-white/[0.05] group focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500/60"
           onPointerDown={onDragDown}
+          onKeyDown={onDragKeyDown}
+          tabIndex={0}
+          role="button"
+          aria-label="Zhvendos luajtësin: tastet me shigjeta për lëvizje, Shift+shigjeta për hap më të madh"
           style={{ touchAction: 'none' }}
-          title="Drag to move"
+          title="Drag to move (or arrow keys)"
         >
           <GripHorizontal className="w-4 h-4 text-white/20 group-hover:text-white/50 transition-colors duration-150" />
         </div>

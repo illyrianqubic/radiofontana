@@ -32,6 +32,7 @@ export const ARTICLE_BY_SLUG_QUERY = `
     "slug": slug.current,
     title,
     excerpt,
+    _updatedAt,
     content[]{
       ...,
       _type == "image" => {

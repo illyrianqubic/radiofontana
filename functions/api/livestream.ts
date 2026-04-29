@@ -1,6 +1,8 @@
 // Cloudflare Pages Function: /api/livestream
 // Returns the current live stream status from Sanity.
 
+import { corsHeaders, rateLimit, tooManyRequests } from './_shared';
+
 interface Env {
   NEXT_PUBLIC_SANITY_PROJECT_ID: string;
   NEXT_PUBLIC_SANITY_DATASET: string;
@@ -25,7 +27,9 @@ export async function onRequestGet(context: {
   request: Request;
   env: Env;
 }) {
-  const { env } = context;
+  const { env, request } = context;
+  const rl = rateLimit(request, 'livestream');
+  if (!rl.allowed) return tooManyRequests(rl);
   const projectId = env.NEXT_PUBLIC_SANITY_PROJECT_ID || DEFAULT_PROJECT_ID;
   const dataset = env.NEXT_PUBLIC_SANITY_DATASET || DEFAULT_DATASET;
   const apiVersion = env.NEXT_PUBLIC_SANITY_API_VERSION || API_VERSION;
@@ -48,12 +52,12 @@ export async function onRequestGet(context: {
         'Content-Type': 'application/json',
         // Short cache — live status should update quickly
         'Cache-Control': 'public, max-age=30, stale-while-revalidate=60',
-        'Access-Control-Allow-Origin': '*',
+        ...corsHeaders(rl.headers),
       },
     });
   } catch {
     return new Response(JSON.stringify(FALLBACK), {
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...corsHeaders(rl.headers) },
     });
   }
 }

@@ -32,25 +32,25 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
     audio.volume = 0.8;
     audioRef.current = audio;
 
-    audio.addEventListener('waiting', () => setLoading(true));
-    audio.addEventListener('playing', () => {
+    const onWaiting = () => setLoading(true);
+    const onPlaying = () => {
       setLoading(false);
       setPlaying(true);
       setError(false);
-    });
-    audio.addEventListener('pause', () => {
+    };
+    const onPause = () => {
       setPlaying(false);
-    });
+    };
     // 'stalled' fires constantly on Shoutcast ICY streams — NOT an error, ignore it
     // 'suspend' is also normal on live streams, ignore it too
-    audio.addEventListener('error', () => {
+    const onError = () => {
       if (!wantPlayRef.current) return;
       setLoading(false);
       setPlaying(false);
       setError(true);
-    });
+    };
     // Shoutcast closes TCP connections periodically; reconnect automatically
-    audio.addEventListener('ended', () => {
+    const onEnded = () => {
       if (!wantPlayRef.current) return;
       setPlaying(false);
       setLoading(true);
@@ -65,11 +65,25 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
           });
         }
       }, 1500);
-    });
+    };
+
+    audio.addEventListener('waiting', onWaiting);
+    audio.addEventListener('playing', onPlaying);
+    audio.addEventListener('pause', onPause);
+    audio.addEventListener('error', onError);
+    audio.addEventListener('ended', onEnded);
 
     return () => {
+      audio.removeEventListener('waiting', onWaiting);
+      audio.removeEventListener('playing', onPlaying);
+      audio.removeEventListener('pause', onPause);
+      audio.removeEventListener('error', onError);
+      audio.removeEventListener('ended', onEnded);
+      wantPlayRef.current = false;
       audio.pause();
       audio.src = '';
+      audio.load();
+      audioRef.current = null;
     };
   }, []);
 

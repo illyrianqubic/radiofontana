@@ -5,7 +5,10 @@ export function formatAlbanianDate(dateString: string): string {
     'Korrik', 'Gusht', 'Shtator', 'Tetor', 'Nëntor', 'Dhjetor',
   ];
   const days = ['E Diel', 'E Hënë', 'E Martë', 'E Mërkurë', 'E Enjte', 'E Premte', 'E Shtunë'];
-  return `${days[date.getDay()]}, ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+  // Use UTC components so the same string renders on the build server (UTC)
+  // and the visitor's browser regardless of local timezone — eliminates
+  // hydration mismatches caused by TZ drift.
+  return `${days[date.getUTCDay()]}, ${date.getUTCDate()} ${months[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
 }
 
 export function timeAgo(dateString: string): string {

@@ -39,52 +39,20 @@ const fetchArticleSlugs = cache(async (): Promise<Array<{ slug: string | null }>
   }
 });
 
-type MetadataArticle = {
-  title: string;
-  excerpt: string;
-  imageUrl: string;
-  publishedAt: string;
-  _updatedAt: string;
-  author: string;
-  category: string;
-};
-
-const fetchMetadataArticle = cache(async (slug: string): Promise<MetadataArticle | null> => {
-  if (!slug || slug === '_') {
-    return null;
-  }
-  try {
-    return await readClient.fetch<MetadataArticle | null>(
-      `*[_type == "post" && slug.current == $slug][0]{
-        title, excerpt,
-        "imageUrl": coalesce(mainImage.asset->url, ""),
-        publishedAt, _updatedAt,
-        "author": coalesce(author->name, "Radio Fontana"),
-        "category": coalesce(category->title, "Lajme")
-      }`,
-      { slug },
-      { next: { revalidate: 300 } },
-    );
-  } catch {
-    return null;
-  }
-});
-
 export async function generateStaticParams() {
   const results = await fetchArticleSlugs();
 
-  const slugs = results
+  return results
     .map((p) => p.slug)
     .filter((slug): slug is string => Boolean(slug))
     .map((slug) => ({ slug }));
-
-  // Keep one static fallback page that can hydrate and fetch by browser URL slug.
-  return [...slugs, { slug: '_' }];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const article = await fetchMetadataArticle(slug);
+  // Reuse the same React-cached call as the page itself — Sanity is hit only once
+  // per slug per render (audit P2-H5).
+  const article = await fetchArticleBySlug(slug);
   if (!article?.title) {
     return {
       title: 'Artikull | Radio Fontana',
@@ -127,21 +95,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ArticlePage({ params }: Props) {
   const { slug } = await params;
-  const [initialArticle, metaArticle] = await Promise.all([
-    fetchArticleBySlug(slug),
-    fetchMetadataArticle(slug),
-  ]);
+  const initialArticle = await fetchArticleBySlug(slug);
 
   const articleUrl = `${SITE_URL}/lajme/${slug}`;
-  const ogImage = metaArticle?.imageUrl || `${SITE_URL}/logortvfontana.jpg`;
+  const ogImage = initialArticle?.imageUrl || `${SITE_URL}/logortvfontana.jpg`;
 
-  const newsArticleSchema = metaArticle?.title
+  const newsArticleSchema = initialArticle?.title
     ? {
         '@context': 'https://schema.org',
         '@type': 'NewsArticle',
         '@id': articleUrl,
-        headline: metaArticle.title,
-        description: metaArticle.excerpt,
+        headline: initialArticle.title,
+        description: initialArticle.excerpt,
         url: articleUrl,
         image: [
           {
@@ -151,11 +116,11 @@ export default async function ArticlePage({ params }: Props) {
             height: 630,
           },
         ],
-        datePublished: metaArticle.publishedAt,
-        dateModified: metaArticle._updatedAt ?? metaArticle.publishedAt,
+        datePublished: initialArticle.publishedAt,
+        dateModified: initialArticle._updatedAt ?? initialArticle.publishedAt,
         author: {
           '@type': 'Person',
-          name: metaArticle.author,
+          name: initialArticle.author,
         },
         publisher: {
           '@type': 'Organization',
@@ -170,7 +135,7 @@ export default async function ArticlePage({ params }: Props) {
           '@type': 'WebPage',
           '@id': articleUrl,
         },
-        articleSection: metaArticle.category,
+        articleSection: initialArticle.category,
         inLanguage: 'sq-AL',
         isPartOf: { '@id': `${SITE_URL}/#website` },
       }
@@ -182,7 +147,7 @@ export default async function ArticlePage({ params }: Props) {
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Kryefaqja', item: SITE_URL },
       { '@type': 'ListItem', position: 2, name: 'Lajme', item: `${SITE_URL}/lajme` },
-      { '@type': 'ListItem', position: 3, name: metaArticle?.title ?? 'Artikull', item: articleUrl },
+      { '@type': 'ListItem', position: 3, name: initialArticle?.title ?? 'Artikull', item: articleUrl },
     ],
   };
 

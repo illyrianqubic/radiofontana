@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Menu, X, Search, ChevronDown, Radio } from 'lucide-react';
 import { CATEGORIES } from '@/lib/types';
 import { FacebookIcon, InstagramIcon, YoutubeIcon, TiktokIcon } from '@/components/shared/SocialIcons';
@@ -83,6 +83,7 @@ export default function Navbar() {
   const [isLive, setIsLive] = useState(false);
   const dropdownCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const pathname = usePathname();
+  const router = useRouter();
 
   const clearDropdownCloseTimer = useCallback(() => {
     if (!dropdownCloseTimerRef.current) {
@@ -152,9 +153,10 @@ export default function Navbar() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (searchQuery.trim()) {
-      window.location.href = `/lajme/?q=${encodeURIComponent(searchQuery)}`;
-    }
+    const q = searchQuery.trim();
+    if (!q) return;
+    router.push(`/lajme/?q=${encodeURIComponent(q)}`);
+    setSearchOpen(false);
   };
 
   const isActive = (href: string) =>

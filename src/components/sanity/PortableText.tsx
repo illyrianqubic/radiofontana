@@ -89,6 +89,14 @@ const components: Partial<PortableTextReactComponents> = {
         : typeof value?.alt === 'string' && value.alt.trim().length > 0
         ? value.alt.trim()
         : '';
+
+      // Pull intrinsic dimensions from Sanity's metadata so the browser can
+      // reserve layout space → no CLS (audit P2-H2). Fall back to a 3:2 box.
+      const dims =
+        (value?.asset?.metadata?.dimensions as { width?: number; height?: number } | undefined) ?? {};
+      const width = typeof dims.width === 'number' && dims.width > 0 ? dims.width : 1200;
+      const height = typeof dims.height === 'number' && dims.height > 0 ? dims.height : 800;
+
       // Use raw <img> since next/image requires known domains and we have unoptimized: true
       return (
         <figure className="my-8">
@@ -96,7 +104,12 @@ const components: Partial<PortableTextReactComponents> = {
           <img
             src={src}
             alt={value?.alt ?? ''}
+            width={width}
+            height={height}
+            loading="lazy"
+            decoding="async"
             className="rounded-xl w-full h-auto shadow-[0_12px_28px_rgba(15,23,42,0.12)]"
+            style={{ aspectRatio: `${width} / ${height}` }}
           />
           {caption && (
             <figcaption className="mt-2 text-sm md:text-base text-slate-500 leading-relaxed">

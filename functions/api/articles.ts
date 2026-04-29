@@ -1,6 +1,8 @@
 // Cloudflare Pages Function: /api/articles
 // Fetches published posts from Sanity via the GROQ HTTP API.
 
+import { corsHeaders, rateLimit, tooManyRequests } from './_shared';
+
 interface Env {
   NEXT_PUBLIC_SANITY_PROJECT_ID: string;
   NEXT_PUBLIC_SANITY_DATASET: string;
@@ -34,11 +36,13 @@ export async function onRequestGet(context: {
   request: Request;
   env: Env;
 }) {
-  const { env } = context;
+  const { env, request } = context;
+  const rl = rateLimit(request, 'articles');
+  if (!rl.allowed) return tooManyRequests(rl);
   const projectId = env.NEXT_PUBLIC_SANITY_PROJECT_ID || DEFAULT_PROJECT_ID;
   const dataset = env.NEXT_PUBLIC_SANITY_DATASET || DEFAULT_DATASET;
   const apiVersion = env.NEXT_PUBLIC_SANITY_API_VERSION || API_VERSION;
-  const reqUrl = new URL(context.request.url);
+  const reqUrl = new URL(request.url);
   const rawLimit = Number(reqUrl.searchParams.get('limit') ?? '20');
   const limit = Number.isFinite(rawLimit)
     ? Math.min(Math.max(Math.trunc(rawLimit), 1), 200)
@@ -64,13 +68,13 @@ export async function onRequestGet(context: {
       headers: {
         'Content-Type': 'application/json',
         'Cache-Control': 'public, max-age=300, stale-while-revalidate=3600',
-        'Access-Control-Allow-Origin': '*',
+        ...corsHeaders(rl.headers),
       },
     });
   } catch {
     return new Response(JSON.stringify([]), {
       status: 200, // return empty array so the UI degrades gracefully
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...corsHeaders(rl.headers) },
     });
   }
 }

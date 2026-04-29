@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Article, CATEGORY_COLORS } from '@/lib/types';
-import { timeAgo, readTime, optimizeImageUrl } from '@/lib/utils';
+import { readTime, optimizeImageUrl } from '@/lib/utils';
 import { Clock, User, BookOpen } from 'lucide-react';
+import TimeAgo from '@/components/shared/TimeAgo';
 
 interface Props {
   article: Article;
@@ -53,7 +54,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
               </span>
               <span className="inline-flex min-w-0 max-w-full items-center gap-1.5">
                 <Clock className="w-3.5 h-3.5" />
-                <span className="truncate">{timeAgo(article.publishedAt)}</span>
+                <TimeAgo dateString={article.publishedAt} className="truncate" />
               </span>
               <span className="hidden lg:inline-flex min-w-0 max-w-full items-center gap-1.5">
                 <BookOpen className="w-3.5 h-3.5" />
@@ -88,7 +89,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
           </h4>
           <p className="text-xs md:text-sm text-slate-600 mt-1.5 flex items-center gap-1 min-w-0">
             <Clock className="w-2.5 h-2.5" />
-            <span className="truncate">{timeAgo(article.publishedAt)}</span>
+            <TimeAgo dateString={article.publishedAt} className="truncate" />
             <span className="text-slate-300">•</span>
             <span className="truncate">{article.author}</span>
           </p>
@@ -124,7 +125,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
             </span>
             <span className="inline-flex min-w-0 max-w-full items-center gap-1">
               <Clock className="w-2.5 h-2.5" />
-              <span className="truncate">{timeAgo(article.publishedAt)}</span>
+              <TimeAgo dateString={article.publishedAt} className="truncate" />
             </span>
           </div>
         </div>
@@ -169,7 +170,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
           <div className="flex min-w-0 items-center gap-2 sm:gap-2.5 sm:ml-auto">
             <span className="inline-flex min-w-0 max-w-full items-center gap-1">
               <Clock className="w-2.5 h-2.5" />
-              <span className="truncate">{timeAgo(article.publishedAt)}</span>
+              <TimeAgo dateString={article.publishedAt} className="truncate" />
             </span>
             <span className="inline-flex items-center gap-1 whitespace-nowrap">
               <BookOpen className="w-2.5 h-2.5" />

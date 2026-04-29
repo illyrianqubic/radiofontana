@@ -19,10 +19,16 @@
 /kontakt /kontakt/index.html 200
 /kontakt/ /kontakt/index.html 200
 
-# Article fallback shell for slugs published after the last static export build.
-# Use segment placeholders so /lajme itself is NOT rewritten to /lajme/_/.
-/lajme/:slug /lajme/_/ 200
-/lajme/:slug/ /lajme/_/ 200
+# Legal / about pages — accept the no-trailing-slash form too.
+/cookies /cookies/index.html 200
+/privacy /privacy/index.html 200
+/terms /terms/index.html 200
+/gdpr /gdpr/index.html 200
+/disclaimer /disclaimer/index.html 200
+/rreth-nesh /rreth-nesh/index.html 200
+
+# Article slugs that don't have a static page fall through to the global 404
+# (no soft-404 fallback shell — see audit P1-H9).
 
 # Fallback to 404 page for unmatched routes
 /* /404.html 404

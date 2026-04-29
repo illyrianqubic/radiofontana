@@ -4,8 +4,8 @@ import { ArrowRight, TrendingUp, Clock, Flame, Radio, Rss } from 'lucide-react';
 import { Article, CATEGORIES, CATEGORY_COLORS } from '@/lib/types';
 import NewsCard from '@/components/news/NewsCard';
 import BreakingNewsTicker from '@/components/layout/BreakingNewsTicker';
-import WeatherWidget from '@/components/home/WeatherWidget';
-import { timeAgo, optimizeImageUrl } from '@/lib/utils';
+import TimeAgo from '@/components/shared/TimeAgo';
+import { optimizeImageUrl } from '@/lib/utils';
 
 interface HomeClientProps {
   articles: Article[];
@@ -35,10 +35,8 @@ export default function HomeClient({ articles }: HomeClientProps) {
               {hero && <NewsCard article={hero} variant="hero" />}
             </div>
 
-            {/* Right column: weather + featured list */}
+            {/* Right column: featured list (weather widget removed — was mock data) */}
             <div className="md:col-span-3 3xl:col-span-5 flex flex-col gap-4 md:gap-5">
-              <WeatherWidget />
-
               {/* Featured side cards */}
               <div className="hidden md:block bg-white rounded-xl border border-slate-200/70 overflow-hidden shadow-[0_14px_36px_rgba(15,23,42,0.10)] flex-1">
                 <div className="px-4 py-3.5 border-b border-slate-200/70 bg-slate-50/70">
@@ -113,7 +111,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
                         </p>
                         <p className="text-xs md:text-sm text-slate-500 mt-2 flex items-center gap-1">
                           <Clock className="w-2.5 h-2.5" />
-                          {timeAgo(article.publishedAt)}
+                          <TimeAgo dateString={article.publishedAt} />
                         </p>
                       </div>
                     </Link>
@@ -164,7 +162,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
                         </span>
                         <span className="text-xs md:text-sm text-slate-600 flex items-center gap-1 min-w-0">
                           <Clock className="w-2.5 h-2.5" />
-                          <span className="truncate">{timeAgo(article.publishedAt)}</span>
+                          <TimeAgo dateString={article.publishedAt} className="truncate" />
                         </span>
                       </div>
                       <h3 className="font-bold text-[1.02rem] md:text-[1.15rem] text-slate-800 leading-[1.35] line-clamp-2 group-hover:text-red-600 transition-colors tracking-[0.01em] break-words">

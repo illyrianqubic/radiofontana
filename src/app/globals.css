@@ -493,3 +493,23 @@ input[type="range"]:not(.volume-slider)::-webkit-slider-thumb:hover { transform:
 .news-grid-responsive > * {
   contain: layout style;
 }
+
+/* ── Reduced motion: disable ALL infinite animations ──
+   Honors WCAG SC 2.3.3 + addresses audit P2-C4 / P3-M8. */
+@media (prefers-reduced-motion: reduce) {
+  .ticker-animate,
+  .gradient-bar,
+  .live-glow,
+  .waveform-bar,
+  .animate-pulse,
+  .animate-spin,
+  .animate-ping {
+    animation: none !important;
+  }
+  .img-zoom,
+  .news-card,
+  .card-accent::after {
+    transition: none !important;
+  }
+  .group:hover .img-zoom { transform: none !important; }
+}

@@ -1,6 +1,8 @@
 // Cloudflare Pages Function: /api/article
 // Fetches a single post by slug from Sanity via the GROQ HTTP API.
 
+import { corsHeaders, rateLimit, tooManyRequests } from './_shared';
+
 interface Env {
   NEXT_PUBLIC_SANITY_PROJECT_ID: string;
   NEXT_PUBLIC_SANITY_DATASET: string;
@@ -37,17 +39,19 @@ export async function onRequestGet(context: {
   request: Request;
   env: Env;
 }) {
-  const { env } = context;
+  const { env, request } = context;
+  const rl = rateLimit(request, 'article');
+  if (!rl.allowed) return tooManyRequests(rl);
   const projectId = env.NEXT_PUBLIC_SANITY_PROJECT_ID || DEFAULT_PROJECT_ID;
   const dataset = env.NEXT_PUBLIC_SANITY_DATASET || DEFAULT_DATASET;
   const apiVersion = env.NEXT_PUBLIC_SANITY_API_VERSION || API_VERSION;
-  const reqUrl = new URL(context.request.url);
+  const reqUrl = new URL(request.url);
   const slug = (reqUrl.searchParams.get('slug') ?? '').trim();
 
   if (!slug) {
     return new Response(JSON.stringify(null), {
       status: 400,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...corsHeaders(rl.headers) },
     });
   }
 
@@ -73,7 +77,7 @@ export async function onRequestGet(context: {
         status: 404,
         headers: {
           'Content-Type': 'application/json',
-          'Access-Control-Allow-Origin': '*',
+          ...corsHeaders(rl.headers),
         },
       });
     }
@@ -82,13 +86,13 @@ export async function onRequestGet(context: {
       headers: {
         'Content-Type': 'application/json',
         'Cache-Control': 'public, max-age=60, stale-while-revalidate=900',
-        'Access-Control-Allow-Origin': '*',
+        ...corsHeaders(rl.headers),
       },
     });
   } catch {
     return new Response(JSON.stringify(null), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...corsHeaders(rl.headers) },
     });
   }
 }

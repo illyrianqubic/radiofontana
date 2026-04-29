@@ -6,7 +6,7 @@ import { FacebookIcon, InstagramIcon, YoutubeIcon, TiktokIcon } from '@/componen
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function KontaktClient() {
-  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '' });
+  const [form, setForm] = useState({ name: '', email: '', subject: '', message: '', botcheck: '' });
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState('');
@@ -17,6 +17,12 @@ export default function KontaktClient() {
     e.preventDefault();
     if (!form.name || !form.email || !form.message) {
       setError('Ju lutem plotësoni të gjitha fushat e detyrueshme.');
+      return;
+    }
+    // Honeypot: real users never fill the hidden `botcheck` field. If it has
+    // any value, silently drop the submission (looks successful to the bot).
+    if (form.botcheck) {
+      setSubmitted(true);
       return;
     }
     setError('');
@@ -31,6 +37,7 @@ export default function KontaktClient() {
           email: form.email,
           subject: form.subject ? `[Kontakt] ${form.subject}` : '[Kontakt] Mesazh i ri nga formulari',
           message: form.message,
+          botcheck: form.botcheck,
         }),
       });
       const data = await res.json();
@@ -255,6 +262,18 @@ export default function KontaktClient() {
                     animate={{ opacity: 1, y: 0 }}
                     className="space-y-5"
                   >
+                    {/* Honeypot — hidden from sighted users and screen readers.
+                        Spam bots auto-fill all inputs and reveal themselves. */}
+                    <input
+                      type="text"
+                      name="botcheck"
+                      value={form.botcheck}
+                      onChange={handleChange}
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }}
+                    />
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-semibold text-slate-700 mb-2">
