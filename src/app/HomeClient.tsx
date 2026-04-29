@@ -6,7 +6,6 @@ import NewsCard from '@/components/news/NewsCard';
 import BreakingNewsTicker from '@/components/layout/BreakingNewsTicker';
 import TimeAgo from '@/components/shared/TimeAgo';
 import WeatherWidget from '@/components/home/WeatherWidget';
-import { optimizeImageUrl } from '@/lib/utils';
 
 interface HomeClientProps {
   articles: Article[];
@@ -149,7 +148,7 @@ export default function HomeClient({ articles }: HomeClientProps) {
                   >
                     <div className="relative w-full aspect-video sm:w-40 sm:aspect-video sm:h-auto flex-shrink-0 rounded-lg overflow-hidden">
                       <Image
-                        src={optimizeImageUrl(article.imageUrl, 256, 192, 72)}
+                        src={article.imageUrl}
                         alt={article.title}
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 160px, 192px"

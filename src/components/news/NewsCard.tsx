@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Article, CATEGORY_COLORS } from '@/lib/types';
-import { readTime, optimizeImageUrl } from '@/lib/utils';
+import { readTime } from '@/lib/utils';
 import { Clock, User, BookOpen } from 'lucide-react';
 import TimeAgo from '@/components/shared/TimeAgo';
 
@@ -20,7 +20,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
       <Link href={href} className="group flex flex-col h-full relative min-w-0 overflow-hidden rounded-xl border border-slate-200/70 news-card isolate">
         <div className="relative flex-1 min-h-[210px] md:min-h-[300px] lg:min-h-[360px]">
           <Image
-            src={optimizeImageUrl(article.imageUrl, 1280, 720, 74)}
+            src={article.imageUrl}
             alt={article.title}
             fill
             sizes="(max-width: 767px) 100vw, (max-width: 1023px) 66vw, (max-width: 1366px) 70vw, 68vw"
@@ -72,7 +72,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
       <Link href={href} className="group flex gap-3 items-start p-3 md:p-4 hover:bg-slate-50 transition-all duration-200">
         <div className="relative w-24 h-[3.75rem] md:w-28 md:h-[4.15rem] flex-shrink-0 rounded-lg overflow-hidden">
           <Image
-            src={optimizeImageUrl(article.imageUrl, 160, 128, 70)}
+            src={article.imageUrl}
             alt={article.title}
             fill
             sizes="(max-width: 767px) 96px, 112px"
@@ -103,7 +103,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
       <Link href={href} className="group flex flex-col sm:flex-row gap-3 sm:gap-4 items-start p-3.5 md:p-4 rounded-xl border border-slate-200/70 bg-white hover:bg-slate-50 transition-all duration-200 hover:shadow-[0_12px_30px_rgba(15,23,42,0.10)] hover:-translate-y-0.5">
         <div className="relative w-full aspect-video sm:w-40 sm:aspect-video sm:h-auto flex-shrink-0 rounded-xl overflow-hidden">
           <Image
-            src={optimizeImageUrl(article.imageUrl, 256, 192, 72)}
+            src={article.imageUrl}
             alt={article.title}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 160px, 192px"
@@ -138,7 +138,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
     <Link href={href} className="group flex flex-col min-w-0 bg-white rounded-xl overflow-hidden border border-slate-200/70 news-card card-accent h-full">
       <div className="relative aspect-video overflow-hidden flex-shrink-0">
         <Image
-          src={optimizeImageUrl(article.imageUrl, 640, 360, 74)}
+          src={article.imageUrl}
           alt={article.title}
           fill
           sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, (max-width: 1366px) 33vw, 25vw"

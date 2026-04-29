@@ -10,7 +10,7 @@ import { Article, CATEGORY_COLORS } from '@/lib/types';
 import NewsCard from '@/components/news/NewsCard';
 import SanityPortableText from '@/components/sanity/PortableText';
 import TimeAgo from '@/components/shared/TimeAgo';
-import { formatAlbanianDate, optimizeImageUrl } from '@/lib/utils';
+import { formatAlbanianDate } from '@/lib/utils';
 
 interface Props {
   slug: string;
@@ -183,7 +183,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
             {/* Hero image */}
             <div className="relative aspect-video overflow-hidden my-7 mx-0 rounded-2xl">
               <Image
-                src={optimizeImageUrl(article.imageUrl, 1440, 810, 76)}
+                src={article.imageUrl}
                 alt={article.title}
                 fill
                 sizes="(max-width: 640px) 100vw, (max-width: 1023px) 100vw, (max-width: 1366px) 72vw, 820px"
