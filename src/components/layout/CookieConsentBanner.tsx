@@ -88,8 +88,8 @@ export default function CookieConsentBanner() {
   }
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-[10050] px-3 sm:px-4 pb-[max(0.75rem,env(safe-area-inset-bottom))]">
-      <div className="mx-auto max-w-5xl rounded-2xl border border-slate-700/80 bg-[#0f172a] text-white shadow-[0_16px_42px_rgba(2,6,23,0.55)] p-4 sm:p-5">
+    <div className="fixed inset-x-0 bottom-0 z-[10050] px-3 sm:px-4 pb-[calc(env(safe-area-inset-bottom)+7rem)] sm:pb-[calc(env(safe-area-inset-bottom)+7.5rem)] pointer-events-none">
+      <div className="mx-auto max-w-5xl rounded-2xl border border-slate-700/80 bg-[#0f172a] text-white shadow-[0_16px_42px_rgba(2,6,23,0.55)] p-4 sm:p-5 pointer-events-auto">
         <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-5">
           <p className="text-sm sm:text-base text-slate-100 leading-relaxed md:max-w-3xl">
             Ne përdorim cookies për të përmirësuar përvojën tuaj. Mund të pranoni ose refuzoni cookies analitike. Cookies thelbësore përdoren gjithmonë për funksionim bazë.
