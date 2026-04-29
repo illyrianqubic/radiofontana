@@ -42,10 +42,14 @@ const fetchArticleSlugs = cache(async (): Promise<Array<{ slug: string | null }>
 export async function generateStaticParams() {
   const results = await fetchArticleSlugs();
 
-  return results
+  const slugs = results
     .map((p) => p.slug)
-    .filter((slug): slug is string => Boolean(slug))
-    .map((slug) => ({ slug }));
+    .filter((slug): slug is string => Boolean(slug));
+
+  // Always include the '_' fallback shell so newly-published Sanity articles
+  // resolve via the client-side fetch in ArticleClient until the next build.
+  // Without this, fresh slugs return 404 even though the article exists.
+  return ['_', ...slugs].map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

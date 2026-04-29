@@ -27,8 +27,11 @@
 /disclaimer /disclaimer/index.html 200
 /rreth-nesh /rreth-nesh/index.html 200
 
-# Article slugs that don't have a static page fall through to the global 404
-# (no soft-404 fallback shell — see audit P1-H9).
+# Article slugs that don't have a static page fall through to the fallback
+# shell (/lajme/_/index.html). The shell uses ArticleClient to fetch the
+# article from /api/article so newly-published Sanity content shows up
+# immediately, before the next build runs.
+/lajme/* /lajme/_/index.html 200
 
 # Fallback to 404 page for unmatched routes
 /* /404.html 404
