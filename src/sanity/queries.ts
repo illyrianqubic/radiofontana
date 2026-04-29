@@ -32,7 +32,13 @@ export const ARTICLE_BY_SLUG_QUERY = `
     "slug": slug.current,
     title,
     excerpt,
-    content,
+    content[]{
+      ...,
+      _type == "image" => {
+        ...,
+        "asset": asset->{ _id, _ref, url, metadata }
+      }
+    },
     "category": coalesce(category->title, "Politikë"),
     "author": coalesce(author->name, "Radio Fontana"),
     publishedAt,

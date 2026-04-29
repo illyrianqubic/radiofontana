@@ -122,12 +122,14 @@ export async function onScheduled(
 
 export async function onRequestPost(context: { env: Env; request: Request }): Promise<Response> {
   try {
+    // Fail-closed: if the secret is missing/empty in the environment, refuse.
     const expectedSecret = context.env.CLEANUP_CRON_SECRET;
-    if (expectedSecret) {
-      const requestSecret = context.request.headers.get('x-cleanup-secret');
-      if (requestSecret !== expectedSecret) {
-        return Response.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
-      }
+    if (!expectedSecret || expectedSecret.length === 0) {
+      return Response.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
+    }
+    const requestSecret = context.request.headers.get('x-cleanup-secret') ?? '';
+    if (requestSecret.length === 0 || requestSecret !== expectedSecret) {
+      return Response.json({ ok: false, error: 'Unauthorized' }, { status: 401 });
     }
 
     const result = await runCleanup(context.env);

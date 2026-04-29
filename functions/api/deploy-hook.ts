@@ -8,13 +8,28 @@ interface Env {
   DEPLOY_HOOK_SECRET: string;    // Shared secret between Sanity webhook and this Function
 }
 
+function timingSafeEqual(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  let mismatch = 0;
+  for (let i = 0; i < a.length; i += 1) {
+    mismatch |= a.charCodeAt(i) ^ b.charCodeAt(i);
+  }
+  return mismatch === 0;
+}
+
 export async function onRequestPost(context: { request: Request; env: Env }) {
   const { request, env } = context;
 
-  // Validate shared secret passed by Sanity as a query param or header
-  const url = new URL(request.url);
-  const secret = url.searchParams.get('secret') ?? request.headers.get('x-webhook-secret') ?? '';
-  if (!env.DEPLOY_HOOK_SECRET || secret !== env.DEPLOY_HOOK_SECRET) {
+  // Fail-closed: refuse if shared secret not configured.
+  if (!env.DEPLOY_HOOK_SECRET || env.DEPLOY_HOOK_SECRET.length === 0) {
+    return new Response('Unauthorized', { status: 401 });
+  }
+
+  // Accept the secret ONLY from a request header. Reading it from the URL
+  // query string would leak it through Cloudflare access logs, browser
+  // history, and Referer headers.
+  const secret = request.headers.get('x-webhook-secret') ?? '';
+  if (secret.length === 0 || !timingSafeEqual(secret, env.DEPLOY_HOOK_SECRET)) {
     return new Response('Unauthorized', { status: 401 });
   }
 

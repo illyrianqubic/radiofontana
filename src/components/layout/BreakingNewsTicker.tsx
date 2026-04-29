@@ -6,13 +6,17 @@ interface Props {
 }
 
 const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
-const NOW = Date.now();
 
 export default function BreakingNewsTicker({ articles }: Props) {
+  // IMPORTANT: evaluate Date.now() per render, NOT at module scope.
+  // With output: 'export', module scope evaluates once at build time and
+  // freezes the cutoff forever, hiding still-fresh breaking news.
+  const now = Date.now();
+
   // Only articles explicitly marked breaking AND published within 24 hours
   const recentBreaking = articles.filter((a) => {
     if (!a.breaking || !a.publishedAt) return false;
-    return NOW - new Date(a.publishedAt).getTime() < TWENTY_FOUR_HOURS;
+    return now - new Date(a.publishedAt).getTime() < TWENTY_FOUR_HOURS;
   });
 
   // Strict deduplication

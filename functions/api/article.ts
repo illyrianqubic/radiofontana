@@ -17,8 +17,14 @@ const QUERY = `*[_type == "post" && slug.current == $slug && !(_id in path("draf
   "slug": slug.current,
   title,
   excerpt,
-  content,
-  "category": coalesce(category->title, "Lajme"),
+  content[]{
+    ...,
+    _type == "image" => {
+      ...,
+      "asset": asset->{ _id, _ref, url, metadata }
+    }
+  },
+  "category": coalesce(category->title, "Politikë"),
   "author": coalesce(author->name, "Radio Fontana"),
   publishedAt,
   "featured": coalesce(featured, false),

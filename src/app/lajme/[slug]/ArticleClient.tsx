@@ -65,14 +65,16 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
       const hasInitial = Boolean(initialArticle && initialArticle.slug === resolvedSlug);
 
       if (hasInitial && initialArticle) {
-        // Use static data immediately, then refresh from API so published edits
-        // like tags appear without requiring a new site build.
+        // Use the SSG-rendered article and skip the redundant /api/article fetch.
+        // This avoids a duplicate Sanity round-trip on every page view.
         setArticle(initialArticle);
         setLoading(false);
-      } else {
-        setArticle(null);
-        setLoading(true);
+        await fetchRelated(initialArticle);
+        return;
       }
+
+      setArticle(null);
+      setLoading(true);
 
       try {
         const response = await fetch(`/api/article?slug=${encodeURIComponent(resolvedSlug)}`);
@@ -86,17 +88,11 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
 
         if (data) {
           await fetchRelated(data);
-        } else if (hasInitial && initialArticle) {
-          await fetchRelated(initialArticle);
         }
       } catch {
         if (!cancelled) {
-          if (!hasInitial) {
-            setArticle(null);
-            setRelated([]);
-          } else if (initialArticle) {
-            await fetchRelated(initialArticle);
-          }
+          setArticle(null);
+          setRelated([]);
         }
       } finally {
         if (!cancelled) {

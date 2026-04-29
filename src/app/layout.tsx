@@ -232,6 +232,39 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="min-h-screen flex flex-col antialiased">
+        {/* GDPR: set Consent Mode v2 defaults to DENIED before GA loads.
+            CookieConsentBanner calls gtag('consent','update', ...) once the
+            user accepts. Without acceptance, GA collects no identifiable
+            data (storage denied, ads denied). */}
+        <Script id="gtag-consent-default" strategy="beforeInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+            gtag('consent', 'default', {
+              'ad_storage': 'denied',
+              'ad_user_data': 'denied',
+              'ad_personalization': 'denied',
+              'analytics_storage': 'denied',
+              'functionality_storage': 'denied',
+              'personalization_storage': 'denied',
+              'security_storage': 'granted',
+              'wait_for_update': 500
+            });
+            try {
+              if (window.localStorage.getItem('rf_cookie_consent') === 'accepted') {
+                gtag('consent', 'update', {
+                  'ad_storage': 'granted',
+                  'ad_user_data': 'granted',
+                  'ad_personalization': 'granted',
+                  'analytics_storage': 'granted',
+                  'functionality_storage': 'granted',
+                  'personalization_storage': 'granted'
+                });
+              }
+            } catch (e) {}
+          `}
+        </Script>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-9D4QPTBGCQ"
           strategy="lazyOnload"
@@ -241,7 +274,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-9D4QPTBGCQ');
+            gtag('config', 'G-9D4QPTBGCQ', { 'anonymize_ip': true });
           `}
         </Script>
         {/* Skip to main content for accessibility + SEO */}

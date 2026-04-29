@@ -37,7 +37,7 @@ export async function GET() {
          publishedAt,
          _updatedAt,
          "author": coalesce(author->name, "Radio Fontana"),
-         "category": coalesce(category->title, "Lajme"),
+         "category": coalesce(category->title, "Politikë"),
          "imageUrl": coalesce(mainImage.asset->url, "")
        }`,
     );

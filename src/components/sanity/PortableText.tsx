@@ -78,8 +78,11 @@ const components: Partial<PortableTextReactComponents> = {
   },
   types: {
     image: ({ value }) => {
+      // Only render if we have a real URL — never fall back to a Sanity asset
+      // _ref like "image-abc-1200x800-jpg", which is not a URL.
+      const candidate: unknown = value?.asset?.url;
       const src: string | undefined =
-        value?.asset?.url ?? value?.asset?._ref;
+        typeof candidate === 'string' && /^https?:\/\//.test(candidate) ? candidate : undefined;
       if (!src) return null;
       const caption = typeof value?.caption === 'string' && value.caption.trim().length > 0
         ? value.caption.trim()
