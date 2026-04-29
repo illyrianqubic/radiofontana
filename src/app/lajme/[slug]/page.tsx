@@ -65,7 +65,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const articleUrl = `${SITE_URL}/lajme/${slug}`;
-  const ogImage = article.imageUrl || `${SITE_URL}/logortvfontana.jpg`;
+  // Build a 1200x630 cropped JPEG via Sanity CDN params for the perfect OG
+  // card. Falling back to the site logo when the article has no main image.
+  // (WhatsApp/Facebook prefer JPEG and an absolute URL — Sanity URLs are
+  // already absolute; we only resize/crop them.)
+  let ogImage = `${SITE_URL}/logortvfontana.jpg`;
+  if (article.imageUrl) {
+    try {
+      const u = new URL(article.imageUrl);
+      if (u.hostname.endsWith('sanity.io')) {
+        u.searchParams.set('w', '1200');
+        u.searchParams.set('h', '630');
+        u.searchParams.set('fit', 'crop');
+        u.searchParams.set('crop', 'entropy');
+        u.searchParams.set('fm', 'jpg');
+        u.searchParams.set('q', '82');
+        u.searchParams.set('auto', 'format');
+        ogImage = u.toString();
+      } else {
+        ogImage = article.imageUrl;
+      }
+    } catch {
+      ogImage = article.imageUrl;
+    }
+  }
 
   return {
     title: article.title,
