@@ -74,16 +74,11 @@ body {
   text-wrap: pretty;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root,
-  html,
-  body,
-  #__next,
-  #root {
-    background-color: #ffffff;
-    color-scheme: light;
-  }
-}
+/* Force light mode everywhere — we deliberately do NOT honour the user's
+   system dark-mode setting. Some in-app browsers (WhatsApp, Facebook,
+   Instagram) tinted the background black when no color-scheme was set.
+   The :root color-scheme above already handles this; we keep no
+   prefers-color-scheme: dark override so colours can never be inverted. */
 
 img,
 video,

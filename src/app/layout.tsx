@@ -216,8 +216,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const orgSchemaWithSocial = { ...orgSchema, sameAs: socialSameAs };
   const radioSchemaWithSocial = { ...radioStationSchema, sameAs: [settings.facebookUrl] };
   return (
-    <html lang="sq" className={geist.className} suppressHydrationWarning>
+    <html lang="sq" className={geist.className} style={{ colorScheme: 'light' }} suppressHydrationWarning>
       <head>
+        {/* Force light mode regardless of OS dark-mode preference. Some
+            in-app browsers (WhatsApp, Facebook, Instagram) tint the page
+            background based on the system theme when no color-scheme is
+            declared, which produces a black flash on our white site. */}
+        <meta name="color-scheme" content="light" />
+        <meta name="supported-color-schemes" content="light" />
         {/* Preconnect to external origins for performance */}
         <link rel="preconnect" href="https://cdn.sanity.io" />
         <link rel="dns-prefetch" href="https://cdn.sanity.io" />
