@@ -228,7 +228,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <meta name="color-scheme" content="only light" />
         <meta name="supported-color-schemes" content="light" />
         <style
-          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{
             __html:
               'html{color-scheme:only light !important;background-color:#ffffff !important;}' +

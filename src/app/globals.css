@@ -278,6 +278,41 @@ textarea {
   .ticker-animate { animation: none; }
 }
 
+/* ── /live page intro animations (replaces framer-motion) ── */
+@keyframes liveFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes liveSlideUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes liveScaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes liveBar {
+  0%, 100% { height: 20%; }
+  20%      { height: 100%; }
+  40%      { height: 40%; }
+  60%      { height: 80%; }
+  80%      { height: 30%; }
+}
+.live-fade-in   { animation: liveFadeIn 0.45s ease-out both; }
+.live-slide-up  { animation: liveSlideUp 0.45s ease-out both; }
+.live-scale-in  { animation: liveScaleIn 0.45s ease-out both; }
+.live-bar       { animation: liveBar 0.8s ease-in-out infinite; height: 40%; }
+.live-delay-150 { animation-delay: 0.15s; }
+.live-delay-220 { animation-delay: 0.22s; }
+.live-delay-300 { animation-delay: 0.30s; }
+.live-delay-380 { animation-delay: 0.38s; }
+@media (prefers-reduced-motion: reduce) {
+  .live-fade-in,
+  .live-slide-up,
+  .live-scale-in,
+  .live-bar { animation: none; opacity: 1; transform: none; }
+}
+
 /* ── Section headings (underline style) ── */
 .section-title {
   position: relative;

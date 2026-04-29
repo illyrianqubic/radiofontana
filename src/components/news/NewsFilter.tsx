@@ -24,9 +24,11 @@ export default function NewsFilter({
 
   const [query, setQuery] = useState(activeQuery);
 
+  // Sync the input back to the parent when the parent's activeQuery changes
+  // (e.g. URL state restored on back/forward). Direct setState — the
+  // previous requestAnimationFrame deferral added a frame of input lag.
   useEffect(() => {
-    const raf = requestAnimationFrame(() => setQuery(activeQuery));
-    return () => cancelAnimationFrame(raf);
+    setQuery(activeQuery);
   }, [activeQuery]);
 
   const handleSearch = (e: React.FormEvent) => {

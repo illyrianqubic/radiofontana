@@ -1,53 +1,19 @@
 'use client';
 
-import { useEffect, useState } from 'react';
 import { Radio, Play, Pause, Clock, Volume2, Wifi } from 'lucide-react';
-import { motion } from 'framer-motion';
 import { useAudioPlayer } from '@/lib/AudioPlayerContext';
-import { LiveStream } from '@/lib/types';
 
-const FALLBACK_FB_URL =
-  'https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Frtvfontanalive&show_text=false&autoplay=true&width=1280';
-
-function buildFbEmbedUrl(facebookUrl: string | null): string {
-  if (!facebookUrl) return FALLBACK_FB_URL;
-  return (
-    `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(facebookUrl)}` +
-    `&show_text=false&autoplay=true&width=1280`
-  );
-}
+// Note: the Facebook live embed and its /api/livestream fetch were removed
+// — the iframe was permanently commented out and the data was unused.
+// Dropping the dead code also removes framer-motion from this page (~50 KB
+// gzip on first load); intro animations now use lightweight CSS keyframes
+// declared in globals.css.
 
 export default function LivePlayer() {
   const { playing, loading, error, togglePlay, prewarm } = useAudioPlayer();
-  const [stream, setStream] = useState<LiveStream | null>(null);
-
-  useEffect(() => {
-    fetch('/api/livestream')
-      .then((r) => r.json())
-      .then((data: LiveStream) => setStream(data))
-      .catch(() => {});
-  }, []);
 
   return (
     <div className="min-h-screen bg-slate-950 page-shell">
-
-      {/* Facebook Live embed — commented out, uncomment to re-enable
-      <div className="w-full bg-black/90 border-b border-white/10">
-        <div className="mx-auto w-full max-w-[1180px] overflow-hidden sm:rounded-b-2xl sm:border-x sm:border-b sm:border-white/10">
-          <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-            <iframe
-              src={buildFbEmbedUrl(stream?.facebookUrl ?? null)}
-              style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', border: 'none', overflow: 'hidden' }}
-              scrolling="no"
-              frameBorder={0}
-              allowFullScreen
-              allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
-            />
-          </div>
-        </div>
-      </div>
-      */}
-
       {/* ── Radio Hero ── */}
       <div className="relative overflow-hidden">
         {/* Background glows */}
@@ -59,12 +25,7 @@ export default function LivePlayer() {
         <div className="site-container relative z-10 flex flex-col items-center text-center text-white pt-14 md:pt-20 lg:pt-24 pb-16 md:pb-20 lg:pb-24">
 
           {/* Station icon */}
-          <motion.div
-            initial={{ scale: 0.75, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.45, ease: 'easeOut' }}
-            className="mb-8 sm:mb-10 relative"
-          >
+          <div className="mb-8 sm:mb-10 relative live-fade-in">
             <div className={`w-20 h-20 sm:w-24 sm:h-24 rounded-2xl flex items-center justify-center transition-all duration-500 ${
               playing
                 ? 'bg-[#e63946]/15 border border-[#e63946]/35 shadow-[0_0_48px_rgba(230,57,70,0.20)]'
@@ -75,15 +36,10 @@ export default function LivePlayer() {
             {playing && (
               <span className="absolute -inset-2 rounded-[1.4rem] border border-[#e63946]/20 animate-ping opacity-30" />
             )}
-          </motion.div>
+          </div>
 
           {/* Status badge */}
-          <motion.div
-            initial={{ y: 10, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.15 }}
-            className="mb-5"
-          >
+          <div className="mb-5 live-slide-up live-delay-150">
             {error ? (
               <span className="inline-flex items-center gap-2 bg-slate-800/80 text-slate-300 text-[11px] md:text-sm font-semibold px-4 py-1.5 rounded-full tracking-[0.16em] uppercase">
                 <span className="w-1.5 h-1.5 bg-slate-500 rounded-full" />
@@ -100,15 +56,10 @@ export default function LivePlayer() {
                 Ndal
               </span>
             )}
-          </motion.div>
+          </div>
 
           {/* Title + subtitle */}
-          <motion.div
-            initial={{ y: 16, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.22 }}
-            className="mb-8 sm:mb-10"
-          >
+          <div className="mb-8 sm:mb-10 live-slide-up live-delay-220">
             <h1 className="ipad-page-title text-[2rem] md:text-[2.3rem] lg:text-[2.8rem] xl:text-[3rem] 2xl:text-[3.4rem] 3xl:text-[3.8rem] font-extrabold tracking-tight mb-2 leading-none break-words">
               Radio Fontana 98.8 FM
             </h1>
@@ -118,20 +69,16 @@ export default function LivePlayer() {
             <p className="text-slate-400 text-sm md:text-base 2xl:text-lg mt-1">
               Transmetim 24/7 me cilësi të lartë
             </p>
-          </motion.div>
+          </div>
 
           {/* Play button */}
-          <motion.button
+          <button
+            type="button"
             onClick={togglePlay}
             onPointerDown={prewarm}
             onPointerEnter={prewarm}
             onTouchStart={prewarm}
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 0.3 }}
-            whileHover={{ scale: 1.06 }}
-            whileTap={{ scale: 0.95 }}
-            className={`touch-target w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full flex items-center justify-center mb-10 sm:mb-12 transition-colors duration-300 ${
+            className={`touch-target w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full flex items-center justify-center mb-10 sm:mb-12 transition-transform duration-200 hover:scale-105 active:scale-95 live-scale-in live-delay-300 ${
               error
                 ? 'bg-slate-700 hover:bg-slate-600 text-slate-300 shadow-2xl'
                 : playing
@@ -149,33 +96,23 @@ export default function LivePlayer() {
             ) : (
               <Play className="w-7 h-7 ml-1" />
             )}
-          </motion.button>
+          </button>
 
-          {/* Waveform (playing only) */}
+          {/* Waveform (playing only) — pure CSS, no framer-motion */}
           {playing && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="flex items-end justify-center gap-[3px] h-7 sm:h-9 mb-10 sm:mb-12"
-            >
-              {[...Array(18)].map((_, i) => (
-                <motion.div
+            <div className="flex items-end justify-center gap-[3px] h-7 sm:h-9 mb-10 sm:mb-12 live-fade-in">
+              {Array.from({ length: 18 }, (_, i) => (
+                <span
                   key={i}
-                  className="w-[3px] bg-[#e63946] rounded-full"
-                  animate={{ height: ['20%', '100%', '40%', '80%', '30%'] }}
-                  transition={{ duration: 0.8, repeat: Infinity, delay: i * 0.045, ease: 'easeInOut' }}
+                  className="w-[3px] bg-[#e63946] rounded-full live-bar"
+                  style={{ animationDelay: `${(i * 0.045).toFixed(3)}s` }}
                 />
               ))}
-            </motion.div>
+            </div>
           )}
 
           {/* Info cards */}
-          <motion.div
-            initial={{ y: 16, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.38 }}
-            className="grid grid-cols-3 gap-3 md:gap-4 w-full max-w-xs md:max-w-2xl"
-          >
+          <div className="grid grid-cols-3 gap-3 md:gap-4 w-full max-w-xs md:max-w-2xl live-slide-up live-delay-380">
             <div className="bg-white/[0.04] border border-white/[0.07] rounded-2xl px-3 md:px-5 py-4 md:py-5 flex flex-col items-center gap-2">
               <Clock className="w-4 h-4 text-slate-500" />
               <p className="text-lg md:text-2xl font-bold text-white leading-none">24/7</p>
@@ -191,11 +128,10 @@ export default function LivePlayer() {
               <p className="text-lg md:text-2xl font-bold text-white leading-none">FM</p>
               <p className="text-xs md:text-sm text-slate-400 uppercase tracking-widest font-bold">98.8</p>
             </div>
-          </motion.div>
+          </div>
 
         </div>
       </div>
     </div>
   );
 }
-
