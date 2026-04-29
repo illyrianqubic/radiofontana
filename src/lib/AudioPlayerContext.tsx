@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useRef, useState, useEffect, useCallback, ReactNode } from 'react';
 
-const STREAM_URL = 'https://live.radiostreaming.al:8010/stream.mp3';
+const DEFAULT_STREAM_URL = 'https://live.radiostreaming.al:8010/stream.mp3';
 
 interface AudioPlayerContextType {
   playing: boolean;
@@ -17,7 +17,17 @@ interface AudioPlayerContextType {
 
 const AudioPlayerContext = createContext<AudioPlayerContextType | null>(null);
 
-export function AudioPlayerProvider({ children }: { children: ReactNode }) {
+export function AudioPlayerProvider({
+  children,
+  streamUrl,
+}: {
+  children: ReactNode;
+  /** Optional override coming from siteSettings (audit P3-L10). */
+  streamUrl?: string;
+}) {
+  const STREAM_URL = streamUrl || DEFAULT_STREAM_URL;
+  const streamUrlRef = useRef(STREAM_URL);
+  streamUrlRef.current = STREAM_URL;
   const [playing, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
@@ -57,7 +67,7 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
       setTimeout(() => {
         const a = audioRef.current;
         if (a && wantPlayRef.current) {
-          a.src = STREAM_URL;
+          a.src = streamUrlRef.current;
           a.load();
           a.play().catch(() => {
             setLoading(false);
@@ -108,7 +118,7 @@ export function AudioPlayerProvider({ children }: { children: ReactNode }) {
       wantPlayRef.current = true;
       setError(false);
       setLoading(true);
-      audio.src = STREAM_URL;
+      audio.src = streamUrlRef.current;
       audio.volume = muted ? 0 : volume;
       audio.load();
       audio.play().catch(() => {

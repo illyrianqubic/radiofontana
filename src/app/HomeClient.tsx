@@ -5,6 +5,7 @@ import { Article, CATEGORIES, CATEGORY_COLORS } from '@/lib/types';
 import NewsCard from '@/components/news/NewsCard';
 import BreakingNewsTicker from '@/components/layout/BreakingNewsTicker';
 import TimeAgo from '@/components/shared/TimeAgo';
+import WeatherWidget from '@/components/home/WeatherWidget';
 import { optimizeImageUrl } from '@/lib/utils';
 
 interface HomeClientProps {
@@ -87,7 +88,8 @@ export default function HomeClient({ articles }: HomeClientProps) {
             </div>
 
             {/* Most Read sidebar */}
-            <aside className="hidden md:block md:col-span-3 3xl:col-span-4">
+            <aside className="hidden md:block md:col-span-3 3xl:col-span-4 space-y-5">
+              <WeatherWidget />
               <div className="bg-white rounded-xl border border-slate-200/70 overflow-hidden shadow-[0_16px_36px_rgba(15,23,42,0.12)] sticky top-24">
                 <div className="flex items-center gap-2.5 px-4 py-3.5 bg-slate-900 text-white">
                   <TrendingUp className="w-3.5 h-3.5 text-red-400" />

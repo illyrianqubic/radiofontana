@@ -49,3 +49,17 @@ export const ARTICLE_BY_SLUG_QUERY = `
     "imageUrl": coalesce(mainImage.asset->url, "/logortvfontana.jpg")
   }
 `;
+
+// Single-document siteSettings — used to wire social links + radio stream
+// URL through Sanity instead of hardcoding them (audit P3-L10).
+export const SITE_SETTINGS_QUERY = `
+  *[_type == "siteSettings"][0] {
+    title,
+    description,
+    facebookUrl,
+    instagramUrl,
+    tiktokUrl,
+    youtubeUrl,
+    radioStreamUrl
+  }
+`;

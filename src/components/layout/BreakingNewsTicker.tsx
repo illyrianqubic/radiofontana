@@ -31,7 +31,7 @@ export default function BreakingNewsTicker({ articles }: Props) {
   if (items.length === 0) return null;
 
   return (
-    <div className="w-full bg-[#c0152a] text-white overflow-hidden" role="marquee" aria-label="Lajmet e fundit">
+    <div className="w-full bg-[#c0152a] text-white overflow-hidden" role="region" aria-label="Lajme të fundit">
       <div className="flex items-stretch h-11 md:h-[52px]">
 
         {/* Label */}

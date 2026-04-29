@@ -90,8 +90,8 @@ export default function LegalPageLayout({ title, summary, lastUpdated, sections 
 
             {section.paragraphs && section.paragraphs.length > 0 ? (
               <div className="space-y-3 text-sm sm:text-base 2xl:text-lg leading-relaxed text-slate-700 break-words">
-                {section.paragraphs.map((paragraph) => (
-                  <p key={paragraph}>{renderWithEmailLinks(paragraph)}</p>
+                {section.paragraphs.map((paragraph, idx) => (
+                  <p key={idx}>{renderWithEmailLinks(paragraph)}</p>
                 ))}
               </div>
             ) : null}

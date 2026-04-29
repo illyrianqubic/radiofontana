@@ -26,6 +26,11 @@ export default defineType({
       type: 'url',
     }),
     defineField({
+      name: 'tiktokUrl',
+      title: 'TikTok URL',
+      type: 'url',
+    }),
+    defineField({
       name: 'youtubeUrl',
       title: 'YouTube URL',
       type: 'url',

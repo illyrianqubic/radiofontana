@@ -23,7 +23,17 @@ const footerCategories = [
   { label: 'Nga Bota', dotClass: 'bg-indigo-500' },
 ];
 
-export default function Footer() {
+export default function Footer({
+  facebookUrl = 'https://www.facebook.com/rtvfontanalive',
+  instagramUrl = 'https://www.instagram.com/rtvfontana/',
+  youtubeUrl = 'https://www.youtube.com/@RTVFontana',
+  tiktokUrl = 'https://www.tiktok.com/@rtvfontanalive',
+}: {
+  facebookUrl?: string;
+  instagramUrl?: string;
+  youtubeUrl?: string;
+  tiktokUrl?: string;
+} = {}) {
   const pathname = usePathname();
 
   if (pathname.startsWith('/studio')) {
@@ -52,7 +62,7 @@ export default function Footer() {
 
             <div className="flex gap-2.5">
               <a
-                href="https://www.facebook.com/rtvfontanalive"
+                href={facebookUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group touch-target w-11 h-11 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-slate-300 hover:text-[#1877F2] hover:border-[#1877F2] hover:shadow-[0_0_0_4px_rgba(24,119,242,0.20)] transition-none"
@@ -61,7 +71,7 @@ export default function Footer() {
                 <FacebookIcon className="w-5 h-5" />
               </a>
               <a
-                href="https://www.instagram.com/rtvfontana/"
+                href={instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group touch-target w-11 h-11 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-slate-300 hover:text-[#dd2a7b] hover:border-[#dd2a7b] hover:shadow-[0_0_0_4px_rgba(221,42,123,0.20)] transition-none"
@@ -70,7 +80,7 @@ export default function Footer() {
                 <InstagramIcon className="w-5 h-5" />
               </a>
               <a
-                href="https://www.youtube.com/@RTVFontana"
+                href={youtubeUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group touch-target w-11 h-11 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-slate-300 hover:text-[#ff0000] hover:border-[#ff0000] hover:shadow-[0_0_0_4px_rgba(255,0,0,0.20)] transition-none"
@@ -79,7 +89,7 @@ export default function Footer() {
                 <YoutubeIcon className="w-5 h-5" />
               </a>
               <a
-                href="https://www.tiktok.com/@rtvfontanalive"
+                href={tiktokUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group touch-target w-11 h-11 rounded-xl bg-slate-900 border border-slate-700 flex items-center justify-center text-slate-300 hover:text-white hover:border-white hover:shadow-[0_0_0_4px_rgba(241,245,249,0.16)] transition-none"

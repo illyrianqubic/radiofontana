@@ -1,7 +1,7 @@
 // Cloudflare Pages Function: /api/articles
 // Fetches published posts from Sanity via the GROQ HTTP API.
 
-import { corsHeaders, rateLimit, tooManyRequests } from './_shared';
+import { corsHeaders, fetchWithTimeout, rateLimit, tooManyRequests } from './_shared';
 
 interface Env {
   NEXT_PUBLIC_SANITY_PROJECT_ID: string;
@@ -54,7 +54,7 @@ export async function onRequestGet(context: {
     `?query=${encodeURIComponent(QUERY)}&%24limit=${limit}`;
 
   try {
-    const res = await fetch(url, {
+    const res = await fetchWithTimeout(url, {
       headers: { Accept: 'application/json' },
     });
 

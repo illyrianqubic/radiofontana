@@ -75,3 +75,19 @@ export function tooManyRequests(rl: RateLimitResult): Response {
     },
   });
 }
+
+// fetch() wrapper with an 8 s AbortController so a slow Sanity API can't
+// hold a Worker open for the full 30 s subrequest budget (audit P3-M13).
+export async function fetchWithTimeout(
+  input: string,
+  init: RequestInit = {},
+  timeoutMs = 8000,
+): Promise<Response> {
+  const ctrl = new AbortController();
+  const id = setTimeout(() => ctrl.abort(), timeoutMs);
+  try {
+    return await fetch(input, { ...init, signal: ctrl.signal });
+  } finally {
+    clearTimeout(id);
+  }
+}

@@ -1,7 +1,7 @@
 // Cloudflare Pages Function: /api/livestream
 // Returns the current live stream status from Sanity.
 
-import { corsHeaders, rateLimit, tooManyRequests } from './_shared';
+import { corsHeaders, fetchWithTimeout, rateLimit, tooManyRequests } from './_shared';
 
 interface Env {
   NEXT_PUBLIC_SANITY_PROJECT_ID: string;
@@ -39,7 +39,7 @@ export async function onRequestGet(context: {
     `?query=${encodeURIComponent(QUERY)}`;
 
   try {
-    const res = await fetch(url, {
+    const res = await fetchWithTimeout(url, {
       headers: { Accept: 'application/json' },
     });
 

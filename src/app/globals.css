@@ -494,9 +494,19 @@ input[type="range"]:not(.volume-slider)::-webkit-slider-thumb:hover { transform:
   contain: layout style;
 }
 
-/* ── Reduced motion: disable ALL infinite animations ──
-   Honors WCAG SC 2.3.3 + addresses audit P2-C4 / P3-M8. */
+/* ── Reduced motion: disable ALL animations + transitions ──
+   Honors WCAG SC 2.3.3 + addresses audit P2-C4 / P3-M8. The catch-all
+   selector covers every remaining animation/transition without needing
+   to maintain an explicit allow-list. */
 @media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
   .ticker-animate,
   .gradient-bar,
   .live-glow,
@@ -505,11 +515,6 @@ input[type="range"]:not(.volume-slider)::-webkit-slider-thumb:hover { transform:
   .animate-spin,
   .animate-ping {
     animation: none !important;
-  }
-  .img-zoom,
-  .news-card,
-  .card-accent::after {
-    transition: none !important;
   }
   .group:hover .img-zoom { transform: none !important; }
 }

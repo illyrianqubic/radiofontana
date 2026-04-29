@@ -127,28 +127,45 @@ export default function Navbar() {
     };
   }, [clearDropdownCloseTimer]);
 
-  // Fetch live status from Sanity via Cloudflare Function
+  // Fetch live status from Sanity via Cloudflare Function.
+  // AbortController + in-flight flag avoid duplicate requests if the effect
+  // re-fires (audit P2-M4).
   useEffect(() => {
+    const ctrl = new AbortController();
+    let inFlight = false;
+    let cancelled = false;
+
     const loadLiveStatus = () => {
-      fetch('/api/livestream')
+      if (inFlight || cancelled) return;
+      inFlight = true;
+      fetch('/api/livestream', { signal: ctrl.signal })
         .then((r) => r.json())
-        .then((data: { isLive?: boolean }) => setIsLive(data?.isLive === true))
-        .catch(() => {});
+        .then((data: { isLive?: boolean }) => {
+          if (!cancelled) setIsLive(data?.isLive === true);
+        })
+        .catch(() => {})
+        .finally(() => { inFlight = false; });
     };
 
+    let idleId: number | undefined;
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
     if ('requestIdleCallback' in window) {
-      const idleId = (window as Window & {
-        requestIdleCallback: (callback: IdleRequestCallback, options?: IdleRequestOptions) => number;
-        cancelIdleCallback: (id: number) => void;
+      idleId = (window as Window & {
+        requestIdleCallback: (cb: IdleRequestCallback, opts?: IdleRequestOptions) => number;
       }).requestIdleCallback(loadLiveStatus, { timeout: 2500 });
-      return () =>
-        (window as Window & {
-          cancelIdleCallback: (id: number) => void;
-        }).cancelIdleCallback(idleId);
+    } else {
+      timeoutId = setTimeout(loadLiveStatus, 1000);
     }
 
-    const timeoutId = setTimeout(loadLiveStatus, 1000);
-    return () => clearTimeout(timeoutId);
+    return () => {
+      cancelled = true;
+      ctrl.abort();
+      if (idleId !== undefined && 'cancelIdleCallback' in window) {
+        (window as Window & { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(idleId);
+      }
+      if (timeoutId !== undefined) clearTimeout(timeoutId);
+    };
   }, []);
 
   const handleSearch = (e: React.FormEvent) => {

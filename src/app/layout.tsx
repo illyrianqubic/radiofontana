@@ -7,6 +7,7 @@ import Footer from '@/components/layout/Footer';
 import RadioPlayer from '@/components/layout/RadioPlayer';
 import CookieConsentBanner from '@/components/layout/CookieConsentBanner';
 import { AudioPlayerProvider } from '@/lib/AudioPlayerContext';
+import { fetchSiteSettings } from '@/sanity/siteSettings';
 
 const geist = Geist({
   subsets: ['latin'],
@@ -203,7 +204,17 @@ const websiteSchema = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  // Wire social + stream URLs from Sanity siteSettings (audit P3-L10).
+  const settings = await fetchSiteSettings();
+  const socialSameAs = [
+    settings.facebookUrl,
+    settings.instagramUrl,
+    settings.youtubeUrl,
+    settings.tiktokUrl,
+  ];
+  const orgSchemaWithSocial = { ...orgSchema, sameAs: socialSameAs };
+  const radioSchemaWithSocial = { ...radioStationSchema, sameAs: [settings.facebookUrl] };
   return (
     <html lang="sq" className={geist.className} suppressHydrationWarning>
       <head>
@@ -220,11 +231,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Global JSON-LD structured data */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgSchemaWithSocial) }}
         />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(radioStationSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(radioSchemaWithSocial) }}
         />
         <script
           type="application/ld+json"
@@ -277,17 +288,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             gtag('config', 'G-9D4QPTBGCQ', { 'anonymize_ip': true });
           `}
         </Script>
-        {/* Skip to main content for accessibility + SEO */}
+        {/* Skip to main content for accessibility + SEO (audit P3-M7) */}
         <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:z-50 focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-red-600 focus:text-white focus:rounded-lg focus:font-semibold"
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:z-[1000] focus:top-4 focus:left-4 focus:px-4 focus:py-2 focus:bg-red-600 focus:text-white focus:rounded-lg focus:font-semibold focus:shadow-lg"
         >
-          Kaло tek përmbajtja kryesore
+          Kalo te përmbajtja
         </a>
-        <AudioPlayerProvider>
+        <AudioPlayerProvider streamUrl={settings.radioStreamUrl}>
           <Navbar />
-          <main id="main-content" className="flex-1 pb-24 sm:pb-28">{children}</main>
-          <Footer />
+          <main id="main" className="flex-1 pb-24 sm:pb-28">{children}</main>
+          <Footer
+            facebookUrl={settings.facebookUrl}
+            instagramUrl={settings.instagramUrl}
+            youtubeUrl={settings.youtubeUrl}
+            tiktokUrl={settings.tiktokUrl}
+          />
           <CookieConsentBanner />
           <RadioPlayer />
         </AudioPlayerProvider>

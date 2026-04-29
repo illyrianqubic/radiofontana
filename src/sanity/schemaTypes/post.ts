@@ -23,17 +23,26 @@ export default defineType({
       title: 'Hyrja / Resumeja',
       type: 'text',
       rows: 3,
+      validation: (rule) =>
+        rule
+          .required()
+          .min(40)
+          .max(300)
+          .warning('Mbaj përshkrimin midis 40 dhe 300 karaktere për SEO më të mirë.'),
     }),
     defineField({
       name: 'mainImage',
       title: 'Imazhi kryesor',
       type: 'image',
       options: { hotspot: true },
+      validation: (rule) => rule.required(),
       fields: [
         defineField({
           name: 'alt',
           type: 'string',
           title: 'Teksti alternativ (alt)',
+          validation: (rule) =>
+            rule.required().warning('Teksti alt është i nevojshëm për aksesueshmëri.'),
         }),
       ],
     }),
@@ -41,6 +50,7 @@ export default defineType({
       name: 'content',
       title: 'Përmbajtja',
       type: 'array',
+      validation: (rule) => rule.required().min(1),
       of: [
         { type: 'block' },
         {
@@ -61,17 +71,20 @@ export default defineType({
       title: 'Kategoria',
       type: 'reference',
       to: [{ type: 'category' }],
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'author',
       title: 'Autori',
       type: 'reference',
       to: [{ type: 'author' }],
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'publishedAt',
       title: 'Data e publikimit',
       type: 'datetime',
+      validation: (rule) => rule.required(),
       initialValue: () => new Date().toISOString(),
     }),
     defineField({

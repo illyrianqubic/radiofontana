@@ -120,6 +120,23 @@ function savePS(s: PS) {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); } catch { /* ignore */ }
 }
 
+// Drop any orphaned keys from previous RadioPlayer schemas so the user's
+// localStorage doesn't accumulate dead entries (audit P3-L9). Runs once
+// per page load before we read the current key.
+function cleanupOrphanedKeys() {
+  try {
+    const KEEP = new Set([STORAGE_KEY]);
+    const dead: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (k && /^rf_player(_v\d+)?$/.test(k) && !KEEP.has(k)) {
+        dead.push(k);
+      }
+    }
+    dead.forEach((k) => localStorage.removeItem(k));
+  } catch { /* ignore */ }
+}
+
 export default function RadioPlayer() {
   const { playing, loading, error, volume, muted, setVolume, setMuted, togglePlay } = useAudioPlayer();
   const pathname = usePathname();
@@ -131,6 +148,7 @@ export default function RadioPlayer() {
 
   // Mark client mount to avoid SSR/client mismatch on fixed positioning.
   useEffect(() => {
+    cleanupOrphanedKeys();
     const raf = requestAnimationFrame(() => setMounted(true));
     return () => cancelAnimationFrame(raf);
   }, []);
