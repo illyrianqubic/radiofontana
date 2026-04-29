@@ -33,7 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly' as const,
       priority: 0.8,
     }));
-    if (list.length > 0) {
+    if (list.length > 0 && list[0]) {
       latestArticleUpdate = new Date(list[0]._updatedAt ?? list[0].publishedAt);
     }
   } catch {

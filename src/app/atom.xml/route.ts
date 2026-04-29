@@ -46,7 +46,7 @@ export async function GET() {
   }
 
   const updated =
-    articles.length > 0
+    articles.length > 0 && articles[0]
       ? new Date(articles[0]._updatedAt ?? articles[0].publishedAt).toISOString()
       : new Date().toISOString();
 
