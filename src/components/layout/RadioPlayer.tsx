@@ -149,6 +149,19 @@ export default function RadioPlayer() {
   // Mark client mount to avoid SSR/client mismatch on fixed positioning.
   useEffect(() => {
     cleanupOrphanedKeys();
+    // On touch/mobile viewports, ignore any persisted `dragged: true` state
+    // from a previous desktop session. Mobile users (especially in iOS
+    // WhatsApp's in-app browser) can't usefully drag the player and a
+    // stale `y` from a 1080p desktop layout would land the player in the
+    // middle of the small mobile viewport instead of pinned to the bottom.
+    try {
+      const isTouch =
+        typeof window !== 'undefined' &&
+        (window.matchMedia?.('(pointer: coarse)').matches || window.innerWidth < 768);
+      if (isTouch) {
+        setPs((prev) => (prev.dragged ? { ...prev, dragged: false, x: 0, y: 0 } : prev));
+      }
+    } catch { /* ignore */ }
     const raf = requestAnimationFrame(() => setMounted(true));
     return () => cancelAnimationFrame(raf);
   }, []);

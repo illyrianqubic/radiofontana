@@ -219,11 +219,22 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="sq" className={geist.className} style={{ colorScheme: 'only light' }} suppressHydrationWarning>
       <head>
         {/* Force light mode regardless of OS dark-mode preference. Some
-            in-app browsers (WhatsApp, Facebook, Instagram, Android
-            WebView) auto-darken pages on dark-mode devices unless we
-            explicitly opt out with `color-scheme: only light`. */}
+            in-app browsers (WhatsApp Android WebView, Facebook, Instagram)
+            auto-darken pages on dark-mode devices unless we explicitly opt
+            out with `color-scheme: only light` AND set the background
+            BEFORE the external stylesheet is fetched. The inline <style>
+            below is render-blocking and runs before the first paint, so
+            Android's auto-dark heuristic never engages. */}
         <meta name="color-scheme" content="only light" />
         <meta name="supported-color-schemes" content="light" />
+        <style
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html:
+              'html{color-scheme:only light !important;background-color:#ffffff !important;}' +
+              'body{color-scheme:only light !important;background-color:#ffffff !important;color:#0d1117 !important;}',
+          }}
+        />
         {/* Preconnect to external origins for performance */}
         <link rel="preconnect" href="https://cdn.sanity.io" />
         <link rel="dns-prefetch" href="https://cdn.sanity.io" />
