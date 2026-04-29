@@ -252,7 +252,11 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
                 <button
                   type="button"
                   onClick={() => {
-                    const url = window.location.href;
+                    // Always copy the canonical public URL — never window.location.href
+                    // (which could carry query strings, hash, or — on certain wrapped
+                    // contexts — an internal scheme). Title is intentionally NOT
+                    // included; only the clean URL goes to the clipboard.
+                    const url = `https://radiofontana.org/lajme/${article.slug}`;
                     const doSet = () => { setCopied(true); setTimeout(() => setCopied(false), 2500); };
                     const fallback = () => {
                       try {
