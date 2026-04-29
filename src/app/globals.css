@@ -15,7 +15,11 @@
   --foreground:    #0d1117;
   --shadow-card:   0 10px 28px rgba(15,23,42,0.08), 0 1px 3px rgba(15,23,42,0.08);
   --shadow-hover:  0 18px 44px rgba(15,23,42,0.16), 0 6px 18px rgba(220,38,38,0.10);
-  color-scheme: light;
+  /* `only light` is the documented opt-out from Chrome / Android WebView
+     'Force Dark' / 'auto-dark' — plain `light` is treated as a hint and
+     the in-app browser can still invert colours on dark-mode devices.
+     The `only` keyword forbids the auto-darkening pass entirely. */
+  color-scheme: only light;
 }
 
 :root,
