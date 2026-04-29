@@ -138,7 +138,7 @@ function cleanupOrphanedKeys() {
 }
 
 export default function RadioPlayer() {
-  const { playing, loading, error, volume, muted, setVolume, setMuted, togglePlay } = useAudioPlayer();
+  const { playing, loading, error, volume, muted, setVolume, setMuted, togglePlay, prewarm } = useAudioPlayer();
   const pathname = usePathname();
   const [currentTime, setCurrentTime] = useState('');
   const [ps, setPs] = useState<PS>(() => loadPS() ?? ({ dragged: false, x: 0, y: 0, width: getDefaultCompactWidth(), height: MIN_H }));
@@ -551,6 +551,9 @@ export default function RadioPlayer() {
           {/* Play / Pause */}
           <button
             onClick={togglePlay}
+            onPointerDown={prewarm}
+            onPointerEnter={prewarm}
+            onTouchStart={prewarm}
             className={`touch-target ${showExpanded ? 'w-12 h-12 sm:w-14 sm:h-14' : compactVeryTight ? 'w-10 h-10' : 'w-11 h-11 md:w-12 md:h-12'} rounded-full flex items-center justify-center transition-all duration-200 active:scale-95 shadow-md flex-shrink-0 ${
               error
                 ? 'bg-slate-700 hover:bg-slate-600 text-slate-300'

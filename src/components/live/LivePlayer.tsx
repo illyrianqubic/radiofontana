@@ -18,7 +18,7 @@ function buildFbEmbedUrl(facebookUrl: string | null): string {
 }
 
 export default function LivePlayer() {
-  const { playing, loading, error, togglePlay } = useAudioPlayer();
+  const { playing, loading, error, togglePlay, prewarm } = useAudioPlayer();
   const [stream, setStream] = useState<LiveStream | null>(null);
 
   useEffect(() => {
@@ -123,6 +123,9 @@ export default function LivePlayer() {
           {/* Play button */}
           <motion.button
             onClick={togglePlay}
+            onPointerDown={prewarm}
+            onPointerEnter={prewarm}
+            onTouchStart={prewarm}
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.3 }}

@@ -221,7 +221,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         {/* Preconnect to external origins for performance */}
         <link rel="preconnect" href="https://cdn.sanity.io" />
         <link rel="dns-prefetch" href="https://cdn.sanity.io" />
-        <link rel="preconnect" href="https://live.radiostreaming.al" />
+        {/* Stream is on :8010 — that's a separate origin from :443, so preconnect explicitly. */}
+        <link rel="preconnect" href="https://live.radiostreaming.al:8010" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://live.radiostreaming.al:8010" />
         <link rel="dns-prefetch" href="https://live.radiostreaming.al" />
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.google-analytics.com" />

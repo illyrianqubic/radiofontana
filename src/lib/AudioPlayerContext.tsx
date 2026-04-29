@@ -13,6 +13,8 @@ interface AudioPlayerContextType {
   setVolume: (v: number) => void;
   setMuted: (m: boolean) => void;
   togglePlay: () => void;
+  /** Open TLS connection to the stream host before the user clicks play. */
+  prewarm: () => void;
 }
 
 const AudioPlayerContext = createContext<AudioPlayerContextType | null>(null);
@@ -35,6 +37,7 @@ export function AudioPlayerProvider({
   const [muted, setMutedState] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const wantPlayRef = useRef(false);
+  const prewarmedAtRef = useRef(0);
 
   useEffect(() => {
     const audio = new Audio();
@@ -68,7 +71,6 @@ export function AudioPlayerProvider({
         const a = audioRef.current;
         if (a && wantPlayRef.current) {
           a.src = streamUrlRef.current;
-          a.load();
           a.play().catch(() => {
             setLoading(false);
             setError(true);
@@ -118,9 +120,10 @@ export function AudioPlayerProvider({
       wantPlayRef.current = true;
       setError(false);
       setLoading(true);
+      // Setting src already triggers loading; an explicit load() before play()
+      // forces an extra abort/restart cycle that delays first audio. Skip it.
       audio.src = streamUrlRef.current;
       audio.volume = muted ? 0 : volume;
-      audio.load();
       audio.play().catch(() => {
         setLoading(false);
         setPlaying(false);
@@ -128,6 +131,33 @@ export function AudioPlayerProvider({
       });
     }
   }, [playing, loading, volume, muted]);
+
+  // Open the TLS connection to the stream host before the user clicks play.
+  // Triggered on pointerdown / hover so by the time togglePlay runs, DNS,
+  // TCP and TLS handshakes are already done. We fire a tiny range request and
+  // abort it almost immediately — just long enough to finish the handshake.
+  const prewarm = useCallback(() => {
+    if (typeof window === 'undefined') return;
+    if (wantPlayRef.current) return;
+    const now = Date.now();
+    // Re-prewarm at most once every 8s; browsers keep TLS alive a while.
+    if (now - prewarmedAtRef.current < 8000) return;
+    prewarmedAtRef.current = now;
+    try {
+      const ctrl = new AbortController();
+      fetch(streamUrlRef.current, {
+        method: 'GET',
+        mode: 'no-cors',
+        cache: 'no-store',
+        signal: ctrl.signal,
+        headers: { Range: 'bytes=0-0' },
+      }).catch(() => {});
+      // Abort once handshake is done; we don't actually want any audio bytes.
+      setTimeout(() => ctrl.abort(), 120);
+    } catch {
+      /* ignore */
+    }
+  }, []);
 
   const setVolume = useCallback((v: number) => {
     const nextVolume = Math.max(0, Math.min(1, v));
@@ -147,7 +177,7 @@ export function AudioPlayerProvider({
   }, [volume]);
 
   return (
-    <AudioPlayerContext.Provider value={{ playing, loading, error, volume, muted, setVolume, setMuted, togglePlay }}>
+    <AudioPlayerContext.Provider value={{ playing, loading, error, volume, muted, setVolume, setMuted, togglePlay, prewarm }}>
       {children}
     </AudioPlayerContext.Provider>
   );
