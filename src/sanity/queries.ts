@@ -20,6 +20,29 @@ export const ARTICLES_QUERY = `
   }
 `;
 
+/** Always fetches articles marked featured or breaking — used on the home page
+ *  so they are never dropped by the recency limit. */
+export const FEATURED_BREAKING_QUERY = `
+  *[_type == "post" && defined(slug.current) && !(_id in path("drafts.**")) && (featured == true || breaking == true)] | order(publishedAt desc) {
+    "id": _id,
+    "slug": slug.current,
+    title,
+    excerpt,
+    "readMinutes": select(
+      length(coalesce(excerpt, "")) > 420 => 3,
+      length(coalesce(excerpt, "")) > 220 => 2,
+      1
+    ),
+    "category": coalesce(category->title, "Politikë"),
+    "author": coalesce(author->name, "Radio Fontana"),
+    publishedAt,
+    "featured": coalesce(featured, false),
+    "breaking": coalesce(breaking, false),
+    "tags": coalesce(tags, etiketat, []),
+    "imageUrl": coalesce(mainImage.asset->url, "/logortvfontana.jpg")
+  }
+`;
+
 export const ARTICLE_SLUGS_QUERY = `
   *[_type == "post" && defined(slug.current) && !(_id in path("drafts.**"))] {
     "slug": slug.current

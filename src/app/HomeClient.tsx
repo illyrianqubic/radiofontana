@@ -14,7 +14,8 @@ interface HomeClientProps {
 export default function HomeClient({ articles }: HomeClientProps) {
 
   const featured = articles.filter((a) => a.featured);
-  const hero = featured[0] ?? articles[0];
+  const pinned = articles.filter((a) => a.featured || a.breaking);
+  const hero = pinned[0] ?? articles[0];
   const sideFeatures = featured.length > 1 ? featured.slice(1, 4) : articles.slice(1, 4);
   const latest = articles.slice(0, 8);
   const mostRead = articles.slice(0, 5);

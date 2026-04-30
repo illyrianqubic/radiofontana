@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import HomeClient from './HomeClient';
 import { readClient } from '@/sanity/client';
-import { ARTICLES_QUERY } from '@/sanity/queries';
+import { ARTICLES_QUERY, FEATURED_BREAKING_QUERY } from '@/sanity/queries';
 import { Article } from '@/lib/types';
 
 const SITE_URL = 'https://radiofontana.org';
@@ -29,12 +29,14 @@ export const metadata: Metadata = {
 
 async function fetchHomeArticles(): Promise<Article[]> {
   try {
-    const data = await readClient.fetch<Article[]>(
-      ARTICLES_QUERY,
-      { limit: 24 },
-      { next: { revalidate: 300 } },
-    );
-    return Array.isArray(data) ? data : [];
+    const [pinned, latest] = await Promise.all([
+      readClient.fetch<Article[]>(FEATURED_BREAKING_QUERY, {}, { next: { revalidate: 300 } }),
+      readClient.fetch<Article[]>(ARTICLES_QUERY, { limit: 24 }, { next: { revalidate: 300 } }),
+    ]);
+    const pinnedSafe = Array.isArray(pinned) ? pinned : [];
+    const latestSafe = Array.isArray(latest) ? latest : [];
+    const pinnedIds = new Set(pinnedSafe.map((a) => a.id));
+    return [...pinnedSafe, ...latestSafe.filter((a) => !pinnedIds.has(a.id))];
   } catch {
     return [];
   }

@@ -5,19 +5,9 @@ interface Props {
   articles: Article[];
 }
 
-const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
-
 export default function BreakingNewsTicker({ articles }: Props) {
-  // IMPORTANT: evaluate Date.now() per render, NOT at module scope.
-  // With output: 'export', module scope evaluates once at build time and
-  // freezes the cutoff forever, hiding still-fresh breaking news.
-  const now = Date.now();
-
-  // Only articles explicitly marked breaking AND published within 24 hours
-  const recentBreaking = articles.filter((a) => {
-    if (!a.breaking || !a.publishedAt) return false;
-    return now - new Date(a.publishedAt).getTime() < TWENTY_FOUR_HOURS;
-  });
+  // Show all articles marked breaking — editorial control via the breaking flag in Sanity.
+  const recentBreaking = articles.filter((a) => a.breaking && a.publishedAt);
 
   // Strict deduplication
   const seen = new Set<string>();
