@@ -1,3 +1,6 @@
+'use client';
+
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, TrendingUp, Clock, Flame, Radio, Rss } from 'lucide-react';
@@ -7,11 +10,19 @@ import BreakingNewsTicker from '@/components/layout/BreakingNewsTicker';
 import TimeAgo from '@/components/shared/TimeAgo';
 import WeatherWidget from '@/components/home/WeatherWidget';
 
-interface HomeClientProps {
-  articles: Article[];
-}
+export default function HomeClient() {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default function HomeClient({ articles }: HomeClientProps) {
+  useEffect(() => {
+    fetch('/api/home')
+      .then((r) => r.json())
+      .then((data: unknown) => {
+        if (Array.isArray(data)) setArticles(data as Article[]);
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false));
+  }, []);
 
   const featured = articles.filter((a) => a.featured);
   const pinned = articles.filter((a) => a.featured || a.breaking);
@@ -33,10 +44,14 @@ export default function HomeClient({ articles }: HomeClientProps) {
 
             {/* Main hero */}
             <div className="md:col-span-7 3xl:col-span-10">
-              {hero && <NewsCard article={hero} variant="hero" />}
+              {loading ? (
+                <div className="rounded-xl bg-slate-100 animate-pulse min-h-[210px] md:min-h-[300px] lg:min-h-[360px]" />
+              ) : (
+                hero && <NewsCard article={hero} variant="hero" />
+              )}
             </div>
 
-            {/* Right column: featured list (weather widget removed — was mock data) */}
+            {/* Right column: featured list */}
             <div className="md:col-span-3 3xl:col-span-5 flex flex-col gap-4 md:gap-5">
               {/* Featured side cards */}
               <div className="hidden md:block bg-white rounded-xl border border-slate-200/70 overflow-hidden shadow-[0_14px_36px_rgba(15,23,42,0.10)] flex-1">
@@ -48,9 +63,20 @@ export default function HomeClient({ articles }: HomeClientProps) {
                   <h3 className="section-title-bar text-base md:text-lg font-bold text-slate-900">Lajme të Spikatura</h3>
                 </div>
                 <div className="divide-y divide-slate-50">
-                  {sideFeatures.map((article) => (
-                    <NewsCard key={article.id} article={article} variant="compact" />
-                  ))}
+                  {loading
+                    ? Array.from({ length: 3 }).map((_, i) => (
+                        <div key={i} className="flex gap-3 items-start p-3 md:p-4 animate-pulse">
+                          <div className="w-24 h-16 rounded-lg bg-slate-100 flex-shrink-0" />
+                          <div className="flex-1 space-y-2 pt-1">
+                            <div className="h-3 bg-slate-100 rounded w-1/3" />
+                            <div className="h-3 bg-slate-100 rounded w-full" />
+                            <div className="h-3 bg-slate-100 rounded w-4/5" />
+                          </div>
+                        </div>
+                      ))
+                    : sideFeatures.map((article) => (
+                        <NewsCard key={article.id} article={article} variant="compact" />
+                      ))}
                 </div>
               </div>
             </div>
@@ -81,9 +107,18 @@ export default function HomeClient({ articles }: HomeClientProps) {
                 </Link>
               </div>
               <div className="news-grid-responsive gap-6 lg:gap-7 2xl:gap-8">
-                {latest.map((article) => (
-                  <NewsCard key={article.id} article={article} />
-                ))}
+                {loading
+                  ? Array.from({ length: 8 }).map((_, i) => (
+                      <div key={i} className="rounded-xl border border-slate-100 p-4 md:p-5 animate-pulse">
+                        <div className="aspect-video rounded-xl bg-slate-100 mb-4" />
+                        <div className="h-4 bg-slate-100 rounded w-2/3 mb-2" />
+                        <div className="h-4 bg-slate-100 rounded w-full mb-2" />
+                        <div className="h-4 bg-slate-100 rounded w-5/6" />
+                      </div>
+                    ))
+                  : latest.map((article) => (
+                      <NewsCard key={article.id} article={article} />
+                    ))}
               </div>
             </div>
 

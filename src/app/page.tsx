@@ -1,8 +1,5 @@
 import { Metadata } from 'next';
 import HomeClient from './HomeClient';
-import { readClient } from '@/sanity/client';
-import { ARTICLES_QUERY, FEATURED_BREAKING_QUERY } from '@/sanity/queries';
-import { Article } from '@/lib/types';
 
 const SITE_URL = 'https://radiofontana.org';
 
@@ -27,24 +24,7 @@ export const metadata: Metadata = {
   },
 };
 
-async function fetchHomeArticles(): Promise<Article[]> {
-  try {
-    const [pinned, latest] = await Promise.all([
-      readClient.fetch<Article[]>(FEATURED_BREAKING_QUERY, {}, { next: { revalidate: 300 } }),
-      readClient.fetch<Article[]>(ARTICLES_QUERY, { limit: 24 }, { next: { revalidate: 300 } }),
-    ]);
-    const pinnedSafe = Array.isArray(pinned) ? pinned : [];
-    const latestSafe = Array.isArray(latest) ? latest : [];
-    const pinnedIds = new Set(pinnedSafe.map((a) => a.id));
-    return [...pinnedSafe, ...latestSafe.filter((a) => !pinnedIds.has(a.id))];
-  } catch {
-    return [];
-  }
-}
-
-export default async function HomePage() {
-  const articles = await fetchHomeArticles();
-
+export default function HomePage() {
   const localBusinessSchema = {
     '@context': 'https://schema.org',
     '@type': ['LocalBusiness', 'RadioStation'],
@@ -93,7 +73,7 @@ export default async function HomePage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
       />
-      <HomeClient articles={articles} />
+      <HomeClient />
     </>
   );
 }
