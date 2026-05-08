@@ -13,7 +13,7 @@ const sections: LegalSection[] = [
   {
     title: '1. Kush jemi ne',
     paragraphs: [
-      'Radio Fontana është media lokale me seli në Istog, Kosovë. Kjo politikë zbatohet për faqen radiofontana.org, aplikacionin tonë Android në Google Play Store dhe shërbimet përkatëse.',
+      'Radio Fontana është media lokale me seli në Istog, Kosovë. Kjo politikë zbatohet për faqen radiofontana.org, aplikacionin tonë Android (com.radiofontana.app) në Google Play Store dhe shërbimet përkatëse.',
       'Për çdo pyetje rreth privatësisë mund të na kontaktoni në rtvfontana@gmail.com.',
     ],
   },
