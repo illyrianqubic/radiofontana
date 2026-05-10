@@ -30,6 +30,7 @@ type LegalPageLayoutProps = {
 };
 
 const LEGAL_LINKS = [
+  { label: 'Udhëzimet Editoriale', href: '/editorial-guidelines' },
   { label: 'Kushtet', href: '/terms' },
   { label: 'Privatësia', href: '/privacy' },
   { label: 'GDPR', href: '/gdpr' },

@@ -170,6 +170,8 @@ export default function Footer({
             <span aria-hidden="true" className="h-3 w-px bg-slate-600" />
             <Link href="/cookies" className="hover:text-red-400 transition-none min-h-11 inline-flex items-center px-2.5">Cookies</Link>
             <span aria-hidden="true" className="h-3 w-px bg-slate-600" />
+            <Link href="/editorial-guidelines" className="hover:text-red-400 transition-none min-h-11 inline-flex items-center px-2.5">Editoriale</Link>
+            <span aria-hidden="true" className="h-3 w-px bg-slate-600" />
             <Link href="/disclaimer" className="hover:text-red-400 transition-none min-h-11 inline-flex items-center px-2.5">Disclaimer</Link>
           </div>
         </div>

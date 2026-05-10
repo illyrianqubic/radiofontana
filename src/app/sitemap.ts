@@ -8,6 +8,7 @@ const SITE_URL = 'https://radiofontana.org';
 // Hardcoded modification dates for static pages — bump only when the page
 // content actually changes (audit P1-M4). Build time is *not* content time.
 const STATIC_PAGE_MTIME = new Date('2026-04-29T00:00:00Z');
+const EDITORIAL_GUIDELINES_MTIME = new Date('2026-05-10T00:00:00Z');
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let articleEntries: MetadataRoute.Sitemap = [];
@@ -51,6 +52,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/terms/`,            lastModified: STATIC_PAGE_MTIME,   changeFrequency: 'yearly',  priority: 0.3 },
     { url: `${SITE_URL}/cookies/`,          lastModified: STATIC_PAGE_MTIME,   changeFrequency: 'yearly',  priority: 0.2 },
     { url: `${SITE_URL}/gdpr/`,             lastModified: STATIC_PAGE_MTIME,   changeFrequency: 'yearly',  priority: 0.2 },
+    { url: `${SITE_URL}/editorial-guidelines/`, lastModified: EDITORIAL_GUIDELINES_MTIME, changeFrequency: 'yearly', priority: 0.3 },
     { url: `${SITE_URL}/disclaimer/`,       lastModified: STATIC_PAGE_MTIME,   changeFrequency: 'yearly',  priority: 0.2 },
   ];
 
