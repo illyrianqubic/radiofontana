@@ -6,8 +6,13 @@ interface Props {
 }
 
 export default function BreakingNewsTicker({ articles }: Props) {
-  // Show all articles marked breaking — editorial control via the breaking flag in Sanity.
-  const recentBreaking = articles.filter((a) => a.breaking && a.publishedAt);
+  // Show breaking articles published within the last 24 hours.
+  const now = Date.now();
+  const twentyFourHoursAgo = now - 24 * 60 * 60 * 1000;
+  const recentBreaking = articles.filter((a) => {
+    if (!a.breaking || !a.publishedAt) return false;
+    return new Date(a.publishedAt).getTime() >= twentyFourHoursAgo;
+  });
 
   // Strict deduplication
   const seen = new Set<string>();
