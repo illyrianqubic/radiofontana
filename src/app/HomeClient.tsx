@@ -45,7 +45,7 @@ export default function HomeClient() {
             {/* Main hero */}
             <div className="md:col-span-7 3xl:col-span-10">
               {loading ? (
-                <div className="rounded-xl bg-slate-100 animate-pulse min-h-[210px] md:min-h-[300px] lg:min-h-[360px]" />
+                <div className="rounded-xl bg-slate-100 animate-pulse min-h-[280px] md:min-h-[420px] lg:min-h-[520px]" />
               ) : (
                 hero && <NewsCard article={hero} variant="hero" />
               )}

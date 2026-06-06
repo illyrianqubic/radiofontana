@@ -18,7 +18,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
   if (variant === 'hero') {
     return (
       <Link href={href} className="group flex flex-col h-full relative min-w-0 overflow-hidden rounded-xl border border-slate-200/70 news-card isolate">
-        <div className="relative flex-1 min-h-[210px] md:min-h-[300px] lg:min-h-[360px]">
+        <div className="relative flex-1 min-h-[280px] md:min-h-[420px] lg:min-h-[520px]">
           <Image
             src={article.imageUrl}
             alt={article.title}
