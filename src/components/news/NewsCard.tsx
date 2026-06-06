@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Article, CATEGORY_COLORS } from '@/lib/types';
-import { readTime } from '@/lib/utils';
+import { readTime, truncateText } from '@/lib/utils';
 import { Clock, User, BookOpen } from 'lucide-react';
 import TimeAgo from '@/components/shared/TimeAgo';
 
@@ -46,7 +46,18 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
             <h2 className="text-white text-[1.1rem] tiny:text-[1.2rem] md:text-[1.45rem] lg:text-[2rem] xl:text-[2.3rem] 2xl:text-[2.6rem] 3xl:text-[3rem] font-extrabold leading-[1.16] mb-2 md:mb-3 group-hover:text-red-200 transition-colors duration-300 break-words line-clamp-2 lg:line-clamp-3 relative z-10 max-w-[92%] md:max-w-[88%]" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.65)' }}>
               {article.title}
             </h2>
-            <p className="hidden lg:block text-white/80 text-sm lg:text-base line-clamp-2 mb-4 md:mb-5 max-w-2xl leading-relaxed relative z-10" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.6)' }}>{article.excerpt}</p>
+            <p
+              className="hidden lg:block text-white/80 text-sm lg:text-base line-clamp-3 mb-4 md:mb-5 max-w-2xl leading-relaxed relative z-10"
+              style={{
+                textShadow: '0 1px 6px rgba(0,0,0,0.6)',
+                WebkitLineClamp: 3,
+                display: '-webkit-box',
+                WebkitBoxOrient: 'vertical',
+                overflow: 'hidden',
+              }}
+            >
+              {truncateText(article.excerpt, 200)}
+            </p>
             <div className="flex flex-wrap md:flex-nowrap items-center gap-2 md:gap-4 text-white/80 text-xs md:text-sm relative z-10" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.6)' }}>
               <span className="inline-flex min-w-0 max-w-full items-center gap-1.5">
                 <User className="w-3.5 h-3.5" />
