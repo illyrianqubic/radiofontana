@@ -80,28 +80,28 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
 
   if (variant === 'compact') {
     return (
-      <Link href={href} className="group flex gap-3 items-start p-3 md:p-4 hover:bg-slate-50 transition-all duration-200">
-        <div className="relative w-24 h-[3.75rem] md:w-28 md:h-[4.15rem] flex-shrink-0 rounded-lg overflow-hidden">
+      <Link href={href} className="group flex flex-row gap-3 items-start p-3 md:p-4 hover:bg-slate-50 transition-all duration-200">
+        <div className="relative w-20 h-14 md:w-24 md:h-16 flex-shrink-0 rounded-lg overflow-hidden">
           <Image
             src={article.imageUrl}
             alt={article.title}
             fill
-            sizes="(max-width: 767px) 96px, 112px"
+            sizes="(max-width: 767px) 80px, 96px"
             className="object-cover img-zoom"
             loading="lazy"
           />
         </div>
-        <div className="flex-1 min-w-0">
-          <span className={`category-badge inline-block max-w-full truncate px-1.5 py-0.5 rounded text-white mb-1.5 ${categoryColor}`}>
+        <div className="flex-1 min-w-0 flex flex-col justify-center">
+          <span className={`category-badge inline-block self-start max-w-full truncate px-1.5 py-0.5 rounded text-white mb-1 ${categoryColor}`}>
             {article.category}
           </span>
-          <h4 className="text-[0.95rem] md:text-[1.05rem] font-semibold text-slate-800 leading-[1.35] line-clamp-2 group-hover:text-red-600 transition-colors duration-200 tracking-[0.01em] break-words">
+          <h4 className="text-[0.9rem] md:text-[0.95rem] font-semibold text-slate-800 leading-[1.35] line-clamp-2 group-hover:text-red-600 transition-colors duration-200 tracking-[0.01em] break-words">
             {article.title}
           </h4>
-          <p className="text-xs md:text-sm text-slate-600 mt-1.5 flex items-center gap-1 min-w-0">
-            <Clock className="w-2.5 h-2.5" />
+          <p className="text-xs text-slate-500 mt-1 flex items-center gap-1.5 min-w-0">
+            <Clock className="w-2.5 h-2.5 flex-shrink-0" />
             <TimeAgo dateString={article.publishedAt} className="truncate" />
-            <span className="text-slate-300">•</span>
+            <span className="text-slate-300 flex-shrink-0">•</span>
             <span className="truncate">{article.author}</span>
           </p>
         </div>

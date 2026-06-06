@@ -27,7 +27,7 @@ export default function HomeClient() {
   const featured = articles.filter((a) => a.featured);
   const pinned = articles.filter((a) => a.featured || a.breaking);
   const hero = pinned[0] ?? articles[0];
-  const sideFeatures = featured.length > 1 ? featured.slice(1, 4) : articles.slice(1, 4);
+  const sideFeatures = featured.length > 1 ? featured.slice(1, 6) : articles.slice(1, 6);
   const latest = articles.slice(0, 8);
   const mostRead = articles.slice(0, 5);
   const teJundit = articles.slice(0, 6);
@@ -64,7 +64,7 @@ export default function HomeClient() {
                 </div>
                 <div className="divide-y divide-slate-50">
                   {loading
-                    ? Array.from({ length: 3 }).map((_, i) => (
+                    ? Array.from({ length: 5 }).map((_, i) => (
                         <div key={i} className="flex gap-3 items-start p-3 md:p-4 animate-pulse">
                           <div className="w-24 h-16 rounded-lg bg-slate-100 flex-shrink-0" />
                           <div className="flex-1 space-y-2 pt-1">
