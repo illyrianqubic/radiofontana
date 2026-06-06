@@ -27,7 +27,7 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
             className="object-cover img-zoom"
             priority
           />
-          <div className="absolute inset-0 z-0 bg-gradient-to-t from-black/90 via-black/52 to-black/18" />
+          <div className="absolute inset-0 z-0 bg-gradient-to-t from-black/95 via-black/70 to-black/40" />
           {/* Top labels */}
           <div className="absolute z-20 top-3 md:top-4 left-3 md:left-4 flex items-center gap-1.5 md:gap-2 flex-wrap pr-3 max-w-[calc(100%-1.5rem)] md:max-w-[calc(100%-2rem)]">
             <span className={`category-badge max-w-[9.75rem] md:max-w-[10.5rem] lg:max-w-[12rem] truncate px-2.5 py-1.5 rounded-md text-white ${categoryColor}`}>
@@ -40,14 +40,14 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
             )}
           </div>
           <div className="absolute z-10 inset-0 flex flex-col justify-end p-4 md:p-5 lg:p-7 pt-20 md:pt-24 overflow-hidden">
-            <p className="text-[11px] md:text-xs font-bold uppercase tracking-[0.14em] text-red-300 mb-2 relative z-10">
+            <p className="text-[11px] md:text-xs font-bold uppercase tracking-[0.14em] text-red-300 mb-2 relative z-10" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.7)' }}>
               Lajm kryesor
             </p>
-            <h2 className="text-white text-[1.1rem] tiny:text-[1.2rem] md:text-[1.45rem] lg:text-[2rem] xl:text-[2.3rem] 2xl:text-[2.6rem] 3xl:text-[3rem] font-extrabold leading-[1.16] mb-2 md:mb-3 group-hover:text-red-200 transition-colors duration-300 break-words line-clamp-2 lg:line-clamp-3 relative z-10 max-w-[92%] md:max-w-[88%]">
+            <h2 className="text-white text-[1.1rem] tiny:text-[1.2rem] md:text-[1.45rem] lg:text-[2rem] xl:text-[2.3rem] 2xl:text-[2.6rem] 3xl:text-[3rem] font-extrabold leading-[1.16] mb-2 md:mb-3 group-hover:text-red-200 transition-colors duration-300 break-words line-clamp-2 lg:line-clamp-3 relative z-10 max-w-[92%] md:max-w-[88%]" style={{ textShadow: '0 2px 10px rgba(0,0,0,0.65)' }}>
               {article.title}
             </h2>
-            <p className="hidden lg:block text-white/80 text-sm lg:text-base line-clamp-2 mb-4 md:mb-5 max-w-2xl leading-relaxed relative z-10">{article.excerpt}</p>
-            <div className="flex flex-wrap md:flex-nowrap items-center gap-2 md:gap-4 text-white/80 text-xs md:text-sm relative z-10">
+            <p className="hidden lg:block text-white/80 text-sm lg:text-base line-clamp-2 mb-4 md:mb-5 max-w-2xl leading-relaxed relative z-10" style={{ textShadow: '0 1px 6px rgba(0,0,0,0.6)' }}>{article.excerpt}</p>
+            <div className="flex flex-wrap md:flex-nowrap items-center gap-2 md:gap-4 text-white/80 text-xs md:text-sm relative z-10" style={{ textShadow: '0 1px 4px rgba(0,0,0,0.6)' }}>
               <span className="inline-flex min-w-0 max-w-full items-center gap-1.5">
                 <User className="w-3.5 h-3.5" />
                 <span className="truncate">{article.author}</span>
