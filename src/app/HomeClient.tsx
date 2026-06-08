@@ -29,16 +29,18 @@ export default function HomeClient() {
   const pinned = articles.filter((a) => a.featured || a.breaking);
   const hero = pinned[0] ?? articles[0];
 
-  // Highlights: featured articles from last 24h, excluding hero, max 3
+  // Highlights: prefer featured articles from last 24h, fallback to any recent, max 3
   const sideFeatures = useMemo(() => {
     const twentyFourHoursAgo = PAGE_LOAD_TIME - 24 * 60 * 60 * 1000;
-    return articles
-      .filter((a) => a.featured && a.publishedAt)
-      .filter((a) => new Date(a.publishedAt).getTime() >= twentyFourHoursAgo)
+    const recent = articles.filter((a) => {
+      if (!a.publishedAt) return false;
+      return new Date(a.publishedAt).getTime() >= twentyFourHoursAgo;
+    });
+    const recentFeatured = recent.filter((a) => a.featured);
+    return (recentFeatured.length > 0 ? recentFeatured : recent)
       .filter((a) => a.id !== hero?.id)
       .slice(0, 3);
   }, [articles, hero?.id]);
-  const showHighlights = loading || sideFeatures.length > 0;
   const latest = articles.slice(0, 8);
   const mostRead = articles.slice(0, 5);
   const teJundit = articles.slice(0, 6);
@@ -54,7 +56,7 @@ export default function HomeClient() {
           <div className="grid grid-cols-1 md:grid-cols-10 3xl:grid-cols-15 gap-4 md:gap-8 2xl:gap-10">
 
             {/* Main hero */}
-            <div className={showHighlights ? 'md:col-span-7 3xl:col-span-10' : 'md:col-span-10 3xl:col-span-15'}>
+            <div className="md:col-span-7 3xl:col-span-10">
               {loading ? (
                 <div className="rounded-xl bg-slate-100 animate-pulse min-h-[280px] md:min-h-[420px] lg:min-h-[520px]" />
               ) : (
@@ -63,7 +65,7 @@ export default function HomeClient() {
             </div>
 
             {/* Right column: featured list */}
-            {showHighlights && <div className="md:col-span-3 3xl:col-span-5 flex flex-col gap-4 md:gap-5">
+            <div className="md:col-span-3 3xl:col-span-5 flex flex-col gap-4 md:gap-5">
               {/* Featured side cards */}
               <div className="hidden md:block bg-white rounded-xl border border-slate-200/70 overflow-hidden shadow-[0_14px_36px_rgba(15,23,42,0.10)] flex-1">
                 <div className="px-4 py-3.5 border-b border-slate-200/70 bg-slate-50/70">
@@ -90,7 +92,7 @@ export default function HomeClient() {
                       ))}
                 </div>
               </div>
-            </div>}
+            </div>
           </div>
         </div>
       </section>
