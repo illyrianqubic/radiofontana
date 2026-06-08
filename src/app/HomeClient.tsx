@@ -37,10 +37,8 @@ export default function HomeClient() {
       return new Date(a.publishedAt).getTime() >= twentyFourHoursAgo;
     });
     const recentFeatured = recent.filter((a) => a.featured);
-    return (recentFeatured.length > 0 ? recentFeatured : recent)
-      .filter((a) => a.id !== hero?.id)
-      .slice(0, 3);
-  }, [articles, hero?.id]);
+    return (recentFeatured.length > 0 ? recentFeatured : recent).slice(0, 3);
+  }, [articles]);
   const latest = articles.slice(0, 8);
   const mostRead = articles.slice(0, 5);
   const teJundit = articles.slice(0, 6);
