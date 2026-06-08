@@ -90,11 +90,11 @@ export default function NewsCard({ article, variant = 'default' }: Props) {
             className="object-cover img-zoom"
             loading="lazy"
           />
-        </div>
-        <div className="flex-1 min-w-0 flex flex-col justify-center">
-          <span className={`category-badge inline-block self-start max-w-full truncate px-1.5 py-0.5 rounded text-white mb-1 ${categoryColor}`}>
+          <span className={`category-badge absolute top-1 left-1 z-10 max-w-full truncate px-1.5 py-0.5 rounded text-white ${categoryColor}`}>
             {article.category}
           </span>
+        </div>
+        <div className="flex-1 min-w-0 flex flex-col justify-start">
           <h4 className="text-[0.9rem] md:text-[0.95rem] font-semibold text-slate-800 leading-[1.35] line-clamp-2 group-hover:text-red-600 transition-colors duration-200 tracking-[0.01em] break-words">
             {article.title}
           </h4>
