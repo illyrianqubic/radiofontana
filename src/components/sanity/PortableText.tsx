@@ -86,8 +86,6 @@ const components: Partial<PortableTextReactComponents> = {
       if (!src) return null;
       const caption = typeof value?.caption === 'string' && value.caption.trim().length > 0
         ? value.caption.trim()
-        : typeof value?.alt === 'string' && value.alt.trim().length > 0
-        ? value.alt.trim()
         : '';
 
       // Pull intrinsic dimensions from Sanity's metadata so the browser can
@@ -103,7 +101,7 @@ const components: Partial<PortableTextReactComponents> = {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={src}
-            alt={value?.alt ?? ''}
+            alt=""
             width={width}
             height={height}
             loading="lazy"

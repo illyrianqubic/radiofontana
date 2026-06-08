@@ -36,15 +36,6 @@ export default defineType({
       type: 'image',
       options: { hotspot: true },
       validation: (rule) => rule.required(),
-      fields: [
-        defineField({
-          name: 'alt',
-          type: 'string',
-          title: 'Teksti alternativ (alt)',
-          validation: (rule) =>
-            rule.required().warning('Teksti alt është i nevojshëm për aksesueshmëri.'),
-        }),
-      ],
     }),
     defineField({
       name: 'content',
@@ -53,17 +44,7 @@ export default defineType({
       validation: (rule) => rule.required().min(1),
       of: [
         { type: 'block' },
-        {
-          type: 'image',
-          options: { hotspot: true },
-          fields: [
-            defineField({
-              name: 'alt',
-              type: 'string',
-              title: 'Teksti alternativ (alt)',
-            }),
-          ],
-        },
+        { type: 'image', options: { hotspot: true } },
       ],
     }),
     defineField({
