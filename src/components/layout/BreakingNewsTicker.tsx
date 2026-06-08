@@ -1,14 +1,15 @@
 import Link from 'next/link';
 import { Article } from '@/lib/types';
 
+const PAGE_LOAD_TIME = Date.now();
+
 interface Props {
   articles: Article[];
 }
 
 export default function BreakingNewsTicker({ articles }: Props) {
   // Show breaking articles published within the last 24 hours.
-  const now = Date.now();
-  const twentyFourHoursAgo = now - 24 * 60 * 60 * 1000;
+  const twentyFourHoursAgo = PAGE_LOAD_TIME - 24 * 60 * 60 * 1000;
   const recentBreaking = articles.filter((a) => {
     if (!a.breaking || !a.publishedAt) return false;
     return new Date(a.publishedAt).getTime() >= twentyFourHoursAgo;
