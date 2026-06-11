@@ -19,7 +19,6 @@ export interface Article {
   /** Sanity-managed last-edit timestamp; used for OG modifiedTime / sitemap. */
   _updatedAt?: string;
   imageUrl: string;
-  tags: string[];
   featured?: boolean;
   breaking?: boolean;
 }

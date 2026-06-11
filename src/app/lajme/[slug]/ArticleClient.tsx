@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound, usePathname } from 'next/navigation';
-import { Clock, User, Tag, ArrowLeft, Share2, Copy, Check } from 'lucide-react';
+import { Clock, User, ArrowLeft, Share2, Copy, Check } from 'lucide-react';
 import { FacebookIcon, WhatsAppIcon } from '@/components/shared/SocialIcons';
 import { Article, CATEGORY_COLORS } from '@/lib/types';
 import NewsCard from '@/components/news/NewsCard';
@@ -206,23 +206,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
               <p className="text-slate-500">Përmbajtja e artikullit nuk është e disponueshme.</p>
             )}
 
-            {/* Tags */}
-            {(article.tags ?? []).filter(Boolean).length > 0 && (
-              <div className="mt-10 pt-7 border-t border-slate-100">
-                <div className="flex flex-wrap gap-2 items-center">
-                  <Tag className="w-4 h-4 text-slate-400 flex-shrink-0" />
-                  {(article.tags ?? []).filter(Boolean).map((tag) => (
-                    <Link
-                      key={tag}
-                      href={`/lajme/?q=${encodeURIComponent(tag)}`}
-                      className="px-3 py-1.5 bg-slate-100 text-slate-600 rounded-xl text-sm md:text-base hover:bg-red-50 hover:text-red-600 transition-colors duration-200"
-                    >
-                      #{tag}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
+
 
             {/* Share */}
             <div className="mt-7 pt-7 border-t border-slate-100">

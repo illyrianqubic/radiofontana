@@ -31,7 +31,6 @@ const QUERY = `*[_type == "post" && slug.current == $slug && !(_id in path("draf
   publishedAt,
   "featured": coalesce(featured, false),
   "breaking": coalesce(breaking, false),
-  "tags": coalesce(tags, etiketat, []),
   "imageUrl": coalesce(mainImage.asset->url, "/logortvfontana.jpg")
 }`;
 

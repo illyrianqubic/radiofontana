@@ -30,7 +30,6 @@ const PROJECTION = `{
   publishedAt,
   "featured": coalesce(featured, false),
   "breaking": coalesce(breaking, false),
-  "tags": coalesce(tags, etiketat, []),
   "imageUrl": coalesce(mainImage.asset->url, "/logortvfontana.jpg")
 }`;
 

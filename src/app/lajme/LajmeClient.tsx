@@ -121,8 +121,7 @@ export default function LajmeClient() {
       result = result.filter(
         (a) =>
           a.title.toLowerCase().includes(query) ||
-          a.excerpt.toLowerCase().includes(query) ||
-          a.tags.some((t) => t.toLowerCase().includes(query)),
+          a.excerpt.toLowerCase().includes(query),
       );
     }
 

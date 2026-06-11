@@ -80,13 +80,6 @@ export default defineType({
       type: 'boolean',
       initialValue: false,
     }),
-    defineField({
-      name: 'tags',
-      title: 'Etiketat',
-      type: 'array',
-      of: [{ type: 'string' }],
-      options: { layout: 'tags' },
-    }),
   ],
   preview: {
     select: {
