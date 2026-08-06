@@ -173,6 +173,13 @@ export default function Footer({
             <Link href="/disclaimer" className="hover:text-red-400 transition-none min-h-11 inline-flex items-center px-2.5">Disclaimer</Link>
           </div>
         </div>
+
+        {/* App attribution */}
+        <p className="mt-4 pb-1 text-center text-xs sm:text-sm text-slate-500">
+          Official mobile app developed by Malera Studio (Freskim Qetaj)
+          <span className="hidden sm:inline" aria-hidden="true"> — </span>
+          <span className="block sm:inline">Available on Google Play and App Store.</span>
+        </p>
       </div>
     </footer>
   );
