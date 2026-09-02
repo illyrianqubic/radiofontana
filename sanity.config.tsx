@@ -1,15 +1,6 @@
 import { defineConfig, buildLegacyTheme } from 'sanity';
 import { structureTool } from 'sanity/structure';
-import {
-  Newspaper,
-  FolderOpen,
-  Users,
-  RadioTower,
-  SlidersHorizontal,
-  Flame,
-  Star,
-  Radio as RadioIcon,
-} from 'lucide-react';
+import { Flame, Star, Radio as RadioIcon } from 'lucide-react';
 import { schemaTypes } from './src/sanity/schemaTypes';
 
 const BRAND_RED = '#DC2626';
@@ -147,45 +138,15 @@ export default defineConfig({
     },
   },
   plugins: [
-    // News-team-friendly navigation: grouped, iconized sections — articles
-    // first so posters land straight in the list. All schemas stay registered
-    // (see schemaTypes) so reference fields keep working.
+    // News-team-friendly structure: land straight into the article list —
+    // "Artikujt dhe Përmbajtja" — with no wrapper pane. All schemas stay
+    // registered (see schemaTypes) so reference fields keep working.
     structureTool({
       structure: (S) =>
-        S.list()
-          .title('Përmbajtja')
+        S.documentTypeList('post')
+          .title('Artikujt dhe Përmbajtja')
           .showIcons(true)
-          .items([
-            S.listItem()
-              .title('Artikujt dhe Përmbajtja')
-              .icon(Newspaper)
-              .child(
-                S.documentTypeList('post')
-                  .title('Artikujt dhe Përmbajtja')
-                  .showIcons(true)
-                  .defaultOrdering([{ field: 'publishedAt', direction: 'desc' }]),
-              ),
-            S.divider(),
-            S.listItem()
-              .title('Kategoritë')
-              .icon(FolderOpen)
-              .child(S.documentTypeList('category').title('Kategoritë').showIcons(true)),
-            S.listItem()
-              .title('Autorët')
-              .icon(Users)
-              .child(S.documentTypeList('author').title('Autorët').showIcons(true)),
-            S.listItem()
-              .title('Live Stream')
-              .icon(RadioTower)
-              .child(S.documentTypeList('liveStream').title('Live Stream').showIcons(true)),
-            S.divider(),
-            S.listItem()
-              .title('Cilësimet e faqes')
-              .icon(SlidersHorizontal)
-              .child(
-                S.documentTypeList('siteSettings').title('Cilësimet e faqes').showIcons(true),
-              ),
-          ]),
+          .defaultOrdering([{ field: 'publishedAt', direction: 'desc' }]),
     }),
   ],
   schema: {

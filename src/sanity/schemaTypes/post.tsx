@@ -1,35 +1,16 @@
 import { defineArrayMember, defineField, defineType } from 'sanity';
-import { Newspaper, Flame, Star } from 'lucide-react';
+import { Newspaper } from 'lucide-react';
 
 export default defineType({
   name: 'post',
   title: 'Artikull',
   type: 'document',
   icon: () => <Newspaper size={18} />,
-  groups: [
-    {
-      name: 'content',
-      title: 'Përmbajtja',
-      default: true,
-      icon: () => <Newspaper size={16} />,
-    },
-    {
-      name: 'meta',
-      title: 'Organizimi',
-      icon: () => <Star size={16} style={{ opacity: 0.9 }} />,
-    },
-    {
-      name: 'status',
-      title: 'Statusi',
-      icon: () => <Flame size={16} />,
-    },
-  ],
   fields: [
     defineField({
       name: 'title',
       title: 'Titulli',
       type: 'string',
-      group: 'content',
       description: 'Titulli kryesor i artikullit — shkruaj tituj të qartë dhe tërheqëse.',
       placeholder: 'p.sh. Fontana sjell muzikën e re në Kosovë…',
       validation: (rule) => rule.required().max(160).error('Titulli duhet të jetë maksimum 160 karaktere.'),
@@ -38,7 +19,6 @@ export default defineType({
       name: 'slug',
       title: 'Slug (URL)',
       type: 'slug',
-      group: 'content',
       description: 'Adresa e artikullit në faqe. Klikoni "Generate" për ta krijuar nga titulli.',
       options: { source: 'title', maxLength: 96 },
       validation: (rule) => rule.required(),
@@ -48,7 +28,6 @@ export default defineType({
       title: 'Hyrja / Resumeja',
       type: 'text',
       rows: 3,
-      group: 'content',
       description: 'Shfaqet nën titull në listat e lajmeve dhe në rezultatet e Google.',
       placeholder: 'Një përmbledhje e shkurtër, 1–2 fjali…',
       validation: (rule) =>
@@ -62,7 +41,6 @@ export default defineType({
       name: 'mainImage',
       title: 'Imazhi kryesor',
       type: 'image',
-      group: 'content',
       description: 'Fotoja kryesore — shfaqet në ballinë, lista dhe karta artikujsh. Klikoni për hotspot.',
       options: { hotspot: true },
       validation: (rule) => rule.required(),
@@ -71,7 +49,6 @@ export default defineType({
       name: 'content',
       title: 'Teksti i artikullit',
       type: 'array',
-      group: 'content',
       description: 'Trupi i artikullit. Përdorni + për të shtuar foto brenda tekstit.',
       validation: (rule) => rule.required().min(1),
       of: [
@@ -84,7 +61,6 @@ export default defineType({
       title: 'Kategoria',
       type: 'reference',
       to: [{ type: 'category' }],
-      group: 'meta',
       description: 'Zgjidhni një kategori (Aktualitet, Kronikë, Sport, …) — shfaqet si etiketë me ngjyrë.',
       validation: (rule) => rule.required(),
     }),
@@ -93,7 +69,6 @@ export default defineType({
       title: 'Autori',
       type: 'reference',
       to: [{ type: 'author' }],
-      group: 'meta',
       description: 'Autori i artikullit — shfaqet si "nga {emri}".',
       validation: (rule) => rule.required(),
     }),
@@ -101,7 +76,6 @@ export default defineType({
       name: 'publishedAt',
       title: 'Data e publikimit',
       type: 'datetime',
-      group: 'meta',
       description: 'Kontrolloni datën/orën — artikujt renditen sipas kësaj date.',
       validation: (rule) => rule.required(),
       initialValue: () => new Date().toISOString(),
@@ -110,7 +84,6 @@ export default defineType({
       name: 'featured',
       title: 'E spikatur (Featured)',
       type: 'boolean',
-      group: 'status',
       description: 'Artikuj të spikatur shfaqen të mëdhenj në ballinë të faqes.',
       initialValue: false,
     }),
@@ -118,7 +91,6 @@ export default defineType({
       name: 'breaking',
       title: 'Lajm i fundit (Breaking News)',
       type: 'boolean',
-      group: 'status',
       description: 'Shfaq shiritin e kuq "Lajm i fundit" dhe njoftimet në faqe.',
       initialValue: false,
     }),
