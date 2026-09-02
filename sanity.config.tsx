@@ -1,8 +1,9 @@
 import { defineConfig, buildLegacyTheme } from 'sanity';
 import { structureTool } from 'sanity/structure';
-import { Flame, Star, Radio as RadioIcon } from 'lucide-react';
+import { Flame, Star, Radio as RadioIcon, Newspaper } from 'lucide-react';
 import { schemaTypes } from './src/sanity/schemaTypes';
 import { DeletePostAction } from './src/sanity/DeletePostAction';
+import { PostListWithDelete } from './src/sanity/PostListWithDelete';
 
 const BRAND_RED = '#DC2626';
 const BRAND_RED_DARK = '#B91C1C';
@@ -149,21 +150,27 @@ export default defineConfig({
       // `prev` is the default list of document actions for this document
       // type, contributed by the structureTool (publish, unpublish,
       // discardChanges, duplicate, delete, historyRestore, …). We pick the
-      // single action that matches the desired mode and return it alone.
+      // actions that match the desired mode and return them.
       //
       // The DocumentActionsContext only tells us the document's "version
       // type" — `'published' | 'draft' | 'revision' | 'version' | 'scheduled-draft'`
-      // (no boolean `published` flag). Anything other than `'published'`
-      // (i.e. a brand-new draft, a draft edit of a published doc, or a
-      // scheduled/archived revision) should expose the Publish action.
+      // (no boolean `published` flag). Anything other than `'draft'`
+      // (i.e. a published doc, or a scheduled/archived revision) should
+      // expose only the Delete action.
+      //
+      // For drafts: show BOTH Publish AND Delete so authors can publish
+      // or remove an unpublished article without opening the "⋯" menu.
       const isDraft = context.versionType === 'draft';
       if (!isDraft) {
         // Published, revision, version, or scheduled-draft: show only Delete.
         return [DeletePostAction];
       }
-      // Draft: keep only the built-in publish action.
+      // Draft: show Publish (built-in) + Delete (custom) — both visible
+      // as primary buttons in the document footer.
       const publishAction = prev.find((a) => a?.action === 'publish');
-      return publishAction ? [publishAction] : [];
+      const actions = [DeletePostAction];
+      if (publishAction) actions.push(publishAction);
+      return actions;
     },
   },
   // Branded top-left logo in the studio navbar.
@@ -173,15 +180,25 @@ export default defineConfig({
     },
   },
   plugins: [
-    // News-team-friendly structure: land straight into the article list —
-    // "Artikujt dhe Përmbajtja" — with no wrapper pane. All schemas stay
-    // registered (see schemaTypes) so reference fields keep working.
     structureTool({
       structure: (S) =>
-        S.documentTypeList('post')
-          .title('Artikujt dhe Përmbajtja')
-          .showIcons(true)
-          .defaultOrdering([{ field: 'publishedAt', direction: 'desc' }]),
+        S.list()
+          .title('Përmbajtja')
+          .items([
+            // "Artikujt dhe Përmbajtja" — custom list view with a visible "−"
+            // delete button on every row so authors can remove articles in
+            // one click without opening each document.
+            S.listItem()
+              .title('Artikujt dhe Përmbajtja')
+              .icon(() => <Newspaper size={18} />)
+              .child(S.component(PostListWithDelete).title('Artikujt dhe Përmbajtja')),
+            // Keep other schema types accessible below
+            S.divider(),
+            S.listItem().title('Kategoritë').child(S.documentTypeList('category')),
+            S.listItem().title('Autorët').child(S.documentTypeList('author')),
+            S.listItem().title('Live Stream').child(S.documentTypeList('liveStream')),
+            S.listItem().title('Cilësimet').child(S.documentTypeList('siteSettings')),
+          ]),
     }),
   ],
   schema: {
