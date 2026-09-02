@@ -9,6 +9,8 @@ interface Env {
   NEXT_PUBLIC_SANITY_PROJECT_ID: string;
   NEXT_PUBLIC_SANITY_DATASET: string;
   NEXT_PUBLIC_SANITY_API_VERSION?: string;
+  /** Optional read token; see functions/api/articles.ts. */
+  SANITY_API_TOKEN?: string;
 }
 
 const API_VERSION = '2024-01-01';
@@ -51,12 +53,18 @@ export async function onRequestGet(context: { request: Request; env: Env }) {
 
   try {
     const [pinnedRes, latestRes] = await Promise.all([
-      fetchWithTimeout(`${base}?query=${encodeURIComponent(PINNED_QUERY)}`, {
-        headers: { Accept: 'application/json' },
-      }),
-      fetchWithTimeout(`${base}?query=${encodeURIComponent(LATEST_QUERY)}`, {
-        headers: { Accept: 'application/json' },
-      }),
+      fetchWithTimeout(
+        `${base}?query=${encodeURIComponent(PINNED_QUERY)}`,
+        { headers: { Accept: 'application/json' } },
+        8000,
+        env.SANITY_API_TOKEN,
+      ),
+      fetchWithTimeout(
+        `${base}?query=${encodeURIComponent(LATEST_QUERY)}`,
+        { headers: { Accept: 'application/json' } },
+        8000,
+        env.SANITY_API_TOKEN,
+      ),
     ]);
 
     const [pinnedData, latestData] = await Promise.all([

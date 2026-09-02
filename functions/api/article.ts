@@ -7,6 +7,8 @@ interface Env {
   NEXT_PUBLIC_SANITY_PROJECT_ID: string;
   NEXT_PUBLIC_SANITY_DATASET: string;
   NEXT_PUBLIC_SANITY_API_VERSION?: string;
+  /** Optional read token; see functions/api/articles.ts. */
+  SANITY_API_TOKEN?: string;
 }
 
 const API_VERSION = '2024-01-01';
@@ -61,9 +63,14 @@ export async function onRequestGet(context: {
     `?query=${encodeURIComponent(QUERY)}&%24slug=${encodeURIComponent(slugParam)}`;
 
   try {
-    const res = await fetchWithTimeout(url, {
-      headers: { Accept: 'application/json' },
-    });
+    const res = await fetchWithTimeout(
+      url,
+      {
+        headers: { Accept: 'application/json' },
+      },
+      8000,
+      env.SANITY_API_TOKEN,
+    );
 
     if (!res.ok) {
       throw new Error(`Sanity responded with ${res.status}`);

@@ -78,15 +78,27 @@ export function tooManyRequests(rl: RateLimitResult): Response {
 
 // fetch() wrapper with an 8 s AbortController so a slow Sanity API can't
 // hold a Worker open for the full 30 s subrequest budget (audit P3-M13).
+//
+// When an optional `token` is provided (SANITY_API_TOKEN), requests to Sanity
+// are authenticated. The authenticated data layer is live/consistent for the
+// whole dataset, whereas anonymous/CDN queries can briefly lag newly-written
+// documents (e.g. brand-new category docs) — which previously caused the GROQ
+// `category->title` lookup to fall back to "Politikë". Authenticated reads on
+// a public dataset return the exact same published content — just not stale.
 export async function fetchWithTimeout(
   input: string,
   init: RequestInit = {},
   timeoutMs = 8000,
+  token?: string,
 ): Promise<Response> {
   const ctrl = new AbortController();
   const id = setTimeout(() => ctrl.abort(), timeoutMs);
+  const headers = new Headers(init.headers);
+  if (token) {
+    headers.set('Authorization', `Bearer ${token}`);
+  }
   try {
-    return await fetch(input, { ...init, signal: ctrl.signal });
+    return await fetch(input, { ...init, headers, signal: ctrl.signal });
   } finally {
     clearTimeout(id);
   }

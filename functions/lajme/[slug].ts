@@ -20,6 +20,8 @@ interface Env {
   NEXT_PUBLIC_SANITY_PROJECT_ID?: string;
   NEXT_PUBLIC_SANITY_DATASET?: string;
   NEXT_PUBLIC_SANITY_API_VERSION?: string;
+  /** Optional read token; see functions/api/articles.ts. */
+  SANITY_API_TOKEN?: string;
 }
 
 const SITE_URL = 'https://radiofontana.org';
@@ -69,8 +71,12 @@ async function fetchArticleForOg(env: Env, slug: string): Promise<OgArticle | nu
     // OG than time out the entire request.
     const ctrl = new AbortController();
     const t = setTimeout(() => ctrl.abort(), 2500);
+    const headers: Record<string, string> = { Accept: 'application/json' };
+    if (env.SANITY_API_TOKEN) {
+      headers.Authorization = `Bearer ${env.SANITY_API_TOKEN}`;
+    }
     const res = await fetch(sanityUrl, {
-      headers: { Accept: 'application/json' },
+      headers,
       signal: ctrl.signal,
     });
     clearTimeout(t);
