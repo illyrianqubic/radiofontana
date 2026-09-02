@@ -2,6 +2,7 @@ import { defineConfig, buildLegacyTheme } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { Flame, Star, Radio as RadioIcon } from 'lucide-react';
 import { schemaTypes } from './src/sanity/schemaTypes';
+import { DeletePostAction } from './src/sanity/DeletePostAction';
 
 const BRAND_RED = '#DC2626';
 const BRAND_RED_DARK = '#B91C1C';
@@ -130,6 +131,14 @@ export default defineConfig({
   // components themselves no-op for non-post documents.
   document: {
     badges: (badges) => [...badges, BreakingBadge, FeaturedBadge],
+    // "Fshij" (Delete) button next to Publish for published articles:
+    // keep the primary action (Publish/Unpublish) first and slot the delete
+    // action directly after it so both render as visible footer buttons.
+    actions: (prev, context) => {
+      if (context.schemaType !== 'post') return prev;
+      const [first, ...rest] = prev;
+      return first ? [first, DeletePostAction, ...rest] : [DeletePostAction, ...rest];
+    },
   },
   // Branded top-left logo in the studio navbar.
   studio: {
