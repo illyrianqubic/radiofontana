@@ -430,6 +430,21 @@ const MOBILE_CSS = `
     -webkit-overflow-scrolling: touch;
   }
 
+  /* – Touch-friendly scroll for all studio panes ’
+   Enable momentum scrolling (–webkit-overflow-scrolling) on any element
+   with overflow: auto / scroll within the studio. This makes lists,
+   category trees, and any panes scroll naturally with touchpads and
+   touch screens, not just via the scrollbar. ’—
+  .sanity-mobile-studio [data-ui="PaneContent"],
+  .sanity-mobile-studio [data-ui="Field"],
+  .sanity-mobile-studio .sanity-Pane,
+  .sanity-mobile-studio .sanity-StructureList,
+  .sanity-mobile-studio .sanity-ScrollArea {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
+
   /* â”€â”€ Responsive refinement (tablets & small laptops) â”€â”€ */
   @media (max-width: 1024px) {
     .sanity-mobile-studio [data-ui="Field"] {
