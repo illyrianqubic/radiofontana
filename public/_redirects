@@ -1,4 +1,8 @@
-# Sanity Studio — serve index.html for all sub-paths (client-side routing)
+# Sanity Studio — serve index.html for all sub-paths (client-side routing).
+# The bare /studio path is listed explicitly: without it, /studio could fall
+# through to the /* 404 catch-all below depending on redirect evaluation
+# order, producing a 404 exactly on browser refreshes.
+/studio /studio/index.html 200
 /studio/* /studio/index.html 200
 
 # Canonicalize accidental trailing slash on common static files

@@ -44,6 +44,15 @@
 /studio/*
   X-Robots-Tag: noindex, nofollow
 
+# Sanity Studio HTML shell: never cached. Guarantees a refresh always
+# revalidates against the latest deploy — a stale 404/HTML copy can never be
+# pinned in a browser or edge cache for /studio paths. (JS bundles under
+# /_next/static keep their own immutable caching rule below.)
+/studio
+  Cache-Control: public, max-age=0, must-revalidate
+/studio/*
+  Cache-Control: public, max-age=0, must-revalidate
+
 /api/*
   X-Robots-Tag: noindex, nofollow
   Cache-Control: public,max-age=60,stale-while-revalidate=300
