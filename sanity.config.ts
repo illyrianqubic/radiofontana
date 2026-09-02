@@ -1,6 +1,5 @@
 import { defineConfig, buildLegacyTheme } from 'sanity';
 import { structureTool } from 'sanity/structure';
-import { visionTool } from '@sanity/vision';
 import { schemaTypes } from './src/sanity/schemaTypes';
 
 const BRAND_RED = '#DC2626';
@@ -33,8 +32,21 @@ export default defineConfig({
     enabled: false,
   },
   plugins: [
-    structureTool(),
-    visionTool({ defaultApiVersion: '2024-01-01' }),
+    // News-team-friendly structure: only the content types editors actually
+    // use. Vision (GROQ playground), liveStream and siteSettings are hidden
+    // from the sidebar to keep the studio clean and simple. Their schemas stay
+    // registered (see schemaTypes) so existing documents keep working and no
+    // "orphan type" warnings appear — they are just not shown to news posters.
+    structureTool({
+      structure: (S) =>
+        S.list()
+          .title('Përmbajtja')
+          .items([
+            S.documentTypeListItem('post').title('Artikujt'),
+            S.documentTypeListItem('category').title('Kategoritë'),
+            S.documentTypeListItem('author').title('Autorët'),
+          ]),
+    }),
   ],
   schema: {
     types: schemaTypes,

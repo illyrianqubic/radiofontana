@@ -46,6 +46,70 @@ const MOBILE_CSS = `
      Sanity Studio Mobile & Polish Overrides
      ════════════════════════════════════════════════════════ */
 
+  /* ════════════════════════════════════════════════════════
+     Readability (ALL screen sizes) — bigger, clearer text for
+     news editors. Targets Sanity's data-ui hooks so the sizes
+     actually override the built-in design-system tokens.
+     ════════════════════════════════════════════════════════ */
+
+  /* Base wrapper size — everything that inherits gets the bump */
+  .sanity-mobile-studio {
+    font-size: 16px;
+  }
+
+  /* Field labels & fieldset legends: big, bold, high-contrast */
+  .sanity-mobile-studio [data-ui="Field"] label,
+  .sanity-mobile-studio [data-ui="Fieldset"] legend {
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.01em;
+  }
+
+  /* Helper / description text under fields */
+  .sanity-mobile-studio [data-ui="FormField"] p,
+  .sanity-mobile-studio [data-testid="field-description"],
+  .sanity-mobile-studio [data-ui="Field"] > div > p {
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* All text inputs, textareas, selects & rich-text editors */
+  .sanity-mobile-studio input,
+  .sanity-mobile-studio textarea,
+  .sanity-mobile-studio select,
+  .sanity-mobile-studio [contenteditable="true"] {
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Article body (Portable Text) editor: comfortable writing size */
+  .sanity-mobile-studio [data-testid="pt-editor"] [contenteditable="true"],
+  .sanity-mobile-studio [data-ui="TextInput"] [contenteditable="true"] {
+    font-size: 17px !important;
+    line-height: 1.65 !important;
+  }
+
+  /* Buttons: clearer labels */
+  .sanity-mobile-studio [data-ui="Button"] {
+    font-size: 15px !important;
+    font-weight: 600 !important;
+  }
+
+  /* Pane / document titles */
+  .sanity-mobile-studio [data-ui="PaneHeader"] h1,
+  .sanity-mobile-studio [data-ui="PaneHeader"] h2,
+  .sanity-mobile-studio [data-ui="PaneHeader"] [data-ui="PaneTitle"] {
+    font-size: 18px !important;
+    font-weight: 700 !important;
+  }
+
+  /* Sidebar / structure list items */
+  .sanity-mobile-studio [data-ui="CollapseItem"],
+  .sanity-mobile-studio [data-ui="Link"],
+  .sanity-mobile-studio [data-ui="Text"] {
+    font-size: 15px !important;
+  }
+
   /* ── Universal: larger tap targets & focus rings ── */
   .sanity-mobile-studio button,
   .sanity-mobile-studio [role="button"],
