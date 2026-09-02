@@ -123,18 +123,6 @@ export default function RrethNeshPage() {
           </div>
         </section>
 
-        {/* Official App attribution */}
-        <section className="bg-slate-50/70 border-b border-slate-200/70">
-          <div className="site-container py-8 md:py-10 text-center">
-            <p className="text-slate-700 text-sm md:text-base lg:text-lg font-medium leading-relaxed">
-              Aplikacioni zyrtar i RTV Fontana është zhvilluar nga Malera Studio (Freskim Qetaj) — i disponueshëm në Google Play dhe App Store.
-            </p>
-            <p className="text-slate-400 text-xs md:text-sm mt-2">
-              The official RTV Fontana app is developed by Malera Studio (Freskim Qetaj) — Available on Google Play and App Store.
-            </p>
-          </div>
-        </section>
-
         {/* Historia */}
         <section className="site-container py-14 md:py-18 lg:py-20 2xl:py-24">
           <div className="max-w-3xl">

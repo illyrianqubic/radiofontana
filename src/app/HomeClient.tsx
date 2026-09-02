@@ -95,18 +95,6 @@ export default function HomeClient() {
         </div>
       </section>
 
-      {/* Official App attribution */}
-      <section className="bg-slate-50/70 border-b border-slate-200/70">
-        <div className="site-container py-8 md:py-10 text-center">
-          <p className="text-slate-700 text-sm md:text-base lg:text-lg font-medium leading-relaxed">
-            Aplikacioni zyrtar i RTV Fontana është zhvilluar nga Malera Studio (Freskim Qetaj) — i disponueshëm në Google Play dhe App Store.
-          </p>
-          <p className="text-slate-400 text-xs md:text-sm mt-2">
-            The official RTV Fontana app is developed by Malera Studio (Freskim Qetaj) — Available on Google Play and App Store.
-          </p>
-        </div>
-      </section>
-
       {/* ── LATEST NEWS + MOST READ ── */}
       <section className="bg-white py-7 md:py-12 lg:py-14 2xl:py-16 border-b border-slate-200/70">
         <div className="site-container">
