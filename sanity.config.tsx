@@ -156,8 +156,9 @@ export default defineConfig({
       // (no boolean `published` flag). Anything other than `'published'`
       // (i.e. a brand-new draft, a draft edit of a published doc, or a
       // scheduled/archived revision) should expose the Publish action.
-      const isPublished = context.versionType === 'published';
-      if (isPublished) {
+      const isDraft = context.versionType === 'draft';
+      if (!isDraft) {
+        // Published, revision, version, or scheduled-draft: show only Delete.
         return [DeletePostAction];
       }
       // Draft: keep only the built-in publish action.
