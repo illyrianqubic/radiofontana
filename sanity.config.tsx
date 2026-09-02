@@ -147,27 +147,14 @@ export default defineConfig({
     // destructive "Fshij" action.
     actions: (prev, context) => {
       if (context.schemaType !== 'post') return prev;
-      // `prev` is the default list of document actions for this document
-      // type, contributed by the structureTool (publish, unpublish,
-      // discardChanges, duplicate, delete, historyRestore, …). We pick the
-      // actions that match the desired mode and return them.
-      //
-      // The DocumentActionsContext only tells us the document's "version
-      // type" — `'published' | 'draft' | 'revision' | 'version' | 'scheduled-draft'`
-      // (no boolean `published` flag). Anything other than `'draft'`
-      // (i.e. a published doc, or a scheduled/archived revision) should
-      // expose only the Delete action.
-      //
-      // For drafts: show BOTH Publish AND Delete so authors can publish
-      // or remove an unpublished article without opening the "⋯" menu.
       const isDraft = context.versionType === 'draft';
       if (!isDraft) {
         // Published, revision, version, or scheduled-draft: show only Delete.
         return [DeletePostAction];
       }
       // Draft: show ALL default actions (publish, unpublish, duplicate, etc.)
-      // PLUS our custom Delete. Filter out the default delete to avoid duplication.
-      return [DeletePostAction, ...prev.filter((a) => a?.action !== 'delete')];
+      // PLUS our custom Delete at the front.
+      return [DeletePostAction, ...prev];
     },
   },
   // Branded top-left logo in the studio navbar.

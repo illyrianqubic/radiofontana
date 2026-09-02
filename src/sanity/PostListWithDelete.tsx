@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useClient } from 'sanity';
-import { IntentLink, useIntentLink } from 'sanity/router';
+import { IntentLink } from 'sanity/router';
 import { Spinner, Badge, Flex, Card, Text, Stack } from '@sanity/ui';
 import { DocumentListDeleteButton } from './DocumentListActions';
 
@@ -124,24 +124,10 @@ export function PostListWithDelete() {
   const [refreshKey, setRefreshKey] = useState(0);
   const client = useClient({ apiVersion: '2024-01-01' });
   const mountedRef = useRef(true);
-  const newArticleLink = useIntentLink({
-    intent: 'create',
-    params: { type: 'post' },
-  });
 
   const onDeleted = useCallback(() => {
     setRefreshKey((k) => k + 1);
   }, []);
-
-  const handleNewArticle = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      e.preventDefault();
-      e.stopPropagation();
-      // Navigate to create a new post using the intent link
-      newArticleLink.onClick(e as unknown as React.MouseEvent<HTMLElement>);
-    },
-    [newArticleLink]
-  );
 
   useEffect(() => {
     mountedRef.current = true;
@@ -182,11 +168,9 @@ export function PostListWithDelete() {
         >
           {posts.length} artikuj
         </Text>
-        <button
-          type="button"
-          onClick={handleNewArticle}
-          title="Shto artikull të ri"
-          data-href={newArticleLink.href}
+        <IntentLink
+          intent="create"
+          params={{ type: 'post' }}
           style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -195,24 +179,17 @@ export function PostListWithDelete() {
             height: 32,
             padding: 0,
             background: '#DC2626',
-            border: 'none',
             borderRadius: 6,
             color: '#fff',
-            cursor: 'pointer',
+            textDecoration: 'none',
             fontSize: 20,
             fontWeight: 600,
             lineHeight: 1,
-            transition: 'background 0.15s',
-          }}
-          onMouseEnter={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.background = '#B91C1C';
-          }}
-          onMouseLeave={(e) => {
-            (e.currentTarget as HTMLButtonElement).style.background = '#DC2626';
+            cursor: 'pointer',
           }}
         >
           +
-        </button>
+        </IntentLink>
       </Flex>
 
       {/* Rows */}
