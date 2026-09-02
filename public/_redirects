@@ -1,9 +1,12 @@
-# Sanity Studio — serve index.html for all sub-paths (client-side routing).
-# The bare /studio path is listed explicitly: without it, /studio could fall
-# through to the /* 404 catch-all below depending on redirect evaluation
-# order, producing a 404 exactly on browser refreshes.
+# Sanity Studio — the bare /studio path is served as a static asset
+# (out/studio/index.html). Every /studio/* sub-route (/studio/structure,
+# /studio/intent/create, /studio/schema, ...) is a client-side Sanity route
+# with no static asset; those are served by the Pages Function at
+# functions/studio/_middleware.ts (it returns the prerendered shell). We do NOT
+# add a `/studio/* /studio/index.html 200` rewrite: Pages rejects rewrites to an
+# index.html inside the same prefix as an "infinite loop" and silently drops
+# them, which is what caused /studio/structure to 404 on refresh.
 /studio /studio/index.html 200
-/studio/* /studio/index.html 200
 
 # Canonicalize accidental trailing slash on common static files
 /favicon.ico/ /favicon.ico 301
