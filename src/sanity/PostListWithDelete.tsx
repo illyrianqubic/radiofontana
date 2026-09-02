@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useClient } from 'sanity';
-import { IntentLink, useRouter } from 'sanity/router';
+import { IntentLink, useIntentLink } from 'sanity/router';
 import { Spinner, Badge, Flex, Card, Text, Stack } from '@sanity/ui';
 import { DocumentListDeleteButton } from './DocumentListActions';
 
@@ -123,33 +123,25 @@ export function PostListWithDelete() {
   const [loading, setLoading] = useState(true);
   const [refreshKey, setRefreshKey] = useState(0);
   const client = useClient({ apiVersion: '2024-01-01' });
-  const router = useRouter();
   const mountedRef = useRef(true);
+  const newArticleLink = useIntentLink({
+    intent: 'create',
+    params: { type: 'post' },
+  });
 
   const onDeleted = useCallback(() => {
     setRefreshKey((k) => k + 1);
   }, []);
 
-  const handleNewArticle = useCallback(async () => {
-    try {
-      // Create a new draft post with default fields
-      const doc = await client.create({
-        _type: 'post',
-        title: 'Artikull i ri',
-        publishedAt: new Date().toISOString(),
-        featured: false,
-        breaking: false,
-      });
-      // Refresh list to show the new article
-      setRefreshKey((k) => k + 1);
-      // Open the new article in the editor
-      router.navigateUrl({
-        path: `/desk/edit?id=${encodeURIComponent(doc._id)}&type=post`,
-      });
-    } catch {
-      // user may not have create permission — silently ignore
-    }
-  }, [client, router]);
+  const handleNewArticle = useCallback(
+    (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault();
+      e.stopPropagation();
+      // Navigate to create a new post using the intent link
+      newArticleLink.onClick(e as unknown as React.MouseEvent<HTMLElement>);
+    },
+    [newArticleLink]
+  );
 
   useEffect(() => {
     mountedRef.current = true;
@@ -194,6 +186,7 @@ export function PostListWithDelete() {
           type="button"
           onClick={handleNewArticle}
           title="Shto artikull të ri"
+          data-href={newArticleLink.href}
           style={{
             display: 'inline-flex',
             alignItems: 'center',

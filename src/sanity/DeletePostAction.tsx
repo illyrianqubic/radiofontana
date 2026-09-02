@@ -13,27 +13,32 @@ import { Trash2 } from 'lucide-react';
  * which returns null for `delete` on published docs in Sanity v5).
  * Removes both the published doc and any draft of it.
  *
- * Always asks for confirmation first.
+ * Uses window.confirm for the confirmation dialog (avoids the "⋯" overflow
+ * button that Sanity shows for actions with built-in dialogs).
  */
 export const DeletePostAction: DocumentActionComponent = (props) => {
   const client = useClient({ apiVersion: '2024-01-01' });
-  const [confirmOpen, setConfirmOpen] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
   const handleDelete = useCallback(async () => {
     setDeleting(true);
     try {
       // Delete published doc + any draft of it
-      await Promise.all([
-        client.delete(props.id).catch(() => {}),
-        client.delete(`drafts.${props.id}`).catch(() => {}),
+      const results = await Promise.allSettled([
+        client.delete(props.id),
+        client.delete(`drafts.${props.id}`),
       ]);
+      // Log any failures for debugging
+      results.forEach((r, i) => {
+        if (r.status === 'rejected') {
+          console.warn(`Delete ${i === 0 ? 'published' : 'draft'} failed:`, r.reason);
+        }
+      });
       props.onComplete?.();
-    } catch {
-      // doc may already be gone — nothing to do
+    } catch (err) {
+      console.error('Delete failed:', err);
     } finally {
       setDeleting(false);
-      setConfirmOpen(false);
     }
   }, [client, props]);
 
@@ -43,17 +48,16 @@ export const DeletePostAction: DocumentActionComponent = (props) => {
     icon: Trash2,
     title: 'Fshij artikullin përgjithmonë',
     disabled: deleting,
-    onHandle: () => setConfirmOpen(true),
-    dialog: confirmOpen
-      ? {
-          type: 'confirm',
-          tone: 'critical',
-          message: props.draft
-            ? 'Ky artikull do të fshihet PËRGJITHMONË — publikimi dhe drafti i redaktuar bashkë me të. Vazhdo?'
-            : 'Ky artikull do të fshihet PËRGJITHMONË. Vazhdo?',
-          onConfirm: handleDelete,
-          onCancel: () => setConfirmOpen(false),
-        }
-      : null,
+    onHandle: () => {
+      // Use window.confirm to avoid the "⋯" overflow button
+      const confirmed = window.confirm(
+        props.draft
+          ? 'Ky artikull do të fshihet PËRGJITHMONË — publikimi dhe drafti i redaktuar bashkë me të. Vazhdo?'
+          : 'Ky artikull do të fshihet PËRGJITHMONË. Vazhdo?'
+      );
+      if (confirmed) {
+        handleDelete();
+      }
+    },
   };
 };
