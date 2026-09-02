@@ -508,6 +508,19 @@ const MOBILE_CSS = `
   .sanity-mobile-studio [data-ui="Field"] [title*="comment" i] {
     display: none !important;
   }
+
+  /* Reference input popover (Category, Author pickers): full touch scroll */
+  .sanity-mobile-studio [data-ui="ReferenceInputPopover"] [data-ui="ScrollContainer"],
+  .sanity-mobile-studio [data-ui="ReferenceInputPopover"] [role="listbox"],
+  .sanity-mobile-studio [data-ui="Popover"] [data-ui="ScrollContainer"],
+  .sanity-mobile-studio [data-ui="Popover"] [role="listbox"],
+  .sanity-mobile-studio [data-ui="Menu"] [role="menu"],
+  .sanity-mobile-studio [data-ui="MenuItems"] {
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    overscroll-behavior: contain !important;
+    touch-action: pan-y !important;
+  }
 `;
 
 export default function StudioClient() {
