@@ -32,8 +32,8 @@ export default defineConfig({
     enabled: false,
   },
   plugins: [
-    // News-team-friendly structure: news posters only ever create articles, so
-    // the sidebar shows just "Artikujt". Vision (GROQ playground), category,
+    // News-team-friendly structure: open straight into the article list —
+    // "Artikujt dhe Përmbajtja" — with no wrapper pane. Vision, category,
     // author, liveStream and siteSettings are hidden from the sidebar to keep
     // the studio clean and simple. All schemas stay registered (see
     // schemaTypes) so the article's category/author reference fields keep
@@ -41,11 +41,7 @@ export default defineConfig({
     // listed to news posters.
     structureTool({
       structure: (S) =>
-        S.list()
-          .title('Përmbajtja')
-          .items([
-            S.documentTypeListItem('post').title('Artikujt'),
-          ]),
+        S.documentTypeList('post').title('Artikujt dhe Përmbajtja'),
     }),
   ],
   schema: {

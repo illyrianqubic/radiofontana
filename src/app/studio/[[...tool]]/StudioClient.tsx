@@ -111,11 +111,12 @@ const MOBILE_CSS = `
   }
 
   /* ════════════════════════════════════════════════════════
-     Layout (desktop): narrow the left structure pane — the one
-     titled "Përmbajtja" (data-pane-index="0"). Sanity sizes
-     panes with flex, so capping max-width trims it by ~half.
-     Capped at 440px so it stays a clean, compact list on wide
-     monitors. Mobile keeps Sanity's one-pane-at-a-time layout.
+     Layout (desktop): keep the left structure pane narrow — the
+     article list "Artikujt dhe Përmbajtja" (data-pane-index="0").
+     Sanity sizes panes with flex, so capping max-width keeps it a
+     clean, compact list (never wider than 440px) while the editor
+     opens full-width to its right. Mobile keeps Sanity's
+     one-pane-at-a-time layout.
      ════════════════════════════════════════════════════════ */
   @media (min-width: 769px) {
     .sanity-mobile-studio [data-ui="Pane"][data-pane-index="0"] {

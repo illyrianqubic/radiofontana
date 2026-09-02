@@ -33,6 +33,8 @@ export interface LiveStream {
 
 export type Category =
   | 'Politikë'
+  | 'Aktualitet'
+  | 'Kronikë'
   | 'Sport'
   | 'Teknologji'
   | 'Showbiz'
@@ -42,6 +44,8 @@ export type Category =
 
 export const CATEGORIES: Category[] = [
   'Politikë',
+  'Aktualitet',
+  'Kronikë',
   'Sport',
   'Teknologji',
   'Showbiz',
@@ -52,9 +56,13 @@ export const CATEGORIES: Category[] = [
 
 export const CATEGORY_COLORS: Record<Category, string> = {
   'Politikë': 'bg-blue-600',
+  Aktualitet: 'bg-teal-600',
+  'Kronikë': 'bg-indigo-600',
   Sport: 'bg-green-600',
   Teknologji: 'bg-purple-600',
   Showbiz: 'bg-pink-600',
-  Shëndetësi: 'bg-red-600',  Biznes: 'bg-amber-600',  'Nga Bota': 'bg-orange-600',
+  Shëndetësi: 'bg-red-600',
+  Biznes: 'bg-amber-600',
+  'Nga Bota': 'bg-orange-600',
 };
 
