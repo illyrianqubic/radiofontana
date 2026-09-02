@@ -496,6 +496,18 @@ const MOBILE_CSS = `
       border-radius: 0 !important;
     }
   }
+
+  /* Field action menu: remove copy field, paste field, and add comment */
+  .sanity-mobile-studio [data-ui="FieldActionsMenu"],
+  .sanity-mobile-studio [data-ui="Field"] [data-testid="field-actions-menu"],
+  .sanity-mobile-studio [data-ui="Field"] [aria-label*="Copy" i],
+  .sanity-mobile-studio [data-ui="Field"] [aria-label*="Paste" i],
+  .sanity-mobile-studio [data-ui="Field"] [aria-label*="comment" i],
+  .sanity-mobile-studio [data-ui="Field"] [title*="Copy" i],
+  .sanity-mobile-studio [data-ui="Field"] [title*="Paste" i],
+  .sanity-mobile-studio [data-ui="Field"] [title*="comment" i] {
+    display: none !important;
+  }
 `;
 
 export default function StudioClient() {
