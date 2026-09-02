@@ -260,6 +260,206 @@ const MOBILE_CSS = `
       padding: 8px 0;
     }
   }
+
+  /* ════════════════════════════════════════════════════════
+     PREMIUM SKIN — Radio Fontana Studio
+     Brand-accented, high-contrast, responsive polish layer.
+     Uses alpha black/white so it adapts to light AND dark UI.
+     ════════════════════════════════════════════════════════ */
+
+  .sanity-mobile-studio {
+    --rf-red: #dc2626;
+    --rf-red-light: #ef4444;
+    --rf-red-dark: #b91c1c;
+    --rf-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  }
+
+  /* ── Scrollbars: slim, rounded, brand-tinted ── */
+  .sanity-mobile-studio * {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(128, 128, 128, 0.35) transparent;
+  }
+  .sanity-mobile-studio ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  .sanity-mobile-studio ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .sanity-mobile-studio ::-webkit-scrollbar-thumb {
+    background: rgba(128, 128, 128, 0.3);
+    border-radius: 8px;
+  }
+  .sanity-mobile-studio ::-webkit-scrollbar-thumb:hover {
+    background: rgba(220, 38, 38, 0.55);
+  }
+
+  /* ── Pane headers: gradient underline + stronger titles ── */
+  .sanity-mobile-studio [data-ui="PaneHeader"] {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.15) !important;
+    position: relative;
+  }
+  .sanity-mobile-studio [data-ui="PaneHeader"]::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--rf-red) 0%, rgba(220, 38, 38, 0) 60%);
+    opacity: 0.85;
+    pointer-events: none;
+  }
+  .sanity-mobile-studio [data-ui="PaneHeader"] h1,
+  .sanity-mobile-studio [data-ui="PaneHeader"] h2,
+  .sanity-mobile-studio [data-ui="PaneHeader"] [data-ui="PaneTitle"] {
+    letter-spacing: -0.01em !important;
+  }
+
+  /* ── Structure / list items: rounded, accent bar on selection ── */
+  .sanity-mobile-studio [data-ui="PaneContent"] button,
+  .sanity-mobile-studio [data-ui="PaneContent"] a {
+    border-radius: 8px !important;
+    transition:
+      background-color 0.15s var(--rf-ease),
+      box-shadow 0.15s var(--rf-ease),
+      transform 0.1s var(--rf-ease);
+  }
+  .sanity-mobile-studio [data-ui="PaneContent"] button:hover,
+  .sanity-mobile-studio [data-ui="PaneContent"] a:hover {
+    background-color: rgba(128, 128, 128, 0.1) !important;
+  }
+  .sanity-mobile-studio [data-ui="PaneContent"] [data-selected="true"],
+  .sanity-mobile-studio [data-ui="PaneContent"] [aria-current="true"] {
+    background-color: rgba(220, 38, 38, 0.12) !important;
+    box-shadow: inset 3px 0 0 0 var(--rf-red) !important;
+  }
+  .sanity-mobile-studio [data-ui="PaneContent"] button:active,
+  .sanity-mobile-studio [data-ui="PaneContent"] a:active {
+    transform: scale(0.995);
+  }
+
+  /* ── Buttons: primary gets the brand gradient ── */
+  .sanity-mobile-studio [data-ui="Button"][data-tone="primary"] {
+    background: linear-gradient(135deg, var(--rf-red-light), var(--rf-red-dark)) !important;
+    box-shadow: 0 1px 4px rgba(220, 38, 38, 0.35) !important;
+    border: none !important;
+    transition:
+      box-shadow 0.15s var(--rf-ease),
+      transform 0.1s var(--rf-ease) !important;
+  }
+  .sanity-mobile-studio [data-ui="Button"][data-tone="primary"]:hover {
+    box-shadow: 0 3px 10px rgba(220, 38, 38, 0.45) !important;
+  }
+  .sanity-mobile-studio [data-ui="Button"]:active {
+    transform: scale(0.98);
+  }
+
+  /* ── Inputs & editors: rounded, clear focus ring ── */
+  .sanity-mobile-studio input:not([type='checkbox']):not([type='radio']),
+  .sanity-mobile-studio textarea,
+  .sanity-mobile-studio select {
+    border-radius: 8px !important;
+    transition:
+      border-color 0.15s var(--rf-ease),
+      box-shadow 0.15s var(--rf-ease) !important;
+  }
+  .sanity-mobile-studio input:not([type='checkbox']):not([type='radio']):focus,
+  .sanity-mobile-studio textarea:focus,
+  .sanity-mobile-studio select:focus,
+  .sanity-mobile-studio [contenteditable='true']:focus {
+    box-shadow: 0 0 0 2px rgba(220, 38, 38, 0.35) !important;
+    outline: 2px solid rgba(220, 38, 38, 0.55) !important;
+    outline-offset: 1px;
+  }
+
+  /* ── Document group tabs (Përmbajtja / Organizimi / Statusi): pills ── */
+  .sanity-mobile-studio [data-ui="GroupTab"],
+  .sanity-mobile-studio [role="tablist"] [role="tab"] {
+    border-radius: 999px !important;
+    transition:
+      background-color 0.15s var(--rf-ease),
+      box-shadow 0.15s var(--rf-ease) !important;
+  }
+  .sanity-mobile-studio [data-ui="GroupTab"][aria-selected="true"],
+  .sanity-mobile-studio [role="tablist"] [role="tab"][aria-selected="true"] {
+    background-color: rgba(220, 38, 38, 0.14) !important;
+    box-shadow: inset 0 0 0 1.5px rgba(220, 38, 38, 0.5) !important;
+    font-weight: 700 !important;
+  }
+
+  /* ── Status chips & badges: rounded pills ── */
+  .sanity-mobile-studio [data-ui="Badge"],
+  .sanity-mobile-studio [data-ui="TextBadge"] {
+    border-radius: 999px !important;
+    font-weight: 700 !important;
+  }
+
+  /* ── Cards & dialogs: softer, deeper elevation ── */
+  .sanity-mobile-studio [data-ui="Dialog"],
+  .sanity-mobile-studio [data-ui="Popover"] > div {
+    border-radius: 14px !important;
+    box-shadow:
+      0 10px 40px rgba(0, 0, 0, 0.18),
+      0 2px 8px rgba(0, 0, 0, 0.08) !important;
+    overflow: hidden;
+  }
+
+  /* ── Preview thumbnails: rounded with depth ── */
+  .sanity-mobile-studio [data-ui="Preview"] img {
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  }
+
+  /* ── Switches: brand accent when checked ── */
+  .sanity-mobile-studio [role="switch"][aria-checked="true"] {
+    background-color: var(--rf-red) !important;
+  }
+
+  /* ── Responsive refinement (tablets & small laptops) ── */
+  @media (max-width: 1024px) {
+    .sanity-mobile-studio [data-ui="Field"] {
+      padding-top: 6px;
+      padding-bottom: 6px;
+    }
+  }
+
+  /* ── Responsive refinement (phones) ── */
+  @media (max-width: 768px) {
+    /* Restore the existing 44px touch-target rules: drop micro transforms */
+    .sanity-mobile-studio [data-ui="Button"] {
+      transition: none !important;
+    }
+    .sanity-mobile-studio [data-ui="PaneContent"] button:active,
+    .sanity-mobile-studio [data-ui="PaneContent"] a:active {
+      transform: none;
+    }
+
+    /* List rows: slightly rounder on touch */
+    .sanity-mobile-studio [data-ui="PaneContent"] button,
+    .sanity-mobile-studio [data-ui="PaneContent"] a {
+      border-radius: 10px !important;
+    }
+
+    /* Group tabs scroll horizontally instead of wrapping/cramping */
+    .sanity-mobile-studio [role="tablist"] {
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .sanity-mobile-studio [role="tablist"]::-webkit-scrollbar {
+      display: none;
+    }
+    .sanity-mobile-studio [data-ui="GroupTab"],
+    .sanity-mobile-studio [role="tablist"] [role="tab"] {
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Dialogs: full-bleed, no rounded corners on phones */
+    .sanity-mobile-studio [data-ui="Dialog"] {
+      border-radius: 0 !important;
+    }
+  }
 `;
 
 export default function StudioClient() {
