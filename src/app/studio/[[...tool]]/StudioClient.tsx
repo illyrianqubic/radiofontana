@@ -35,24 +35,24 @@ const StudioWithConfig = dynamic(
           background: '#141416',
         }}
       >
-        Duke ngarkuar studion…
+        Duke ngarkuar studionâ¦
       </div>
     ),
   },
 );
 
 const MOBILE_CSS = `
-  /* ════════════════════════════════════════════════════════
+  /* ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
      Sanity Studio Mobile & Polish Overrides
-     ════════════════════════════════════════════════════════ */
+     ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 
-  /* ════════════════════════════════════════════════════════
-     Readability (ALL screen sizes) — bigger, clearer text for
+  /* ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+     Readability (ALL screen sizes) â bigger, clearer text for
      news editors. Targets Sanity's data-ui hooks so the sizes
      actually override the built-in design-system tokens.
-     ════════════════════════════════════════════════════════ */
+     ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 
-  /* Base wrapper size — everything that inherits gets the bump */
+  /* Base wrapper size â everything that inherits gets the bump */
   .sanity-mobile-studio {
     font-size: 16px;
   }
@@ -110,21 +110,21 @@ const MOBILE_CSS = `
     font-size: 15px !important;
   }
 
-  /* ════════════════════════════════════════════════════════
-     Layout (desktop): keep the left structure pane narrow — the
-     article list "Artikujt dhe Përmbajtja" (data-pane-index="0").
+  /* ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+     Layout (desktop): keep the left structure pane narrow â the
+     article list "Artikujt dhe PÃ«rmbajtja" (data-pane-index="0").
      Sanity sizes panes with flex, so capping max-width keeps it a
      clean, compact list (never wider than 440px) while the editor
      opens full-width to its right. Mobile keeps Sanity's
      one-pane-at-a-time layout.
-     ════════════════════════════════════════════════════════ */
+     ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
   @media (min-width: 769px) {
     .sanity-mobile-studio [data-ui="Pane"][data-pane-index="0"] {
       max-width: min(50%, 440px) !important;
     }
   }
 
-  /* ── Universal: larger tap targets & focus rings ── */
+  /* ââ Universal: larger tap targets & focus rings ââ */
   .sanity-mobile-studio button,
   .sanity-mobile-studio [role="button"],
   .sanity-mobile-studio a {
@@ -138,7 +138,7 @@ const MOBILE_CSS = `
     outline-offset: 1px !important;
   }
 
-  /* ── Portable Text: much larger "+" insert button ── */
+  /* ââ Portable Text: much larger "+" insert button ââ */
   .sanity-mobile-studio [data-testid="insert-menu-button"],
   .sanity-mobile-studio button[aria-label*="insert" i],
   .sanity-mobile-studio button[aria-label*="add" i] {
@@ -146,52 +146,52 @@ const MOBILE_CSS = `
     min-height: 44px !important;
   }
 
-  /* ── Inputs: comfortable height, prevent iOS zoom ── */
+  /* ââ Inputs: comfortable height, prevent iOS zoom ââ */
   .sanity-mobile-studio input,
   .sanity-mobile-studio textarea,
   .sanity-mobile-studio select {
     min-height: 44px;
   }
 
-  /* ── Buttons: adequate padding ── */
+  /* ââ Buttons: adequate padding ââ */
   .sanity-mobile-studio [data-ui="Button"] {
     min-height: 40px;
     padding: 8px 16px;
   }
 
-  /* ── Pane headers: bigger tap area ── */
+  /* ââ Pane headers: bigger tap area ââ */
   .sanity-mobile-studio [data-ui="PaneHeader"] {
     min-height: 52px;
   }
 
-  /* ── Array drag handles ── */
+  /* ââ Array drag handles ââ */
   .sanity-mobile-studio [data-testid="drag-handle"],
   .sanity-mobile-studio [data-ui="DragHandle"] {
     min-width: 44px;
     min-height: 44px;
   }
 
-  /* ── Dialogs / modals ── */
+  /* ââ Dialogs / modals ââ */
   .sanity-mobile-studio [data-ui="Dialog"] {
     padding: 16px;
   }
 
-  /* ── Form labels ── */
+  /* ââ Form labels ââ */
   .sanity-mobile-studio [data-ui="Field"] label,
   .sanity-mobile-studio [data-ui="Fieldset"] legend {
     font-weight: 600;
   }
 
-  /* ════════════════════════════════════════════════════════
+  /* ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
      Mobile-only rules (max-width: 768px)
-     ════════════════════════════════════════════════════════ */
+     ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
   @media (max-width: 768px) {
     /* Base font size bump */
     .sanity-mobile-studio {
       font-size: 15px;
     }
 
-    /* All touch targets ≥ 44×44px */
+    /* All touch targets â¥ 44Ã44px */
     .sanity-mobile-studio button,
     .sanity-mobile-studio [role="button"],
     .sanity-mobile-studio a {
@@ -261,11 +261,11 @@ const MOBILE_CSS = `
     }
   }
 
-  /* ════════════════════════════════════════════════════════
-     PREMIUM SKIN — Radio Fontana Studio
+  /* ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+     PREMIUM SKIN â Radio Fontana Studio
      Brand-accented, high-contrast, responsive polish layer.
      Uses alpha black/white so it adapts to light AND dark UI.
-     ════════════════════════════════════════════════════════ */
+     ââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 
   .sanity-mobile-studio {
     --rf-red: #dc2626;
@@ -274,7 +274,7 @@ const MOBILE_CSS = `
     --rf-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
   }
 
-  /* ── Scrollbars: slim, rounded, brand-tinted ── */
+  /* ââ Scrollbars: slim, rounded, brand-tinted ââ */
   .sanity-mobile-studio * {
     scrollbar-width: thin;
     scrollbar-color: rgba(128, 128, 128, 0.35) transparent;
@@ -294,7 +294,7 @@ const MOBILE_CSS = `
     background: rgba(220, 38, 38, 0.55);
   }
 
-  /* ── Pane headers: gradient underline + stronger titles ── */
+  /* ââ Pane headers: gradient underline + stronger titles ââ */
   .sanity-mobile-studio [data-ui="PaneHeader"] {
     border-bottom: 1px solid rgba(128, 128, 128, 0.15) !important;
     position: relative;
@@ -316,7 +316,7 @@ const MOBILE_CSS = `
     letter-spacing: -0.01em !important;
   }
 
-  /* ── Structure / list items: rounded, accent bar on selection ── */
+  /* ââ Structure / list items: rounded, accent bar on selection ââ */
   .sanity-mobile-studio [data-ui="PaneContent"] button,
   .sanity-mobile-studio [data-ui="PaneContent"] a {
     border-radius: 8px !important;
@@ -339,7 +339,7 @@ const MOBILE_CSS = `
     transform: scale(0.995);
   }
 
-  /* ── Buttons: primary gets the brand gradient ── */
+  /* ââ Buttons: primary gets the brand gradient ââ */
   .sanity-mobile-studio [data-ui="Button"][data-tone="primary"] {
     background: linear-gradient(135deg, var(--rf-red-light), var(--rf-red-dark)) !important;
     box-shadow: 0 1px 4px rgba(220, 38, 38, 0.35) !important;
@@ -355,7 +355,7 @@ const MOBILE_CSS = `
     transform: scale(0.98);
   }
 
-  /* ── Inputs & editors: rounded, clear focus ring ── */
+  /* ââ Inputs & editors: rounded, clear focus ring ââ */
   .sanity-mobile-studio input:not([type='checkbox']):not([type='radio']),
   .sanity-mobile-studio textarea,
   .sanity-mobile-studio select {
@@ -373,7 +373,7 @@ const MOBILE_CSS = `
     outline-offset: 1px;
   }
 
-  /* ── Document group tabs (Përmbajtja / Organizimi / Statusi): pills ── */
+  /* ââ Document group tabs (PÃ«rmbajtja / Organizimi / Statusi): pills ââ */
   .sanity-mobile-studio [data-ui="GroupTab"],
   .sanity-mobile-studio [role="tablist"] [role="tab"] {
     border-radius: 999px !important;
@@ -388,15 +388,15 @@ const MOBILE_CSS = `
     font-weight: 700 !important;
   }
 
-  /* ── Status chips & badges: rounded pills ── */
+  /* ââ Status chips & badges: rounded pills ââ */
   .sanity-mobile-studio [data-ui="Badge"],
   .sanity-mobile-studio [data-ui="TextBadge"] {
     border-radius: 999px !important;
     font-weight: 700 !important;
   }
 
-  /* ── Cards & dialogs: softer, deeper elevation ──
-     NOTE: no overflow:hidden here — the reference-input popover (e.g. the
+  /* ââ Cards & dialogs: softer, deeper elevation ââ
+     NOTE: no overflow:hidden here â the reference-input popover (e.g. the
      category picker) contains its own scroll container, and clipping the
      popover wrapper breaks scrolling inside it. */
   .sanity-mobile-studio [data-ui="Dialog"],
@@ -407,18 +407,18 @@ const MOBILE_CSS = `
       0 2px 8px rgba(0, 0, 0, 0.08) !important;
   }
 
-  /* ── Preview thumbnails: rounded with depth ── */
+  /* ââ Preview thumbnails: rounded with depth ââ */
   .sanity-mobile-studio [data-ui="Preview"] img {
     border-radius: 8px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   }
 
-  /* ── Switches: brand accent when checked ── */
+  /* ââ Switches: brand accent when checked ââ */
   .sanity-mobile-studio [role="switch"][aria-checked="true"] {
     background-color: var(--rf-red) !important;
   }
 
-  /* ── Popover / dialog scroll safety: never clip pickers ──
+  /* ââ Popover / dialog scroll safety: never clip pickers ââ
      Reference inputs (category, author) and select popovers scroll inside
      their own containers; guarantee they keep overflow scrolling and get
      contained overscroll so the page doesn't rubber-band instead. */
@@ -430,14 +430,21 @@ const MOBILE_CSS = `
     -webkit-overflow-scrolling: touch;
   }
 
-  /* � Touch-friendly scroll for all studio panes �
-   Enable momentum scrolling (�webkit-overflow-scrolling) on any element
+  /*  Touch-friendly scroll for all studio panes 
+   Enable momentum scrolling (webkit-overflow-scrolling) on any element
    with overflow: auto / scroll within the studio. This makes lists,
    category trees, and any panes scroll naturally with touchpads and
-   touch screens, not just via the scrollbar. ��
+   touch screens, not just via the scrollbar. 
   .sanity-mobile-studio [data-ui="PaneContent"],
   .sanity-mobile-studio [data-ui="Field"],
   .sanity-mobile-studio .sanity-Pane,
+  .sanity-mobile-studio .sanity-StructureList,
+  .sanity-mobile-studio .sanity-ScrollArea,
+  .sanity-mobile-studio [data-ui="ReferenceInput"] {
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+  }
   .sanity-mobile-studio .sanity-StructureList,
   .sanity-mobile-studio .sanity-ScrollArea {
     overflow: auto;
@@ -445,7 +452,7 @@ const MOBILE_CSS = `
     overscroll-behavior: contain;
   }
 
-  /* ── Responsive refinement (tablets & small laptops) ── */
+  /* ââ Responsive refinement (tablets & small laptops) ââ */
   @media (max-width: 1024px) {
     .sanity-mobile-studio [data-ui="Field"] {
       padding-top: 6px;
@@ -453,7 +460,7 @@ const MOBILE_CSS = `
     }
   }
 
-  /* ── Responsive refinement (phones) ── */
+  /* ââ Responsive refinement (phones) ââ */
   @media (max-width: 768px) {
     /* Restore the existing 44px touch-target rules: drop micro transforms */
     .sanity-mobile-studio [data-ui="Button"] {
