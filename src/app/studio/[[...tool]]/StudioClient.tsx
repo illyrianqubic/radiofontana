@@ -508,8 +508,14 @@ export default function StudioClient() {
         inset: 0,
         height: '100dvh',
         width: '100%',
-        zIndex: 99999, // above the site shell (Navbar/Footer/RadioPlayer) so the
-                      // full-screen studio is never occluded on small screens
+        // Clear the iPhone home-bar / Android gesture area at the bottom so
+        // the studio's bottom action bar (Publish / Fshij) isn't clipped
+        // under the home indicator on mobile. border-box keeps the padded
+        // height within 100dvh (no new overflow introduced).
+        boxSizing: 'border-box',
+        paddingBottom: 'env(safe-area-inset-bottom)',
+        zIndex: 99999, // above the site shell (Navbar/Footer/RadioPlayer) so
+                      // the full-screen studio is never occluded on small screens
         overflow: 'hidden',
       }}
     >
