@@ -165,12 +165,9 @@ export default defineConfig({
         // Published, revision, version, or scheduled-draft: show only Delete.
         return [DeletePostAction];
       }
-      // Draft: show Publish (built-in) + Delete (custom) — both visible
-      // as primary buttons in the document footer.
-      const publishAction = prev.find((a) => a?.action === 'publish');
-      const actions = [DeletePostAction];
-      if (publishAction) actions.push(publishAction);
-      return actions;
+      // Draft: show ALL default actions (publish, unpublish, duplicate, etc.)
+      // PLUS our custom Delete. Filter out the default delete to avoid duplication.
+      return [DeletePostAction, ...prev.filter((a) => a?.action !== 'delete')];
     },
   },
   // Branded top-left logo in the studio navbar.
