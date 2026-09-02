@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { notFound, usePathname } from 'next/navigation';
 import { Clock, User, ArrowLeft, Share2, Copy, Check } from 'lucide-react';
 import { FacebookIcon, WhatsAppIcon } from '@/components/shared/SocialIcons';
-import { Article, CATEGORY_COLORS } from '@/lib/types';
+import { Article, getCategoryColor } from '@/lib/types';
 import NewsCard from '@/components/news/NewsCard';
 import SanityPortableText from '@/components/sanity/PortableText';
 import TimeAgo from '@/components/shared/TimeAgo';
@@ -128,7 +128,7 @@ export default function ArticleClient({ slug, initialArticle = null }: Props) {
     );
   }
 
-  const catColor = CATEGORY_COLORS[article.category];
+  const catColor = getCategoryColor(article.category);
 
   return (
     <div className="bg-white page-shell">

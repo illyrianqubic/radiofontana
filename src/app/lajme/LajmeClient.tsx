@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-import { Article, Category, CATEGORIES, CATEGORY_COLORS } from '@/lib/types';
+import { Article, Category, CATEGORIES, getCategoryColor } from '@/lib/types';
 import NewsCard from '@/components/news/NewsCard';
 import NewsFilter from '@/components/news/NewsFilter';
 
@@ -159,7 +159,7 @@ export default function LajmeClient() {
           {activeCategory && (
             <div className="mt-3">
               <span
-                className={`category-badge inline-block max-w-full truncate px-3 py-1.5 rounded-lg text-white ${CATEGORY_COLORS[activeCategory] ?? 'bg-slate-500'}`}
+                className={`category-badge inline-block max-w-full truncate px-3 py-1.5 rounded-lg text-white ${getCategoryColor(activeCategory)}`}
               >
                 {filtered.length} artikuj
               </span>

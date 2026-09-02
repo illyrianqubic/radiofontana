@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Article, CATEGORY_COLORS } from '@/lib/types';
+import { Article, getCategoryColor } from '@/lib/types';
 import { readTime, truncateText } from '@/lib/utils';
 import { Clock, User, BookOpen } from 'lucide-react';
 import TimeAgo from '@/components/shared/TimeAgo';
@@ -11,7 +11,7 @@ interface Props {
 }
 
 export default function NewsCard({ article, variant = 'default' }: Props) {
-  const categoryColor = CATEGORY_COLORS[article.category];
+  const categoryColor = getCategoryColor(article.category);
   const minutes = article.readMinutes ?? (article.content ? readTime(article.content) : 1);
   const href = `/lajme/${article.slug}`;
 

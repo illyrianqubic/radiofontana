@@ -10,7 +10,7 @@ export const ARTICLES_QUERY = `
       length(coalesce(excerpt, "")) > 220 => 2,
       1
     ),
-    "category": coalesce(category->title, "Politikë"),
+    "category": coalesce(category->title, category->slug.current, "Politikë"),
     "author": coalesce(author->name, "Radio Fontana"),
     publishedAt,
     "featured": coalesce(featured, false),
@@ -32,7 +32,7 @@ export const FEATURED_BREAKING_QUERY = `
       length(coalesce(excerpt, "")) > 220 => 2,
       1
     ),
-    "category": coalesce(category->title, "Politikë"),
+    "category": coalesce(category->title, category->slug.current, "Politikë"),
     "author": coalesce(author->name, "Radio Fontana"),
     publishedAt,
     "featured": coalesce(featured, false),
@@ -61,7 +61,7 @@ export const ARTICLE_BY_SLUG_QUERY = `
         "asset": asset->{ _id, _ref, url, metadata }
       }
     },
-    "category": coalesce(category->title, "Politikë"),
+    "category": coalesce(category->title, category->slug.current, "Politikë"),
     "author": coalesce(author->name, "Radio Fontana"),
     publishedAt,
     "featured": coalesce(featured, false),

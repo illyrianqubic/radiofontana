@@ -26,7 +26,7 @@ const QUERY = `*[_type == "post" && slug.current == $slug && !(_id in path("draf
       "asset": asset->{ _id, _ref, url, metadata }
     }
   },
-  "category": coalesce(category->title, "Politikë"),
+  "category": coalesce(category->title, category->slug.current, "Politikë"),
   "author": coalesce(author->name, "Radio Fontana"),
   publishedAt,
   "featured": coalesce(featured, false),

@@ -36,7 +36,7 @@ const OG_IMAGE_PROXY = (slug: string) => `${SITE_URL}/og/${encodeURIComponent(sl
 const OG_QUERY = `*[_type == "post" && slug.current == $slug && !(_id in path("drafts.**"))][0]{
   title,
   excerpt,
-  "category": coalesce(category->title, "Politikë"),
+  "category": coalesce(category->title, category->slug.current, "Politikë"),
   "imageUrl": mainImage.asset->url
 }`;
 

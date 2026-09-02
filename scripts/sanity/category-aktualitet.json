@@ -1,0 +1,11 @@
+{
+  "_id": "category.aktualitet",
+  "_type": "category",
+  "title": "Aktualitet",
+  "slug": {
+    "_type": "slug",
+    "current": "aktualitet"
+  },
+  "description": "Lajmet e përditshme dhe aktualiteti",
+  "color": "bg-teal-600"
+}

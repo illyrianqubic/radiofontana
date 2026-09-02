@@ -23,7 +23,7 @@ const QUERY = `*[_type == "post" && defined(slug.current) && !(_id in path("draf
     length(coalesce(excerpt, "")) > 220 => 2,
     1
   ),
-  "category": coalesce(category->title, "Politikë"),
+  "category": coalesce(category->title, category->slug.current, "Politikë"),
   "author": coalesce(author->name, "Radio Fontana"),
   publishedAt,
   "featured": coalesce(featured, false),

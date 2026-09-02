@@ -1,0 +1,11 @@
+{
+  "_id": "category.kronike",
+  "_type": "category",
+  "title": "Kronikë",
+  "slug": {
+    "_type": "slug",
+    "current": "kronike"
+  },
+  "description": "Kronikë e zeza, ngjarje kriminale dhe gjyqësore",
+  "color": "bg-indigo-600"
+}

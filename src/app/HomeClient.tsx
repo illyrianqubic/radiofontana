@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, TrendingUp, Clock, Flame, Radio, Rss } from 'lucide-react';
-import { Article, CATEGORIES, CATEGORY_COLORS } from '@/lib/types';
+import { Article, CATEGORIES, getCategoryColor } from '@/lib/types';
 import NewsCard from '@/components/news/NewsCard';
 import BreakingNewsTicker from '@/components/layout/BreakingNewsTicker';
 import TimeAgo from '@/components/shared/TimeAgo';
@@ -217,7 +217,7 @@ export default function HomeClient() {
                     </div>
                     <div className="flex-1 min-w-0 flex flex-col justify-center">
                       <div className="flex flex-wrap items-center gap-2 mb-1.5 min-w-0">
-                        <span className={`category-badge inline-block max-w-full truncate px-2 py-1 rounded text-white ${CATEGORY_COLORS[article.category]}`}>
+                        <span className={`category-badge inline-block max-w-full truncate px-2 py-1 rounded text-white ${getCategoryColor(article.category)}`}>
                           {article.category}
                         </span>
                         <span className="text-xs md:text-sm text-slate-600 flex items-center gap-1 min-w-0">
@@ -281,7 +281,7 @@ export default function HomeClient() {
               <Link
                 key={cat}
                 href={`/lajme/?kategoria=${encodeURIComponent(cat)}`}
-                className={`${CATEGORY_COLORS[cat]} text-white rounded-xl p-3 md:p-4 lg:p-5 min-h-11 text-center transition-all duration-200 hover:-translate-y-1 hover:brightness-105 shadow-[0_8px_16px_rgba(15,23,42,0.12)] hover:shadow-[0_14px_26px_rgba(15,23,42,0.22)] inline-flex items-center justify-center`}
+                className={`${getCategoryColor(cat)} text-white rounded-xl p-3 md:p-4 lg:p-5 min-h-11 text-center transition-all duration-200 hover:-translate-y-1 hover:brightness-105 shadow-[0_8px_16px_rgba(15,23,42,0.12)] hover:shadow-[0_14px_26px_rgba(15,23,42,0.22)] inline-flex items-center justify-center`}
               >
                 <span className="font-bold text-sm md:text-base leading-tight break-words line-clamp-2">{cat}</span>
               </Link>
