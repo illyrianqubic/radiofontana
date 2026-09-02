@@ -395,14 +395,16 @@ const MOBILE_CSS = `
     font-weight: 700 !important;
   }
 
-  /* ── Cards & dialogs: softer, deeper elevation ── */
+  /* ── Cards & dialogs: softer, deeper elevation ──
+     NOTE: no overflow:hidden here — the reference-input popover (e.g. the
+     category picker) contains its own scroll container, and clipping the
+     popover wrapper breaks scrolling inside it. */
   .sanity-mobile-studio [data-ui="Dialog"],
   .sanity-mobile-studio [data-ui="Popover"] > div {
     border-radius: 14px !important;
     box-shadow:
       0 10px 40px rgba(0, 0, 0, 0.18),
       0 2px 8px rgba(0, 0, 0, 0.08) !important;
-    overflow: hidden;
   }
 
   /* ── Preview thumbnails: rounded with depth ── */
@@ -414,6 +416,18 @@ const MOBILE_CSS = `
   /* ── Switches: brand accent when checked ── */
   .sanity-mobile-studio [role="switch"][aria-checked="true"] {
     background-color: var(--rf-red) !important;
+  }
+
+  /* ── Popover / dialog scroll safety: never clip pickers ──
+     Reference inputs (category, author) and select popovers scroll inside
+     their own containers; guarantee they keep overflow scrolling and get
+     contained overscroll so the page doesn't rubber-band instead. */
+  .sanity-mobile-studio [data-ui="Popover"],
+  .sanity-mobile-studio [data-ui="Popover"] [data-ui="ScrollContainer"],
+  .sanity-mobile-studio [role="listbox"] {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
   }
 
   /* ── Responsive refinement (tablets & small laptops) ── */
