@@ -28,6 +28,14 @@ export default defineType({
       description: 'Emri i kategorisë siç shfaqet në faqe dhe aplikacion.',
       placeholder: 'p.sh. Sport',
       validation: (rule) => rule.required(),
+      options: {
+        list: [
+          { title: 'Aktualitet', value: 'aktualitet' },
+          { title: 'Kronikë', value: 'kronike' },
+          { title: 'Sport', value: 'sport' },
+        ],
+        layout: 'dropdown',
+      },
     }),
     defineField({
       name: 'slug',

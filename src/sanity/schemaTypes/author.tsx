@@ -12,8 +12,15 @@ export default defineType({
       title: 'Emri',
       type: 'string',
       description: 'Emri i plotë i autorit — shfaqet si "nga {emri}" në artikuj.',
-      placeholder: 'p.sh. Ana Krasniqi',
+      placeholder: 'p.sh. Egzon Mehmetaj',
       validation: (rule) => rule.required(),
+      options: {
+        list: [
+          { title: 'Egzon Mehmetaj', value: 'egzon-mehmetaj' },
+          { title: 'Endrit Mehmetaj', value: 'endrit-mehmetaj' },
+        ],
+        layout: 'dropdown',
+      },
     }),
     defineField({
       name: 'role',
