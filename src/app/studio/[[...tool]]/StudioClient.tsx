@@ -500,7 +500,7 @@ export default function StudioClient() {
     };
   }, []);
 
-  return (
+    return (
     <div
       className="sanity-mobile-studio"
       style={{
@@ -508,7 +508,8 @@ export default function StudioClient() {
         inset: 0,
         height: '100dvh',
         width: '100%',
-        zIndex: 50,
+        zIndex: 99999, // above the site shell (Navbar/Footer/RadioPlayer) so the
+                      // full-screen studio is never occluded on small screens
         overflow: 'hidden',
       }}
     >
