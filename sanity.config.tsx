@@ -131,13 +131,38 @@ export default defineConfig({
   // components themselves no-op for non-post documents.
   document: {
     badges: (badges) => [...badges, BreakingBadge, FeaturedBadge],
-    // "Fshij" (Delete) button next to Publish for published articles:
-    // keep the primary action (Publish/Unpublish) first and slot the delete
-    // action directly after it so both render as visible footer buttons.
+    // Post-type document actions: keep the editor footer to exactly TWO states:
+    //   • Unpublished article → only "Publisho" (the built-in publish action).
+    //   • Published   article → only "Fshij" (Delete).
+    //
+    // Sanity's document-action toolbar renders the FIRST returned action as
+    // the visible primary button and everything else inside the "⋯" menu.
+    // By returning exactly one action, the "⋯" overflow button disappears
+    // entirely (no remaining actions to overflow into) — so editors see a
+    // single, unambiguous button that matches the article's state.
+    //
+    // Unpublish intentionally becomes unreachable from the post editor (per
+    // editor-team request) — taking a published article offline is now a
+    // destructive "Fshij" action.
     actions: (prev, context) => {
       if (context.schemaType !== 'post') return prev;
-      const [first, ...rest] = prev;
-      return first ? [first, DeletePostAction, ...rest] : [DeletePostAction, ...rest];
+      // `prev` is the default list of document actions for this document
+      // type, contributed by the structureTool (publish, unpublish,
+      // discardChanges, duplicate, delete, historyRestore, …). We pick the
+      // single action that matches the desired mode and return it alone.
+      //
+      // The DocumentActionsContext only tells us the document's "version
+      // type" — `'published' | 'draft' | 'revision' | 'version' | 'scheduled-draft'`
+      // (no boolean `published` flag). Anything other than `'published'`
+      // (i.e. a brand-new draft, a draft edit of a published doc, or a
+      // scheduled/archived revision) should expose the Publish action.
+      const isPublished = context.versionType === 'published';
+      if (isPublished) {
+        return [DeletePostAction];
+      }
+      // Draft: keep only the built-in publish action.
+      const publishAction = prev.find((a) => a?.action === 'publish');
+      return publishAction ? [publishAction] : [];
     },
   },
   // Branded top-left logo in the studio navbar.
