@@ -32,19 +32,19 @@ export default defineConfig({
     enabled: false,
   },
   plugins: [
-    // News-team-friendly structure: only the content types editors actually
-    // use. Vision (GROQ playground), liveStream and siteSettings are hidden
-    // from the sidebar to keep the studio clean and simple. Their schemas stay
-    // registered (see schemaTypes) so existing documents keep working and no
-    // "orphan type" warnings appear — they are just not shown to news posters.
+    // News-team-friendly structure: news posters only ever create articles, so
+    // the sidebar shows just "Artikujt". Vision (GROQ playground), category,
+    // author, liveStream and siteSettings are hidden from the sidebar to keep
+    // the studio clean and simple. All schemas stay registered (see
+    // schemaTypes) so the article's category/author reference fields keep
+    // working and no "orphan type" warnings appear — those types are just not
+    // listed to news posters.
     structureTool({
       structure: (S) =>
         S.list()
           .title('Përmbajtja')
           .items([
             S.documentTypeListItem('post').title('Artikujt'),
-            S.documentTypeListItem('category').title('Kategoritë'),
-            S.documentTypeListItem('author').title('Autorët'),
           ]),
     }),
   ],

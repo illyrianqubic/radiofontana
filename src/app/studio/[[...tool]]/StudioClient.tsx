@@ -110,6 +110,19 @@ const MOBILE_CSS = `
     font-size: 15px !important;
   }
 
+  /* ════════════════════════════════════════════════════════
+     Layout (desktop): narrow the left structure pane — the one
+     titled "Përmbajtja" (data-pane-index="0"). Sanity sizes
+     panes with flex, so capping max-width trims it by ~half.
+     Capped at 440px so it stays a clean, compact list on wide
+     monitors. Mobile keeps Sanity's one-pane-at-a-time layout.
+     ════════════════════════════════════════════════════════ */
+  @media (min-width: 769px) {
+    .sanity-mobile-studio [data-ui="Pane"][data-pane-index="0"] {
+      max-width: min(50%, 440px) !important;
+    }
+  }
+
   /* ── Universal: larger tap targets & focus rings ── */
   .sanity-mobile-studio button,
   .sanity-mobile-studio [role="button"],
