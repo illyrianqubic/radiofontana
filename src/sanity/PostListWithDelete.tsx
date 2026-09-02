@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useClient } from 'sanity';
-import { IntentLink } from 'sanity/router';
+import { IntentLink, useRouter } from 'sanity/router';
 import { Spinner, Badge, Flex, Card, Text, Stack } from '@sanity/ui';
 import { DocumentListDeleteButton } from './DocumentListActions';
 
@@ -123,11 +123,33 @@ export function PostListWithDelete() {
   const [loading, setLoading] = useState(true);
   const [refreshKey, setRefreshKey] = useState(0);
   const client = useClient({ apiVersion: '2024-01-01' });
+  const router = useRouter();
   const mountedRef = useRef(true);
 
   const onDeleted = useCallback(() => {
     setRefreshKey((k) => k + 1);
   }, []);
+
+  const handleNewArticle = useCallback(async () => {
+    try {
+      // Create a new draft post with default fields
+      const doc = await client.create({
+        _type: 'post',
+        title: 'Artikull i ri',
+        publishedAt: new Date().toISOString(),
+        featured: false,
+        breaking: false,
+      });
+      // Refresh list to show the new article
+      setRefreshKey((k) => k + 1);
+      // Open the new article in the editor
+      router.navigateUrl({
+        path: `/desk/edit?id=${encodeURIComponent(doc._id)}&type=post`,
+      });
+    } catch {
+      // user may not have create permission — silently ignore
+    }
+  }, [client, router]);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -154,21 +176,51 @@ export function PostListWithDelete() {
 
   return (
     <div style={{ padding: 16 }}>
-      {/* Header count */}
-      <Text
-        size={1}
-        muted
-        style={{
-          display: 'block',
-          padding: '4px 0 12px',
-          fontWeight: 600,
-          letterSpacing: '0.06em',
-          textTransform: 'uppercase',
-          fontSize: 11,
-        }}
-      >
-        {posts.length} artikuj
-      </Text>
+      {/* Header with count + "+" button */}
+      <Flex align="center" justify="space-between" style={{ padding: '4px 0 12px' }}>
+        <Text
+          size={1}
+          muted
+          style={{
+            fontWeight: 600,
+            letterSpacing: '0.06em',
+            textTransform: 'uppercase',
+            fontSize: 11,
+          }}
+        >
+          {posts.length} artikuj
+        </Text>
+        <button
+          type="button"
+          onClick={handleNewArticle}
+          title="Shto artikull të ri"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 32,
+            height: 32,
+            padding: 0,
+            background: '#DC2626',
+            border: 'none',
+            borderRadius: 6,
+            color: '#fff',
+            cursor: 'pointer',
+            fontSize: 20,
+            fontWeight: 600,
+            lineHeight: 1,
+            transition: 'background 0.15s',
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.background = '#B91C1C';
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLButtonElement).style.background = '#DC2626';
+          }}
+        >
+          +
+        </button>
+      </Flex>
 
       {/* Rows */}
       {posts.map((post) => (
@@ -178,6 +230,9 @@ export function PostListWithDelete() {
       {posts.length === 0 && !loading && (
         <Card padding={4} tone="transparent" style={{ textAlign: 'center' }}>
           <Text muted>Asnjë artikull në databazë.</Text>
+          <Text muted size={1} style={{ marginTop: 8 }}>
+            Klikoni + për të krijuar artikullin e parë.
+          </Text>
         </Card>
       )}
     </div>
