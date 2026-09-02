@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useClient } from 'sanity';
+import { IntentLink } from 'sanity/router';
 import { Spinner, Badge, Flex, Card, Text, Stack } from '@sanity/ui';
 import { DocumentListDeleteButton } from './DocumentListActions';
 
@@ -9,6 +10,9 @@ import { DocumentListDeleteButton } from './DocumentListActions';
  * Renders every post with its title, status badges, and a visible "−" delete
  * button on each row — so authors can delete articles in one click without
  * opening each document.
+ *
+ * Clicking anywhere on the row opens the document editor. The "−" button
+ * deletes the article (with confirmation) and does NOT open the editor.
  *
  * Uses Sanity's real-time client; re-fetches after every delete so the list
  * stays current.
@@ -56,26 +60,33 @@ function PostRow({ post, onDeleted }: PostRowProps) {
 
   return (
     <Card
-      padding={3}
+      padding={0}
       marginBottom={2}
       style={{
         border: '1px solid rgba(255,255,255,0.06)',
         borderRadius: 8,
         background: 'rgba(255,255,255,0.02)',
+        overflow: 'hidden',
       }}
     >
-      <Flex align="center" gap={3}>
-        {/* Title + meta */}
-        <Stack flex={1} space={2} style={{ minWidth: 0 }}>
-          <Text size={2} weight="semibold" style={{ color: '#fff' }}>
-            {post.title || 'Pa titull'}
-          </Text>
-          <Flex align="center" gap={2} style={{ flexWrap: 'wrap' }}>
-            <Text size={1} muted>
-              {post.categoryTitle} · {post.authorName} · {date}
+      <Flex align="center" gap={3} padding={3}>
+        {/* Title + meta — clickable area opens the editor */}
+        <IntentLink
+          intent="edit"
+          params={{ id: post._id, type: post._type }}
+          style={{ flex: 1, minWidth: 0, textDecoration: 'none', color: 'inherit' }}
+        >
+          <Stack flex={1} space={2} style={{ minWidth: 0 }}>
+            <Text size={2} weight="semibold" style={{ color: '#fff' }}>
+              {post.title || 'Pa titull'}
             </Text>
-          </Flex>
-        </Stack>
+            <Flex align="center" gap={2} style={{ flexWrap: 'wrap' }}>
+              <Text size={1} muted>
+                {post.categoryTitle} · {post.authorName} · {date}
+              </Text>
+            </Flex>
+          </Stack>
+        </IntentLink>
 
         {/* Status badges */}
         <Flex align="center" gap={2}>

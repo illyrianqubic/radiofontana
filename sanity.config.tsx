@@ -192,12 +192,6 @@ export default defineConfig({
               .title('Artikujt dhe Përmbajtja')
               .icon(() => <Newspaper size={18} />)
               .child(S.component(PostListWithDelete).title('Artikujt dhe Përmbajtja')),
-            // Keep other schema types accessible below
-            S.divider(),
-            S.listItem().title('Kategoritë').child(S.documentTypeList('category')),
-            S.listItem().title('Autorët').child(S.documentTypeList('author')),
-            S.listItem().title('Live Stream').child(S.documentTypeList('liveStream')),
-            S.listItem().title('Cilësimet').child(S.documentTypeList('siteSettings')),
           ]),
     }),
   ],
