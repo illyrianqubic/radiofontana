@@ -2,7 +2,6 @@ import { defineConfig, buildLegacyTheme } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { Flame, Star, Radio as RadioIcon, Newspaper } from 'lucide-react';
 import { schemaTypes } from './src/sanity/schemaTypes';
-import { DeletePostAction } from './src/sanity/DeletePostAction';
 import { PostListWithDelete } from './src/sanity/PostListWithDelete';
 
 const BRAND_RED = '#DC2626';
@@ -132,30 +131,6 @@ export default defineConfig({
   // components themselves no-op for non-post documents.
   document: {
     badges: (badges) => [...badges, BreakingBadge, FeaturedBadge],
-    // Post-type document actions: keep the editor footer to exactly TWO states:
-    //   • Unpublished article → only "Publisho" (the built-in publish action).
-    //   • Published   article → only "Fshij" (Delete).
-    //
-    // Sanity's document-action toolbar renders the FIRST returned action as
-    // the visible primary button and everything else inside the "⋯" menu.
-    // By returning exactly one action, the "⋯" overflow button disappears
-    // entirely (no remaining actions to overflow into) — so editors see a
-    // single, unambiguous button that matches the article's state.
-    //
-    // Unpublish intentionally becomes unreachable from the post editor (per
-    // editor-team request) — taking a published article offline is now a
-    // destructive "Fshij" action.
-    actions: (prev, context) => {
-      if (context.schemaType !== 'post') return prev;
-      const isDraft = context.versionType === 'draft';
-      if (!isDraft) {
-        // Published, revision, version, or scheduled-draft: show only Delete.
-        return [DeletePostAction];
-      }
-      // Draft: show ALL default actions (publish, unpublish, duplicate, etc.)
-      // PLUS our custom Delete at the front.
-      return [DeletePostAction, ...prev];
-    },
   },
   // Branded top-left logo in the studio navbar.
   studio: {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useClient } from 'sanity';
-import { IntentLink } from 'sanity/router';
+import { IntentLink, useRouter } from 'sanity/router';
 import { Spinner, Badge, Flex, Card, Text, Stack } from '@sanity/ui';
 import { DocumentListDeleteButton } from './DocumentListActions';
 
@@ -122,12 +122,38 @@ export function PostListWithDelete() {
   const [posts, setPosts] = useState<PostDoc[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [creating, setCreating] = useState(false);
   const client = useClient({ apiVersion: '2024-01-01' });
+  const router = useRouter();
   const mountedRef = useRef(true);
 
   const onDeleted = useCallback(() => {
     setRefreshKey((k) => k + 1);
   }, []);
+
+  const handleNewArticle = useCallback(async () => {
+    setCreating(true);
+    try {
+      // Create a new draft post
+      const doc = await client.create({
+        _type: 'post',
+        title: 'Artikull i ri',
+        publishedAt: new Date().toISOString(),
+        featured: false,
+        breaking: false,
+      });
+      // Refresh list to show the new article
+      setRefreshKey((k) => k + 1);
+      // Open the new article in the editor
+      router.navigateUrl({
+        path: `/desk/intent/edit/id=${doc._id};type=post`,
+      });
+    } catch (err) {
+      console.error('Failed to create article:', err);
+    } finally {
+      setCreating(false);
+    }
+  }, [client, router]);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -168,9 +194,11 @@ export function PostListWithDelete() {
         >
           {posts.length} artikuj
         </Text>
-        <IntentLink
-          intent="create"
-          params={{ type: 'post' }}
+        <button
+          type="button"
+          onClick={handleNewArticle}
+          disabled={creating}
+          title="Shto artikull të ri"
           style={{
             display: 'inline-flex',
             alignItems: 'center',
@@ -178,18 +206,19 @@ export function PostListWithDelete() {
             width: 32,
             height: 32,
             padding: 0,
-            background: '#DC2626',
+            background: creating ? '#991B1B' : '#DC2626',
+            border: 'none',
             borderRadius: 6,
             color: '#fff',
-            textDecoration: 'none',
+            cursor: creating ? 'wait' : 'pointer',
             fontSize: 20,
             fontWeight: 600,
             lineHeight: 1,
-            cursor: 'pointer',
+            opacity: creating ? 0.7 : 1,
           }}
         >
-          +
-        </IntentLink>
+          {creating ? '…' : '+'}
+        </button>
       </Flex>
 
       {/* Rows */}
