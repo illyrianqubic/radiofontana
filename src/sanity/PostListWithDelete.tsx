@@ -133,7 +133,7 @@ export function PostListWithDelete() {
   const handleNewArticle = useCallback(async () => {
     setCreating(true);
     try {
-      // Create a new draft post
+      // Create a new draft post directly (avoids "Cannot create published doc" error)
       const doc = await client.create({
         _type: 'post',
         title: 'Artikull i ri',
@@ -143,7 +143,7 @@ export function PostListWithDelete() {
       });
       // Refresh list to show the new article
       setRefreshKey((k) => k + 1);
-      // Open the new article in the editor (full reload for reliability)
+      // Navigate to the editor for the new draft
       const basePath = window.location.pathname.split('/desk')[0];
       window.location.href = `${basePath}/desk/intent/edit/id=${doc._id};type=post`;
     } catch (err) {

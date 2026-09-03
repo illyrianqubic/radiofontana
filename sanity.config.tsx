@@ -2,7 +2,6 @@ import { defineConfig, buildLegacyTheme } from 'sanity';
 import { structureTool } from 'sanity/structure';
 import { Flame, Star, Radio as RadioIcon, Newspaper } from 'lucide-react';
 import { schemaTypes } from './src/sanity/schemaTypes';
-import { DeletePostAction } from './src/sanity/DeletePostAction';
 import { PostListWithDelete } from './src/sanity/PostListWithDelete';
 
 const BRAND_RED = '#DC2626';
@@ -132,16 +131,6 @@ export default defineConfig({
   // components themselves no-op for non-post documents.
   document: {
     badges: (badges) => [...badges, BreakingBadge, FeaturedBadge],
-    actions: (prev, context) => {
-      if (context.schemaType !== 'post') return prev;
-      const isDraft = context.versionType === 'draft';
-      if (!isDraft) {
-        // Published: show only Delete
-        return [DeletePostAction];
-      }
-      // Draft: show Delete + all default actions (publish, unpublish, etc.)
-      return [DeletePostAction, ...prev];
-    },
   },
   // Branded top-left logo in the studio navbar.
   studio: {
