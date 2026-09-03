@@ -59,16 +59,28 @@ function PostRow({ post, onDeleted }: PostRowProps) {
     : 'Pa datë';
 
   return (
-    <Card
-      padding={0}
-      marginBottom={2}
-      style={{
-        border: '1px solid rgba(255,255,255,0.06)',
-        borderRadius: 8,
-        background: 'rgba(255,255,255,0.02)',
-        overflow: 'hidden',
-      }}
-    >
+    <>
+      <style>{`
+        .post-row-card:hover {
+          border-color: rgba(255,255,255,0.3) !important;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.5) !important;
+        }
+      `}</style>
+      <Card
+        padding={0}
+        marginBottom={3}
+        style={{
+          border: '1px solid rgba(255,255,255,0.18)',
+          borderLeft: '3px solid #DC2626',
+          borderRadius: 8,
+          background: 'rgba(255,255,255,0.03)',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+          overflow: 'hidden',
+          cursor: 'pointer',
+          transition: 'border-color 0.15s, box-shadow 0.15s',
+        }}
+        className="post-row-card"
+      >
       <Flex align="center" gap={3} padding={3}>
         {/* Title + meta — clickable area opens the editor */}
         <IntentLink
@@ -87,6 +99,16 @@ function PostRow({ post, onDeleted }: PostRowProps) {
             </Flex>
           </Stack>
         </IntentLink>
+
+        {/* Divider */}
+        <div
+          style={{
+            width: 1,
+            alignSelf: 'stretch',
+            background: 'rgba(255,255,255,0.1)',
+            margin: '0 4px',
+          }}
+        />
 
         {/* Status badges */}
         <Flex align="center" gap={2}>
@@ -107,6 +129,16 @@ function PostRow({ post, onDeleted }: PostRowProps) {
           )}
         </Flex>
 
+        {/* Divider */}
+        <div
+          style={{
+            width: 1,
+            alignSelf: 'stretch',
+            background: 'rgba(255,255,255,0.1)',
+            margin: '0 4px',
+          }}
+        />
+
         {/* Delete button — the "-" */}
         <DocumentListDeleteButton
           documentId={post._id}
@@ -115,6 +147,7 @@ function PostRow({ post, onDeleted }: PostRowProps) {
         />
       </Flex>
     </Card>
+    </>
   );
 }
 
