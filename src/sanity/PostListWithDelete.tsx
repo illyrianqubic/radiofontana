@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useClient } from 'sanity';
-import { IntentLink } from 'sanity/router';
+import { IntentLink, useRouter } from 'sanity/router';
 import { Spinner, Badge, Flex, Card, Text, Stack } from '@sanity/ui';
 import { DocumentListDeleteButton } from './DocumentListActions';
 
@@ -124,6 +124,7 @@ export function PostListWithDelete() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [creating, setCreating] = useState(false);
   const client = useClient({ apiVersion: '2024-01-01' });
+  const router = useRouter();
   const mountedRef = useRef(true);
 
   const onDeleted = useCallback(() => {
@@ -133,7 +134,7 @@ export function PostListWithDelete() {
   const handleNewArticle = useCallback(async () => {
     setCreating(true);
     try {
-      // Create a new draft post directly (avoids "Cannot create published doc" error)
+      // Create a new draft post directly
       const doc = await client.create({
         _type: 'post',
         title: 'Artikull i ri',
@@ -144,14 +145,16 @@ export function PostListWithDelete() {
       // Refresh list to show the new article
       setRefreshKey((k) => k + 1);
       // Navigate to the editor for the new draft
-      const basePath = window.location.pathname.split('/desk')[0];
-      window.location.href = `${basePath}/desk/intent/edit/id=${doc._id};type=post`;
+      router.navigate({
+        _id: doc._id,
+        _type: 'post',
+      });
     } catch (err) {
       console.error('Failed to create article:', err);
     } finally {
       setCreating(false);
     }
-  }, [client]);
+  }, [client, router]);
 
   useEffect(() => {
     mountedRef.current = true;
