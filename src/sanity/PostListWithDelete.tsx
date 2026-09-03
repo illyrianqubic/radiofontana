@@ -123,6 +123,8 @@ export function PostListWithDelete() {
   const [loading, setLoading] = useState(true);
   const [refreshKey, setRefreshKey] = useState(0);
   const [creating, setCreating] = useState(false);
+  const [newDocId, setNewDocId] = useState<string | null>(null);
+  const linkRef = useRef<HTMLAnchorElement>(null);
   const client = useClient({ apiVersion: '2024-01-01' });
   const mountedRef = useRef(true);
 
@@ -143,16 +145,22 @@ export function PostListWithDelete() {
       });
       // Refresh list to show the new article
       setRefreshKey((k) => k + 1);
-      // Navigate directly to the document editor
-      const { origin, pathname } = window.location;
-      const studioBase = pathname.split('/desk')[0];
-      window.location.href = `${origin}${studioBase}/desk/intent/edit/id=${doc._id};type=post`;
+      // Store the new doc ID - the IntentLink will be rendered and auto-clicked
+      setNewDocId(doc._id);
     } catch (err) {
       console.error('Failed to create article:', err);
     } finally {
       setCreating(false);
     }
   }, [client]);
+
+  // Auto-click the IntentLink when a new document is created
+  useEffect(() => {
+    if (newDocId && linkRef.current) {
+      linkRef.current.click();
+      setNewDocId(null);
+    }
+  }, [newDocId]);
 
   useEffect(() => {
     mountedRef.current = true;
@@ -179,6 +187,17 @@ export function PostListWithDelete() {
 
   return (
     <div style={{ padding: 16 }}>
+      {/* Hidden IntentLink for navigating to newly created documents */}
+      {newDocId && (
+        <IntentLink
+          ref={linkRef}
+          intent="edit"
+          params={{ id: newDocId, type: 'post' }}
+          style={{ display: 'none' }}
+        >
+          Edit
+        </IntentLink>
+      )}
       {/* Header with count + "+" button */}
       <Flex align="center" justify="space-between" style={{ padding: '4px 0 12px' }}>
         <Text
